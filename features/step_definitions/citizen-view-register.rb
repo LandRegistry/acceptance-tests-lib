@@ -18,7 +18,6 @@ Then(/^Price Paid is displayed$/) do
 end
 
 When(/^I try to view a register that does not exist$/) do
-  puts 'xxxxxxxxx'
   visit("http://#{$PROPERTY_FRONTEND_DOMAIN}/property/XXXXXXXXX")
 end
 

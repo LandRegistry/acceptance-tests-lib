@@ -3,8 +3,6 @@ def wait_for_register_to_be_created(title_no)
   count = 0
   while (found == false && count < 10) do
   puts 'waiting for registration to be created'
-  puts 'http://' + $LR_SEARCH_API_DOMAIN + '/search?query=' + title_no
-
 
   uri = URI.parse('http://' + $LR_SEARCH_API_DOMAIN)
   http = Net::HTTP.new(uri.host, uri.port)
@@ -29,9 +27,6 @@ end
 end
 
 def get_register_by_title(title_no)
-
-  puts 'http://' + $SYSTEM_OF_RECORD_API_DOMAIN + '/search?query=' + title_no
-
   uri = URI.parse('http://' + $SYSTEM_OF_RECORD_API_DOMAIN)
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Get.new('/search?query=' + title_no,  initheader = {'Content-Type' =>'application/json'})
@@ -50,7 +45,6 @@ end
 
 def does_title_exist(title_no)
   puts 'Does title exist'
-  puts 'http://' + $SYSTEM_OF_RECORD_API_DOMAIN + '/search?query=' + title_no
 
   uri = URI.parse('http://' + $SYSTEM_OF_RECORD_API_DOMAIN)
   http = Net::HTTP.new(uri.host, uri.port)
