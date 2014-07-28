@@ -13,7 +13,7 @@ env:
   - LR_SEARCH_API_DOMAIN="lr-search-api.herokuapp.com"
   - SYSTEM_OF_RECORD_API_DOMAIN="lr-system-of-record.herokuapp.com"
   - secure: LJEocntktAZE0xFpYIfhMkxgTaxURhIhJqD+YRasVPli18ReBWfmdMoBSHDuuXfffGklBuCrVx3fntii7Pm5bgn9Xu9xNcZVYrod9oXn47qL0lVjYuzXsDI15NojYoD9pAO9KuJ2J4FlrhSsn/+XBBP2hBXT660t4bcOGeHOucw=
-  - secure: JLoDx5hajyrVgQ3FyzH2ut1VUSYnaR1uka7EmRpkp0R23o87fVbTX5nUQNFx7XodCYBBQ88Jmfejqcv3yp+hKdwe4z02RSCkxgTwvzRd0uQLsyaGG2PpwpDXLW1uDWNmoqfiyR+9kEPUt1ztB5VoEZr/CQXAYeYIDDjLIxn3A5A=
+  - secure: AO8MDSpUlFQQRzOge9yO7C+d3HjB9CdYKXqH/tKJYK/5Pl914HJI9m41p86BW1wjaoUYOaIB6oTIYyPwz7NyrF5Yqrj+Vdba5DXrFzLYHbRLc+wHajfiWHDJpDs4dVm3DX5dLEiKQkk7qvUObcBAMEyYah7TrLVBeO6Dsbx1hpA=
 before_install:
 - 'echo ''gem: --no-ri --no-rdoc'' > ~/.gemrc'
 before_script:
