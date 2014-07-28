@@ -22,4 +22,4 @@ script:
 - bundle exec cucumber --tags ~@wip --tags ~@removed --format json --out report.json
   --format pretty
 - curl -X POST -H 'Content-Type:application/json' -d @report.json http://lr-test-dashboard.herokuapp.com/import/cucumber
-- (echo '##############';echo $(cat rakefile);echo '##############')
+- (echo '#######JSON_RESULTS#######';echo $(cat report.json);echo '#######JSON_RESULTS#######')
