@@ -11,5 +11,5 @@ Then(/^proprietors are displayed$/) do
 end
 
 When(/^I view the private register$/) do
-  visit("http://#{$PRIVATE_PROPERTY_FRONTEND_DOMAIN}")
+  visit("#{$PRIVATE_PROPERTY_FRONTEND_DOMAIN}")
 end
