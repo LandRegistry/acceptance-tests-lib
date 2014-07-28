@@ -27,7 +27,7 @@ Given(/^I have a registered property$/) do
 
   puts 'Title number' + $regData['title_number']
 
-  uri = URI.parse('http://' + $MINT_API_DOMAIN)
+  uri = URI.parse($MINT_API_DOMAIN)
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Post.new('/titles/' + $regData['title_number'],  initheader = {'Content-Type' =>'application/json'})
   request.basic_auth $http_auth_name, $http_auth_password
@@ -44,7 +44,7 @@ Given(/^I have a registered property$/) do
 end
 
 Given(/^I am searching for that property$/) do
-  visit("http://#{$PROPERTY_FRONTEND_DOMAIN}/search")
+  visit("#{$PROPERTY_FRONTEND_DOMAIN}/search")
 end
 
 Given(/^I am a citizen$/) do
