@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/LandRegistry/front-end-tests.svg)](https://travis-ci.org/LandRegistry/front-end-tests)
+[![Build Status](https://travis-ci.org/LandRegistry/acceptance-tests.svg)](https://travis-ci.org/LandRegistry/acceptance-tests)
 
 Frontend Acceptance Tests
 ===============
