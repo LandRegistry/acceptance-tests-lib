@@ -1,4 +1,5 @@
 #!/bin/bash
+bundle install
 
 if [ -z "$1" ]
   then
