@@ -1,4 +1,3 @@
-# encoding: utf-8
 
 Given(/^I have received an application for a first registration$/) do
   $data = Hash.new()
