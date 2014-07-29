@@ -97,12 +97,11 @@ def postcode()
   $pcode << 'EC1A 1BB'
   $pcode << 'P2 2BB'
   $pcode << 'N70 1NX'
-  $pcode << 'DS3 7YI'
   $pcode << 'EO66 2QU'
   $pcode << 'Y2B 1JR'
   $pcode << 'FD2B 2DD'
 
-  $pcode_num = rand(0 .. 11)
+  $pcode_num = rand(0 .. 10)
 
   return $pcode[$pcode_num]
 

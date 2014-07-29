@@ -91,43 +91,25 @@ When(/^I enter an invalid price paid$/) do
 end
 
 Then(/^a Title Number is displayed$/) do
-  if first(".//*[@id='title_number']", :visible => false).value == "" then
-    raise "There is no titleNumber!"
-  end
+  assert_not_equal find(".//*[@id='title_number']", :visible => false).value, '', 'There is no titleNumber!'
 end
 
 Then(/^Title Number is formatted correctly$/) do
   titleNumber = find(".//*[@id='title_number']", :visible => false).value
-  puts titleNumber
 
-  if (titleNumber[0,4] != 'TEST') then
-    raise "Title does not have a prefix of TEST"
-  end
-
-  if (titleNumber[4,titleNumber.size - 1] != titleNumber[4,titleNumber.size - 1].to_i.to_s) then
-    raise "The title number is not numberic"
-  end
-
-  if (titleNumber[4,titleNumber.size - 1].to_i < 1) then
-    raise "The number is less than 0"
-  end
-
-  if (titleNumber[4,titleNumber.size - 1].to_i > 99999) then
-    raise "The number is greater than 99999"
-  end
+  assert_equal titleNumber[0,4], 'TEST', 'Title does not have a prefix of TEST'
+  assert_equal titleNumber[4,titleNumber.size - 1], titleNumber[4,titleNumber.size - 1].to_i.to_s, 'The title number is not numberic'
+  assert_operator titleNumber[4,titleNumber.size - 1].to_i, :>=, 1, 'The number is less than 0'
+  assert_operator titleNumber[4,titleNumber.size - 1].to_i, :<=, 99999, 'The number is greater than 99999'
 
 end
 
 Then(/^I have received confirmation that it has been registered$/) do
-  if (!page.body.include? 'New title created') then
-    raise "Expected registration message but was not present"
-  end
+  assert_match(/New title created/i, page.body, 'Expected registration message but was not present')
 end
 
 Then(/^Title Number is unique$/) do
-  if (does_title_exist($data['titleNumber']) == true) then
-    raise "A title with " + $data['titleNumber'] + " already exists"
-  end
+  assert_equal does_title_exist($data['titleNumber']), false, "A title with " + $data['titleNumber'] + " already exists"
 end
 
 When(/^I enter a valid title extent$/) do
