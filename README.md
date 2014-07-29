@@ -38,11 +38,12 @@ sh run_tests.sh
 Or to run a specific feature:
 
 ```
-cucumber -r features features/caseworker/first-registration.feature
+sh run_tests.sh features/caseworker/first-registration.feature
 ```
 
 Or to run a specific scenario(the 29 refers to the line in the future file that your scenario starts on):
 
 ```
-cucumber -r features features/caseworker/first-registration.feature:29
+sh run_tests.sh features/caseworker/first-registration.feature:29
 ```
+
