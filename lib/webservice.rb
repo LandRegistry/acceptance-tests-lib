@@ -54,11 +54,11 @@ def does_title_exist(title_no)
   response = http.request(request)
 
   if (response.code == '404') then
-    false
     puts 'Title does not exist'
+    false
   else
-    true
     puts 'Title exists'
+    true
   end
 
 end

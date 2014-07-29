@@ -1,3 +1,5 @@
+
+
 Before do | scenario |
   if page.driver.respond_to?(:basic_auth)
     page.driver.basic_auth($http_auth_name, $http_auth_password)

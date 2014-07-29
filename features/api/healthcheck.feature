@@ -1,8 +1,6 @@
 Feature: Confirm applications are healthy
 
 Scenario: system-of-record is healthy
-Given app system-of-record
-#When logging is enabled
+Given the app at "http://lr-system-of-record.herokuapp.com"
 When I GET to /health
-Then I should get a 200 status code 
-#Then debug
+Then I should get a 200 status code

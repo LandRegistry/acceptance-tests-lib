@@ -1,3 +1,5 @@
+
+=begin
 # Since these tests test a multitude of microservices, offer
 # the ability to choose which app to test from the feature.
 # (possibly do same as https://github.com/alphagov/smokey/blob/master/features/support/base_urls.rb)
@@ -19,9 +21,9 @@ Given(/^app (.*?)$/) do |app|
   when /^[Ss]earch [Aa]pi.*/
     @app = $LR_SEARCH_API_DOMAIN
   else
-    raise 'Invalid app ' + app 
+    raise 'Invalid app ' + app
   end
- 
+
 end
 
-
+=end
