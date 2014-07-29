@@ -49,6 +49,7 @@ end
 
 Given(/^I am a citizen$/) do
   # Nothing can be done here, maybe click a logout button if it exists?
+  step "I am not already logged in"
 end
 
 When(/^I enter an incorrect Title Number \(non\-matching\)$/) do
