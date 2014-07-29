@@ -39,11 +39,10 @@ Given(/^I have a registered property$/) do
   end
 
   wait_for_register_to_be_created($regData['title_number'])
-
-  sleep(1) # Really don't like sleeps, but using it as inserting too quickly before querying the data. Will fix later
 end
 
 Given(/^I am searching for that property$/) do
+  puts "#{$PROPERTY_FRONTEND_DOMAIN}/search"
   visit("#{$PROPERTY_FRONTEND_DOMAIN}/search")
 end
 
