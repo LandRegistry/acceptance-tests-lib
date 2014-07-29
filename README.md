@@ -26,7 +26,14 @@ Then run bundler (this will install all required gems)
 ```
 bundle install
 ```
+### Generating the login account needed for private view
 
+Make sure you have the following login details setup in your dev environment
+email: geoff@gmail.com
+password: apassword
+
+command is: python manage.py create_user --email=geoff@gmail.com --password=apassword
+View service-frontend for more details.
 ### Running the tests
 
 To run all the tests:
@@ -46,4 +53,3 @@ Or to run a specific scenario(the 29 refers to the line in the future file that 
 ```
 sh run_tests.sh features/caseworker/first-registration.feature:29
 ```
-
