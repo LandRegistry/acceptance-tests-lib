@@ -216,7 +216,7 @@ $rectBegin = <<eos
   "crs": {
     "type": "name",
     "properties": {
-      "name": "urn:ogc:def:crs:EPSG::27700"
+      "name": "urn:ogc:def:crs:EPSG:27700"
     }
   },
   "geometry": {
