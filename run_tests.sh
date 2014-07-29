@@ -1,4 +1,7 @@
 #!/bin/bash
+
+set -e
+
 bundle install
 
 if [ -z "$1" ]
