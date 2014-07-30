@@ -1,3 +1,4 @@
+@service-frontend @search-api
 Feature: Citizen find a property
 
 Scenario: No Title Number match for citizen

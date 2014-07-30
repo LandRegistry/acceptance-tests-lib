@@ -1,3 +1,4 @@
+@healthcheck
 Feature: Confirm applications are healthy
 
 Scenario Outline: system-of-record is healthy

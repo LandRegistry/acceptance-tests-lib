@@ -1,3 +1,4 @@
+@service-frontend
 Feature: login and view private register
 
 Scenario: view register as new authenticated user
