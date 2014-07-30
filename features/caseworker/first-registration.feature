@@ -1,3 +1,4 @@
+@casework-frontend
 Feature: Create a Register from a received application
 
 Scenario: Processing Absolute Freehold First Registration with 1 proprietor (3)
