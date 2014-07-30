@@ -10,8 +10,7 @@ And I enter a valid price paid
 And I enter 1 proprietor
 And I enter a valid title extent
 And I submit the title details
-Then I have received confirmation that it has been registered
-And the first registration is registered
+Then I have received confirmation that the property has been registered
 
 Scenario: Processing Good Leasehold First Registration with 1 proprietor (4)
 Given I have received an application for a first registration
@@ -23,8 +22,7 @@ And I enter a valid price paid
 And I enter 1 proprietor
 And I enter a valid title extent
 And I submit the title details
-Then I have received confirmation that it has been registered
-And the first registration is registered
+Then I have received confirmation that the property has been registered
 
 Scenario: Processing possessory Freehold First Registration with 2 proprietors (5)
 Given I have received an application for a first registration
@@ -36,8 +34,7 @@ And I enter a valid price paid
 And I enter 2 proprietors
 And I enter a valid title extent
 And I submit the title details
-Then I have received confirmation that it has been registered
-And the first registration is registered
+Then I have received confirmation that the property has been registered
 
 Scenario: Processing Qualified Freehold First Registration with 1 proprietor and no price paid (6)
 Given I have received an application for a first registration
@@ -48,8 +45,7 @@ And I select class of Qualified
 And I enter 1 proprietor
 And I enter a valid title extent
 And I submit the title details
-Then I have received confirmation that it has been registered
-And the first registration is registered
+Then I have received confirmation that the property has been registered
 
 Scenario: Trying to process a first registration with no proprietor (2)
 Given I have received an application for a first registration

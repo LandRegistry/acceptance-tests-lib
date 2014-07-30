@@ -100,18 +100,10 @@ end
 
 Then(/^results show address details$/) do
   for i in 0..$results.count
-    if (page.body.include? $results[i]['property']['address']['house_number']) then
-      raise "Expected to find house number #{$results[i]['property']['address']['house_number']}, but not present."
-    end
-    if (page.body.include? $results[i]['property']['address']['road']) then
-      raise "Expected to find road #{$results[i]['property']['address']['road']}, but not present."
-    end
-    if (page.body.include? $results[i]['property']['address']['town']) then
-      raise "Expected to find town #{$results[i]['property']['address']['town']}, but not present."
-    end
-    if (page.body.include? $results[i]['property']['address']['postcode']) then
-      raise "Expected to find postcode #{$results[i]['property']['address']['postcode']}, but not present."
-    end
+    assert_match(/#{$results[i]['property']['address']['house_number']}/i, page.body, 'Expected to find house_number')
+    assert_match(/#{$results[i]['property']['address']['road']}/i, page.body, 'Expected to find road')
+    assert_match(/#{$results[i]['property']['address']['town']}/i, page.body, 'Expected to find town')
+    assert_match(/#{$results[i]['property']['address']['postcode']}/i, page.body, 'Expected to find postcode')
   end
 end
 

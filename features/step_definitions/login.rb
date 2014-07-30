@@ -41,10 +41,10 @@ Then(/^I fail to login \(incorrect password\)$/) do
 end
 
 Given(/^I am still authenticated$/) do
-  visit("#{$PRIVATE_PROPERTY_FRONTEND_DOMAIN}/login")
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/login")
   step "I login with correct credentials"
 end
 
 Given(/^I am not already logged in$/) do
-  visit("#{$PRIVATE_PROPERTY_FRONTEND_DOMAIN}/logout")
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
 end

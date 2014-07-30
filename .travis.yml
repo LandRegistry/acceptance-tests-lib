@@ -6,10 +6,8 @@ install: true
 env:
   global:
   - CASEWORK_FRONTEND_DOMAIN="http://lr-casework-frontend.herokuapp.com"
-  - SEARCH_FRONTEND_DOMAIN="http://lr-property.herokuapp.com"
   - PROPERTY_FRONTEND_DOMAIN="http://lr-property-frontend.herokuapp.com"
   - MINT_API_DOMAIN="http://lr-mint.herokuapp.com"
-  - PUBLICTITLE_API_DOMAIN="http://lr-public-titles-api.herokuapp.com"
   - LR_SEARCH_API_DOMAIN="http://lr-search-api.herokuapp.com"
   - SYSTEM_OF_RECORD_API_DOMAIN="http://lr-system-of-record.herokuapp.com"
   - SERVICE_FRONTEND_DOMAIN="http://lr-service-frontend.herokuapp.com"
@@ -23,4 +21,3 @@ script:
 - bundle exec cucumber --tags ~@wip --tags ~@removed --format json --out report.json
   --format pretty
 - curl -X POST -H 'Content-Type:application/json' -d @report.json http://lr-test-dashboard.herokuapp.com/import/cucumber
-- (echo '#######JSON_RESULTS#######';echo $(cat report.json);echo '#######JSON_RESULTS#######')

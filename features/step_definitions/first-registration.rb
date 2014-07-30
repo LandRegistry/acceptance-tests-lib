@@ -25,15 +25,15 @@ When(/^I enter a Property Address$/) do
 end
 
 When(/^I choose a tenure of Freehold$/) do
-  choose('freehold')
+  choose('Freehold')
 end
 
 When(/^I choose a tenure of Leasehold$/) do
-  choose('leasehold')
+  choose('Leasehold')
 end
 
 When(/^I select class of Absolute$/) do
-  choose('absolute')
+  choose('Absolute')
 end
 
 When(/^I enter a valid price paid$/) do
@@ -56,10 +56,6 @@ When(/^I submit the title details$/) do
   click_button('submit')
 end
 
-Then(/^the first registration is registered$/) do
-  wait_for_register_to_be_created($data['titleNumber'])
-end
-
 Then(/^the user will be prompted again for a proprietor$/) do
   assert_selector(".//*[@id='error_first_name1']", text: /This field is required./)
   assert_selector(".//*[@id='error_surname1']", text: /This field is required./)
@@ -73,15 +69,15 @@ Then(/^the user will be prompted again for required address fields$/) do
 end
 
 When(/^I select class of Good$/) do
-  choose('good')
+  choose('Good')
 end
 
 When(/^I select class of Possessory$/) do
-  choose('possessory')
+  choose('Possessory')
 end
 
 When(/^I select class of Qualified$/) do
-  choose('qualified')
+  choose('Qualified')
 end
 
 When(/^I enter an invalid price paid$/) do
@@ -103,8 +99,9 @@ Then(/^Title Number is formatted correctly$/) do
 
 end
 
-Then(/^I have received confirmation that it has been registered$/) do
+Then(/^I have received confirmation that the property has been registered$/) do
   assert_match(/New title created/i, page.body, 'Expected registration message but was not present')
+  wait_for_register_to_be_created($data['titleNumber'])
 end
 
 Then(/^Title Number is unique$/) do
