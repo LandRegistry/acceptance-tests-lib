@@ -38,7 +38,7 @@ def firstName()
 	$fname << 'Yvana'
 	$fname << 'Zach'
 
-	$fname_num = rand(0 .. 25)
+	$fname_num = rand(0 .. $fname.length - 1)
 
 	return $fname[$fname_num]
 
@@ -77,7 +77,7 @@ def surname()
 	$sname << 'Yankee'
 	$sname << 'Zulu'
 
-	$sname_num = rand(0 .. 25)
+	$sname_num = rand(0 .. $sname.length - 1)
 
 	return $sname[$sname_num]
 
@@ -101,7 +101,7 @@ def postcode()
   $pcode << 'Y2B 1JR'
   $pcode << 'FD2B 2DD'
 
-  $pcode_num = rand(0 .. 10)
+  $pcode_num = rand(0 .. $pcode.length - 1)
 
   return $pcode[$pcode_num]
 
@@ -145,7 +145,7 @@ def road()
 	$road << 'Vauxhall Grove'
 	$road << 'Zealand Road'
 
-	$road_num = rand(0 .. 25)
+	$road_num = rand(0 .. $road.length - 1)
 
 	return $road[$road_num]
 
@@ -184,7 +184,7 @@ def town()
 	$town << 'Telford'
 	$town << 'Torquay'
 
-	$town_num = rand(0 .. 25)
+	$town_num = rand(0 .. $town.length - 1)
 
 	return $town[$town_num]
 end
