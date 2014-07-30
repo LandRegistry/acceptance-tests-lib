@@ -24,6 +24,7 @@ Given(/^I have a registered property$/) do
   $regData['payment']['price_paid'] = pricePaid()
   $regData['payment']['titles'] = Array.new()
   $regData['payment']['titles'][0] = $regData['title_number']
+  $regData['extent'] = genenerate_title_extent()
 
   puts 'Title number' + $regData['title_number']
 

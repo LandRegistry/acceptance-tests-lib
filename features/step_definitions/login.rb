@@ -41,6 +41,8 @@ Then(/^I fail to login \(incorrect password\)$/) do
 end
 
 Given(/^I am still authenticated$/) do
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
+  step "I have login credentials"
   visit("#{$SERVICE_FRONTEND_DOMAIN}/login")
   step "I login with correct credentials"
 end

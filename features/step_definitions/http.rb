@@ -1,5 +1,5 @@
 
-Given(/^the app at "(.*?)"$/) do |app_url|
+Given(/^the app at (.*?)$/) do |app_url|
   $app_url = app_url
 end
 

@@ -10,12 +10,6 @@ Before do | scenario |
   end
 end
 
-
-Before('@webuitest') do
-
-end
-
-
 After do | scenario |
   if (scenario.failed?)
       page.save_screenshot "sshot-#{Time.new.to_i}.png"
