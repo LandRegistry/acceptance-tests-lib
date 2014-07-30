@@ -1,7 +1,6 @@
 When(/^I view the private register$/) do
   #The URL is accessed directly with generated TN
-  puts "#{$PRIVATE_PROPERTY_FRONTEND_DOMAIN}/property/#{$regData['title_number']}"
-  visit("#{$PRIVATE_PROPERTY_FRONTEND_DOMAIN}/property/#{$regData['title_number']}")
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}")
 end
 
 #public detail checks located in citizen-view-register
