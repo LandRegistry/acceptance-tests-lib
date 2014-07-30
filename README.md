@@ -28,22 +28,13 @@ bundle install
 ```
 ### Generating the login account needed for private view
 
-Make sure you have the following login details setup in your dev environment
-
-email: geoff@gmail.com
-
-command is:
+You will need to create a user in the development environment:
 ```
-python manage.py create_user --email=geoff@gmail.com --password=apassword
+vagrant ssh
+./apps/service-frontend/
+./create-user-for-integration-tests.sh 
 ```
 
-=======
-password: apassword
-```
-command is: python manage.py create_user --email=geoff@gmail.com --password=apassword
-```
-
-View service-frontend for more details.
 ### Running the tests
 
 To run all the tests:
