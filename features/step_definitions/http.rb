@@ -7,6 +7,7 @@ When(/^I GET to (\/\S*?)$/) do |app_path|
   uri = URI.parse($app_url)
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Get.new(app_path,  initheader = {'Content-Type' =>'application/json'})
+  request.basic_auth $http_auth_name, $http_auth_password
   $app_response = http.request(request)
 end
 
