@@ -31,8 +31,8 @@ bundle install
 You will need to create a user in the development environment:
 ```
 vagrant ssh
-./apps/service-frontend/
-./create-user-for-integration-tests.sh 
+cd ./apps/service-frontend/
+./create-user-for-integration-tests.sh
 ```
 
 ### Running the tests
