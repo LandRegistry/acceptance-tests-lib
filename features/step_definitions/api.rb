@@ -13,7 +13,6 @@ Given(/^the app at (.*?)$/) do |app|
 end
 
 When(/^I GET to (\/\S*?)$/) do |app_path|
-  puts $app_url
   uri = URI.parse($app_url)
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Get.new(app_path,  initheader = {'Content-Type' =>'application/json'})
