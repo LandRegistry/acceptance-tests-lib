@@ -15,6 +15,8 @@ end
 
 Given(/^I want to create a Register of Title$/) do
   visit("#{$CASEWORK_FRONTEND_DOMAIN}/registration")
+  fill_in('email', :with => 'caseworker@example.org')
+  fill_in('password', :with => 'dummypassword')
   $data['titleNumber'] = find(".//input[@id='title_number']", :visible => false).value
 end
 

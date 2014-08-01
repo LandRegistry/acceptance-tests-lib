@@ -1,7 +1,7 @@
 Given(/^I have login credentials$/) do
   $userdetails = Hash.new()
-  $userdetails['email'] = 'geoff@gmail.com'
-  $userdetails['password'] = 'apassword'
+  $userdetails['email'] = 'citizen@example.org'
+  $userdetails['password'] = 'dummypassword'
 end
 
 When(/^I login with correct credentials$/) do
