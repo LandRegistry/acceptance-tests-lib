@@ -23,6 +23,7 @@ When(/^I login with incorrect username$/) do
 end
 
 Then(/^I fail to login $/) do
+  puts page.body
   if (!page.body.include? 'Specified user does not exist') then
     raise "Expected error message informing the user was unsuccessful in logging in"
   end
@@ -71,4 +72,15 @@ end
 
 Then(/^I am prompted to login as a caseworker$/) do
   assert_match(/Please log in to access this page/i, page.body, 'Expected caseworker login page.')
+end
+
+Given(/^I am not already logged in as a caseworker$/) do
+  visit("#{$CASEWORK_FRONTEND_DOMAIN}/logout")
+end
+
+Given(/^I am still authenticated as a caseworker$/) do
+  visit("#{$CASEWORK_FRONTEND_DOMAIN}/logout")
+  step "I have caseworker login credentials"
+  visit("#{$CASEWORK_FRONTEND_DOMAIN}/login")
+  step "I login with correct credentials"
 end
