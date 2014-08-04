@@ -1,12 +1,12 @@
 Feature: Citizen login
 
-Scenario: Invalid username login failed
+Scenario: Citizen Invalid username login failed
 Given I have private citizen login credentials
 And I am not already logged in as a private citizen
 And I login with incorrect username
 Then I fail to login (incorrect username)
 
-Scenario: Invalid password login failed
+Scenario: Citizen Invalid password login failed
 Given I have private citizen login credentials
 And I am not already logged in as a private citizen
 When I login with incorrect password
