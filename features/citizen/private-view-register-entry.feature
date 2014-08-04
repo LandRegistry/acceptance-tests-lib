@@ -13,22 +13,6 @@ And Tenure is displayed
 And Class is displayed
 And proprietors are displayed
 
-Scenario: Invalid username login failed
-And I have private citizen login credentials
-And I have a registered property
-And I am not already logged in
-When I view the private register
-And I login with incorrect username
-Then I fail to login (incorrect username)
-
-Scenario: Invalid password login failed
-And I have private citizen login credentials
-And I have a registered property
-And I am not already logged in
-When I view the private register
-And I login with incorrect password
-Then I fail to login (incorrect password)
-
 Scenario: view register as existing authenticated user
 Given I have a registered property
 And I am still authenticated
@@ -39,3 +23,9 @@ And Price Paid is displayed
 And Tenure is displayed
 And Class is displayed
 And proprietors are displayed
+
+Scenario:
+Given I have a registered property
+And I am not already logged in
+When I view the private register
+Then I am prompted to login as a private citizen

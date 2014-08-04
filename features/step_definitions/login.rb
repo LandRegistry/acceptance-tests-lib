@@ -56,3 +56,11 @@ end
 Given(/^I am not already logged in$/) do
   visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
 end
+
+When(/^I logout as a private citizen$/) do
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
+end
+
+Then(/^I am prompted to login as a private citizen$/) do
+  assert_match(/Please log in to access this page/i, page.body, 'Expected login page.')
+end
