@@ -1,9 +1,8 @@
-@service-frontend
 Feature: login and view private register
 
 Scenario: view register as new authenticated user
 Given I have a registered property
-And I have login credentials
+And I have private citizen login credentials
 And I am not already logged in
 When I view the private register
 And I login with correct credentials
@@ -15,7 +14,7 @@ And Class is displayed
 And proprietors are displayed
 
 Scenario: Invalid username login failed
-Given I have login credentials
+And I have private citizen login credentials
 And I have a registered property
 And I am not already logged in
 When I view the private register
@@ -23,7 +22,7 @@ And I login with incorrect username
 Then I fail to login (incorrect username)
 
 Scenario: Invalid password login failed
-Given I have login credentials
+And I have private citizen login credentials
 And I have a registered property
 And I am not already logged in
 When I view the private register
