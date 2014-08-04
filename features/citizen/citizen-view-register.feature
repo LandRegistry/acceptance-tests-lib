@@ -8,6 +8,7 @@ When I view the register
 Then the address of property is displayed
 And Title Number is displayed
 And Price Paid is displayed
+And the Title Extent is displayed
 
 Scenario: try to view register that does not exist
 Given I am a citizen

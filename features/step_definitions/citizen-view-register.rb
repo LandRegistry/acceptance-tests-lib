@@ -26,3 +26,7 @@ end
 When(/^I view the register$/) do
   visit("#{$PROPERTY_FRONTEND_DOMAIN}/property/#{$regData['title_number']}")
 end
+
+Then(/^the Title Extent is displayed$/) do
+  find(".//*[@id='map']")
+end
