@@ -62,5 +62,13 @@ When(/^I logout as a private citizen$/) do
 end
 
 Then(/^I am prompted to login as a private citizen$/) do
-  assert_match(/Please log in to access this page/i, page.body, 'Expected login page.')
+  assert_match(/Please log in to access this page/i, page.body, 'Expected private citizen login page.')
+end
+
+When(/^I logout as a caseworker$/) do
+  visit("#{$CASEWORK_FRONTEND_DOMAIN}/logout")
+end
+
+Then(/^I am prompted to login as a caseworker$/) do
+  assert_match(/Please log in to access this page/i, page.body, 'Expected caseworker login page.')
 end
