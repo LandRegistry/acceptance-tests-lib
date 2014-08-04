@@ -26,6 +26,6 @@ And proprietors are displayed
 
 Scenario: Citizen can only view private register if logged in
 Given I have a registered property
-And I am not already logged in a private citizen
+And I am not already logged in as a private citizen
 When I view the private register
 Then I am prompted to login as a private citizen
