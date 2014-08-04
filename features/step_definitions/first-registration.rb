@@ -14,7 +14,11 @@ Given(/^I have received an application for a first registration$/) do
 end
 
 Given(/^I want to create a Register of Title$/) do
-  visit("#{$CASEWORK_FRONTEND_DOMAIN}/registration")
+
+  step "I have caseworker login credentials"
+  visit("#{$CASEWORK_FRONTEND_DOMAIN}/login")
+  step "I login with correct credentials"
+  click_link('First registration')
   $data['titleNumber'] = find(".//input[@id='title_number']", :visible => false).value
 end
 

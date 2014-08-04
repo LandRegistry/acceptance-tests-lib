@@ -1,7 +1,13 @@
-Given(/^I have login credentials$/) do
+Given(/^I have private citizen login credentials$/) do
   $userdetails = Hash.new()
-  $userdetails['email'] = 'geoff@gmail.com'
-  $userdetails['password'] = 'apassword'
+  $userdetails['email'] = 'citizen@example.org'
+  $userdetails['password'] = 'dummypassword'
+end
+
+Given(/^I have caseworker login credentials$/) do
+  $userdetails = Hash.new()
+  $userdetails['email'] = 'caseworker@example.org'
+  $userdetails['password'] = 'dummypassword'
 end
 
 When(/^I login with correct credentials$/) do
@@ -42,7 +48,7 @@ end
 
 Given(/^I am still authenticated$/) do
   visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
-  step "I have login credentials"
+  step "I have private citizen login credentials"
   visit("#{$SERVICE_FRONTEND_DOMAIN}/login")
   step "I login with correct credentials"
 end
