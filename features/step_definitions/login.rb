@@ -23,7 +23,6 @@ When(/^I login with incorrect username$/) do
 end
 
 Then(/^I fail to login $/) do
-  puts page.body
   if (!page.body.include? 'Specified user does not exist') then
     raise "Expected error message informing the user was unsuccessful in logging in"
   end
@@ -54,7 +53,7 @@ Given(/^I am still authenticated$/) do
   step "I login with correct credentials"
 end
 
-Given(/^I am not already logged in$/) do
+Given(/^I am not already logged in as a private citizen$/) do
   visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
 end
 
