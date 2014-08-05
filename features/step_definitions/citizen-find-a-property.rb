@@ -15,8 +15,8 @@ Given(/^I have a registered property$/) do
   $regData['property'] = Hash.new()
   $regData['property']['address'] = Hash.new()
   $regData['property']['address']['house_number'] = houseNumber()
-  $regData['property']['address']['road'] = road()
-  $regData['property']['address']['town'] = town()
+  $regData['property']['address']['road'] = roadName()
+  $regData['property']['address']['town'] = townName()
   $regData['property']['address']['postcode'] = postcode()
   $regData['property']['tenure'] = 'freehold'
   $regData['property']['class_of_title'] = 'absolute'
