@@ -42,6 +42,7 @@ end
 
 def surname()
 
+  sname = Array.new
 	sname << 'Adams'
 	sname << 'Brown'
 	sname << 'Cook'
@@ -77,6 +78,7 @@ end
 
 def postcode()
 
+  pcode = Array.new
   pcode << 'M1 1AA'
   pcode << 'M60 1NW'
   pcode << 'CR2 6XH'
@@ -99,8 +101,9 @@ def houseNumber()
 	return rand(1 .. 9999)
 end
 
-def road()
+def roadName()
 
+  road = Array.new
 	road << 'Allgood Street'
 	road << 'Bardsley Lane (part)'
 	road << 'Carlton Drive'
@@ -134,8 +137,9 @@ def road()
 
 end
 
-def town()
+def townName()
 
+  town = Array.new
 	town << 'Abercwmboi'
 	town << 'Bridgend'
 	town << 'Crickhowell'

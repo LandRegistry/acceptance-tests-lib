@@ -3,8 +3,8 @@
 Given(/^I have received an application for a first registration$/) do
   $data = Hash.new()
   $data['propertyHouseNumber'] = houseNumber()
-  $data['propertyRoad'] = road()
-  $data['propertyTown'] = town()
+  $data['propertyRoad'] = roadName()
+  $data['propertyTown'] = townName()
   $data['propertyPostcode'] = postcode()
   $data['pricePaid'] = pricePaid()
   $data['forename1'] = firstName()
