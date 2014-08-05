@@ -11,7 +11,7 @@ Given(/^I have received an application for a first registration$/) do
   $data['surname1'] = surname()
   $data['forename2'] = firstName()
   $data['surname2'] = surname()
-  $data['AppTime'] = date +"%s%3N"
+  $data['AppTime'] = (Time.now.to_f * 1000).to_i
   puts $data['AppTime']
 end
 

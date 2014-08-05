@@ -20,6 +20,7 @@ end
 ### Reads the basic auth username and password from env settings
 $http_auth_name = (ENV['HTTPAUTH_USERNAME'] || '')
 $http_auth_password = (ENV['HTTPAUTH_PASSWORD'] || '')
+$logentries_key = (ENV['LOGENTRIES_KEY'] || '')
 
 ### Includes the unit testing framework
 require 'test/unit'

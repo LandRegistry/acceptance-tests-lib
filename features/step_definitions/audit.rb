@@ -12,7 +12,10 @@ Then(/^Audit for new registration is written$/) do
   #» 14:57:05.005 2014-08-04 13:57:04.112611+00:00 heroku router - - at=info method=GET path="/registration?created=TEST8886" host=casework.landregistryconcept.co.uk request_id=3960a052-48d9-4994-bc60-cdf4dbbf96b3 fwd="109.151.41.82/host109-151-41-82.range109-151.btcentralplus.com" dyno=web.1 connect=1ms service=65ms status=200 bytes=944 Context
   #Title is created
   #shows which caseworker created title
-
+  visit("https://pull.logentries.com/#{$LOGENTRIES_KEY}hosts/Heroku/lr-casework-frontend/?start=$data['AppTime']")
+  if (page.body.include? "Audit: user=[4], request=[<Request 'http://casework.landregistryconcept.co.uk/registration?created=" + $data['titleNumber'] + "' [GET]") then
+    raise "An audit log to show the creation of title number " + $data['titleNumber'] + " was expected"
+  end
 end
 
 #Audit for service frontend (when citizen logs in to view)
