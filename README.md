@@ -7,16 +7,13 @@ Frontend Acceptance Tests
 
 This repository contains the front end tests for all the systems.
 
-### Generating the login account needed for private view
+### Running the tests in the vagrant image
 
-You will need to create a user in the development environment:
-```
-vagrant ssh
-cd /vagrant/apps/service-frontend/
-./create-user-for-integration-tests.sh
-```
+Navigate to the acceptance test repoistory
 
-### Running the tests
+```
+cd apps/acceptance-tests/
+```
 
 To run all the tests:
 
@@ -35,3 +32,18 @@ Or to run a specific scenario(the 29 refers to the line in the future file that 
 ```
 ./run_tests.sh features/caseworker/first-registration.feature:29
 ```
+
+### Running the tests against Preview
+
+To run against the preview enviornment, then use:
+
+```
+./run_tests_preview.sh
+```
+ 
+You will need to set the following enviornment variables:
+```
+HTTPAUTH_USERNAME
+HTTPAUTH_PASSWORD
+```
+
