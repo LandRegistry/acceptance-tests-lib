@@ -3,8 +3,8 @@
 Given(/^I have received an application for a first registration$/) do
   $data = Hash.new()
   $data['propertyHouseNumber'] = houseNumber()
-  $data['propertyRoad'] = road()
-  $data['propertyTown'] = town()
+  $data['propertyRoad'] = roadName()
+  $data['propertyTown'] = townName()
   $data['propertyPostcode'] = postcode()
   $data['pricePaid'] = pricePaid()
   $data['forename1'] = firstName()
@@ -14,7 +14,6 @@ Given(/^I have received an application for a first registration$/) do
 end
 
 Given(/^I want to create a Register of Title$/) do
-
   step "I have caseworker login credentials"
   visit("#{$CASEWORK_FRONTEND_DOMAIN}/login")
   step "I login with correct credentials"
@@ -48,6 +47,8 @@ end
 When(/^I enter 1 proprietor$/) do
   fill_in('first_name1', :with => $data['forename1'])
   fill_in('surname1', :with => $data['surname1'])
+  $data['forename2'] = ''
+  $data['surname2'] = ''
 end
 
 When(/^I enter 2 proprietors$/) do
@@ -107,6 +108,33 @@ end
 Then(/^I have received confirmation that the property has been registered$/) do
   assert_match(/New title created/i, page.body, 'Expected registration message but was not present')
   wait_for_register_to_be_created($data['titleNumber'])
+
+  registered_property = get_register_by_title($data['titleNumber'])
+
+
+
+
+  assert_match($data['titleNumber'].to_s, registered_property, 'Title number does not match')
+  assert_match($data['forename1'].to_s, registered_property, 'Forename 1 does not match')
+  assert_match($data['surname1'].to_s, registered_property, 'Surname 1 does not match')
+  assert_match($data['forename2'].to_s, registered_property, 'Forename 2 does not match')
+  assert_match($data['surname2'].to_s, registered_property, 'Surname 2 does not match')
+  assert_match($data['propertyHouseNumber'].to_s, registered_property, 'House Number does not match')
+  assert_match($data['propertyTown'].to_s, registered_property, 'Town does not match')
+  assert_match($data['propertyPostcode'].to_s, registered_property, 'Postcode does not match')
+  assert_match($data['propertyRoad'].to_s, registered_property, 'Road does not match')
+
+  #assert_equal registered_property['title']['data']['title']['title_number'], $data['titleNumber'].to_s, 'Title number does not match'
+  #assert_equal registered_property['title']['data']['title']['proprietors'][0]['first_name'].to_s, $data['forename1'].to_s, 'Forename 1 does not match'
+  #assert_equal registered_property['title']['data']['title']['proprietors'][0]['last_name'].to_s, $data['surname1'].to_s, 'Surname 1 does not match'
+  #assert_equal registered_property['title']['data']['title']['proprietors'][1]['first_name'].to_s, $data['forename2'].to_s, 'Forename 2 does not match'
+  #assert_equal registered_property['title']['data']['title']['proprietors'][1]['last_name'].to_s, $data['surname2'].to_s, 'Surname 2 does not match'
+
+  #assert_equal registered_property['title']['data']['title']['property']['address']['house_number'].to_s, $data['propertyHouseNumber'].to_s, 'House Number does not match'
+  #assert_equal registered_property['title']['data']['title']['property']['address']['town'].to_s, $data['propertyTown'].to_s, 'Town does not match'
+  #assert_equal registered_property['title']['data']['title']['property']['address']['postcode'].to_s, $data['propertyPostcode'].to_s, 'Postcode does not match'
+  #assert_equal registered_property['title']['data']['title']['property']['address']['road'].to_s, $data['propertyRoad'].to_s, 'Road does not match'
+
 end
 
 Then(/^Title Number is unique$/) do
