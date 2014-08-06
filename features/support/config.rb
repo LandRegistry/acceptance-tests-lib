@@ -1,6 +1,8 @@
 ### Include Custom function libraries
 require_relative '../../lib/data-generator.rb'
 require_relative '../../lib/webservice.rb'
+require 'net/https'
+require "open-uri"
 
 ### Includes Capybara (the visit, find, fill_in commands) and poltergeist (channel to phantomjs headless browser)
 require 'capybara/cucumber'
