@@ -59,13 +59,6 @@ And I enter a valid title extent
 And I submit the title details
 Then the user will be prompted again for a proprietor
 
-Scenario: Testing Title Number is generated and valid (1)
-Given I have received an application for a first registration
-And I want to create a Register of Title
-Then a Title Number is displayed
-And Title Number is formatted correctly
-And Title Number is unique
-
 Scenario: Trying to process a first registration with no address (8)
 Given I have received an application for a first registration
 And I want to create a Register of Title
