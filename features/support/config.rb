@@ -21,6 +21,7 @@ end
 $http_auth_name = (ENV['HTTPAUTH_USERNAME'] || '')
 $http_auth_password = (ENV['HTTPAUTH_PASSWORD'] || '')
 $logentries_key = (ENV['LOGENTRIES_KEY'] || '')
+$ENVIRONMENT = (ENV['ENVIRONMENT'] || 'development')
 
 ### Includes the unit testing framework
 require 'test/unit'

@@ -5,6 +5,7 @@ rvm:
 install: true
 env:
   global:
+  - ENVIRONMENT="preview"
   - CASEWORK_FRONTEND_DOMAIN="http://lr-casework-frontend.herokuapp.com"
   - PROPERTY_FRONTEND_DOMAIN="http://lr-property-frontend.herokuapp.com"
   - MINT_API_DOMAIN="http://lr-mint.herokuapp.com"

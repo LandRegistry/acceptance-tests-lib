@@ -12,7 +12,6 @@ Given(/^I have received an application for a first registration$/) do
   $data['forename2'] = firstName()
   $data['surname2'] = surname()
   $data['AppTime'] = (Time.now.to_f * 1000).to_i
-  puts $data['AppTime']
 end
 
 Given(/^I want to create a Register of Title$/) do
