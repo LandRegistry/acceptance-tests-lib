@@ -2,24 +2,24 @@ def wait_for_register_to_be_created(title_no)
   found = false
   count = 0
   while (found == false && count < 10) do
-  puts 'waiting for registration to be created'
+    puts 'waiting for registration to be created'
 
-  uri = URI.parse($LR_SEARCH_API_DOMAIN)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Get.new('/search?query=' + title_no,  initheader = {'Content-Type' =>'application/json'})
-  request.basic_auth $http_auth_name, $http_auth_password
-  response = http.request(request)
+    uri = URI.parse($LR_SEARCH_API_DOMAIN)
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Get.new('/search?query=' + title_no,  initheader = {'Content-Type' =>'application/json'})
+    request.basic_auth $http_auth_name, $http_auth_password
+    response = http.request(request)
 
-  json_response = JSON.parse(response.body);
+    json_response = JSON.parse(response.body);
 
-  if ((response.code != '404') && (json_response['results'].length > 0)) then
-      found = true
-      puts 'registration created'
+    if ((response.code != '404') && (json_response['results'].length > 0)) then
+        found = true
+        puts 'registration created'
+    end
+
+    count = count + 1
+    sleep(1)
   end
-
-  count = count + 1
-  sleep(1)
-end
 
   if (found == false) then
     raise "No records found for title " + title_no

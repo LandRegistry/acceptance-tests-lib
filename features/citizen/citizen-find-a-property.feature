@@ -15,7 +15,6 @@ And I am searching for that property
 When I enter the exact Title Number
 And I search
 Then the citizen register is displayed
-And Audit for public citizen search of title written
 
 @wip
 Scenario: Multiple Title Number match for citizen

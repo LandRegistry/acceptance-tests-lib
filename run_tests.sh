@@ -13,8 +13,6 @@ fi
 
 bundle install
 
-export WEBDRIVER="Firefox"
-
 if [ -z "$1" ]
   then
     cucumber --tags ~@wip --tags ~@removed
