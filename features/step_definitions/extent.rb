@@ -10,12 +10,34 @@ Given(/^I check the title plan$/) do
 
   save_screenshot($polygon_file2, :selector => "#map")
 
-  page.driver.browser.refresh
+  visit page.driver.browser.current_url
 
 end
 
 Then(/^there is at least one polygon$/) do
-  pending # express the regexp above with the code you wish you had
+
+  images = [
+    ChunkyPNG::Image.from_file($polygon_file2),
+    ChunkyPNG::Image.from_file($polygon_file1)
+  ]
+
+  diff = []
+
+  images.first.height.times do |y|
+    images.first.row(y).each_with_index do |pixel, x|
+      diff << [x,y] unless pixel == images.last[x,y]
+    end
+  end
+
+  puts "pixels (total):     #{images.first.pixels.length}"
+  puts "pixels changed:     #{diff.length}"
+  puts "pixels changed (%): #{(diff.length.to_f / images.first.pixels.length) * 100}%"
+
+  x, y = diff.map{ |xy| xy[0] }, diff.map{ |xy| xy[1] }
+
+  images.last.rect(x.min, y.min, x.max, y.max, ChunkyPNG::Color.rgb(0,0,0))
+  images.last.save("diff2-#{Time.new.to_i}.png")
+
 end
 
 Then(/^the whole polygon is in view$/) do
