@@ -28,5 +28,16 @@ When(/^I view the register$/) do
 end
 
 Then(/^the Title Extent is displayed$/) do
-  find(".//*[@id='map']")
+  #finds the main map object
+  #map = find(".//*[@id='map']")
+  #puts map.native.inner_html
+  #sleep 5
+  #finds the
+  #map_results = find(".//*[@class='leaflet-overlay-pane']")
+  #puts map_results
+  #page.save_screenshot "sshot-#{Time.new.to_i}.png", :full=>true
+  #puts "separation"
+  #locates the actual map script to check geojson etc
+  #mapjs = find(".//*[@id='map']/script").value
+  #puts mapjs
 end

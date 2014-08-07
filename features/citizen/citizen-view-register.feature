@@ -1,4 +1,4 @@
-@property-frontend
+@property-frontend @geoff
 Feature: Citizen view register
 
 Scenario: view register as citizen
