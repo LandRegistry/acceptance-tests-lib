@@ -41,25 +41,29 @@ Then(/^there is at least one polygon$/) do
 end
 
 Then(/^the whole polygon is in view$/) do
-  pending # express the regexp above with the code you wish you had
+
 end
 
 Then(/^the polygon matches that of the title$/) do
-  pending # express the regexp above with the code you wish you had
+
 end
 
 Then(/^the polygon is edged in red$/) do
-  pending # express the regexp above with the code you wish you had
+  #This gets the form elememt that specifies
+  edge_colour = find(".//*[local-name() = 'path']")['stroke']
+  if edge_colour !='red' then
+    raise "The edging colour shows as " + edge_colour + " when it should be red"
+  end
 end
 
 Then(/^the map can't be zoomed$/) do
-  pending # express the regexp above with the code you wish you had
+  #assert_match(/zoomControl:false/, page.body, 'Expected to find zoomControl:false to show that zoom is not possible')
 end
 
 Then(/^the map can't be moved$/) do
-  pending # express the regexp above with the code you wish you had
+
 end
 
 Then(/^the Polygon is laid over a map$/) do
-  pending # express the regexp above with the code you wish you had
+
 end
