@@ -12,6 +12,7 @@ And I enter 1 proprietor
 And I enter a valid title extent
 And I submit the title details
 Then I have received confirmation that the property has been registered
+And Audit for new registration is written
 
 Scenario: Processing Good Leasehold First Registration with 1 proprietor (4)
 Given I have received an application for a first registration
