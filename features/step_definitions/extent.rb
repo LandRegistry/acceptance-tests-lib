@@ -1,6 +1,7 @@
 require 'chunky_png'
 
 Given(/^I check the title plan$/) do
+  sleep(2)
   $polygon_file1 = "tmpimg-#{Time.new.to_i}-1.png"
   $polygon_file2 = "tmpimg-#{Time.new.to_i}-2.png"
 
@@ -21,26 +22,43 @@ Then(/^there is at least one polygon$/) do
     ChunkyPNG::Image.from_file($polygon_file1)
   ]
 
-  diff = []
+  $polygon_diff = []
 
   images.first.height.times do |y|
     images.first.row(y).each_with_index do |pixel, x|
-      diff << [x,y] unless pixel == images.last[x,y]
+      $polygon_diff << [x,y] unless pixel == images.last[x,y]
     end
   end
 
+  pixels_changed = ($polygon_diff.length.to_f / images.first.pixels.length) * 100
+
   puts "pixels (total):     #{images.first.pixels.length}"
-  puts "pixels changed:     #{diff.length}"
-  puts "pixels changed (%): #{(diff.length.to_f / images.first.pixels.length) * 100}%"
+  puts "pixels changed:     #{$polygon_diff.length}"
+  puts "pixels changed (%): #{($polygon_diff.length.to_f / images.first.pixels.length) * 100}%"
 
-  x, y = diff.map{ |xy| xy[0] }, diff.map{ |xy| xy[1] }
+  x, y = $polygon_diff.map{ |xy| xy[0] }, $polygon_diff.map{ |xy| xy[1] }
 
-  images.last.rect(x.min, y.min, x.max, y.max, ChunkyPNG::Color.rgb(0,0,0))
+  if (pixels_changed > 0) then
+    images.last.rect(x.min, y.min, x.max, y.max, ChunkyPNG::Color.rgb(0,0,0))
+  end
+
   images.last.save("diff2-#{Time.new.to_i}.png")
+
+  assert_operator pixels_changed, :>, 0, 'There is no difference on the map when the polygon is removed'
 
 end
 
 Then(/^the whole polygon is in view$/) do
+
+
+  x, y = $polygon_diff.map{ |xy| xy[0] }, $polygon_diff.map{ |xy| xy[1] }
+
+  image = ChunkyPNG::Image.from_file($polygon_file1)
+
+  assert_not_equal x.min, 0, 'The Polygon occurpys more than the screen'
+  assert_not_equal y.min, 0, 'The Polygon occurpys more than the screen'
+  assert_not_equal x.max, image.width - 1, 'The Polygon occurpys more than the screen'
+  assert_not_equal y.max, image.height - 1, 'The Polygon occurpys more than the screen'
 
 end
 
@@ -54,6 +72,30 @@ Then(/^the polygon is edged in red$/) do
   if edge_colour !='red' then
     raise "The edging colour shows as " + edge_colour + " when it should be red"
   end
+
+  x, y = $polygon_diff.map{ |xy| xy[0] }, $polygon_diff.map{ |xy| xy[1] }
+
+  image = ChunkyPNG::Image.from_file($polygon_file1)
+
+  poly_colour = []
+
+  found_red = false
+
+  for i in x.min..x.max - 1
+    i_x = i
+    i_y = y.min + 3
+    pixel_colour = {}
+    r = ChunkyPNG::Color.r(image[i_x,i_y])
+    g = ChunkyPNG::Color.g(image[i_x,i_y])
+    b = ChunkyPNG::Color.b(image[i_x,i_y])
+
+    if ((r > 245) && (g < 120) && (b < 120)) then
+      found_red = true
+    end
+  end
+
+  assert_equal found_red, true, 'Expected to find Red on the edge, none found'
+
 end
 
 Then(/^the map can't be zoomed$/) do
