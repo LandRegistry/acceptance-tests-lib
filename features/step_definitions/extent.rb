@@ -67,11 +67,8 @@ Then(/^the polygon matches that of the title$/) do
 end
 
 Then(/^the polygon is edged in red$/) do
-  #This gets the form elememt that specifies
-  edge_colour = find(".//*[local-name() = 'path']")['stroke']
-  if edge_colour !='red' then
-    raise "The edging colour shows as " + edge_colour + " when it should be red"
-  end
+
+  assert_equal (find(".//*[local-name() = 'path']")['stroke']) , 'red', 'Expected the edging to be red'
 
   x, y = $polygon_diff.map{ |xy| xy[0] }, $polygon_diff.map{ |xy| xy[1] }
 

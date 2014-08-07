@@ -8,7 +8,6 @@ Before do | scenario |
   elsif page.driver.respond_to?(:browser) && page.driver.browser.respond_to?(:basic_authorize)
     page.driver.browser.basic_authorize($http_auth_name, $http_auth_password)
   end
-  page.driver.add_headers("Referer" => "")
 end
 
 After do | scenario |
