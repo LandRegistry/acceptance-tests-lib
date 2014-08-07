@@ -12,6 +12,7 @@ And Price Paid is displayed
 And Tenure is displayed
 And Class is displayed
 And proprietors are displayed
+And Audit for private citizen register view written
 
 Scenario: view register as existing authenticated user
 Given I have a registered property

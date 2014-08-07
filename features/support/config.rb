@@ -1,6 +1,8 @@
 ### Include Custom function libraries
 require_relative '../../lib/data-generator.rb'
 require_relative '../../lib/webservice.rb'
+require_relative '../../lib/logchecking.rb'
+require 'net/https'
 
 ### Includes Capybara (the visit, find, fill_in commands) and poltergeist (channel to phantomjs headless browser)
 require 'capybara/cucumber'
@@ -40,6 +42,8 @@ end
 ### Reads the basic auth username and password from env settings
 $http_auth_name = (ENV['HTTPAUTH_USERNAME'] || '')
 $http_auth_password = (ENV['HTTPAUTH_PASSWORD'] || '')
+$logentries_key = (ENV['LOGENTRIES_KEY'] || '')
+$ENVIRONMENT = (ENV['ENVIRONMENT'] || 'development')
 
 ### Includes the unit testing framework
 require 'test/unit'
