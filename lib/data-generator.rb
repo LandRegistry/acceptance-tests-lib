@@ -191,6 +191,38 @@ def genenerate_title_extent()
   $bottomRight = Array.new
   $bottomRight << $N.to_s
   $bottomRight << $E.to_s
+=begin
+  polydata = Hash.new()
+  polydata['type'] = "Feature"
+  polydata['crs'] = Hash.new()
+  polydata['crs']['type'] = 'name'
+  polydata['crs']['properties'] = Hash.new()
+  polydata['crs']['properties']['name'] = 'urn:ogc:def:crs:EPSG:27700'
+  polydata['geometry'] = Hash.new()
+  polydata['geometry']['type'] = 'Polygon'
+  polydata['geometry']['coordinates'] = Array.new()
+  polydata['geometry']['coordinates'][0] = Array.new()
+  polydata['geometry']['coordinates'][0][0] = Array.new()
+  polydata['geometry']['coordinates'][0][0][0] = $topLeft[0]
+  polydata['geometry']['coordinates'][0][0][1] = $topLeft[1]
+  polydata['geometry']['coordinates'][0][1] = Array.new()
+  polydata['geometry']['coordinates'][0][1][0] = $bottomRight[0]
+  polydata['geometry']['coordinates'][0][1][1] = $topLeft[1]
+  polydata['geometry']['coordinates'][0][2] = Array.new()
+  polydata['geometry']['coordinates'][0][2][0] = $bottomRight[0]
+  polydata['geometry']['coordinates'][0][2][1] = $bottomRight[1]
+  polydata['geometry']['coordinates'][0][3] = Array.new()
+  polydata['geometry']['coordinates'][0][3][0] = $topLeft[0]
+  polydata['geometry']['coordinates'][0][3][1] = $bottomRight[1]
+  polydata['geometry']['coordinates'][0][4] = Array.new()
+  polydata['geometry']['coordinates'][0][4][0] = $topLeft[0]
+  polydata['geometry']['coordinates'][0][4][1] = $topLeft[1]
+  polydata['geometry']['properties'] = Hash.new()
+  polydata['geometry']['properties']['Description'] = 'Polygon'
+
+  return polydata
+=end
+
 $rectBegin = <<eos
 {
   "type": "Feature",
