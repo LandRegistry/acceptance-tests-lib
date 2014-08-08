@@ -150,7 +150,6 @@ When(/^I enter a valid title extent$/) do
 end
 
 
-Then(/^a "([^"]*)" for "([^"]*)" is returned$/) do |errorMessage, fieldId|
-  puts errorMessage
-  puts fieldId
+Then(/^a \"([^\"]*)\" for \"([^\"]*)\" is returned$/) do |errorMessage, fieldId|
+  assert_selector(".//*[@id='" + fieldId + "']", text: errorMessage)
 end

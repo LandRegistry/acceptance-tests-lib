@@ -5,7 +5,7 @@ Scenario Outline: A new title must contain all mandatory fields before being sub
 Given I have received an application for a first registration
 And I want to create a Register of Title
 When I submit the title details without entering any data
-Then a <errorMessage> for <fieldId> is returned
+Then a "<errorMessage>" for "<fieldId>" is returned
 
 Examples:
   | errorMessage            | fieldId               |
