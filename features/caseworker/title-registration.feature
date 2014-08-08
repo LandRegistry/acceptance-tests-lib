@@ -1,5 +1,5 @@
 @casework-frontend
-Feature: Create a Register from a received application
+Feature: Create a Title of Register from a received application
 
 Scenario Outline: A new title must contain all mandatory fields before being submitted successfully
 Given I have received an application for a first registration
@@ -19,7 +19,14 @@ Examples:
 | error_property_class  | Not a valid choice      |
 | error_extent          | This field is required. |
 
-Scenario: Caseworker can submit a form with all fields filled in - including a charge
+Scenario: Optional fields must be validated when data entered
+Given I have received an application for a first registration
+And I want to create a Register of Title
+And I enter a price paid with too many decimal places
+When I submit the title details
+Then a "Please enter the price paid as pound and pence" for "error_price_paid" is returned
+
+Scenario: Caseworker can create a Register of Title with all fields filled in - including a company charge
 Given I have received an application for a first registration
 And I want to create a Register of Title
 When I enter a Property Address
@@ -32,15 +39,15 @@ And I enter a valid title extent
 And I submit the title details
 Then I have received confirmation that the property has been registered
 
-Scenario: Caseworker can submit a form with 2 proprietors and multiple charges
+Scenario: Caseworker can create a Register of Title with multiple proprietors and company charges
 Given I have received an application for a first registration
 And I want to create a Register of Title
 When I enter a Property Address
 And I choose a tenure of Freehold
 And I select class of Possessory
 And I enter a valid price paid
-And I enter 2 company charge
-And I enter 2 proprietor
+And I enter 2 company charges
+And I enter 2 proprietors
 And I enter a valid title extent
 And I submit the title details
 Then I have received confirmation that the property has been registered
