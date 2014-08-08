@@ -62,6 +62,10 @@ When(/^I submit the title details$/) do
   click_button('submit')
 end
 
+When(/^I submit the title details without entering any data$/) do
+  click_button('submit')
+end
+
 Then(/^the user will be prompted again for a proprietor$/) do
   assert_selector(".//*[@id='error_first_name1']", text: /This field is required./)
   assert_selector(".//*[@id='error_surname1']", text: /This field is required./)
@@ -143,4 +147,10 @@ end
 
 When(/^I enter a valid title extent$/) do
   fill_in('extent', :with => genenerate_title_extent())
+end
+
+
+Then(/^a "([^"]*)" for "([^"]*)" is returned$/) do |errorMessage, fieldId|
+  puts errorMessage
+  puts fieldId
 end
