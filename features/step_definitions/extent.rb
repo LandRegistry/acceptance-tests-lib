@@ -96,7 +96,11 @@ Then(/^the polygon is edged in red$/) do
 end
 
 Then(/^the map can't be zoomed$/) do
-  #assert_match(/zoomControl:false/, page.body, 'Expected to find zoomControl:false to show that zoom is not possible')
+  uri = URI.parse($PROPERTY_FRONTEND_DOMAIN)
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Get.new('/static/build//javascripts/map.js')
+  response = http.request(request)
+  puts response.body
 end
 
 Then(/^the map can't be moved$/) do
