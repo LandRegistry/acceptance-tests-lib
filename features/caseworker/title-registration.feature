@@ -1,39 +1,34 @@
 @casework-frontend
 Feature: Create a Title of Register from a received application
 
-Scenario Outline: A new title must contain all mandatory fields before being submitted successfully
+Scenario: A new title must contain all mandatory fields before being submitted successfully
 Given I have received an application for a first registration
 And I want to create a Register of Title
 When I submit the title details without entering any data
-Then a "<errorMessage>" for "<fieldId>" is returned
+Then a "This field is required." message for "error_first_name1" is returned
+And a "This field is required." message for "error_surname1" is returned
+And a "This field is required." message for "error_house_number" is returned
+And a "This field is required." message for "error_road" is returned
+And a "This field is required." message for "error_town" is returned
+And a "This field is required." message for "error_postcode" is returned
+And a "Not a valid choice" message for "error_property_tenure" is returned
+And a "Not a valid choice" message for "error_property_class" is returned
+And a "This field is required." message for "error_extent" is returned
 
-Examples:
-  | errorMessage            | fieldId               |
-  | This field is required. | error_first_name1     |
-  | This field is required. | error_surname1        |
-  | This field is required. | error_house_number    |
-  | This field is required. | error_road            |
-  | This field is required. | error_town            |
-  | This field is required. | error_postcode        |
-  | Not a valid choice      | error_property_tenure |
-  | Not a valid choice      | error_property_class  |
-  | This field is required. | error_extent          |
-
-Scenario: Optional fields must be validated when data entered
+Scenario: Optional fields must be validated when incorrect data entered
 Given I have received an application for a first registration
 And I want to create a Register of Title
 And I enter a price paid with too many decimal places
 When I submit the title details
-Then a "Please enter the price paid as pound and pence" for "error_price_paid" is returned
+Then a "Please enter the price paid as pound and pence" message for "error_price_paid" is returned
 
-Scenario: Caseworker can create a Register of Title with all fields filled in - including a company charge
+Scenario: Caseworker can create a Register of Title with all fields filled in - including optional fields
 Given I have received an application for a first registration
 And I want to create a Register of Title
 When I enter a Property Address
 And I choose a tenure of Freehold
 And I select class of Possessory
 And I enter a valid price paid
-And I enter 1 company charge
 And I enter 1 proprietor
 And I enter a valid title extent
 And I submit the title details

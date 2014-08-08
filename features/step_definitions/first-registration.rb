@@ -149,7 +149,35 @@ When(/^I enter a valid title extent$/) do
   fill_in('extent', :with => genenerate_title_extent())
 end
 
-
-Then(/^a \"([^\"]*)\" for \"([^\"]*)\" is returned$/) do |errorMessage, fieldId|
+Then(/^a \"([^\"]*)\" message for \"([^\"]*)\" is returned$/) do |errorMessage, fieldId|
   assert_selector(".//*[@id='" + fieldId + "']", text: errorMessage)
+end
+
+Given(/^I enter a price paid with too many decimal places$/) do
+  $data['pricePaid'] = "100.00001"
+  fill_in('price_paid', :with => $data['pricePaid'])
+end
+
+When(/^I enter (\d+) company charge$/) do |arg1|
+  #todayDate =  Date.today.strftime("%d/%m/%Y")
+  #fill_in('charge_date', :with => todayDate)
+  #fill_in('chargee_name', :with => "Fake company1")
+  #fill_in('chargee_registration_number', :with => "Test reg no1")
+  #fill_in('chargee_address', :with => "Flat 3, 2 Test Street, London, SE17 3BY")
+end
+
+When(/^I enter (\d+) company charges$/) do |arg1|
+  #todayDate =  Date.today.strftime("%d/%m/%Y")
+  #fill_in('charge_date', :with => todayDate)
+  #fill_in('chargee_name', :with => "Fake company1")
+  #fill_in('chargee_registration_number', :with => "Test reg no1")
+  #fill_in('chargee_address', :with => "Flat 3, 2 Test Street, London, SE17 3BY")
+
+  #click_button('Add another charge')
+
+  #yesterdayDate =  Date.today.prev_day.strftime("%d/%m/%Y")
+  #fill_in('charge_date', :with => yesterdayDate)
+  #fill_in('chargee_name', :with => "Fake company2")
+  #fill_in('chargee_registration_number', :with => "Test reg no2")
+  #fill_in('chargee_address', :with => "21 Test Street, London, SE17 3BY")
 end
