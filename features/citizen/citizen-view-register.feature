@@ -30,7 +30,7 @@ And the map can't be moved
 And the Polygon is laid over a map
 
 Scenario: Register with Title Plan Two Polygons
-Given I have a registered property with 2 polygons
+Given I have a registered property
 And I am a citizen
 When I view the register
 And I check the title plan

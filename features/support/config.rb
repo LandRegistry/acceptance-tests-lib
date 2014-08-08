@@ -2,6 +2,7 @@
 require_relative '../../lib/data-generator.rb'
 require_relative '../../lib/webservice.rb'
 require_relative '../../lib/logchecking.rb'
+require_relative '../../lib/polygonchecking.rb'
 require 'net/https'
 
 ### Includes Capybara (the visit, find, fill_in commands) and poltergeist (channel to phantomjs headless browser)
