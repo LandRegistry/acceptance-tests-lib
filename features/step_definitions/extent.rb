@@ -5,6 +5,9 @@ Given(/^I check the title plan$/) do
   $polygon_file1 = "tmpimg-#{Time.new.to_i}-1.png"
   $polygon_file2 = "tmpimg-#{Time.new.to_i}-2.png"
 
+page.execute_script("geoJson.setStyle({opacity: 1, weight: 2});")
+
+
   save_screenshot($polygon_file1, :selector => "#map")
 
   page.execute_script("map.removeLayer(geoJson);")
@@ -76,12 +79,6 @@ Then(/^the polygon(s are| is) edged in red$/) do |wording|
 end
 
 Then(/^the map can't be zoomed$/) do
-  #uri = URI.parse($PROPERTY_FRONTEND_DOMAIN)
-  #http = Net::HTTP.new(uri.host, uri.port)
-  #request = Net::HTTP::Get.new('/static/build//javascripts/map.js')
-  #response = http.request(request)
-  #puts response.body
-
   map_file1 = "tmpimg-#{Time.new.to_i}-1.png"
   map_file2 = "tmpimg-#{Time.new.to_i}-2.png"
 

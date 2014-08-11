@@ -85,6 +85,31 @@ def get_polygon_details(image1, image2)
 
   end
 
+  multi_array_area = []
+
+  for i in 0..(multi_array.count - 1)
+
+    multi_array_area[i] = []
+
+    multi_array[i].each do |poly_key, poly_value |
+
+      multi_array[i][poly_key].each do |poly_object2_key, poly_object2_value|
+
+        if ((multi_array[i][poly_key][poly_object2_key - 1].nil?) ||
+          (multi_array[i][poly_key][poly_object2_key + 1].nil?) ||
+          ((!multi_array[i][poly_key - 1].nil?) && (multi_array[i][poly_key - 1][poly_object2_key].nil?)) ||
+          ((!multi_array[i][poly_key + 1].nil?) && (multi_array[i][poly_key + 1][poly_object2_key].nil?))) then
+
+          multi_array_area[i] << [poly_key, poly_object2_key]
+
+        end
+
+      end
+
+    end
+
+  end
+
   polygon_data['polygons'] = []
 
   for i in 0..(multi_array.count - 1)
@@ -94,7 +119,7 @@ def get_polygon_details(image1, image2)
     polys_late = []
 
     if (!multi_array[i].nil?)
-      multi_array[i].each do |poly_key, poly_valye |
+      multi_array[i].each do |poly_key, poly_value |
 
         multi_array[i][poly_key].each do |poly_object2_key, poly_object2_value|
           count = 1 + count
@@ -114,6 +139,7 @@ def get_polygon_details(image1, image2)
       polygon_data_hash['y.min'] = y.min
       polygon_data_hash['y.max'] = y.max
       polygon_data_hash['pixels'] = count
+      polygon_data_hash['edging'] = multi_array_area[i]
 
       polygon_data['polygons'] << polygon_data_hash
     end
@@ -133,7 +159,7 @@ def compare_maps(image1, image2)
 
   puts 'image1 - ' + Digest::MD5.file(image1).to_s
   puts 'image2 - ' + Digest::MD5.file(image2).to_s
-  
+
   if (Digest::MD5.file(image1).to_s == Digest::MD5.file(image2).to_s) then
     return true
   else
