@@ -4,6 +4,7 @@ require_relative '../../lib/webservice.rb'
 require_relative '../../lib/logchecking.rb'
 require_relative '../../lib/polygonchecking.rb'
 require 'net/https'
+require 'digest/md5'
 
 ### Includes Capybara (the visit, find, fill_in commands) and poltergeist (channel to phantomjs headless browser)
 require 'capybara/cucumber'

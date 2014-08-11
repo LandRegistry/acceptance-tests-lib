@@ -120,11 +120,24 @@ def get_polygon_details(image1, image2)
 
   end
 
+
+
   polygon_data['polygon_count'] = polygon_data['polygons'].count
-
-
 
   images.last.save("diff2-#{Time.new.to_i}.png")
 
   return polygon_data
+end
+
+def compare_maps(image1, image2)
+
+  puts 'image1 - ' + Digest::MD5.file(image1).to_s
+  puts 'image2 - ' + Digest::MD5.file(image2).to_s
+  
+  if (Digest::MD5.file(image1).to_s == Digest::MD5.file(image2).to_s) then
+    return true
+  else
+    return false
+  end
+
 end

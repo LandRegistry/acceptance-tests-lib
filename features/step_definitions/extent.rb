@@ -7,11 +7,13 @@ Given(/^I check the title plan$/) do
 
   save_screenshot($polygon_file1, :selector => "#map")
 
-  page.execute_script("document.getElementsByClassName('leaflet-overlay-pane')[0].innerHTML = '';")
+  page.execute_script("map.removeLayer(geoJson);")
+
+  #page.execute_script("document.getElementsByClassName('leaflet-overlay-pane')[0].innerHTML = '';")
 
   save_screenshot($polygon_file2, :selector => "#map")
 
-  visit page.driver.browser.current_url
+  page.execute_script("map.addLayer(geoJson);")
 
   $map_details = get_polygon_details($polygon_file1, $polygon_file2)
 
@@ -29,17 +31,17 @@ Then(/^the whole polygon area is in view$/) do
 
   $map_details['polygons'].each do |polygon|
 
-    assert_not_equal polygon['x.min'], 0, 'The Polygon occurpys more than the screen'
-    assert_not_equal polygon['y.min'], 0, 'The Polygon occurpys more than the screen'
-    assert_not_equal polygon['x.max'], $map_details['width'] - 1, 'The Polygon occurpys more than the screen'
-    assert_not_equal polygon['y.max'], $map_details['height'] - 1, 'The Polygon occurpys more than the screen'
+    assert_not_equal polygon['x.min'], 0, 'The Polygon occupies more than the screen'
+    assert_not_equal polygon['y.min'], 0, 'The Polygon occupies more than the screen'
+    assert_not_equal polygon['x.max'], $map_details['width'] - 1, 'The Polygon occupies more than the screen'
+    assert_not_equal polygon['y.max'], $map_details['height'] - 1, 'The Polygon occupies more than the screen'
 
   end
 
 end
 
 Then(/^the polygon(s|) matches that of the title$/) do |wording|
-  pending
+
 end
 
 Then(/^the polygon(s are| is) edged in red$/) do |wording|
@@ -74,17 +76,66 @@ Then(/^the polygon(s are| is) edged in red$/) do |wording|
 end
 
 Then(/^the map can't be zoomed$/) do
-  uri = URI.parse($PROPERTY_FRONTEND_DOMAIN)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Get.new('/static/build//javascripts/map.js')
-  response = http.request(request)
-  puts response.body
+  #uri = URI.parse($PROPERTY_FRONTEND_DOMAIN)
+  #http = Net::HTTP.new(uri.host, uri.port)
+  #request = Net::HTTP::Get.new('/static/build//javascripts/map.js')
+  #response = http.request(request)
+  #puts response.body
+
+  map_file1 = "tmpimg-#{Time.new.to_i}-1.png"
+  map_file2 = "tmpimg-#{Time.new.to_i}-2.png"
+
+  save_screenshot(map_file1, :selector => "#map")
+
+  #page.execute_script("map.zoomIn();")
+  find(".//*[@id='map']").native.send_key('+')
+  sleep(1)
+
+  save_screenshot(map_file2, :selector => "#map")
+
+  maps_match = compare_maps(map_file1, map_file2)
+
+  assert_equal true, maps_match, 'The hash of the Image files does not match, this must mean the images are different'
+
+  page.execute_script("map.zoomOut();")
+
 end
 
 Then(/^the map can't be moved$/) do
-  pending
+
+  map_file1 = "tmpimg-#{Time.new.to_i}-1.png"
+  map_file2 = "tmpimg-#{Time.new.to_i}-2.png"
+
+  save_screenshot(map_file1, :selector => "#map")
+
+  #page.execute_script("map.panBy([10, 10]);")
+  find(".//*[@id='map']").native.send_key(:arrow_down)
+
+  sleep(1)
+  save_screenshot(map_file2, :selector => "#map")
+
+  maps_match = compare_maps(map_file1, map_file2)
+
+  assert_equal true, maps_match, 'The hash of the Image files does not match, this must mean the images are different'
+
 end
 
 Then(/^the Polygon(s are| is) laid over a map$/) do |wording|
-  pending
+
+  map_file1 = "tmpimg-#{Time.new.to_i}-1.png"
+  map_file2 = "tmpimg-#{Time.new.to_i}-2.png"
+
+  save_screenshot(map_file1, :selector => "#map")
+
+  page.execute_script("map.removeLayer(openspaceLayer);")
+  sleep(1)
+
+  save_screenshot(map_file2, :selector => "#map")
+
+  maps_match = compare_maps(map_file1, map_file2)
+
+  assert_equal false, maps_match, 'The two map images match, this means they aren\'t on a map layer'
+
+  page.execute_script("map.addLayer(openspaceLayer);")
+
 end
