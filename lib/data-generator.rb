@@ -191,7 +191,7 @@ def genenerate_title_extent()
   $bottomRight = Array.new
   $bottomRight << $N.to_s
   $bottomRight << $E.to_s
-=begin
+
   polydata = Hash.new()
   polydata['type'] = "Feature"
   polydata['crs'] = Hash.new()
@@ -221,8 +221,8 @@ def genenerate_title_extent()
   polydata['geometry']['properties']['Description'] = 'Polygon'
 
   return polydata
-=end
 
+=begin
 $rectBegin = <<eos
 {
   "type": "Feature",
@@ -252,5 +252,36 @@ eos
   $rectangle = $rectangle + "["+ $topLeft[0] + "," + $bottomRight[1] + "], "
   $rectangle = $rectangle + "["+ $topLeft[0] + "," + $topLeft[1] + "] "
   $rectangle = $rectangle + $rectEnd
+=end
+end
 
+
+def dateInThePast()
+  return DateTime.now - (rand(1..99))
+end
+
+
+def countryName()
+
+  country = Array.new
+  country << 'Finland'
+  country << 'France'
+  country << 'Georgia'
+  country << 'Germany'
+  country << 'Greece'
+  country << 'Italyv'
+  country << 'Monaco'
+  country << 'Norway'
+  country << 'Portugal'
+  country << 'Ukraine'
+  country << 'United Kingdom'
+
+  country_num = rand(0 .. country.length - 1)
+
+  return country[country_num]
+
+end
+
+def certificateNumber()
+  return rand(1000000000..9000000000)
 end
