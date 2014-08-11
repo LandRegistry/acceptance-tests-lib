@@ -182,16 +182,16 @@ def genenerate_title_extent()
 
 
  $topLeft = Array.new
- $topLeft << $N.to_s
- $topLeft << $E.to_s
+ $topLeft << $N
+ $topLeft << $E
 
 
  $N = $N + 250
  $E = $E + 250
 
  $bottomRight = Array.new
- $bottomRight << $N.to_s
- $bottomRight << $E.to_s
+ $bottomRight << $N
+ $bottomRight << $E
 
  polydata = Hash.new()
  polydata['type'] = "Feature"
