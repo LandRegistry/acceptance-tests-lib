@@ -5,8 +5,7 @@ Given(/^I check the title plan$/) do
   $polygon_file1 = "tmpimg-#{Time.new.to_i}-1.png"
   $polygon_file2 = "tmpimg-#{Time.new.to_i}-2.png"
 
-page.execute_script("geoJson.setStyle({opacity: 1, weight: 2});")
-
+  page.execute_script("geoJson.setStyle({opacity: 1, weight: 2});")
 
   save_screenshot($polygon_file1, :selector => "#map")
 
@@ -54,6 +53,7 @@ Then(/^the polygon(s|) matches that of the title$/) do |wording|
     end
   end
 
+
 end
 
 Then(/^the polygon(s are| is) edged in red$/) do |wording|
@@ -70,7 +70,7 @@ Then(/^the polygon(s are| is) edged in red$/) do |wording|
 
     for i in polygon['x.min']..polygon['x.max'] - 1
       i_x = i
-      i_y = polygon['y.min'] + 3
+      i_y = polygon['y.min'] + 2
       pixel_colour = {}
       r = ChunkyPNG::Color.r(image[i_x,i_y])
       g = ChunkyPNG::Color.g(image[i_x,i_y])
@@ -102,8 +102,6 @@ Then(/^the map can't be zoomed$/) do
   maps_match = compare_maps(map_file1, map_file2)
 
   assert_equal true, maps_match, 'The hash of the Image files does not match, this must mean the images are different'
-
-  page.execute_script("map.zoomOut();")
 
 end
 

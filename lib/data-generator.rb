@@ -185,8 +185,9 @@ def genenerate_title_extent()
  $topLeft << $N.to_s
  $topLeft << $E.to_s
 
- $N = $N + 2
- $E = $E + 2
+
+ $N = $N + 250
+ $E = $E + 250
 
  $bottomRight = Array.new
  $bottomRight << $N.to_s
