@@ -22,19 +22,18 @@ And I enter a price paid with too many decimal places
 When I submit the title details
 Then a "Please enter the price paid as pound and pence" message for "error_price_paid" is returned
 
-Scenario: Caseworker can create a Register of Title with all fields filled in - including optional fields
+Scenario: Caseworker can create a Register of Title with only mandatory fields filled in
 Given I have received an application for a first registration
 And I want to create a Register of Title
 When I enter a Property Address
 And I choose a tenure of Freehold
 And I select class of Possessory
-And I enter a valid price paid
 And I enter 1 proprietor
 And I enter a valid title extent
 And I submit the title details
 Then I have received confirmation that the property has been registered
 
-Scenario: Caseworker can create a Register of Title with multiple proprietors and company charges
+Scenario: Caseworker can create a Register of Title with all fields filled in - including multiple charges
 Given I have received an application for a first registration
 And I want to create a Register of Title
 When I enter a Property Address
