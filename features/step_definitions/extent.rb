@@ -24,27 +24,21 @@ Given(/^I check the title plan$/) do
 end
 
 Then(/^there is (\d+) polygon(s|)$/) do |expected_polygon_count, wording|
-
   assert_equal expected_polygon_count.to_i, $map_details['polygon_count'], 'Expected different amount of polygons'
-
 end
 
 Then(/^the whole polygon area is in view$/) do
-
   $map_details['polygons'].each do |polygon|
-
     assert_not_equal polygon['x.min'], 0, 'The Polygon occupies more than the screen'
     assert_not_equal polygon['y.min'], 0, 'The Polygon occupies more than the screen'
     assert_not_equal polygon['x.max'], $map_details['width'] - 1, 'The Polygon occupies more than the screen'
     assert_not_equal polygon['y.max'], $map_details['height'] - 1, 'The Polygon occupies more than the screen'
-
   end
-
 end
 
 Then(/^the polygon(s|) matches that of the title$/) do |wording|
-  for i in 0..($regData['extent']['geometry']['coordinates'].count -1)
-    for j in 0..($regData['extent']['geometry']['coordinates'][i].count -1)
+  for i in 0..($regData['extent']['geometry']['coordinates'].count) -1
+    for j in 0..($regData['extent']['geometry']['coordinates'][i].count) -1
       assert_match($regData['extent']['geometry']['coordinates'][i][j][0], page.body, 'expected map co-ordinates not present')
       assert_match($regData['extent']['geometry']['coordinates'][i][j][1], page.body, 'expected map co-ordinates not present')
       puts j
@@ -52,8 +46,6 @@ Then(/^the polygon(s|) matches that of the title$/) do |wording|
       puts $regData['extent']['geometry']['coordinates'][i][j][1]
     end
   end
-
-
 end
 
 Then(/^the polygon(s are| is) edged in red$/) do |wording|
