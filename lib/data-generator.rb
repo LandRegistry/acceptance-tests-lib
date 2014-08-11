@@ -182,15 +182,16 @@ def genenerate_title_extent()
 
 
   $topLeft = Array.new
-  $topLeft << $N.to_s
-  $topLeft << $E.to_s
+  $topLeft << $N
+  $topLeft << $E
 
   $N = $N + 0.5
   $E = $E + 0.5
 
   $bottomRight = Array.new
-  $bottomRight << $N.to_s
-  $bottomRight << $E.to_s
+  $bottomRight << $N
+  $bottomRight << $E
+
 
   polydata = Hash.new()
   polydata['type'] = "Feature"
@@ -221,6 +222,7 @@ def genenerate_title_extent()
   polydata['geometry']['properties']['Description'] = 'Polygon'
 
   return polydata
+
 
 =begin
 $rectBegin = <<eos
@@ -253,6 +255,7 @@ eos
   $rectangle = $rectangle + "["+ $topLeft[0] + "," + $topLeft[1] + "] "
   $rectangle = $rectangle + $rectEnd
 =end
+
 end
 
 
