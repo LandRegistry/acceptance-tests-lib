@@ -1,4 +1,4 @@
-require 'chunky_png'
+require 'oily_png'
 
 Given(/^I check the title plan$/) do
   sleep(2)
