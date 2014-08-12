@@ -124,7 +124,7 @@ Then(/^the Polygon(s are| is) laid over a map$/) do |wording|
   save_screenshot(map_file1, :selector => "#map")
 
   page.execute_script("map.removeLayer(openspaceLayer);")
-  sleep(1)
+  sleep(4)
 
   save_screenshot(map_file2, :selector => "#map")
 
