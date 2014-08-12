@@ -146,3 +146,7 @@ When(/^I enter a valid title extent$/) do
   puts json
   fill_in('extent', :with => json)
 end
+
+Then(/^a \"([^\"]*)\" message for \"([^\"]*)\" is returned$/) do |errorMessage, fieldId|
+  assert_selector(".//*[@id='" + fieldId + "']", text: errorMessage)
+end

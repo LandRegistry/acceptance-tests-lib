@@ -2,7 +2,7 @@ Given(/^I have have got married and I want to change my name on the register$/) 
   $data = Hash.new()
   $data['newName'] = firstName() + ' ' + surname()
   $data['partnerFullName '] = firstName() + ' ' + surname()
-  $data['dateOfMarriage'] = dateInThePast()
+  $data['dateOfMarriage'] = dateInThePast().strftime("%Y-%m-%d")
   $data['propertyPostcode'] = postcode()
   $data['locationOfMarriage'] = countryName()
   $data['marriageCertificateNumber'] = certificateNumber()
@@ -60,9 +60,5 @@ When(/^I Accept the statement$/) do
 end
 
 Then(/^I receive a confirmation that my change of name request has been lodged$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-Then(/^a "(.*?)" message for "(.*?)" is returned$/) do |arg1, arg2|
   pending # express the regexp above with the code you wish you had
 end
