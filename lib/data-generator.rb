@@ -176,50 +176,57 @@ def pricePaid()
 	return rand(100000 .. 9999000)
 end
 
-def genenerate_title_extent()
- $N = rand(404431.0 .. 404439.99999)
- $E = rand(369891.0 .. 369899.99999)
+def genenerate_title_extent(polygons)
+   $N = rand(404431.0 .. 404439.99999)
+   $E = rand(369891.0 .. 369899.99999)
 
+   polydata = Hash.new()
+   polydata['type'] = "Feature"
+   polydata['crs'] = Hash.new()
+   polydata['crs']['type'] = 'name'
+   polydata['crs']['properties'] = Hash.new()
+   polydata['crs']['properties']['name'] = 'urn:ogc:def:crs:EPSG:27700'
+   polydata['geometry'] = Hash.new()
+   polydata['geometry']['type'] = 'Polygon'
+   polydata['geometry']['coordinates'] = Array.new()
 
- $topLeft = Array.new
- $topLeft << $N
- $topLeft << $E
+   for i in 0..(polygons - 1)
 
+    $topLeft = Array.new
+    $topLeft << $N
+    $topLeft << $E
 
- $N = $N + 250
- $E = $E + 250
+    $N = $N + 250
+    $E = $E + 250
 
- $bottomRight = Array.new
- $bottomRight << $N
- $bottomRight << $E
+    $bottomRight = Array.new
+    $bottomRight << $N
+    $bottomRight << $E
 
- polydata = Hash.new()
- polydata['type'] = "Feature"
- polydata['crs'] = Hash.new()
- polydata['crs']['type'] = 'name'
- polydata['crs']['properties'] = Hash.new()
- polydata['crs']['properties']['name'] = 'urn:ogc:def:crs:EPSG:27700'
- polydata['geometry'] = Hash.new()
- polydata['geometry']['type'] = 'Polygon'
- polydata['geometry']['coordinates'] = Array.new()
- polydata['geometry']['coordinates'][0] = Array.new()
- polydata['geometry']['coordinates'][0][0] = Array.new()
- polydata['geometry']['coordinates'][0][0][0] = $topLeft[0]
- polydata['geometry']['coordinates'][0][0][1] = $topLeft[1]
- polydata['geometry']['coordinates'][0][1] = Array.new()
- polydata['geometry']['coordinates'][0][1][0] = $bottomRight[0]
- polydata['geometry']['coordinates'][0][1][1] = $topLeft[1]
- polydata['geometry']['coordinates'][0][2] = Array.new()
- polydata['geometry']['coordinates'][0][2][0] = $bottomRight[0]
- polydata['geometry']['coordinates'][0][2][1] = $bottomRight[1]
- polydata['geometry']['coordinates'][0][3] = Array.new()
- polydata['geometry']['coordinates'][0][3][0] = $topLeft[0]
- polydata['geometry']['coordinates'][0][3][1] = $bottomRight[1]
- polydata['geometry']['coordinates'][0][4] = Array.new()
- polydata['geometry']['coordinates'][0][4][0] = $topLeft[0]
- polydata['geometry']['coordinates'][0][4][1] = $topLeft[1]
- polydata['geometry']['properties'] = Hash.new()
- polydata['geometry']['properties']['Description'] = 'Polygon'
+     polydata['geometry']['coordinates'][i] = Array.new()
+     polydata['geometry']['coordinates'][i][0] = Array.new()
+     polydata['geometry']['coordinates'][i][0][0] = $topLeft[0]
+     polydata['geometry']['coordinates'][i][0][1] = $topLeft[1]
+     polydata['geometry']['coordinates'][i][1] = Array.new()
+     polydata['geometry']['coordinates'][i][1][0] = $bottomRight[0]
+     polydata['geometry']['coordinates'][i][1][1] = $topLeft[1]
+     polydata['geometry']['coordinates'][i][2] = Array.new()
+     polydata['geometry']['coordinates'][i][2][0] = $bottomRight[0]
+     polydata['geometry']['coordinates'][i][2][1] = $bottomRight[1]
+     polydata['geometry']['coordinates'][i][3] = Array.new()
+     polydata['geometry']['coordinates'][i][3][0] = $topLeft[0]
+     polydata['geometry']['coordinates'][i][3][1] = $bottomRight[1]
+     polydata['geometry']['coordinates'][i][4] = Array.new()
+     polydata['geometry']['coordinates'][i][4][0] = $topLeft[0]
+     polydata['geometry']['coordinates'][i][4][1] = $topLeft[1]
+     polydata['geometry']['properties'] = Hash.new()
+     polydata['geometry']['properties']['Description'] = 'Polygon'
+
+     $N = $N + 250
+
+  end
+
+  puts polydata
 
  return polydata
 =begin

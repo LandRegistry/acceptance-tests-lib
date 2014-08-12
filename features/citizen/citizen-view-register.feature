@@ -30,7 +30,7 @@ And the map can't be moved
 And the Polygon is laid over a map
 
 Scenario: Register with Title Plan Two Polygons
-Given I have a registered property
+Given I have a registered property with multiple polygons
 And I am a citizen
 When I view the register
 And I check the title plan
@@ -41,11 +41,3 @@ And the polygons are edged in red
 And the map can't be zoomed
 And the map can't be moved
 And the Polygons are laid over a map
-
-
-
-
-
-
-Scenario: Register with Title Plan
-Given I am testing

@@ -39,11 +39,11 @@ end
 Then(/^the polygon(s|) matches that of the title$/) do |wording|
   for i in 0..($regData['extent']['geometry']['coordinates'].count) -1
     for j in 0..($regData['extent']['geometry']['coordinates'][i].count) -1
-      assert_match($regData['extent']['geometry']['coordinates'][i][j][0], page.body, 'expected map co-ordinates not present')
-      assert_match($regData['extent']['geometry']['coordinates'][i][j][1], page.body, 'expected map co-ordinates not present')
+      assert_match($regData['extent']['geometry']['coordinates'][i][j][0].to_s, page.body, 'expected map co-ordinates not present')
+      assert_match($regData['extent']['geometry']['coordinates'][i][j][1].to_s, page.body, 'expected map co-ordinates not present')
       puts j
-      puts $regData['extent']['geometry']['coordinates'][i][j][0]
-      puts $regData['extent']['geometry']['coordinates'][i][j][1]
+      puts $regData['extent']['geometry']['coordinates'][i][j][0].to_s
+      puts $regData['extent']['geometry']['coordinates'][i][j][1].to_s
     end
   end
 end
