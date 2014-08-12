@@ -20,8 +20,8 @@ before_install:
   - phantomjs --version
   - wget http://phantomjs.googlecode.com/files/phantomjs-1.7.0-linux-i686.tar.bz2
   - tar -xf phantomjs-1.7.0-linux-i686.tar.bz2
-  - rm -rf /usr/local/phantomjs
-  - mv phantomjs-1.7.0-linux-i686 /usr/local/phantomjs
+  - sudo rm -rf /usr/local/phantomjs
+  - sudo mv phantomjs-1.7.0-linux-i686 /usr/local/phantomjs
   - phantomjs --version
   - 'echo ''gem: --no-ri --no-rdoc'' > ~/.gemrc'
 before_script:
