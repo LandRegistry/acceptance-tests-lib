@@ -38,7 +38,7 @@ else
     Capybara::Poltergeist::Driver.new(app, :inspector => true)
   end
   #This removes the referer for the map tiles to be returned
-  page.driver.headers = {"Referer" => ""}
+  page.driver.headers ("Referer", "", permanent: true)
 end
 
 ### Reads the basic auth username and password from env settings
