@@ -2,7 +2,7 @@
 #Audit for casework when a new 1st registration is created
 Then(/^Audit for new registration is written$/) do
   url = "https://pull.logentries.com/#{$logentries_key}/hosts/Heroku/lr-casework-frontend/"
-  match_string = "Audit: user=[{'email': 'caseworker@example.org', 'id': '4'}], request=[<Request 'http://casework.landregistryconcept.co.uk/registration?created=" + $data['titleNumber'].to_s + "' [GET]"
+  match_string = "Audit: user=[{'id': '4', 'email': 'caseworker@example.org'}], request=[<Request 'http://casework.landregistryconcept.co.uk/registration?created=" + $data['titleNumber'].to_s + "' [GET]"
   check_logs_for_message(url, match_string)
 end
 
