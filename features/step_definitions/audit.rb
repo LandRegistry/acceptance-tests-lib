@@ -9,7 +9,7 @@ end
 #Audit for service frontend (when citizen logs in to view)
 Then(/^Audit for private citizen register view written$/) do
   url = "https://pull.logentries.com/#{$logentries_key}/hosts/ManualHostService/lr-service-frontend/"
-  match_string = "Audit: user==[{'id': '9', 'email': 'citizen@example.org'}], request=[<Request 'http://land.service.gov.uk.landregistryconcept.co.uk/property/" + $regData['title_number'] + "' [GET]"
+  match_string = "Audit: user=[{'id': '9', 'email': 'citizen@example.org'}], request=[<Request 'http://land.service.gov.uk.landregistryconcept.co.uk/property/" + $regData['title_number'] + "' [GET]"
   check_logs_for_message(url, match_string)
 end
 
