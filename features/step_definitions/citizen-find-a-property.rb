@@ -1,7 +1,6 @@
 require "net/http"
 
-
-Given(/^I have a registered property$/) do
+Given(/^I have registered property data$/) do
 
   $regData = Hash.new()
   $regData['title_number'] = titleNumber()
@@ -24,9 +23,13 @@ Given(/^I have a registered property$/) do
   $regData['payment']['price_paid'] = pricePaid()
   $regData['payment']['titles'] = Array.new()
   $regData['payment']['titles'][0] = $regData['title_number']
-  $regData['extent'] = genenerate_title_extent()
+  $regData['extent'] = genenerate_title_extent(1)
 
   puts 'Title number' + $regData['title_number']
+
+end
+
+Given(/^I submit the registered property data$/) do
 
   uri = URI.parse($MINT_API_DOMAIN)
   http = Net::HTTP.new(uri.host, uri.port)
@@ -40,6 +43,21 @@ Given(/^I have a registered property$/) do
   end
 
   wait_for_register_to_be_created($regData['title_number'])
+
+end
+
+
+Given(/^I have a registered property$/) do
+
+  step "I have registered property data"
+  step "I submit the registered property data"
+
+end
+
+Given(/^I have a registered property with multiple polygons$/) do
+  step "I have registered property data"
+  $regData['extent'] = genenerate_title_extent(2)
+  step "I submit the registered property data"
 end
 
 Given(/^I am searching for that property$/) do
