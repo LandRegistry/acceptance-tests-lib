@@ -2,14 +2,14 @@
 #Audit for casework when a new 1st registration is created
 Then(/^Audit for new registration is written$/) do
   url = "https://pull.logentries.com/#{$logentries_key}/hosts/Heroku/lr-casework-frontend/"
-  match_string = "Audit: user=[{'email': 'caseworker@example.org', 'id': '4'}], request=[<Request 'http://casework.landregistryconcept.co.uk/registration?created=" + $data['titleNumber'].to_s + "' [GET]"
+  match_string = "Audit: user=[{'id': '4', 'email': 'caseworker@example.org'}], request=[<Request 'http://casework.landregistryconcept.co.uk/registration?created=" + $data['titleNumber'].to_s + "' [GET]"
   check_logs_for_message(url, match_string)
 end
 
 #Audit for service frontend (when citizen logs in to view)
 Then(/^Audit for private citizen register view written$/) do
   url = "https://pull.logentries.com/#{$logentries_key}/hosts/ManualHostService/lr-service-frontend/"
-  match_string = "Audit: user=[{'id': '9', 'email': 'citizen@example.org'}], request=[<Request 'http://land.service.gov.uk.landregistryconcept.co.uk/property/" + $regData['title_number'] + "' [GET]"
+  match_string = "Audit: user=[{'email': 'citizen@example.org', 'id': '9'}], request=[<Request 'http://land.service.gov.uk.landregistryconcept.co.uk/property/" + $regData['title_number'] + "' [GET]"
   check_logs_for_message(url, match_string)
 end
 

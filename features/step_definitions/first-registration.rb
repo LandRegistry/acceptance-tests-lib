@@ -142,7 +142,7 @@ Then(/^Title Number is unique$/) do
 end
 
 When(/^I enter a valid title extent$/) do
-  json = genenerate_title_extent().to_json
+  json = genenerate_title_extent(1).to_json
   puts json
   fill_in('extent', :with => json)
 end
