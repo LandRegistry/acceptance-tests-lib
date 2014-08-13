@@ -46,7 +46,7 @@ And the map can't be zoomed
 And the map can't be moved
 And the Polygon is laid over a map
 
-Scenario: Private Register with Title Plan Two Polygons 
+Scenario: Private Register with Title Plan Two Polygons
 Given I have a registered property with multiple polygons
 And I have private citizen login credentials
 And I am not already logged in as a private citizen
