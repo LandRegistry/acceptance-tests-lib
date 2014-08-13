@@ -1,7 +1,7 @@
 require 'oily_png'
 
 Given(/^I check the title plan$/) do
-  sleep(2)
+  sleep(1)
 
   # Get names for the 2 files we will produce
   $polygon_file1 = "tmpimg-#{Time.new.to_i}-1.png"
@@ -9,6 +9,9 @@ Given(/^I check the title plan$/) do
 
   # Make the shape more vivid
   page.execute_script("geoJson.setStyle({opacity: 1, weight: 2});")
+
+  # Hide Map Layer
+  page.execute_script("map.removeLayer(openspaceLayer);")
 
   # Take a screen show of the map id div tag
   save_screenshot($polygon_file1, :selector => "#map")
@@ -25,6 +28,9 @@ Given(/^I check the title plan$/) do
   # Compare the images to get the polygon details
   $map_details = get_polygon_details($polygon_file1, $polygon_file2)
 
+  # Re add the map layer
+  page.execute_script("map.addLayer(openspaceLayer);")
+  sleep(1)
   puts $map_details
 
 end
@@ -58,32 +64,26 @@ Then(/^the polygon(s are| is) edged in red$/) do |wording|
   # Check the source code of the html for the stroke of red
   assert_equal (find(".//*[local-name() = 'path']")['stroke']) , 'red', 'Expected the edging to be red'
 
-  #And also check the border of the polygon to see if it is red
+  image = ChunkyPNG::Image.from_file($polygon_file1)
+
+  # Loop through the polygons
   $map_details['polygons'].each do |polygon|
+    # Check the colour of the edging pixels
+    polygon['edging'].each do |polygon_edge|
+      i_x = polygon_edge[0]
+      i_y = polygon_edge[1]
 
-    image = ChunkyPNG::Image.from_file($polygon_file1)
-
-    poly_colour = []
-
-    found_red = false
-    # loop though one line of the image to see if it is red
-    for i in polygon['x.min']..polygon['x.max'] - 1
-      i_x = i
-      i_y = polygon['y.min'] + 2
-      pixel_colour = {}
       r = ChunkyPNG::Color.r(image[i_x,i_y])
       g = ChunkyPNG::Color.g(image[i_x,i_y])
       b = ChunkyPNG::Color.b(image[i_x,i_y])
 
-      # Red has a high r value and low g and b
-      if ((r > 245) && (g < 120) && (b < 120)) then
-        found_red = true
+      #puts i_x.to_s + ' - ' + i_y.to_s + ' - ' + r.to_s + ':' + g.to_s + ':' + b.to_s
+
+      # Red has a high r value and low g and b. So lets see if any break that rule
+      if ((r < 245) || (g > 80) || (b > 80)) then
+        raise 'Found a colour that isn\'t red on the border.'
       end
     end
-
-    # Check to see if red was found
-    assert_equal found_red, true, 'Expected to find Red on the edge, none found'
-
   end
 
 end
@@ -144,7 +144,7 @@ Then(/^the Polygon(s are| is) laid over a map$/) do |wording|
 
   # Remove the underlying map layer
   page.execute_script("map.removeLayer(openspaceLayer);")
-  sleep(2)
+  sleep(1)
 
   # save a screen with the image after the key press
   save_screenshot(map_file2, :selector => "#map")

@@ -97,26 +97,44 @@ def get_polygon_details(image1, image2)
 
   end
 
+  # Duplicate array
+  multi_array_cut = multi_array
 
+  # There is a tapering affect on the red pixels, we want to remove some layers of
+  # pixels around the edge to get to the solid red border
+  layers_to_remove = 1
 
-  multi_array_area = []
-  # This loop will find all the pixels on an edge of a polygon
-  # (so where a pixel hasn't got an above or below or left or right pixek)
-  for i in 0..(multi_array.count - 1)
-
-    multi_array_area[i] = []
-
-    multi_array[i].each do |poly_key, poly_value |
-
-      multi_array[i][poly_key].each do |poly_object2_key, poly_object2_value|
-
-        if ((multi_array[i][poly_key][poly_object2_key - 1].nil?) ||
-          (multi_array[i][poly_key][poly_object2_key + 1].nil?) ||
-          ((!multi_array[i][poly_key - 1].nil?) && (multi_array[i][poly_key - 1][poly_object2_key].nil?)) ||
-          ((!multi_array[i][poly_key + 1].nil?) && (multi_array[i][poly_key + 1][poly_object2_key].nil?))) then
-
-          multi_array_area[i] << [poly_key, poly_object2_key]
-
+  # This will loop through and remove layers of the polygon
+  for k in 0..(layers_to_remove)
+    # set some internal variables
+    multi_array_tmp = multi_array_cut
+    multi_array_cut = []
+    multi_array_area = []
+    # This loop will find all the pixels on an edge of a polygon
+    # (so where a pixel hasn't got an above or below or left or right pixek)
+    # Loop through each polygon
+    for i in 0..(multi_array_tmp.count - 1)
+      multi_array_cut << {}
+      multi_array_area[i] = []
+      # Loop though each pixel (x)
+      multi_array_tmp[i].each do |poly_key, poly_value |
+        # Loop though each pixel (y)
+        multi_array_tmp[i][poly_key].each do |poly_object2_key, poly_object2_value|
+          # Check if the pixel has an up, down, left, right neghbour
+          if ((!multi_array_tmp[i][poly_key][poly_object2_key - 1].nil?) &&
+            (!multi_array_tmp[i][poly_key][poly_object2_key + 1].nil?) &&
+            ((!multi_array_tmp[i][poly_key - 1].nil?) && (!multi_array_tmp[i][poly_key - 1][poly_object2_key].nil?)) &&
+            ((!multi_array_tmp[i][poly_key + 1].nil?) && (!multi_array_tmp[i][poly_key + 1][poly_object2_key].nil?))) then
+            if (multi_array_cut[i][poly_key].nil?) then
+              multi_array_cut[i][poly_key] = {}
+            end
+              # If it down have 4 neghbours, then we want to store that in array to possible
+              # run through again to remove a layer
+              multi_array_cut[i][poly_key][poly_object2_key] = poly_object2_key
+          else
+            # If it isn't in a layer, then we want to store this and return to the user, as this must be the edging
+            multi_array_area[i] << [poly_key, poly_object2_key]
+          end
         end
 
       end

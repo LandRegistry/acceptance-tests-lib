@@ -1,5 +1,5 @@
 def titleNumber()
-  number = rand(99999).to_s
+  number = rand(999999999).to_s
   prefix = "TEST"
 	return prefix + number
 end
@@ -205,20 +205,20 @@ def genenerate_title_extent(polygons)
 
      polydata['geometry']['coordinates'][i] = Array.new()
      polydata['geometry']['coordinates'][i][0] = Array.new()
-     polydata['geometry']['coordinates'][i][0][0] = $topLeft[0]
-     polydata['geometry']['coordinates'][i][0][1] = $topLeft[1]
+     polydata['geometry']['coordinates'][i][0][0] = $topLeft[0] - rand(0..80)
+     polydata['geometry']['coordinates'][i][0][1] = $topLeft[1] - rand(0..80)
      polydata['geometry']['coordinates'][i][1] = Array.new()
-     polydata['geometry']['coordinates'][i][1][0] = $bottomRight[0]
-     polydata['geometry']['coordinates'][i][1][1] = $topLeft[1]
+     polydata['geometry']['coordinates'][i][1][0] = $bottomRight[0] - rand(0..80)
+     polydata['geometry']['coordinates'][i][1][1] = $topLeft[1] - rand(0..80)
      polydata['geometry']['coordinates'][i][2] = Array.new()
-     polydata['geometry']['coordinates'][i][2][0] = $bottomRight[0]
-     polydata['geometry']['coordinates'][i][2][1] = $bottomRight[1]
+     polydata['geometry']['coordinates'][i][2][0] = $bottomRight[0] - rand(0..80)
+     polydata['geometry']['coordinates'][i][2][1] = $bottomRight[1] - rand(0..80)
      polydata['geometry']['coordinates'][i][3] = Array.new()
-     polydata['geometry']['coordinates'][i][3][0] = $topLeft[0]
-     polydata['geometry']['coordinates'][i][3][1] = $bottomRight[1]
+     polydata['geometry']['coordinates'][i][3][0] = $topLeft[0] - rand(0..80)
+     polydata['geometry']['coordinates'][i][3][1] = $bottomRight[1] - rand(0..80)
      polydata['geometry']['coordinates'][i][4] = Array.new()
-     polydata['geometry']['coordinates'][i][4][0] = $topLeft[0]
-     polydata['geometry']['coordinates'][i][4][1] = $topLeft[1]
+     polydata['geometry']['coordinates'][i][4][0] = polydata['geometry']['coordinates'][i][0][0]
+     polydata['geometry']['coordinates'][i][4][1] = polydata['geometry']['coordinates'][i][0][1]
      polydata['geometry']['properties'] = Hash.new()
      polydata['geometry']['properties']['Description'] = 'Polygon'
 
@@ -229,36 +229,4 @@ def genenerate_title_extent(polygons)
   puts polydata
 
  return polydata
-=begin
-
-$rectBegin = <<eos
-{
- "type": "Feature",
- "crs": {
-   "type": "name",
-   "properties": {
-     "name": "urn:ogc:def:crs:EPSG:27700"
-   }
- },
- "geometry": {
-   "type": "Polygon",
-   "coordinates":
-       [[
-eos
-
-$rectEnd = <<eos
-]]
-},
-"properties": {
-"Description": "Polygon"
-}
-}
-eos
- $rectangle = $rectBegin + "["+ $topLeft[0] + "," + $topLeft[1] + "], "
- $rectangle = $rectangle + "["+ $bottomRight[0] + "," + $topLeft[1] + "], "
- $rectangle = $rectangle + "["+ $bottomRight[0] + "," + $bottomRight[1] + "], "
- $rectangle = $rectangle + "["+ $topLeft[0] + "," + $bottomRight[1] + "], "
- $rectangle = $rectangle + "["+ $topLeft[0] + "," + $topLeft[1] + "] "
- $rectangle = $rectangle + $rectEnd
-=end
 end
