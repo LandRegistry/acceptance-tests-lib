@@ -1,7 +1,7 @@
 Given(/^I have have got married and I want to change my name on the register$/) do
   $data = Hash.new()
   $data['newName'] = firstName() + ' ' + surname()
-  $data['partnerFullName '] = firstName() + ' ' + surname()
+  $data['partnerFullName'] = firstName() + ' ' + surname()
   $data['dateOfMarriage'] = dateInThePast().strftime("%Y-%m-%d")
   $data['propertyPostcode'] = postcode()
   $data['locationOfMarriage'] = countryName()
@@ -51,14 +51,11 @@ When(/^I submit the marriage change of name details$/) do
   click_button('Submit')
 end
 
-Then(/^I am presented with a statement I need to accept$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-When(/^I Accept the statement$/) do
-  pending # express the regexp above with the code you wish you had
+Then(/^I am presented with my information in the certify message$/) do
+  #Based on how they add the fields, this function below may not be suitable. It may needs to be a find command
+  assert_match('I hereby certify that...', page.body, 'Expected to certify statement including personnal details')
 end
 
 Then(/^I receive a confirmation that my change of name request has been lodged$/) do
-  pending # express the regexp above with the code you wish you had
+  assert_match('Acknowledgement', page.body, 'Expected to Acknowledgement message')
 end
