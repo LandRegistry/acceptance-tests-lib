@@ -52,7 +52,7 @@ When(/^I submit the marriage change of name details$/) do
   click_button('Submit')
 end
 
-Then(/^I am presented with my information in the certify message$/) do
+Then(/^I am presented to certify my details$/) do
   assert_match('I hereby certify that', page.body, 'Expected to certify statement including personnal details')
   assert_match($data['newName'], page.body, 'Expected to certify statement including personnal details')
   assert_match($data['dateOfMarriage'], page.body, 'Expected to certify statement including personnal details')
@@ -61,7 +61,7 @@ Then(/^I am presented with my information in the certify message$/) do
   assert_match($data['partnerFullName'], page.body, 'Expected to certify statement including personnal details')
 end
 
-Then(/^I am presented to certify my details$/) do
+Then(/^I receive a confirmation that my change of name request has been lodged$/) do
   assert_match('Acknowledgement', page.body, 'Expected to Acknowledgement message')
 end
 
