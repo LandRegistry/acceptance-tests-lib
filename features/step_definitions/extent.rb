@@ -88,7 +88,7 @@ Then(/^the polygon(s are| is) edged in red$/) do |wording|
         b = ChunkyPNG::Color.b(image[i_x,i_y])
 
         # Red has a high r value and low g and b. So lets see if any break that rule
-        if ((r < 245) || (g > 80) || (b > 80)) then
+        if ((r < 235) || (g > 120) || (b > 120)) then
           puts i_x.to_s + ' - ' + i_y.to_s + ' - ' + r.to_s + ':' + g.to_s + ':' + b.to_s
           raise 'Found a colour that isn\'t red on the border.'
         end
