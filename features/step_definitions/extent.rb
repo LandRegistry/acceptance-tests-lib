@@ -11,7 +11,7 @@ Given(/^I check the title plan$/) do
   page.execute_script("map.removeLayer(openspaceLayer);")
 
   # Make the shape more vivid
-  page.execute_script("geoJson.setStyle({opacity: 1, weight: 2, fillOpacity: 1});")
+  page.execute_script("geoJson.setStyle({opacity: 1, weight: 2, fillOpacity: 1, fillColor: '#f03'});")
   # Take a screen show of the map id div tag
   save_screenshot($polygon_file1, :selector => "#map")
 
@@ -24,7 +24,7 @@ Given(/^I check the title plan$/) do
   # readd the layer back in to in sure the map is correct for other tests
   page.execute_script("map.addLayer(geoJson);")
 
-  page.execute_script("geoJson.setStyle({fillOpacity: 0.5});")
+  page.execute_script("geoJson.setStyle({fillOpacity: 0});")
 
   # Compare the images to get the polygon details
   $map_details = get_polygon_details($polygon_file1, $polygon_file2)
