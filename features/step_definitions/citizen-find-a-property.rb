@@ -60,6 +60,12 @@ Given(/^I have a registered property with multiple polygons$/) do
   step "I submit the registered property data"
 end
 
+Given(/^I have a registered property with donut polygons$/) do
+  step "I have registered property data"
+  $regData['extent'] = genenerate_title_extent_donut(1)
+  step "I submit the registered property data"
+end
+
 Given(/^I am searching for that property$/) do
   puts "#{$PROPERTY_FRONTEND_DOMAIN}/search"
   visit("#{$PROPERTY_FRONTEND_DOMAIN}/search")

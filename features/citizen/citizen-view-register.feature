@@ -40,3 +40,17 @@ And the polygons are edged in red
 And the map can't be zoomed
 And the map can't be moved
 And the Polygons are laid over a map
+
+Scenario: Register with Title Plan Donut Polygons
+Given I have a registered property with donut polygons
+And I am a citizen
+When I view the register
+And I check the title plan
+Then there is 1 polygons
+And the polygon is a donut
+And the whole polygon area is in view
+And the polygons matches that of the title
+And the polygons are edged in red
+And the map can't be zoomed
+And the map can't be moved
+And the Polygons are laid over a map

@@ -9,6 +9,11 @@ Before do | scenario |
     page.driver.browser.basic_authorize($http_auth_name, $http_auth_password)
   end
   $log_start_time = (Time.now.to_f * 1000).to_i
+
+  if (ENV['WEBDRIVER'] != 'Firefox') then
+    page.driver.add_header("Referer", "", permanent: true)
+  end
+
 end
 
 After do | scenario |
