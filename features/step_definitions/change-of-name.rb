@@ -4,7 +4,8 @@ Given(/^I have have got married and I want to change my name on the register$/) 
   $data['partnerFullName'] = firstName() + ' ' + surname()
   $data['dateOfMarriage'] = dateInThePast().strftime("%Y-%m-%d")
   $data['propertyPostcode'] = postcode()
-  $data['locationOfMarriage'] = countryName()
+  $data['locationOfMarriage'] = townName()
+  $data['countryOfMarriage'] = countryName()
   $data['marriageCertificateNumber'] = certificateNumber()
   $data['witnessFullName'] = firstName() + ' ' + surname()
   $data['witnessAddress'] = houseNumber().to_s + ' ' + roadName() + "\n" + townName() + "\n" + postcode()
@@ -20,19 +21,19 @@ When(/^I enter a new name$/) do
 end
 
 When(/^I enter my partners name$/) do
-  fill_in('partner_full_name', :with => $data['partnerFullName'])
+  fill_in('partner_name', :with => $data['partnerFullName'])
 end
 
 When(/^I enter my date of marriage$/) do
-  fill_in('date_of_marriage', :with => $data['dateOfMarriage'])
+  fill_in('marriage_date', :with => $data['dateOfMarriage'])
 end
 
 When(/^I enter a Country of marriage$/) do
-  fill_in('partner_full_name', :with => $data['partnerFullName'])
+  fill_in('marriage_country', :with => $data['countryOfMarriage'])
 end
 
 When(/^I enter a location of marriage$/) do
-  fill_in('location_of_marriage_ceremony', :with => $data['locationOfMarriage'])
+  fill_in('marriage_place', :with => $data['locationOfMarriage'])
 end
 
 When(/^I enter a Marriage Certificate Number$/) do
@@ -52,10 +53,19 @@ When(/^I submit the marriage change of name details$/) do
 end
 
 Then(/^I am presented with my information in the certify message$/) do
-  #Based on how they add the fields, this function below may not be suitable. It may needs to be a find command
-  assert_match('I hereby certify that...', page.body, 'Expected to certify statement including personnal details')
+  assert_match('I hereby certify that', page.body, 'Expected to certify statement including personnal details')
+  assert_match($data['newName'], page.body, 'Expected to certify statement including personnal details')
+  assert_match($data['dateOfMarriage'], page.body, 'Expected to certify statement including personnal details')
+  assert_match($data['locationOfMarriage'], page.body, 'Expected to certify statement including personnal details')
+  assert_match($data['countryOfMarriage'], page.body, 'Expected to certify statement including personnal details')
+  assert_match($data['partnerFullName'], page.body, 'Expected to certify statement including personnal details')
 end
 
-Then(/^I receive a confirmation that my change of name request has been lodged$/) do
+Then(/^I am presented to certify my details$/) do
   assert_match('Acknowledgement', page.body, 'Expected to Acknowledgement message')
+end
+
+When(/^I accept the certify statement$/) do
+  check('confirm')
+  click_button('Submit')
 end
