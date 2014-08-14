@@ -232,38 +232,6 @@ def genenerate_title_extent(polygons)
 
  return polydata
 
-=begin
-$rectBegin = <<eos
-{
- "type": "Feature",
- "crs": {
-   "type": "name",
-   "properties": {
-     "name": "urn:ogc:def:crs:EPSG:27700"
-   }
- },
- "geometry": {
-   "type": "Polygon",
-   "coordinates":
-       [[
-eos
-
-$rectEnd = <<eos
-]]
-},
-"properties": {
-"Description": "Polygon"
-}
-}
-eos
- $rectangle = $rectBegin + "["+ $topLeft[0] + "," + $topLeft[1] + "], "
- $rectangle = $rectangle + "["+ $bottomRight[0] + "," + $topLeft[1] + "], "
- $rectangle = $rectangle + "["+ $bottomRight[0] + "," + $bottomRight[1] + "], "
- $rectangle = $rectangle + "["+ $topLeft[0] + "," + $bottomRight[1] + "], "
- $rectangle = $rectangle + "["+ $topLeft[0] + "," + $topLeft[1] + "] "
- $rectangle = $rectangle + $rectEnd
-=end
-
 end
 
 
