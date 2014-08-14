@@ -1,18 +1,17 @@
 require 'oily_png'
 
 Given(/^I check the title plan$/) do
-  sleep(1)
+  sleep(2)
 
   # Get names for the 2 files we will produce
   $polygon_file1 = "tmpimg-#{Time.new.to_i}-1.png"
   $polygon_file2 = "tmpimg-#{Time.new.to_i}-2.png"
 
-  # Make the shape more vivid
-  page.execute_script("geoJson.setStyle({opacity: 1, weight: 2});")
-
   # Hide Map Layer
   page.execute_script("map.removeLayer(openspaceLayer);")
 
+  # Make the shape more vivid
+  page.execute_script("geoJson.setStyle({opacity: 1, weight: 2, fillOpacity: 1});")
   # Take a screen show of the map id div tag
   save_screenshot($polygon_file1, :selector => "#map")
 
@@ -25,13 +24,14 @@ Given(/^I check the title plan$/) do
   # readd the layer back in to in sure the map is correct for other tests
   page.execute_script("map.addLayer(geoJson);")
 
+  page.execute_script("geoJson.setStyle({fillOpacity: 0.5});")
+
   # Compare the images to get the polygon details
   $map_details = get_polygon_details($polygon_file1, $polygon_file2)
 
   # Re add the map layer
   page.execute_script("map.addLayer(openspaceLayer);")
   sleep(1)
-  puts $map_details
 
 end
 
@@ -47,6 +47,13 @@ Then(/^the whole polygon area is in view$/) do
     assert_not_equal polygon['y.min'], 0, 'The Polygon occupies more than the screen'
     assert_not_equal polygon['x.max'], $map_details['width'] - 1, 'The Polygon occupies more than the screen'
     assert_not_equal polygon['y.max'], $map_details['height'] - 1, 'The Polygon occupies more than the screen'
+  end
+end
+
+Then(/^the polygon is a donut$/) do
+  # Check to see if the polygons are donuts
+  $map_details['polygons'].each do |polygon|
+    assert_equal polygon['donut'], true, 'The Polygon should be a donut, but isn\'t'
   end
 end
 
@@ -69,19 +76,22 @@ Then(/^the polygon(s are| is) edged in red$/) do |wording|
   # Loop through the polygons
   $map_details['polygons'].each do |polygon|
     # Check the colour of the edging pixels
-    polygon['edging'].each do |polygon_edge|
-      i_x = polygon_edge[0]
-      i_y = polygon_edge[1]
+    polygon['edges'].each do |polygon_edges|
 
-      r = ChunkyPNG::Color.r(image[i_x,i_y])
-      g = ChunkyPNG::Color.g(image[i_x,i_y])
-      b = ChunkyPNG::Color.b(image[i_x,i_y])
+      polygon_edges.each do |polygon_edge_pixels|
 
-      #puts i_x.to_s + ' - ' + i_y.to_s + ' - ' + r.to_s + ':' + g.to_s + ':' + b.to_s
+        i_x = polygon_edge_pixels[0]
+        i_y = polygon_edge_pixels[1]
 
-      # Red has a high r value and low g and b. So lets see if any break that rule
-      if ((r < 245) || (g > 80) || (b > 80)) then
-        raise 'Found a colour that isn\'t red on the border.'
+        r = ChunkyPNG::Color.r(image[i_x,i_y])
+        g = ChunkyPNG::Color.g(image[i_x,i_y])
+        b = ChunkyPNG::Color.b(image[i_x,i_y])
+
+        # Red has a high r value and low g and b. So lets see if any break that rule
+        if ((r < 245) || (g > 80) || (b > 80)) then
+          puts i_x.to_s + ' - ' + i_y.to_s + ' - ' + r.to_s + ':' + g.to_s + ':' + b.to_s
+          raise 'Found a colour that isn\'t red on the border.'
+        end
       end
     end
   end
