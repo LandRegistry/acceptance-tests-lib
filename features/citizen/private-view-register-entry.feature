@@ -12,6 +12,7 @@ And Price Paid is displayed
 And Tenure is displayed
 And Class is displayed
 And proprietors are displayed
+And the company charge is displayed
 And Audit for private citizen register view written
 
 Scenario: view register as existing authenticated user
@@ -24,6 +25,7 @@ And Price Paid is displayed
 And Tenure is displayed
 And Class is displayed
 And proprietors are displayed
+And the company charge is displayed
 
 Scenario: Citizen can only view private register if logged in
 Given I have a registered property

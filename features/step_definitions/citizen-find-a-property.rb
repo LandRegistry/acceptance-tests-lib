@@ -25,6 +25,13 @@ Given(/^I have registered property data$/) do
   $regData['payment']['titles'][0] = $regData['title_number']
   $regData['extent'] = genenerate_title_extent(1)
 
+  $regData['charges'] = Array.new()
+  $regData['charges'][0] = Hash.new()
+  $regData['charges'][0]['charge_date'] = '2014-08-11'
+  $regData['charges'][0]['chargee_address'] = '12 Test Street, London, SE1 33S'
+  $regData['charges'][0]['chargee_name'] = 'Test Bank'
+  $regData['charges'][0]['chargee_registration_number'] = '1234567'
+
   puts 'Title number' + $regData['title_number']
 
 end
