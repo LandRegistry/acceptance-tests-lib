@@ -145,14 +145,14 @@ Given(/^I enter a price paid with too many decimal places$/) do
 end
 
 When(/^I enter (\d+) company charges$/) do |arg1|
-  click_button('Add another charge')
+  click_button('Add a charge')
   todayDate =  Date.today.strftime("%d-%m-%Y")
   fill_in('charges-0-charge_date', :with => todayDate)
   fill_in('charges-0-chargee_name', :with => "Fake company1")
   fill_in('charges-0-chargee_registration_number', :with => "Test reg no1")
   fill_in('charges-0-chargee_address', :with => "Flat 3, 2 Test Street, London, SE17 3BY")
 
-  click_button('Add another charge')
+  click_button('Add a charge')
 
   yesterdayDate =  Date.today.prev_day.strftime("%d-%m-%Y")
   fill_in('charges-1-charge_date', :with => yesterdayDate)
@@ -162,5 +162,5 @@ When(/^I enter (\d+) company charges$/) do |arg1|
 end
 
 Given(/^I add a charge with no information$/) do
-  click_button('Add another charge')
+  click_button('Add a charge')
 end
