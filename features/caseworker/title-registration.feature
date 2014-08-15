@@ -19,8 +19,14 @@ Scenario: Optional fields must be validated when incorrect data entered
 Given I have received an application for a first registration
 And I want to create a Register of Title
 And I enter a price paid with too many decimal places
+And I add a charge with no information
 When I submit the title details
 Then a "Please enter the price paid as pound and pence" message for "error_price_paid" is returned
+Then a "This field is required." message for "error_charges-0-charge_date" is returned
+Then a "This field is required." message for "error_charges-0-chargee_name" is returned
+Then a "This field is required." message for "error_charges-0-chargee_registration_number" is returned
+Then a "This field is required." message for "error_charges-0-chargee_address" is returned
+
 
 Scenario: Caseworker can create a Register of Title with only mandatory fields filled in
 Given I have received an application for a first registration

@@ -14,8 +14,11 @@ Given(/^I have received an application for a first registration$/) do
 end
 
 Given(/^I want to create a Register of Title$/) do
+  puts "step1"
   step "I have caseworker login credentials"
+  puts "#{$CASEWORK_FRONTEND_DOMAIN}/login"
   visit("#{$CASEWORK_FRONTEND_DOMAIN}/login")
+  puts "step2"
   step "I login with correct credentials"
   click_link('First registration')
   $data['titleNumber'] = find(".//input[@id='title_number']", :visible => false).value
@@ -145,7 +148,8 @@ Given(/^I enter a price paid with too many decimal places$/) do
 end
 
 When(/^I enter (\d+) company charges$/) do |arg1|
-  todayDate =  Date.today.strftime("%d/%m/%Y")
+  click_button('Add another charge')
+  todayDate =  Date.today.strftime("%d-%m-%Y")
   fill_in('charges-0-charge_date', :with => todayDate)
   fill_in('charges-0-chargee_name', :with => "Fake company1")
   fill_in('charges-0-chargee_registration_number', :with => "Test reg no1")
@@ -153,9 +157,13 @@ When(/^I enter (\d+) company charges$/) do |arg1|
 
   click_button('Add another charge')
 
-  yesterdayDate =  Date.today.prev_day.strftime("%d/%m/%Y")
+  yesterdayDate =  Date.today.prev_day.strftime("%d-%m-%Y")
   fill_in('charges-1-charge_date', :with => yesterdayDate)
   fill_in('charges-1-chargee_name', :with => "Fake company2")
   fill_in('charges-1-chargee_registration_number', :with => "Test reg no2")
   fill_in('charges-1-chargee_address', :with => "21 Test Street, London, SE17 3BY")
+end
+
+Given(/^I add a charge with no information$/) do
+  click_button('Add another charge')
 end
