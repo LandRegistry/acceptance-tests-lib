@@ -144,26 +144,18 @@ Given(/^I enter a price paid with too many decimal places$/) do
   fill_in('price_paid', :with => $data['pricePaid'])
 end
 
-When(/^I enter (\d+) company charge$/) do |arg1|
-  #todayDate =  Date.today.strftime("%d/%m/%Y")
-  #fill_in('charges-0-charge_date', :with => todayDate)
-  #fill_in('charges-0-chargee_name', :with => "Fake company1")
-  #fill_in('charges-0-chargee_registration_number', :with => "Test reg no1")
-  #fill_in('charges-0-chargee_address', :with => "Flat 3, 2 Test Street, London, SE17 3BY")
-end
-
 When(/^I enter (\d+) company charges$/) do |arg1|
-  #todayDate =  Date.today.strftime("%d/%m/%Y")
-  #fill_in('charges-0-charge_date', :with => todayDate)
-  #fill_in('charges-0-chargee_name', :with => "Fake company1")
-  #fill_in('charges-0-chargee_registration_number', :with => "Test reg no1")
-  #fill_in('charges-0-chargee_address', :with => "Flat 3, 2 Test Street, London, SE17 3BY")
+  todayDate =  Date.today.strftime("%d/%m/%Y")
+  fill_in('charges-0-charge_date', :with => todayDate)
+  fill_in('charges-0-chargee_name', :with => "Fake company1")
+  fill_in('charges-0-chargee_registration_number', :with => "Test reg no1")
+  fill_in('charges-0-chargee_address', :with => "Flat 3, 2 Test Street, London, SE17 3BY")
 
-  #click_button('Add another charge')
+  click_button('Add another charge')
 
-  #yesterdayDate =  Date.today.prev_day.strftime("%d/%m/%Y")
-  #fill_in('charges-1-charge_date', :with => yesterdayDate)
-  #fill_in('charges-1-chargee_name', :with => "Fake company2")
-  #fill_in('charges-1-chargee_registration_number', :with => "Test reg no2")
-  #fill_in('charges-1-chargee_address', :with => "21 Test Street, London, SE17 3BY")
+  yesterdayDate =  Date.today.prev_day.strftime("%d/%m/%Y")
+  fill_in('charges-1-charge_date', :with => yesterdayDate)
+  fill_in('charges-1-chargee_name', :with => "Fake company2")
+  fill_in('charges-1-chargee_registration_number', :with => "Test reg no2")
+  fill_in('charges-1-chargee_address', :with => "21 Test Street, London, SE17 3BY")
 end
