@@ -19,3 +19,10 @@ Then(/^proprietors are displayed$/) do
     assert_selector(".//*[@class='proprietor']/ul/li[2]", text: /#{$regData['proprietors'][1]['first_name']} #{$regData['proprietors'][1]['last_name']}/)
   end
 end
+
+Then(/^the company charge is displayed$/) do
+  assert_match(Date.parse($regData['charges'][0]['charge_date']).strftime("%d %B %Y"), page.body, 'Expected to find house_number')
+  assert_match(/#{$regData['charges'][0]['chargee_address']}/i, page.body, 'Expected to find chargee_address')
+  assert_match(/#{$regData['charges'][0]['chargee_name']}/i, page.body, 'Expected to find chargee_name')
+  assert_match(/#{$regData['charges'][0]['chargee_registration_number']}/i, page.body, 'Expected to find chargee_registration_number')
+end

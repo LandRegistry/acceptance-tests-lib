@@ -14,11 +14,8 @@ Given(/^I have received an application for a first registration$/) do
 end
 
 Given(/^I want to create a Register of Title$/) do
-  puts "step1"
   step "I have caseworker login credentials"
-  puts "#{$CASEWORK_FRONTEND_DOMAIN}/login"
   visit("#{$CASEWORK_FRONTEND_DOMAIN}/login")
-  puts "step2"
   step "I login with correct credentials"
   click_link('First registration')
   $data['titleNumber'] = find(".//input[@id='title_number']", :visible => false).value
