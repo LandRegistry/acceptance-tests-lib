@@ -10,6 +10,10 @@ Given(/^I have caseworker login credentials$/) do
   $userdetails['password'] = 'dummypassword'
 end
 
+Given(/^I am logged in$/) do
+  step "I login with correct credentials"
+end
+
 When(/^I login with correct credentials$/) do
   fill_in('email', :with => $userdetails['email'])
   fill_in('password', :with => $userdetails['password'])

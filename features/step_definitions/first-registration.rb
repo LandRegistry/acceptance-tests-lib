@@ -96,7 +96,8 @@ When(/^I enter an invalid price paid$/) do
 end
 
 Then(/^a Title Number is displayed$/) do
-  assert_not_equal find(".//*[@id='title_number']", :visible => false).value, '', 'There is no titleNumber!'
+  #assert_not_equal find(".//*[@id='title_number']", :visible => false).value, '', 'There is no titleNumber!'
+  assert_match(/#{$regData['title_number']}/i, page.body, 'Expected to see title number')
 end
 
 Then(/^Title Number is formatted correctly$/) do

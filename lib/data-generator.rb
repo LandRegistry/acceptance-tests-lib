@@ -231,6 +231,38 @@ def genenerate_title_extent(polygons)
   puts polydata
 
  return polydata
+
+end
+
+
+def dateInThePast()
+  return DateTime.now - (rand(1..99))
+end
+
+
+def countryName()
+
+  country = Array.new
+  country << 'Finland'
+  country << 'France'
+  country << 'Georgia'
+  country << 'Germany'
+  country << 'Greece'
+  country << 'Italyv'
+  country << 'Monaco'
+  country << 'Norway'
+  country << 'Portugal'
+  country << 'Ukraine'
+  country << 'United Kingdom'
+
+  country_num = rand(0 .. country.length - 1)
+
+  return country[country_num]
+
+end
+
+def certificateNumber()
+  return rand(1000000000..9000000000)
 end
 
 def genenerate_title_extent_donut(polygons)
