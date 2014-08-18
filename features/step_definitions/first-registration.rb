@@ -139,8 +139,6 @@ end
 Then(/^a \"([^\"]*)\" message for \"([^\"]*)\" is returned$/) do |errorMessage, fieldId|
   assert_selector(".//*[@id='" + fieldId + "']", text: errorMessage)
 end
-<<<<<<< HEAD
-=======
 
 Given(/^I enter a price paid with too many decimal places$/) do
   $data['pricePaid'] = "100.00001"
@@ -167,4 +165,3 @@ end
 Given(/^I add a charge with no information$/) do
   click_button('Add a charge')
 end
->>>>>>> master
