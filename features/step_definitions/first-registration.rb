@@ -62,6 +62,10 @@ When(/^I submit the title details$/) do
   click_button('submit')
 end
 
+When(/^I submit the title details without entering any data$/) do
+  click_button('submit')
+end
+
 Then(/^the user will be prompted again for a proprietor$/) do
   assert_selector(".//*[@id='error_first_name1']", text: /This field is required./)
   assert_selector(".//*[@id='error_surname1']", text: /This field is required./)
@@ -135,3 +139,32 @@ end
 Then(/^a \"([^\"]*)\" message for \"([^\"]*)\" is returned$/) do |errorMessage, fieldId|
   assert_selector(".//*[@id='" + fieldId + "']", text: errorMessage)
 end
+<<<<<<< HEAD
+=======
+
+Given(/^I enter a price paid with too many decimal places$/) do
+  $data['pricePaid'] = "100.00001"
+  fill_in('price_paid', :with => $data['pricePaid'])
+end
+
+When(/^I enter (\d+) company charges$/) do |arg1|
+  click_button('Add a charge')
+  todayDate =  Date.today.strftime("%d-%m-%Y")
+  fill_in('charges-0-charge_date', :with => todayDate)
+  fill_in('charges-0-chargee_name', :with => "Fake company1")
+  fill_in('charges-0-chargee_registration_number', :with => "Test reg no1")
+  fill_in('charges-0-chargee_address', :with => "Flat 3, 2 Test Street, London, SE17 3BY")
+
+  click_button('Add a charge')
+
+  yesterdayDate =  Date.today.prev_day.strftime("%d-%m-%Y")
+  fill_in('charges-1-charge_date', :with => yesterdayDate)
+  fill_in('charges-1-chargee_name', :with => "Fake company2")
+  fill_in('charges-1-chargee_registration_number', :with => "Test reg no2")
+  fill_in('charges-1-chargee_address', :with => "21 Test Street, London, SE17 3BY")
+end
+
+Given(/^I add a charge with no information$/) do
+  click_button('Add a charge')
+end
+>>>>>>> master
