@@ -66,7 +66,7 @@ Then(/^I am presented to certify my details$/) do
 end
 
 Then(/^I receive a confirmation that my change of name request has been lodged$/) do
-  assert_match('Application complete', page.body, 'Expected to Acknowledgement message')
+  assert_match('Application complete', page.body, 'Expected Application complete')
 end
 
 When(/^I accept the certify statement$/) do
