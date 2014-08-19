@@ -1,4 +1,3 @@
-@wip
 Feature: caseworker worklist
 
 Scenario: View Change of Name in work queue
