@@ -2,7 +2,7 @@ Given(/^I have have got married and I want to change my name on the register$/) 
   $data = Hash.new()
   $data['newName'] = firstName() + ' ' + surname()
   $data['partnerFullName'] = firstName() + ' ' + surname()
-  $data['dateOfMarriage'] = dateInThePast().strftime("%Y-%m-%d")
+  $data['dateOfMarriage'] = dateInThePast().strftime("%d-%m-%Y")
   $data['propertyPostcode'] = postcode()
   $data['locationOfMarriage'] = townName()
   $data['countryOfMarriage'] = countryName()
@@ -31,9 +31,14 @@ When(/^I enter my date of marriage$/) do
   fill_in('marriage_date', :with => $data['dateOfMarriage'])
 end
 
-When(/^I enter UK as the Country of marriage$/) do
-  #fill_in('marriage_country', :with => $data['countryOfMarriage'])
-  choose('United Kingdom')
+When(/^I enter GB as the Country of marriage$/) do
+  $data['countryOfMarriage'] = 'GB'
+  fill_in('marriage_country', :with => $data['countryOfMarriage'])
+end
+
+When(/^I do not enter GB as the Country of marriage$/) do
+  $data['countryOfMarriage'] = 'Non Great Britain'
+  fill_in('marriage_country', :with => $data['countryOfMarriage'])
 end
 
 When(/^I enter a location of marriage$/) do
@@ -72,4 +77,36 @@ end
 When(/^I accept the certify statement$/) do
   check('confirm')
   click_button('Submit')
+end
+
+Given(/^a change of name by marriage application that requires reviewing by a caseworker$/) do
+  step "I have have got married and I want to change my name on the register"
+  step "I have a registered property"
+  step "I have private citizen login credentials"
+  step "I want to request I change my name on the register"
+  step "I am logged in"
+  step "I enter a new name"
+  step "I enter my date of marriage"
+  step "I enter my partners name"
+  step "I enter GB as the Country of marriage"
+  step "I enter a location of marriage"
+  step "I enter a Marriage Certificate Number"
+  step "I submit the marriage change of name details"
+  step "I accept the certify statement"
+end
+
+Given(/^a change of name by marriage application that requires checking$/) do
+  step "I have have got married and I want to change my name on the register"
+  step "I have a registered property"
+  step "I have private citizen login credentials"
+  step "I want to request I change my name on the register"
+  step "I am logged in"
+  step "I enter a new name"
+  step "I enter my date of marriage"
+  step "I enter my partners name"
+  step "I do not enter GB as the Country of marriage"
+  step "I enter a location of marriage"
+  step "I enter a Marriage Certificate Number"
+  step "I submit the marriage change of name details"
+  step "I accept the certify statement"
 end
