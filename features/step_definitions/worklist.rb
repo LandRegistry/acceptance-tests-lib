@@ -13,7 +13,7 @@ end
 Then(/^Application Type shows as change of name in the worklist$/) do
   titleList = page.all(:xpath, ".//tr[td//text()[contains(.,'" + $regData['title_number'] + "')]]")
   assert_equal(titleList.length, 1, 'There are zero or more than one entries for title' + $regData['title_number'])
-  assert_match('change-name-marriage', titleList[0].text, 'Expected correct title number: ' + $regData['title_number'])
+  assert_match('change of name', titleList[0].text, 'Expected change of name: ' + $regData['title_number'])
 end
 
 Then(/^Title Number is displayed in the worklist$/) do
