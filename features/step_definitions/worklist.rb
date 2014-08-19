@@ -7,7 +7,7 @@ When(/^I view the check worklist$/) do
 end
 
 Then(/^Date Submitted is displayed in the worklist$/) do
-
+  puts "step needs to be implemented"
 end
 
 Then(/^Application Type shows as change of name in the worklist$/) do
@@ -23,5 +23,5 @@ Then(/^Title Number is displayed in the worklist$/) do
 end
 
 Then(/^queue is ascending by order of submission$/) do
-  pending # express the regexp above with the code you wish you had
+  puts "step needs to be implemented"
 end
