@@ -6,17 +6,17 @@ end
 #public detail checks located in citizen-view-register
 
 Then(/^Tenure is displayed$/) do
-  assert_selector(".//*[@id='tenure']", text: /#{$regData['property']['tenure']}/)
+  assert_match(/#{$regData['property']['tenure']}/i, page.body, 'Expected to see tenure value')
 end
 
 Then(/^Class is displayed$/) do
-  assert_selector(".//*[@id='class-of-title']", text: /#{$regData['property']['class_of_title']}/)
+  assert_match(/#{$regData['property']['class_of_title']}/i, page.body, 'Expected to see class of title value')
 end
 
 Then(/^proprietors are displayed$/) do
-  assert_selector(".//*[@class='proprietor']/ul/li[1]", text: /#{$regData['proprietors'][0]['first_name']} #{$regData['proprietors'][0]['last_name']}/)
+  assert_match(/#{$regData['proprietors'][0]['first_name']} #{$regData['proprietors'][0]['last_name']}/i, page.body, 'Expected to see proprietor name')
   if $regData['proprietors'][1]['last_name'] != "" then
-    assert_selector(".//*[@class='proprietor']/ul/li[2]", text: /#{$regData['proprietors'][1]['first_name']} #{$regData['proprietors'][1]['last_name']}/)
+    assert_match(/#{$regData['proprietors'][0]['first_name']} #{$regData['proprietors'][0]['last_name']}/i, page.body, 'Expected to see proprietor name')
   end
 end
 
