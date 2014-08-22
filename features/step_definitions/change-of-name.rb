@@ -9,7 +9,7 @@ Given(/^I have have got married and I want to change my name on the register$/) 
   $data['marriageCertificateNumber'] = certificateNumber()
   $data['witnessFullName'] = firstName() + ' ' + surname()
   $data['witnessAddress'] = houseNumber().to_s + ' ' + roadName() + "\n" + townName() + "\n" + postcode()
-
+  $data['dateSubmitted'] = Date.today.strftime("%d %B %Y").to_s
 end
 
 Given(/^I want to request I change my name on the register$/) do
@@ -31,13 +31,8 @@ When(/^I enter my date of marriage$/) do
   fill_in('marriage_date', :with => $data['dateOfMarriage'])
 end
 
-When(/^I enter GB as the Country of marriage$/) do
-  $data['countryOfMarriage'] = 'GB'
-  fill_in('marriage_country', :with => $data['countryOfMarriage'])
-end
-
-When(/^I do not enter GB as the Country of marriage$/) do
-  $data['countryOfMarriage'] = 'Non Great Britain'
+When(/^I enter "(.*?)" as the country of marriage$/) do |country|
+  $data['countryOfMarriage'] = country
   fill_in('marriage_country', :with => $data['countryOfMarriage'])
 end
 
@@ -80,22 +75,14 @@ When(/^I accept the certify statement$/) do
 end
 
 Given(/^a change of name by marriage application that requires reviewing by a caseworker$/) do
-  step "I have have got married and I want to change my name on the register"
-  step "I have a registered property"
-  step "I have private citizen login credentials"
-  step "I want to request I change my name on the register"
-  step "I am logged in"
-  step "I enter a new name"
-  step "I enter my date of marriage"
-  step "I enter my partners name"
-  step "I enter GB as the Country of marriage"
-  step "I enter a location of marriage"
-  step "I enter a Marriage Certificate Number"
-  step "I submit the marriage change of name details"
-  step "I accept the certify statement"
+  create_change_of_name_by_marriage_request("GB")
 end
 
 Given(/^a change of name by marriage application that requires checking$/) do
+  create_change_of_name_by_marriage_request("Not GB")
+end
+
+def create_change_of_name_by_marriage_request(country)
   step "I have have got married and I want to change my name on the register"
   step "I have a registered property"
   step "I have private citizen login credentials"
@@ -104,7 +91,7 @@ Given(/^a change of name by marriage application that requires checking$/) do
   step "I enter a new name"
   step "I enter my date of marriage"
   step "I enter my partners name"
-  step "I do not enter GB as the Country of marriage"
+  step "I enter \"#{country}\" as the country of marriage"
   step "I enter a location of marriage"
   step "I enter a Marriage Certificate Number"
   step "I submit the marriage change of name details"
