@@ -273,23 +273,23 @@ def genenerate_multiple_extent(polygons)
      j = i
      puts j
 
-     polydata['geometry']['coordinates'][j] = Array.new()
-     polydata['geometry']['coordinates'][j][i] = Array.new()
-     polydata['geometry']['coordinates'][j][i][0] = Array.new()
-     polydata['geometry']['coordinates'][j][i][0][0] = $topLeft[0] - rand(0..80)
-     polydata['geometry']['coordinates'][j][i][0][1] = $topLeft[1] - rand(0..80)
-     polydata['geometry']['coordinates'][j][i][1] = Array.new()
-     polydata['geometry']['coordinates'][j][i][1][0] = $bottomRight[0] - rand(0..80)
-     polydata['geometry']['coordinates'][j][i][1][1] = $topLeft[1] - rand(0..80)
-     polydata['geometry']['coordinates'][j][i][2] = Array.new()
-     polydata['geometry']['coordinates'][j][i][2][0] = $bottomRight[0] - rand(0..80)
-     polydata['geometry']['coordinates'][j][i][2][1] = $bottomRight[1] - rand(0..80)
-     polydata['geometry']['coordinates'][j][i][3] = Array.new()
-     polydata['geometry']['coordinates'][j][i][3][0] = $topLeft[0] - rand(0..80)
-     polydata['geometry']['coordinates'][j][i][3][1] = $bottomRight[1] - rand(0..80)
-     polydata['geometry']['coordinates'][j][i][4] = Array.new()
-     polydata['geometry']['coordinates'][j][i][4][0] = polydata['geometry']['coordinates'][j][i][0][0]
-     polydata['geometry']['coordinates'][j][i][4][1] = polydata['geometry']['coordinates'][j][i][0][1]
+     polydata['geometry']['coordinates'][i] = Array.new()
+     polydata['geometry']['coordinates'][i][0] = Array.new()
+     polydata['geometry']['coordinates'][i][0][0] = Array.new()
+     polydata['geometry']['coordinates'][i][0][0][0] = $topLeft[0] - rand(0..80)
+     polydata['geometry']['coordinates'][i][0][0][1] = $topLeft[1] - rand(0..80)
+     polydata['geometry']['coordinates'][i][0][1] = Array.new()
+     polydata['geometry']['coordinates'][i][0][1][0] = $bottomRight[0] - rand(0..80)
+     polydata['geometry']['coordinates'][i][0][1][1] = $topLeft[1] - rand(0..80)
+     polydata['geometry']['coordinates'][i][0][2] = Array.new()
+     polydata['geometry']['coordinates'][i][0][2][0] = $bottomRight[0] - rand(0..80)
+     polydata['geometry']['coordinates'][i][0][2][1] = $bottomRight[1] - rand(0..80)
+     polydata['geometry']['coordinates'][i][0][3] = Array.new()
+     polydata['geometry']['coordinates'][i][0][3][0] = $topLeft[0] - rand(0..80)
+     polydata['geometry']['coordinates'][i][0][3][1] = $bottomRight[1] - rand(0..80)
+     polydata['geometry']['coordinates'][i][0][4] = Array.new()
+     polydata['geometry']['coordinates'][i][0][4][0] = polydata['geometry']['coordinates'][j][0][0][0]
+     polydata['geometry']['coordinates'][i][0][4][1] = polydata['geometry']['coordinates'][j][0][0][1]
 
      $N = $N + 250
 
@@ -299,7 +299,7 @@ def genenerate_multiple_extent(polygons)
   polydata['geometry']['properties']['Description'] = 'MultiPolygon'
 
   puts polydata
-
+  
  return polydata
 
 end
