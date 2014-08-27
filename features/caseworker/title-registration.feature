@@ -51,3 +51,22 @@ And I enter 2 proprietors
 And I enter a valid title extent
 And I submit the title details
 Then I have received confirmation that the property has been registered
+
+Scenario: A new title where lease is expanded prompts for required fields
+Given I have received an application for a first registration
+And I want to create a Register of Title
+And I choose a tenure of Leasehold
+When I submit the title details
+Then a "This field is required." message for "error_first_name1" is returned
+And a "This field is required." message for "error_surname1" is returned
+And a "This field is required." message for "error_house_number" is returned
+And a "This field is required." message for "error_road" is returned
+And a "This field is required." message for "error_town" is returned
+And a "This field is required." message for "error_postcode" is returned
+And a "Not a valid choice" message for "error_property_class" is returned
+And a "This field is required." message for "error_extent" is returned
+And a "This field is required." message for "error_date_of_lease" is returned
+And a "This field is required." message for "error_term" is returned
+And a "This field is required." message for "error_term_start_date" is returned
+And a "This field is required." message for "error_lessor_name" is returned
+And a "This field is required." message for "error_lessee_name" is returned

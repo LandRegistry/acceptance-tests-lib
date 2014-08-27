@@ -15,7 +15,7 @@ And proprietors are displayed
 And the company charge is displayed
 And Audit for private citizen register view written
 
-Scenario: view register as existing authenticated user
+Scenario: view freehold register as existing authenticated user
 Given I have a registered property
 And I am still authenticated
 When I view the private register
@@ -26,6 +26,60 @@ And Tenure is displayed
 And Class is displayed
 And proprietors are displayed
 And the company charge is displayed
+
+Scenario: view lease register as new authenticated user without clauses and different lessor
+Given I have a registered leasehold property
+And easements within the lease clause NOT existing
+And alienation clause NOT existing
+And landlords title registered clause NOT existing
+And Lessee name is different as proprietor
+And I have private citizen login credentials
+And I am not already logged in as a private citizen
+When I view the private register
+And I login with correct credentials
+Then the address of property is displayed
+And Title Number is displayed
+And Price Paid is displayed
+And Tenure is displayed
+And Class is displayed
+And proprietors are displayed
+And the company charge is displayed
+And Date of Lease is displayed
+And Lease Term is displayed
+And Lease Term start date is displayed
+And Lessor name is displayed
+And Lessee name is displayed
+And easements within the lease clause NOT displayed
+And alienation clause NOT displayed
+And landlords title registered clause NOT displayed
+And Audit for private citizen register view written
+
+Scenario: view lease register as new authenticated user with clauses and lessor as proprietor
+Given I have a registered leasehold property
+And easements within the lease clause is existing
+And alienation clause is existing
+And landlords title registered clause is existing
+And Lessee name is different as proprietor
+And I have private citizen login credentials
+And I am not already logged in as a private citizen
+When I view the private register
+And I login with correct credentials
+Then the address of property is displayed
+And Title Number is displayed
+And Price Paid is displayed
+And Tenure is displayed
+And Class is displayed
+And proprietors are displayed
+And the company charge is displayed
+And Date of Lease is displayed
+And Lease Term is displayed
+And Lease Term start date is displayed
+And Lessor name is displayed
+And Lessee name is displayed
+And easements within the lease clause is displayed
+And alienation clause is displayed
+And landlords title registered clause is displayed
+And Audit for private citizen register view written
 
 Scenario: Citizen can only view private register if logged in
 Given I have a registered property

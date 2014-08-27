@@ -28,3 +28,56 @@ end
 When(/^I view the register$/) do
   visit("#{$PROPERTY_FRONTEND_DOMAIN}/property/#{$regData['title_number']}")
 end
+
+Then(/^No lease information is displayed$/) do
+  #confirm lease info is not shown when tenure is freehold
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^Date of Lease is displayed$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^Lease Term is displayed$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^Lease Term start date is displayed$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^Lessor name is displayed$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^Lessee name is displayed$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^easements within the lease clause NOT displayed$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^alienation clause NOT displayed$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^landlords title registered clause NOT displayed$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^Lessor name NOT displayed$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^easements within the lease clause is displayed$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^alienation clause is displayed$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^landlords title registered clause is displayed$/) do
+  pending # express the regexp above with the code you wish you had
+end

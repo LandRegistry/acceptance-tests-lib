@@ -165,3 +165,39 @@ end
 Given(/^I add a charge with no information$/) do
   click_button('Add a charge')
 end
+
+When(/^I enter valid Date of Lease$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+When(/^I enter valid Term Years$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+When(/^I enter valid term start date$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+When(/^I enter proprietor as lessor name$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+When(/^I enter Lessee name$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+When(/^I enter non proprietor lessor name$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+When(/^I select easement within lease$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+When(/^I select alienation$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+When(/^I select landlords title registered$/) do
+  pending # express the regexp above with the code you wish you had
+end

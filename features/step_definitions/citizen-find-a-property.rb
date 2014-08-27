@@ -1,7 +1,6 @@
 require "net/http"
 
-Given(/^I have registered property data$/) do
-
+Given(/^I have registered (.*) property data$/) do |tenure|
   $regData = Hash.new()
   $regData['title_number'] = titleNumber()
   $regData['proprietors'] = Array.new()
@@ -31,7 +30,9 @@ Given(/^I have registered property data$/) do
   $regData['charges'][0]['chargee_address'] = '12 Test Street, London, SE1 33S'
   $regData['charges'][0]['chargee_name'] = 'Test Bank'
   $regData['charges'][0]['chargee_registration_number'] = '1234567'
-
+  if tenure =='leasehold' then
+    #build up the leasehold structure
+  end
   puts 'Title number' + $regData['title_number']
 
 end
@@ -54,21 +55,21 @@ Given(/^I submit the registered property data$/) do
 end
 
 
-Given(/^I have a registered property$/) do
+Given(/^I have a registered (.*) property$/) do |tenure|
 
-  step "I have registered property data"
+  step "I have registered " + tenure +" property data"
   step "I submit the registered property data"
 
 end
 
 Given(/^I have a registered property with multiple polygons$/) do
-  step "I have registered property data"
+  step "I have registered freehold property data"
   $regData['extent'] = genenerate_title_extent(2)
   step "I submit the registered property data"
 end
 
 Given(/^I have a registered property with donut polygons$/) do
-  step "I have registered property data"
+  step "I have registered freehold property data"
   $regData['extent'] = genenerate_title_extent_donut(1)
   step "I submit the registered property data"
 end
@@ -112,9 +113,9 @@ end
 Given(/^at least two registers with the same Title Number beginning exists$/) do
   # Currently I am unsure how to do this as the developer aren't sure how it will happen.
   $results = Array[]
-  step "I have a registered property"
+  step "I have a registered freehold property"
   $results[0] = $regData
-  step "I have a registered property"
+  step "I have a registered freehold property"
   $results[1] = $regData
   # For now I am calling this step twice to create 2 registers, I will then search for TEST*
 end
@@ -149,4 +150,32 @@ end
 
 When(/^I select a result$/) do
   click_link('Title Number: ' + $regData['title_number'])
+end
+
+Given(/^easements within the lease clause (NOT|is) existing$/) do |easement|
+  pending # express the regexp above with the code you wish you had
+end
+
+Given(/^alienation clause NOT existing$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Given(/^landlords title registered clause NOT existing$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Given(/^Lessee name is different as proprietor$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Given(/^alienation clause is existing$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Given(/^landlords title registered clause is existing$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Given(/^Lessee name is same as proprietor$/) do
+  pending # express the regexp above with the code you wish you had
 end
