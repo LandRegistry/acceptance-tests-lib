@@ -35,7 +35,7 @@ else
 
   ### Set the options for poltergeist to use
   Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, :inspector => true)
+    Capybara::Poltergeist::Driver.new(app, :inspector => true, :js_errors => false)
   end
   #This removes the referer for the map tiles to be returned
   page.driver.add_header("Referer", "", permanent: true)
