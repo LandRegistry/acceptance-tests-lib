@@ -2,7 +2,7 @@
 Feature: Citizen view register
 
 Scenario: view freehold register as citizen
-Given I have a registered freehold property
+Given I have a registered Freehold property
 And I am a citizen
 When I view the register
 Then the address of property is displayed
@@ -11,8 +11,8 @@ And Price Paid is displayed
 And No lease information is displayed
 And Audit for public citizen search of title written
 
-Scenario: view lease register as citizen without clauses and different lessor
-Given I have a registered leasehold property
+Scenario: view lease register as citizen without clauses and different lessee
+Given I have a registered Leasehold property
 And easements within the lease clause NOT existing
 And alienation clause NOT existing
 And landlords title registered clause NOT existing
@@ -32,8 +32,8 @@ And alienation clause NOT displayed
 And landlords title registered clause NOT displayed
 And Audit for public citizen search of title written
 
-Scenario: view lease register as citizen with clauses and lessor as proprietor
-Given I have a registered leasehold property
+Scenario: view lease register as citizen with clauses and lessee as proprietor
+Given I have a registered Leasehold property
 And easements within the lease clause is existing
 And alienation clause is existing
 And landlords title registered clause is existing
@@ -46,8 +46,8 @@ And Price Paid is displayed
 And Date of Lease is displayed
 And Lease Term is displayed
 And Lease Term start date is displayed
-And Lessor name NOT displayed
-And Lessee name is displayed
+And Lessor name is displayed
+And Lessee name NOT displayed
 And easements within the lease clause is displayed
 And alienation clause is displayed
 And landlords title registered clause is displayed
@@ -59,7 +59,7 @@ When I try to view a register that does not exist
 Then an error will be displayed
 
 Scenario: Register with Title Plan Single Polygon
-Given I have a registered freehold property
+Given I have a registered Freehold property
 And I am a citizen
 When I view the register
 And I check the title plan

@@ -14,7 +14,7 @@ And I submit the title details
 Then I have received confirmation that the property has been registered
 And Audit for new registration is written
 
-Scenario: Processing Good Leasehold First Registration with 1 proprietor and all valid details but no clauses and lessor as a proprietor
+Scenario: Processing Good Leasehold First Registration with 1 proprietor and all valid details but no clauses and lessee as a proprietor
 Given I have received an application for a first registration
 And I want to create a Register of Title
 When I enter a Property Address
@@ -22,8 +22,8 @@ And I choose a tenure of Leasehold
 And I enter valid Date of Lease
 And I enter valid Term Years
 And I enter valid term start date
-And I enter proprietor as lessor name
-And I enter Lessee name
+And I enter Lessor name
+And I enter proprietor as lessee name
 And I select class of Good
 And I enter a valid price paid
 And I enter 1 proprietor
@@ -31,7 +31,7 @@ And I enter a valid title extent
 And I submit the title details
 Then I have received confirmation that the property has been registered
 
-Scenario: Processing Absolute Leasehold First Registration with 2 proprietors and all valid details with clauses and different lessor
+Scenario: Processing Absolute Leasehold First Registration with 2 proprietors and all valid details with clauses and different lessee
 Given I have received an application for a first registration
 And I want to create a Register of Title
 When I enter a Property Address
@@ -39,8 +39,8 @@ And I choose a tenure of Leasehold
 And I enter valid Date of Lease
 And I enter valid Term Years
 And I enter valid term start date
-And I enter non proprietor lessor name
-And I enter Lessee name
+And I enter Lessor name
+And I enter non proprietor lessee name
 And I select easement within lease
 And I select alienation
 And I select landlords title registered

@@ -167,37 +167,45 @@ Given(/^I add a charge with no information$/) do
 end
 
 When(/^I enter valid Date of Lease$/) do
-  pending # express the regexp above with the code you wish you had
+  yesterdayDate =  Date.today.prev_day.strftime("%d-%m-%Y")
+  fill_in('leases-0-lease_date', :with => yesterdayDate)
 end
 
 When(/^I enter valid Term Years$/) do
-  pending # express the regexp above with the code you wish you had
+  fill_in('leases-0-lease_term', :with => '7')
 end
 
 When(/^I enter valid term start date$/) do
-  pending # express the regexp above with the code you wish you had
+  todayDate =  Date.today.strftime("%d-%m-%Y")
+  fill_in('leases-0-lease_from', :with => todayDate)
 end
 
-When(/^I enter proprietor as lessor name$/) do
-  pending # express the regexp above with the code you wish you had
+When(/^I enter Lessor name$/) do
+  lessor_name = firstName() + ' ' + surname() +', '+firstName() + ' ' + surname()
+  fill_in('leases-0-lessor_name', :with => lessor_name)
 end
 
-When(/^I enter Lessee name$/) do
-  pending # express the regexp above with the code you wish you had
+When(/^I enter proprietor as lessee name$/) do
+  proprietor_lessee_name = $data['forename1'] + ' ' + $data['surname1']
+  if $data['surname2'] !='' then
+    proprietor_lessee_name = proprietor_lessee_name + ', ' +$data['forename2'] + ' ' + $data['surname2']
+  end
+  fill_in('leases-0-lessee_name', :with => proprietor_lessee_name)
 end
 
-When(/^I enter non proprietor lessor name$/) do
-  pending # express the regexp above with the code you wish you had
+When(/^I enter non proprietor lessee name$/) do
+  lessee_name = firstName() + 'diff ' + surname() +'diff, '+firstName() + 'diff ' + surname()
+  fill_in('leases-0-lessee_name', :with => lessee_name)
 end
 
 When(/^I select easement within lease$/) do
-  pending # express the regexp above with the code you wish you had
+  check('leases-0-lease_easements')
 end
 
 When(/^I select alienation$/) do
-  pending # express the regexp above with the code you wish you had
+  check('leases-0-alienation_clause')
 end
 
 When(/^I select landlords title registered$/) do
-  pending # express the regexp above with the code you wish you had
+  check('leases-0-title_registered')
 end
