@@ -180,6 +180,7 @@ def get_polygon_details(image1, image2)
 
     multi_array_edge[polygon_i] = []
 
+
     # Loop though all the polygons that are different
     multi_array_area[0].each do |x, y|
 
@@ -210,6 +211,10 @@ def get_polygon_details(image1, image2)
         if ((coords[i] > 0) && (coords[i] != my_polymulti)) then
 
           multi_array_edge_tmp = multi_array_edge
+
+          if (multi_array_edge_tmp[polygon_i].nil?) then
+            multi_array_edge_tmp[polygon_i] = []
+          end
 
           # Loop through the edging to merge an array if they connect
           multi_array_edge_tmp[polygon_i][coords[i]].each do |poly_x, poly_x_value |
@@ -257,6 +262,38 @@ def get_polygon_details(image1, image2)
   end
 
   ##########
+  # The code below works out the easement pixels
+  #########
+
+  multi_easements = []
+
+  for i in 0..(multi_array.count - 1)
+
+    multi_easements[i] = {}
+
+    multi_array[i].each do |poly_x, poly_x_value |
+      # Loop though each pixel (y)
+      poly_x_value.each do |poly_y, poly_y_value|
+        # Check if the pixel has an up, down, left, right neghbour
+
+        r = ChunkyPNG::Color.r(images.last[poly_x,poly_y])
+        g = ChunkyPNG::Color.g(images.last[poly_x,poly_y])
+        b = ChunkyPNG::Color.b(images.last[poly_x,poly_y])
+
+        if ((r == 0) && (g == 0) && (b == 255)) then
+          if (multi_easements[i][poly_x].nil?) then
+            multi_easements[i][poly_x] = {}
+          end
+          multi_easements[i][poly_x][poly_y] = poly_y
+        end
+      end
+    end
+  end
+
+
+
+
+  ##########
   # The code below collates all the information and returns it
   #########
 
@@ -271,6 +308,9 @@ def get_polygon_details(image1, image2)
     polys_late = []
 
     if (!multi_array[i].nil?)
+
+
+
       multi_array[i].each do |poly_key, poly_value |
 
         multi_array[i][poly_key].each do |poly_object2_key, poly_object2_value|
@@ -298,6 +338,7 @@ def get_polygon_details(image1, image2)
       polygon_data_hash['edging_count'] = polgyon_edges[i].count
 
       polygon_data_hash['donut'] = (if polygon_data_hash['edging_count'] > 1 then true else false end)
+      polygon_data_hash['easement'] = (if multi_easements[i].count > 1 then true else false end)
 
 
       polygon_data['polygons'] << polygon_data_hash
@@ -309,13 +350,12 @@ def get_polygon_details(image1, image2)
 
   images.last.save("diff2-#{Time.new.to_i}.png")
 
+  puts polygon_data
+
   return polygon_data
 end
 
 def compare_maps(image1, image2)
-
-  puts 'image1 - ' + Digest::MD5.file(image1).to_s
-  puts 'image2 - ' + Digest::MD5.file(image2).to_s
 
   if (Digest::MD5.file(image1).to_s == Digest::MD5.file(image2).to_s) then
     return true

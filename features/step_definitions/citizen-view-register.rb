@@ -1,7 +1,7 @@
 Then(/^the address of property is displayed$/) do
-  assert_match(/#{$regData['property']['address']['house_number']}/i, page.body, 'Expected to find house_number')
-  assert_match(/#{$regData['property']['address']['road'].gsub(')', '\)').gsub('(', '\(')}/i, page.body, 'Expected to find road')
-  assert_match(/#{$regData['property']['address']['town']}/i, page.body, 'Expected to find town')
+  assert_match(/#{$regData['property']['address']['address_line_1']}/i, page.body, 'Expected to find address line 1')
+  assert_match(/#{$regData['property']['address']['address_line_2'].gsub(')', '\)').gsub('(', '\(')}/i, page.body, 'Expected to find address line 2')
+  assert_match(/#{$regData['property']['address']['city']}/i, page.body, 'Expected to find city')
   assert_match(/#{$regData['property']['address']['postcode']}/i, page.body, 'Expected to find postcode')
 end
 

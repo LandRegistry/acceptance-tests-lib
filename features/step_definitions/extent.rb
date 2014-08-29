@@ -1,7 +1,11 @@
 require 'oily_png'
 
-Given(/^I check the title plan$/) do
+When(/^I check the title plan \(public view\)$/) do
   sleep(2)
+
+  $polygon_main = "tmpimg-#{Time.new.to_i}-main.png"
+  page.execute_script("geoJson.setStyle({weight: 8, opacity: 1});")
+  save_screenshot($polygon_main, :selector => "#map")
 
   # Get names for the 2 files we will produce
   $polygon_file1 = "tmpimg-#{Time.new.to_i}-1.png"
@@ -11,7 +15,8 @@ Given(/^I check the title plan$/) do
   page.execute_script("map.removeLayer(openspaceLayer);")
 
   # Make the shape more vivid
-  page.execute_script("geoJson.setStyle({opacity: 1, weight: 2, fillOpacity: 1, fillColor: '#f03'});")
+  page.execute_script("geoJson.setStyle({opacity: 1, weight: 0, fillOpacity: 1});")
+
   # Take a screen show of the map id div tag
   save_screenshot($polygon_file1, :selector => "#map")
 
@@ -25,6 +30,51 @@ Given(/^I check the title plan$/) do
   page.execute_script("map.addLayer(geoJson);")
 
   page.execute_script("geoJson.setStyle({fillOpacity: 0});")
+
+  # Compare the images to get the polygon details
+  $map_details = get_polygon_details($polygon_file1, $polygon_file2)
+
+  # Re add the map layer
+  page.execute_script("map.addLayer(openspaceLayer);")
+  sleep(1)
+
+end
+
+When(/^I check the title plan \(private view\)$/) do
+  sleep(2)
+
+  $polygon_main = "tmpimg-#{Time.new.to_i}-main.png"
+  page.execute_script("extentGeoJson.setStyle({weight: 8, opacity: 1});")
+  save_screenshot($polygon_main, :selector => "#map")
+
+  # Get names for the 2 files we will produce
+  $polygon_file1 = "tmpimg-#{Time.new.to_i}-1.png"
+  $polygon_file2 = "tmpimg-#{Time.new.to_i}-2.png"
+
+  # Hide Map Layer
+  page.execute_script("map.removeLayer(openspaceLayer);")
+
+  # Make the shape more vivid
+  page.execute_script("extentGeoJson.setStyle({opacity: 1, weight: 0, fillOpacity: 1});")
+  page.execute_script("easementGeoJson.setStyle({opacity: 1, weight: 0, fillOpacity: 1});")
+
+  puts page.evaluate_script("easementGeoJson.options")
+
+  # Take a screen show of the map id div tag
+  save_screenshot($polygon_file1, :selector => "#map")
+
+  # Remove the geojson layer of the map
+  page.execute_script("map.removeLayer(extentGeoJson);")
+  page.execute_script("map.removeLayer(easementGeoJson);")
+
+  # Now take another screenshot without the geojson there
+  save_screenshot($polygon_file2, :selector => "#map")
+
+  # readd the layer back in to in sure the map is correct for other tests
+  page.execute_script("map.addLayer(extentGeoJson);")
+  page.execute_script("map.addLayer(easementGeoJson);")
+
+  page.execute_script("extentGeoJson.setStyle({fillOpacity: 0});")
 
   # Compare the images to get the polygon details
   $map_details = get_polygon_details($polygon_file1, $polygon_file2)
@@ -69,9 +119,9 @@ end
 
 Then(/^the polygon(s are| is) edged in red$/) do |wording|
   # Check the source code of the html for the stroke of red
-  assert_equal (find(".//*[local-name() = 'path']")['stroke']) , 'red', 'Expected the edging to be red'
+  #assert_equal (find(".//*[local-name() = 'path']")['stroke']) , 'red', 'Expected the edging to be red'
 
-  image = ChunkyPNG::Image.from_file($polygon_file1)
+  image = ChunkyPNG::Image.from_file($polygon_main)
 
   # Loop through the polygons
   $map_details['polygons'].each do |polygon|
@@ -88,7 +138,7 @@ Then(/^the polygon(s are| is) edged in red$/) do |wording|
         b = ChunkyPNG::Color.b(image[i_x,i_y])
 
         # Red has a high r value and low g and b. So lets see if any break that rule
-        if ((r < 235) || (g > 120) || (b > 120)) then
+        if ((r != 255) || (g != 0) || (b != 0)) then
           puts i_x.to_s + ' - ' + i_y.to_s + ' - ' + r.to_s + ':' + g.to_s + ':' + b.to_s
           raise 'Found a colour that isn\'t red on the border.'
         end
@@ -168,4 +218,18 @@ Then(/^the Polygon(s are| is) laid over a map$/) do |wording|
   # Re add the map layer
   page.execute_script("map.addLayer(openspaceLayer);")
 
+end
+
+Then(/^the polygon( has|s have) an easement$/) do |wording|
+  # Loop through the polygons
+  $map_details['polygons'].each do |polygon|
+    assert_equal true, polygon['easement'], 'The polygon does not have an easement'
+  end
+end
+
+Then(/^the polygon does not have an easement$/) do
+  # Loop through the polygons
+  $map_details['polygons'].each do |polygon|
+    assert_equal false, polygon['easement'], 'The polygon does not have an easement'
+  end
 end
