@@ -66,7 +66,13 @@ When(/^I logout as a private citizen$/) do
 end
 
 Then(/^I am prompted to login as a private citizen$/) do
-  assert_match(/Please log in to access this page/i, page.body, 'Expected private citizen login page.')
+  assert_match(/Login/i, page.body, 'Expected private citizen login page.')
+end
+
+Then(/^I fail to login$/) do
+  if (!page.body.include? 'Invalid login') then
+    raise "Expected error message informing the user was unsuccessful in logging in"
+  end
 end
 
 When(/^I logout as a caseworker$/) do

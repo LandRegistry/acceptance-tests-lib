@@ -67,6 +67,19 @@ Given(/^I have a registered property with multiple polygons$/) do
   step "I submit the registered property data"
 end
 
+
+Given(/^I have a registered property with an easement$/) do
+  step "I have registered property data"
+  $regData['extent'] = genenerate_title_extent(1)
+
+  $regData['easements'] = []
+  $regData['easements'][0] = {}
+  $regData['easements'][0]['easement_geometry'] = generate_easement_for_title_extent($regData['extent'])
+  $regData['easements'][0]['easement_description'] = 'Easement Description'
+
+  step "I submit the registered property data"
+end
+
 Given(/^I have a registered property with donut polygons$/) do
   step "I have registered property data"
   $regData['extent'] = genenerate_title_extent_donut(1)

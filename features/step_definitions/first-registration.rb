@@ -11,6 +11,8 @@ Given(/^I have received an application for a first registration$/) do
   $data['surname1'] = surname()
   $data['forename2'] = firstName()
   $data['surname2'] = surname()
+  $data['title_extent'] = genenerate_title_extent(1)
+  $data['easement'] = generate_easement_for_title_extent($data['title_extent'])
 end
 
 Given(/^I want to create a Register of Title$/) do
@@ -133,7 +135,7 @@ Then(/^Title Number is unique$/) do
 end
 
 When(/^I enter a valid title extent$/) do
-  fill_in('extent', :with => genenerate_title_extent(1).to_json)
+  fill_in('extent', :with => $data['title_extent'].to_json)
 end
 
 Then(/^a \"([^\"]*)\" message for \"([^\"]*)\" is returned$/) do |errorMessage, fieldId|
@@ -164,4 +166,10 @@ end
 
 Given(/^I add a charge with no information$/) do
   click_button('Add a charge')
+end
+
+When(/^I enter a valid title easement$/) do
+  click_button('Add an easement')
+  fill_in('easements-0-easement_description', :with => 'Easement Description')
+  fill_in('easements-0-easement_geometry', :with => $data['easement'].to_json)
 end
