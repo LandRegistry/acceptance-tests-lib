@@ -14,9 +14,9 @@ Then(/^Class is displayed$/) do
 end
 
 Then(/^proprietors are displayed$/) do
-  assert_match(/#{$regData['proprietors'][0]['first_name']} #{$regData['proprietors'][0]['last_name']}/i, page.body, 'Expected to see proprietor name')
-  if $regData['proprietors'][1]['last_name'] != "" then
-    assert_match(/#{$regData['proprietors'][0]['first_name']} #{$regData['proprietors'][0]['last_name']}/i, page.body, 'Expected to see proprietor name')
+  assert_match(/#{$regData['proprietors'][0]['full_name']}/i, page.body, 'Expected to see proprietor name')
+  if $regData['proprietors'][1]['full_name'] != "" then
+    assert_match(/#{$regData['proprietors'][1]['full_name']}/i, page.body, 'Expected to see proprietor name')
   end
 end
 

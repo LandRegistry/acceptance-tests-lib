@@ -9,10 +9,8 @@ Given(/^I have received an application for a first registration$/) do
   $data['city'] = townName()
   $data['postcode'] = postcode()
   $data['pricePaid'] = pricePaid()
-  $data['forename1'] = firstName()
-  $data['surname1'] = surname()
-  $data['forename2'] = firstName()
-  $data['surname2'] = surname()
+  $data['fullName1'] = fullName()
+  $data['fullName2'] = fullName()
   $data['title_extent'] = genenerate_title_extent(1)
   $data['easement'] = generate_easement_for_title_extent($data['title_extent'])
 end
@@ -51,17 +49,13 @@ When(/^I enter a valid price paid$/) do
 end
 
 When(/^I enter 1 proprietor$/) do
-  fill_in('first_name1', :with => $data['forename1'])
-  fill_in('surname1', :with => $data['surname1'])
-  $data['forename2'] = ''
-  $data['surname2'] = ''
+  fill_in('full_name1', :with => $data['fullName1'])
+  $data['fullName2'] = ''
 end
 
 When(/^I enter 2 proprietors$/) do
-  fill_in('first_name1', :with => $data['forename1'])
-  fill_in('surname1', :with => $data['surname1'])
-  fill_in('first_name2', :with => $data['forename2'])
-  fill_in('surname2', :with => $data['surname2'])
+  fill_in('full_name1', :with => $data['fullName1'])
+  fill_in('full_name2', :with => $data['fullName2'])
 end
 
 When(/^I submit the title details$/) do
@@ -73,8 +67,7 @@ When(/^I submit the title details without entering any data$/) do
 end
 
 Then(/^the user will be prompted again for a proprietor$/) do
-  assert_selector(".//*[@id='error_first_name1']", text: /This field is required./)
-  assert_selector(".//*[@id='error_surname1']", text: /This field is required./)
+  assert_selector(".//*[@id='error_full_name1']", text: /This field is required./)
 end
 
 Then(/^the user will be prompted again for required address fields$/) do
@@ -122,10 +115,8 @@ Then(/^I have received confirmation that the property has been registered$/) do
   registered_property = get_register_by_title($data['titleNumber'])
 
   assert_match($data['titleNumber'].to_s, registered_property, 'Title number does not match')
-  assert_match($data['forename1'].to_s, registered_property, 'Forename 1 does not match')
-  assert_match($data['surname1'].to_s, registered_property, 'Surname 1 does not match')
-  assert_match($data['forename2'].to_s, registered_property, 'Forename 2 does not match')
-  assert_match($data['surname2'].to_s, registered_property, 'Surname 2 does not match')
+  assert_match($data['fullName1'].to_s, registered_property, 'FullName 1 does not match')
+  assert_match($data['fullName2'].to_s, registered_property, 'FullName 2 does not match')
   assert_match($data['propertyHouseNumber'].to_s, registered_property, 'House Number does not match')
   assert_match($data['propertyTown'].to_s, registered_property, 'Town does not match')
   assert_match($data['propertyPostcode'].to_s, registered_property, 'Postcode does not match')

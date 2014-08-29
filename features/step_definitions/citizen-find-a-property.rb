@@ -6,11 +6,9 @@ Given(/^I have registered property data$/) do
   $regData['title_number'] = titleNumber()
   $regData['proprietors'] = Array.new()
   $regData['proprietors'][0] = Hash.new()
-  $regData['proprietors'][0]['first_name'] = firstName()
-  $regData['proprietors'][0]['last_name'] = surname()
+  $regData['proprietors'][0]['full_name'] = fullName()
   $regData['proprietors'][1] = Hash.new()
-  $regData['proprietors'][1]['first_name'] = firstName()
-  $regData['proprietors'][1]['last_name'] = surname()
+  $regData['proprietors'][1]['full_name'] = fullName()
   $regData['property'] = Hash.new()
   $regData['property']['address'] = Hash.new()
   $regData['property']['address']['address_line_1'] = houseNumber()
@@ -123,7 +121,7 @@ end
 Then(/^the citizen register is displayed$/) do
   puts $regData['title_number']
   # This step isn't ideal. I need something on the page to show it is the citizen registration.
-  if (page.body.include? $regData['proprietors'][0]['first_name']) then
+  if (page.body.include? $regData['proprietors'][0]['full_name']) then
     raise "Expected to find no names on this register, this means it isn't the public register."
   end
 end
