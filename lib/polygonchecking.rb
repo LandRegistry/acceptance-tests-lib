@@ -28,6 +28,8 @@ def get_polygon_details(image1, image2)
   # now with the pixels that are different, get the min and max
   x, y = polygon_diff.map{ |xy| xy[0] }, polygon_diff.map{ |xy| xy[1] }
 
+  images.last.rect(x.min, y.min, x.max, y.max, ChunkyPNG::Color.rgb(0,0,0))
+
   polygon_data['x.min'] = x.min
   polygon_data['x.max'] = x.max
   polygon_data['y.min'] = y.min

@@ -71,7 +71,6 @@ And the map can't be zoomed
 And the map can't be moved
 And the Polygon is laid over a map
 
-@wip
 Scenario: Register with Title Plan Two Polygons
 Given I have a registered property with multiple polygons
 And I am a citizen
