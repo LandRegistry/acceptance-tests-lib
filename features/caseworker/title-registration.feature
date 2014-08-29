@@ -65,15 +65,8 @@ And a "This field is required." message for "error_town" is returned
 And a "This field is required." message for "error_postcode" is returned
 And a "Not a valid choice" message for "error_property_class" is returned
 And a "This field is required." message for "error_extent" is returned
-And a "This field is required." message for "error_date_of_lease" is returned
-And a "This field is required." message for "error_term" is returned
-And a "This field is required." message for "error_term_start_date" is returned
-And a "This field is required." message for "error_lessor_name" is returned
-And a "This field is required." message for "error_lessee_name" is returned
-
-Scenario: Try to enter a lease first registration which is less than seven years
-Given I have received an application for a first registration
-And I want to create a Register of Title
-And I choose a tenure of Leasehold
-When I submit the title details
-Then a "This field is required." message for "error_term" is returned
+And a "This field is required." message for "error_leases-0-lease_date" is returned
+And a "This field is required." message for "error_leases-0-lease_term" is returned
+And a "This field is required." message for "error_leases-0-lease_from" is returned
+And a "This field is required." message for "error_leases-0-lessor_name" is returned
+And a "This field is required." message for "error_leases-0-lessee_name" is returned
