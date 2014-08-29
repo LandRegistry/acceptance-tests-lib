@@ -331,6 +331,6 @@ def genenerate_title_extent_donut(polygons)
 
   polydata['geometry']['properties'] = Hash.new()
   polydata['geometry']['properties']['Description'] = 'Polygon'
-  
+
   return polydata
 end

@@ -27,14 +27,14 @@ Given(/^I have registered (.*) property data$/) do |tenure|
     #build up the leasehold structure
     $regData['leases'] = Array.new()
     $regData['leases'][0] = Hash.new()
-    $regData['leases'][0]['lease_term'] = '8'
+    $regData['leases'][0]['lease_term'] = rand(7..999)
     $regData['leases'][0]['lease_easements'] = true
-    $regData['leases'][0]['lease_date'] = '2013-08-11'
+    $regData['leases'][0]['lease_date'] = Date.today.prev_day.strftime("%Y-%m-%d")
     $regData['leases'][0]['title_registered'] = true
-    $regData['leases'][0]['lessee_name'] = 'Tom'
+    $regData['leases'][0]['lessee_name'] = firstName() + ' ' + surname() +'s, '+firstName() + ' ' + surname() + 's'
     $regData['leases'][0]['alienation_clause'] = true
-    $regData['leases'][0]['lease_from'] = '2013-08-11'
-    $regData['leases'][0]['lessor_name'] = 'fred'
+    $regData['leases'][0]['lease_from'] = Date.today.prev_day.strftime("%Y-%m-%d")
+    $regData['leases'][0]['lessor_name'] = firstName() + ' ' + surname() +', '+firstName() + ' ' + surname()
   end
   $regData['charges'] = Array.new()
   $regData['charges'][0] = Hash.new()
@@ -162,33 +162,34 @@ When(/^I select a result$/) do
   click_link('Title Number: ' + $regData['title_number'])
 end
 
-Given(/^easements within the lease clause (NOT|is) existing$/) do |easement|
-  pending # express the regexp above with the code you wish you had
+Given(/^easements within the lease clause (NOT|is) existing$/) do |easement_clause|
+  if easement_clause == 'NOT' then
+    $regData['leases'][0]['lease_easements'] = false
+  else
+    $regData['leases'][0]['lease_easements'] = true
+  end
 end
 
-Given(/^alienation clause NOT existing$/) do
-  pending # express the regexp above with the code you wish you had
+Given(/^alienation clause (NOT|is) existing$/) do |alienation_clause|
+  if alienation_clause == 'NOT' then
+    $regData['leases'][0]['alienation_clause'] = false
+  else
+    $regData['leases'][0]['alienation_clause'] = true
+  end
 end
 
-Given(/^landlords title registered clause NOT existing$/) do
-  pending # express the regexp above with the code you wish you had
+Given(/^landlords title registered clause (NOT|is) existing$/) do |landlord_clause|
+  if landlord_clause =='NOT' then
+    $regData['leases'][0]['title_registered'] = false
+  else
+    $regData['leases'][0]['title_registered'] = true
+  end
 end
 
-Given(/^Lessee name is different as proprietor$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-Given(/^alienation clause is existing$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-Given(/^landlords title registered clause is existing$/) do
-  pending # express the regexp above with the code you wish you had
-end
-
-Given(/^Lessee name is same as proprietor$/) do
-  pending # express the regexp above with the code you wish you had
-end
-Then(/^Lessee name NOT displayed$/) do
-  pending # express the regexp above with the code you wish you had
+Given(/^Lessee name is (different|same) as proprietor$/) do |lessee_name_as_proprietor|
+  #lessee name is alreday different so only need to make same as necessary
+  #only puts the first proprietor name as lessee, varients should be covered in unit test
+  if lessee_name_as_proprietor == 'same' then
+    $regData['leases'][0]['lessee_name'] = $regData['proprietors'][0]['first_name'] + ' ' + $regData['proprietors'][0]['last_name']
+  end
 end
