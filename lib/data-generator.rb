@@ -191,44 +191,40 @@ def generate_single_extent
   polydata['geometry']['type'] = 'Polygon'
   polydata['geometry']['coordinates'] = Array.new()
 
-   $topLeft = Array.new
-   $topLeft << $N
-   $topLeft << $E
+  $topLeft = Array.new
+  $topLeft << $N
+  $topLeft << $E
 
-   $N = $N + 250
-   $E = $E + 250
+  $N = $N + 250
+  $E = $E + 250
 
-   $bottomRight = Array.new
-   $bottomRight << $N
-   $bottomRight << $E
+  $bottomRight = Array.new
+  $bottomRight << $N
+  $bottomRight << $E
 
+  polydata['geometry']['coordinates'][0] = Array.new()
+  polydata['geometry']['coordinates'][0][0] = Array.new()
+  polydata['geometry']['coordinates'][0][0][0] = $topLeft[0] - rand(0..80)
+  polydata['geometry']['coordinates'][0][0][1] = $topLeft[1] - rand(0..80)
+  polydata['geometry']['coordinates'][0][1] = Array.new()
+  polydata['geometry']['coordinates'][0][1][0] = $bottomRight[0] - rand(0..80)
+  polydata['geometry']['coordinates'][0][1][1] = $topLeft[1] - rand(0..80)
+  polydata['geometry']['coordinates'][0][2] = Array.new()
+  polydata['geometry']['coordinates'][0][2][0] = $bottomRight[0] - rand(0..80)
+  polydata['geometry']['coordinates'][0][2][1] = $bottomRight[1] - rand(0..80)
+  polydata['geometry']['coordinates'][0][3] = Array.new()
+  polydata['geometry']['coordinates'][0][3][0] = $topLeft[0] - rand(0..80)
+  polydata['geometry']['coordinates'][0][3][1] = $bottomRight[1] - rand(0..80)
+  polydata['geometry']['coordinates'][0][4] = Array.new()
+  polydata['geometry']['coordinates'][0][4][0] = polydata['geometry']['coordinates'][0][0][0]
+  polydata['geometry']['coordinates'][0][4][1] = polydata['geometry']['coordinates'][0][0][1]
 
-    polydata['geometry']['coordinates'][0] = Array.new()
-    polydata['geometry']['coordinates'][0][0] = Array.new()
-    polydata['geometry']['coordinates'][0][0][0] = $topLeft[0] - rand(0..80)
-    polydata['geometry']['coordinates'][0][0][1] = $topLeft[1] - rand(0..80)
-    polydata['geometry']['coordinates'][0][1] = Array.new()
-    polydata['geometry']['coordinates'][0][1][0] = $bottomRight[0] - rand(0..80)
-    polydata['geometry']['coordinates'][0][1][1] = $topLeft[1] - rand(0..80)
-    polydata['geometry']['coordinates'][0][2] = Array.new()
-    polydata['geometry']['coordinates'][0][2][0] = $bottomRight[0] - rand(0..80)
-    polydata['geometry']['coordinates'][0][2][1] = $bottomRight[1] - rand(0..80)
-    polydata['geometry']['coordinates'][0][3] = Array.new()
-    polydata['geometry']['coordinates'][0][3][0] = $topLeft[0] - rand(0..80)
-    polydata['geometry']['coordinates'][0][3][1] = $bottomRight[1] - rand(0..80)
-    polydata['geometry']['coordinates'][0][4] = Array.new()
-    polydata['geometry']['coordinates'][0][4][0] = polydata['geometry']['coordinates'][0][0][0]
-    polydata['geometry']['coordinates'][0][4][1] = polydata['geometry']['coordinates'][0][0][1]
+  $N = $N + 250
 
-    $N = $N + 250
+  polydata['geometry']['properties'] = Hash.new()
+  polydata['geometry']['properties']['Description'] = 'Polygon'
 
- polydata['geometry']['properties'] = Hash.new()
-   polydata['geometry']['properties']['Description'] = 'Polygon'
-
-
- puts polydata
-
-return polydata
+  return polydata
 
 end
 
@@ -349,57 +345,91 @@ def genenerate_title_extent_donut(polygons)
   polydata['geometry']['type'] = 'Polygon'
   polydata['geometry']['coordinates'] = Array.new()
 
-  for i in 0..(polygons - 1)
+  $topLeft = Array.new
+  $topLeft << $N
+  $topLeft << $E
 
-    $topLeft = Array.new
-    $topLeft << $N
-    $topLeft << $E
+  $N = $N + 250
+  $E = $E + 250
 
-    $N = $N + 250
-    $E = $E + 250
+  $bottomRight = Array.new
+  $bottomRight << $N
+  $bottomRight << $E
 
-    $bottomRight = Array.new
-    $bottomRight << $N
-    $bottomRight << $E
-
-    polydata['geometry']['coordinates'][i] = Array.new()
-    polydata['geometry']['coordinates'][i][0] = Array.new()
-    polydata['geometry']['coordinates'][i][0][0] = $topLeft[0] - rand(0..80)
-    polydata['geometry']['coordinates'][i][0][1] = $topLeft[1] - rand(0..80)
-    polydata['geometry']['coordinates'][i][1] = Array.new()
-    polydata['geometry']['coordinates'][i][1][0] = $bottomRight[0] - rand(0..80)
-    polydata['geometry']['coordinates'][i][1][1] = $topLeft[1] - rand(0..80)
-    polydata['geometry']['coordinates'][i][2] = Array.new()
-    polydata['geometry']['coordinates'][i][2][0] = $bottomRight[0] - rand(0..80)
-    polydata['geometry']['coordinates'][i][2][1] = $bottomRight[1] - rand(0..80)
-    polydata['geometry']['coordinates'][i][3] = Array.new()
-    polydata['geometry']['coordinates'][i][3][0] = $topLeft[0] - rand(0..80)
-    polydata['geometry']['coordinates'][i][3][1] = $bottomRight[1] - rand(0..80)
-    polydata['geometry']['coordinates'][i][4] = Array.new()
-    polydata['geometry']['coordinates'][i][4][0] = polydata['geometry']['coordinates'][i][0][0]
-    polydata['geometry']['coordinates'][i][4][1] = polydata['geometry']['coordinates'][i][0][1]
-    polydata['geometry']['coordinates'][i + 1] = Array.new()
-    polydata['geometry']['coordinates'][i + 1][0] = Array.new()
-    polydata['geometry']['coordinates'][i + 1][0][0] = polydata['geometry']['coordinates'][i][0][0] + 70
-    polydata['geometry']['coordinates'][i + 1][0][1] = polydata['geometry']['coordinates'][i][0][1] + 70
-    polydata['geometry']['coordinates'][i + 1][1] = Array.new()
-    polydata['geometry']['coordinates'][i + 1][1][0] = polydata['geometry']['coordinates'][i][3][0] + 70
-    polydata['geometry']['coordinates'][i + 1][1][1] = polydata['geometry']['coordinates'][i][3][1] - 70
-    polydata['geometry']['coordinates'][i + 1][2] = Array.new()
-    polydata['geometry']['coordinates'][i + 1][2][0] = polydata['geometry']['coordinates'][i][2][0] - 70
-    polydata['geometry']['coordinates'][i + 1][2][1] = polydata['geometry']['coordinates'][i][2][1] - 70
-    polydata['geometry']['coordinates'][i + 1][3] = Array.new()
-    polydata['geometry']['coordinates'][i + 1][3][0] = polydata['geometry']['coordinates'][i][1][0] - 70
-    polydata['geometry']['coordinates'][i + 1][3][1] = polydata['geometry']['coordinates'][i][1][1] + 70
-    polydata['geometry']['coordinates'][i + 1][4] = Array.new()
-    polydata['geometry']['coordinates'][i + 1][4][0] = polydata['geometry']['coordinates'][i + 1][0][0]
-    polydata['geometry']['coordinates'][i + 1][4][1] = polydata['geometry']['coordinates'][i + 1][0][1]
-
-    $N = $N + 250
-
-  end
+  polydata['geometry']['coordinates'][0] = Array.new()
+  polydata['geometry']['coordinates'][0][0] = Array.new()
+  polydata['geometry']['coordinates'][0][0][0] = $topLeft[0] - rand(0..80)
+  polydata['geometry']['coordinates'][0][0][1] = $topLeft[1] - rand(0..80)
+  polydata['geometry']['coordinates'][0][1] = Array.new()
+  polydata['geometry']['coordinates'][0][1][0] = $bottomRight[0] - rand(0..80)
+  polydata['geometry']['coordinates'][0][1][1] = $topLeft[1] - rand(0..80)
+  polydata['geometry']['coordinates'][0][2] = Array.new()
+  polydata['geometry']['coordinates'][0][2][0] = $bottomRight[0] - rand(0..80)
+  polydata['geometry']['coordinates'][0][2][1] = $bottomRight[1] - rand(0..80)
+  polydata['geometry']['coordinates'][0][3] = Array.new()
+  polydata['geometry']['coordinates'][0][3][0] = $topLeft[0] - rand(0..80)
+  polydata['geometry']['coordinates'][0][3][1] = $bottomRight[1] - rand(0..80)
+  polydata['geometry']['coordinates'][0][4] = Array.new()
+  polydata['geometry']['coordinates'][0][4][0] = polydata['geometry']['coordinates'][0][0][0]
+  polydata['geometry']['coordinates'][0][4][1] = polydata['geometry']['coordinates'][0][0][1]
+  polydata['geometry']['coordinates'][1] = Array.new()
+  polydata['geometry']['coordinates'][1][0] = Array.new()
+  polydata['geometry']['coordinates'][1][0][0] = polydata['geometry']['coordinates'][0][0][0] + 70
+  polydata['geometry']['coordinates'][1][0][1] = polydata['geometry']['coordinates'][0][0][1] + 70
+  polydata['geometry']['coordinates'][1][1] = Array.new()
+  polydata['geometry']['coordinates'][1][1][0] = polydata['geometry']['coordinates'][0][3][0] + 70
+  polydata['geometry']['coordinates'][1][1][1] = polydata['geometry']['coordinates'][0][3][1] - 70
+  polydata['geometry']['coordinates'][1][2] = Array.new()
+  polydata['geometry']['coordinates'][1][2][0] = polydata['geometry']['coordinates'][0][2][0] - 70
+  polydata['geometry']['coordinates'][1][2][1] = polydata['geometry']['coordinates'][0][2][1] - 70
+  polydata['geometry']['coordinates'][1][3] = Array.new()
+  polydata['geometry']['coordinates'][1][3][0] = polydata['geometry']['coordinates'][0][1][0] - 70
+  polydata['geometry']['coordinates'][1][3][1] = polydata['geometry']['coordinates'][0][1][1] + 70
+  polydata['geometry']['coordinates'][1][4] = Array.new()
+  polydata['geometry']['coordinates'][1][4][0] = polydata['geometry']['coordinates'][1][0][0]
+  polydata['geometry']['coordinates'][1][4][1] = polydata['geometry']['coordinates'][1][0][1]
 
   polydata['geometry']['properties'] = Hash.new()
   polydata['geometry']['properties']['Description'] = 'Polygon'
   return polydata
+end
+
+
+
+def generate_easement_for_title_extent(title_extent)
+
+
+  polydata = Hash.new()
+  polydata['type'] = "Feature"
+  polydata['crs'] = Hash.new()
+  polydata['crs']['type'] = 'name'
+  polydata['crs']['properties'] = Hash.new()
+  polydata['crs']['properties']['name'] = 'urn:ogc:def:crs:EPSG:27700'
+  polydata['geometry'] = Hash.new()
+
+  polydata['geometry']['type'] = 'Polygon'
+  polydata['geometry']['coordinates'] = Array.new()
+
+  polydata['geometry']['coordinates'][0] = Array.new()
+  polydata['geometry']['coordinates'][0][0] = Array.new()
+  polydata['geometry']['coordinates'][0][0][0] = title_extent['geometry']['coordinates'][0][0][0] + 50
+  polydata['geometry']['coordinates'][0][0][1] = title_extent['geometry']['coordinates'][0][0][1] + 50
+  polydata['geometry']['coordinates'][0][1] = Array.new()
+  polydata['geometry']['coordinates'][0][1][0] = title_extent['geometry']['coordinates'][0][1][0] - 50
+  polydata['geometry']['coordinates'][0][1][1] = title_extent['geometry']['coordinates'][0][1][1] + 50
+  polydata['geometry']['coordinates'][0][2] = Array.new()
+  polydata['geometry']['coordinates'][0][2][0] = title_extent['geometry']['coordinates'][0][2][0] - 50
+  polydata['geometry']['coordinates'][0][2][1] = title_extent['geometry']['coordinates'][0][2][1] - 50
+  polydata['geometry']['coordinates'][0][3] = Array.new()
+  polydata['geometry']['coordinates'][0][3][0] = title_extent['geometry']['coordinates'][0][3][0] + 50
+  polydata['geometry']['coordinates'][0][3][1] = title_extent['geometry']['coordinates'][0][3][1] - 50
+  polydata['geometry']['coordinates'][0][4] = Array.new()
+  polydata['geometry']['coordinates'][0][4][0] = polydata['geometry']['coordinates'][0][0][0]
+  polydata['geometry']['coordinates'][0][4][1] = polydata['geometry']['coordinates'][0][0][1]
+
+  polydata['geometry']['properties'] = Hash.new()
+  polydata['geometry']['properties']['Description'] = 'Polygon'
+
+  return polydata
+
 end

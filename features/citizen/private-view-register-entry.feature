@@ -87,17 +87,18 @@ And I am not already logged in as a private citizen
 When I view the private register
 Then I am prompted to login as a private citizen
 
-Scenario: Private Register with Title Plan Single Polygon
-Given I have a registered Freehold property
+Scenario: Private Register with Title Plan Single Polygon with easement
+Given I have a registered property with an easement
 And I have private citizen login credentials
 And I am not already logged in as a private citizen
 When I view the private register
 And I login with correct credentials
-And I check the title plan
+And I check the title plan (private view)
 Then there is 1 polygon
 And the whole polygon area is in view
 And the polygon matches that of the title
 And the polygon is edged in red
+And the polygon has an easement
 And the map can't be zoomed
 And the map can't be moved
 And the Polygon is laid over a map
@@ -108,7 +109,7 @@ And I have private citizen login credentials
 And I am not already logged in as a private citizen
 When I view the private register
 And I login with correct credentials
-And I check the title plan
+And I check the title plan (private view)
 Then there is 2 polygons
 And the whole polygon area is in view
 And the polygons matches that of the title

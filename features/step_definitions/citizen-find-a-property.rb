@@ -12,17 +12,24 @@ Given(/^I have registered (.*) property data$/) do |tenure|
   $regData['proprietors'][1]['last_name'] = surname()
   $regData['property'] = Hash.new()
   $regData['property']['address'] = Hash.new()
-  $regData['property']['address']['house_number'] = houseNumber()
-  $regData['property']['address']['road'] = roadName()
-  $regData['property']['address']['town'] = townName()
+  $regData['property']['address']['address_line_1'] = houseNumber()
+  $regData['property']['address']['address_line_2'] = roadName()
+  $regData['property']['address']['address_line_3'] = roadName()
+  $regData['property']['address']['address_line_4'] = roadName()
+  $regData['property']['address']['city'] = townName()
   $regData['property']['address']['postcode'] = postcode()
+
   $regData['property']['tenure'] = tenure
+
+  $regData['property']['address']['country'] = 'GB'
+
   $regData['property']['class_of_title'] = 'absolute'
   $regData['payment'] = Hash.new()
   $regData['payment']['price_paid'] = pricePaid()
   $regData['payment']['titles'] = Array.new()
   $regData['payment']['titles'][0] = $regData['title_number']
   $regData['extent'] = genenerate_title_extent(1)
+
   if tenure =='Leasehold' then
     #build up the leasehold structure
     $regData['leases'] = Array.new()
@@ -36,6 +43,7 @@ Given(/^I have registered (.*) property data$/) do |tenure|
     $regData['leases'][0]['lease_from'] = Date.today.prev_day.strftime("%Y-%m-%d")
     $regData['leases'][0]['lessor_name'] = firstName() + ' ' + surname() +', '+firstName() + ' ' + surname()
   end
+
   $regData['charges'] = Array.new()
   $regData['charges'][0] = Hash.new()
   $regData['charges'][0]['charge_date'] = '2014-08-11'
@@ -65,16 +73,31 @@ Given(/^I submit the registered property data$/) do
 end
 
 
-Given(/^I have a registered (.*) property$/) do |tenure|
+Given(/^I have a registered property$/) do
+  step "I have registered Freehold property data"
+  step "I submit the registered property data"
+end
 
+Given(/^I have a registered (.*) property$/) do |tenure|
   step "I have registered " + tenure +" property data"
   step "I submit the registered property data"
-
 end
 
 Given(/^I have a registered property with multiple polygons$/) do
   step "I have registered Freehold property data"
   $regData['extent'] = genenerate_title_extent(2)
+  step "I submit the registered property data"
+end
+
+
+Given(/^I have a registered property with an easement$/) do
+  step "I have registered Freehold property data"
+  $regData['extent'] = genenerate_title_extent(1)
+
+  $regData['easements'][0] = {}
+  $regData['easements'][0]['easement_geometry'] = generate_easement_for_title_extent($regData['extent'])
+  $regData['easements'][0]['easement_description'] = 'Easement Description'
+
   step "I submit the registered property data"
 end
 
