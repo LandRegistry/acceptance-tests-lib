@@ -2,10 +2,12 @@
 
 Given(/^I have received an application for a first registration$/) do
   $data = Hash.new()
-  $data['propertyHouseNumber'] = houseNumber()
-  $data['propertyRoad'] = roadName()
-  $data['propertyTown'] = townName()
-  $data['propertyPostcode'] = postcode()
+  $data['address_line_1'] = houseNumber()
+  $data['address_line_2'] = roadName()
+  $data['address_line_3'] = roadName()
+  $data['address_line_4'] = roadName()
+  $data['city'] = townName()
+  $data['postcode'] = postcode()
   $data['pricePaid'] = pricePaid()
   $data['forename1'] = firstName()
   $data['surname1'] = surname()
@@ -24,10 +26,12 @@ Given(/^I want to create a Register of Title$/) do
 end
 
 When(/^I enter a Property Address$/) do
-  fill_in('house_number', :with => $data['propertyHouseNumber'])
-  fill_in('road', :with => $data['propertyRoad'])
-  fill_in('town', :with => $data['propertyTown'])
-  fill_in('postcode', :with => $data['propertyPostcode'])
+  fill_in('address_line_1', :with => $data['address_line_1'])
+  fill_in('address_line_2', :with => $data['address_line_2'])
+  fill_in('address_line_3', :with => $data['address_line_3'])
+  fill_in('address_line_4', :with => $data['address_line_4'])
+  fill_in('city', :with => $data['city'])
+  fill_in('postcode', :with => $data['postcode'])
 end
 
 When(/^I choose a tenure of Freehold$/) do
@@ -74,10 +78,9 @@ Then(/^the user will be prompted again for a proprietor$/) do
 end
 
 Then(/^the user will be prompted again for required address fields$/) do
-  assert_selector(".//*[@id='error_town']", text: /This field is required./)
-  assert_selector(".//*[@id='error_road']", text: /This field is required./)
+  assert_selector(".//*[@id='error_address_line_1']", text: /This field is required./)
   assert_selector(".//*[@id='error_postcode']", text: /This field is required./)
-  assert_selector(".//*[@id='error_house_number']", text: /This field is required./)
+  assert_selector(".//*[@id='error_city']", text: /This field is required./)
 end
 
 When(/^I select class of Good$/) do

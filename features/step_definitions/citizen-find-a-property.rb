@@ -13,10 +13,13 @@ Given(/^I have registered property data$/) do
   $regData['proprietors'][1]['last_name'] = surname()
   $regData['property'] = Hash.new()
   $regData['property']['address'] = Hash.new()
-  $regData['property']['address']['house_number'] = houseNumber()
-  $regData['property']['address']['road'] = roadName()
-  $regData['property']['address']['town'] = townName()
+  $regData['property']['address']['address_line_1'] = houseNumber()
+  $regData['property']['address']['address_line_2'] = roadName()
+  $regData['property']['address']['address_line_3'] = roadName()
+  $regData['property']['address']['address_line_4'] = roadName()
+  $regData['property']['address']['city'] = townName()
   $regData['property']['address']['postcode'] = postcode()
+  $regData['property']['address']['country'] = 'GB'
   $regData['property']['tenure'] = 'freehold'
   $regData['property']['class_of_title'] = 'absolute'
   $regData['payment'] = Hash.new()
@@ -24,6 +27,9 @@ Given(/^I have registered property data$/) do
   $regData['payment']['titles'] = Array.new()
   $regData['payment']['titles'][0] = $regData['title_number']
   $regData['extent'] = genenerate_title_extent(1)
+
+
+
 
   $regData['charges'] = Array.new()
   $regData['charges'][0] = Hash.new()
