@@ -362,7 +362,6 @@ end
 
 def generate_easement_for_title_extent(title_extent)
 
-
   polydata = Hash.new()
   polydata['type'] = "Feature"
   polydata['crs'] = Hash.new()
@@ -393,6 +392,50 @@ def generate_easement_for_title_extent(title_extent)
 
   polydata['geometry']['properties'] = Hash.new()
   polydata['geometry']['properties']['Description'] = 'Polygon'
+
+  puts polydata.to_json
+
+  return polydata
+
+end
+
+def generate_multiple_easement_for_title_extent(title_extent, polygons)
+
+  polydata = Hash.new()
+  polydata['type'] = "Feature"
+  polydata['crs'] = Hash.new()
+  polydata['crs']['type'] = 'name'
+  polydata['crs']['properties'] = Hash.new()
+  polydata['crs']['properties']['name'] = 'urn:ogc:def:crs:EPSG:27700'
+  polydata['geometry'] = Hash.new()
+
+  polydata['geometry']['type'] = 'MultiPolygon'
+  polydata['geometry']['coordinates'] = Array.new()
+
+  for i in 0..(polygons - 1)
+
+    polydata['geometry']['coordinates'][i] = Array.new
+    polydata['geometry']['coordinates'][i][0] = Array.new()
+    polydata['geometry']['coordinates'][i][0][0] = Array.new()
+    polydata['geometry']['coordinates'][i][0][0][0] = title_extent['geometry']['coordinates'][0][0][0] + 100
+    polydata['geometry']['coordinates'][i][0][0][1] = title_extent['geometry']['coordinates'][0][0][1] + 75 + (i * 80)
+    polydata['geometry']['coordinates'][i][0][1] = Array.new()
+    polydata['geometry']['coordinates'][i][0][1][0] = polydata['geometry']['coordinates'][i][0][0][0] + 50 - rand(0..10)
+    polydata['geometry']['coordinates'][i][0][1][1] = polydata['geometry']['coordinates'][i][0][0][1] - rand(0..10)
+    polydata['geometry']['coordinates'][i][0][2] = Array.new()
+    polydata['geometry']['coordinates'][i][0][2][0] = polydata['geometry']['coordinates'][i][0][1][0] - rand(0..10)
+    polydata['geometry']['coordinates'][i][0][2][1] = polydata['geometry']['coordinates'][i][0][1][1] + 50 - rand(0..10)
+    polydata['geometry']['coordinates'][i][0][3] = Array.new()
+    polydata['geometry']['coordinates'][i][0][3][0] = polydata['geometry']['coordinates'][i][0][0][0] + rand(0..10)
+    polydata['geometry']['coordinates'][i][0][3][1] = polydata['geometry']['coordinates'][i][0][0][1] + 50 - rand(0..10)
+    polydata['geometry']['coordinates'][i][0][4] = Array.new()
+    polydata['geometry']['coordinates'][i][0][4][0] = polydata['geometry']['coordinates'][i][0][0][0]
+    polydata['geometry']['coordinates'][i][0][4][1] = polydata['geometry']['coordinates'][i][0][0][1]
+
+  end
+
+  polydata['geometry']['properties'] = Hash.new()
+  polydata['geometry']['properties']['Description'] = 'MultiPolygon'
 
   puts polydata.to_json
 

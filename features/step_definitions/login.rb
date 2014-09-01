@@ -90,6 +90,6 @@ end
 Given(/^I am still authenticated as a caseworker$/) do
   visit("#{$CASEWORK_FRONTEND_DOMAIN}/logout")
   step "I have caseworker login credentials"
-  visit("#{$CASEWORK_FRONTEND_DOMAIN}/login")
+  visit("#{$CASEWORK_FRONTEND_DOMAIN}")
   step "I login with correct credentials"
 end
