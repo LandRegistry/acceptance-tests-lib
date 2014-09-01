@@ -57,6 +57,9 @@ When(/^I check the title plan \(private view\)$/) do
   # Make the shape more vivid
   page.execute_script("extentGeoJson.setStyle({opacity: 1, weight: 0, fillOpacity: 1});")
   page.execute_script("easementGeoJson.setStyle({opacity: 1, weight: 0, fillOpacity: 1});")
+  page.execute_script("extentGeoJson.bringToBack();")
+
+
 
   puts page.evaluate_script("easementGeoJson.options")
 
@@ -73,6 +76,7 @@ When(/^I check the title plan \(private view\)$/) do
   # readd the layer back in to in sure the map is correct for other tests
   page.execute_script("map.addLayer(extentGeoJson);")
   page.execute_script("map.addLayer(easementGeoJson);")
+  page.execute_script("extentGeoJson.bringToFront();")
 
   page.execute_script("extentGeoJson.setStyle({fillOpacity: 0});")
 
@@ -232,4 +236,10 @@ Then(/^the polygon does not have an easement$/) do
   $map_details['polygons'].each do |polygon|
     assert_equal false, polygon['easement'], 'The polygon does not have an easement'
   end
+end
+
+
+Given(/^I want to compare easements$/) do
+  # Compare the images to get the polygon details
+  $map_details = get_polygon_details('tmpimg-1409432299-1.png', 'tmpimg-1409432299-2.png')
 end
