@@ -14,6 +14,9 @@ end
 
 Given(/^I want to request I change my name on the register$/) do
   #visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}/edit")
+
+  link_title_to_email($userdetails['email'], $regData['title_number'])
+
   visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}/edit/title.proprietor.1")
   puts "#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}/edit/title.proprietor.1"
 
