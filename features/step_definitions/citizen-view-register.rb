@@ -67,24 +67,24 @@ end
 
 Then(/^easements within the lease clause (NOT|is) displayed$/) do |easement_clause_displayed|
   if easement_clause_displayed == 'NOT' then
-    expect(page).to have_no_selector("//input[@id='easementClause']")
+    expect(page).to have_no_selector(".//*[@id='easementClause']")
   else
-    expect(page).to have_selector("//input[@id='easementClause']")
+    expect(page).to have_selector(".//*[@id='easementClause']")
   end
 end
 
 Then(/^alienation clause (NOT|is) displayed$/) do |alienation_clause_displayed|
   if alienation_clause_displayed == 'NOT' then
-    expect(page).to have_no_selector("//input[@id='alienationClause']")
+    expect(page).to have_no_selector(".//*[@id='alienationClause']")
   else
-    expect(page).to have_selector("//input[@id='alienationClause']")
+    expect(page).to have_selector(".//*[@id='alienationClause']")
   end
 end
 
 Then(/^landlords title registered clause (NOT|is) displayed$/) do |landlords_clause_displayed|
   if landlords_clause_displayed == 'NOT' then
-    expect(page).to have_no_selector("//input[@id='titleRegisteredClause']")
+    expect(page).to have_no_selector(".//*[@id='titleRegisteredClause']")
   else
-    expect(page).to have_selector("//input[@id='titleRegisteredClause']")
+    expect(page).to have_selector(".//*[@id='titleRegisteredClause']")
   end
 end
