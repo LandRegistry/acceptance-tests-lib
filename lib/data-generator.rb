@@ -4,7 +4,7 @@ def titleNumber()
 	return prefix + number
 end
 
-def firstName()
+def fullName()
 
 	fname = Array.new
 	fname << 'Adam'
@@ -37,42 +37,6 @@ def firstName()
 	fname_num = rand(0 .. fname.length - 1)
 
 	return fname[fname_num]
-
-end
-
-def surname()
-
-  sname = Array.new
-	sname << 'Adams'
-	sname << 'Brown'
-	sname << 'Cook'
-	sname << 'Drane'
-	sname << 'Elf'
-	sname << 'Fisher'
-	sname << 'Green'
-	sname << 'Hall'
-	sname << 'Island'
-	sname << 'Jackson'
-	sname << 'King'
-	sname << 'Large'
-	sname << 'Matthews'
-	sname << 'Neilson'
-	sname << 'Onion'
-	sname << 'Parrett'
-	sname << 'Quest'
-	sname << 'Richardson'
-	sname << 'Smith'
-	sname << 'Tibbs'
-	sname << 'Usher'
-	sname << 'Vallance'
-	sname << 'Wallis'
-	sname << 'Xavier'
-	sname << 'Yankee'
-	sname << 'Zulu'
-
-	sname_num = rand(0 .. sname.length - 1)
-
-	return sname[sname_num]
 
 end
 

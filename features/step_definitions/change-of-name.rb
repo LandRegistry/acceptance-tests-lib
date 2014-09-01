@@ -1,13 +1,13 @@
 Given(/^I have have got married and I want to change my name on the register$/) do
   $data = Hash.new()
-  $data['newName'] = firstName() + ' ' + surname()
-  $data['partnerFullName'] = firstName() + ' ' + surname()
+  $data['newName'] = fullName()
+  $data['partnerFullName'] = fullName()
   $data['dateOfMarriage'] = dateInThePast().strftime("%d-%m-%Y")
   $data['propertyPostcode'] = postcode()
   $data['locationOfMarriage'] = townName()
   $data['countryOfMarriage'] = countryName()
   $data['marriageCertificateNumber'] = certificateNumber()
-  $data['witnessFullName'] = firstName() + ' ' + surname()
+  $data['witnessFullName'] = fullName()
   $data['witnessAddress'] = houseNumber().to_s + ' ' + roadName() + "\n" + townName() + "\n" + postcode()
   $data['dateSubmitted'] = Date.today.strftime("%d %B %Y").to_s
 end
@@ -20,7 +20,7 @@ Given(/^I want to request I change my name on the register$/) do
 end
 
 When(/^I enter a new name$/) do
-  fill_in('proprietor_new_surname', :with => $data['newName'])
+  fill_in('proprietor_new_full_name', :with => $data['newName'])
 end
 
 When(/^I enter my partners name$/) do

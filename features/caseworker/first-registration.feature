@@ -99,8 +99,7 @@ Scenario: A new title must contain all mandatory fields before being submitted s
 Given I have received an application for a first registration
 And I want to create a Register of Title
 When I submit the title details without entering any data
-Then a "This field is required." message for "error_first_name1" is returned
-And a "This field is required." message for "error_surname1" is returned
+Then a "This field is required." message for "error_full_name1" is returned
 And a "This field is required." message for "error_address_line_1" is returned
 And a "This field is required." message for "error_city" is returned
 And a "This field is required." message for "error_postcode" is returned
