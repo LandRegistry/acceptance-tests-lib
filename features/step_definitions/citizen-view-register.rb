@@ -67,24 +67,24 @@ end
 
 Then(/^easements within the lease clause (NOT|is) displayed$/) do |easement_clause_displayed|
   if easement_clause_displayed == 'NOT' then
-    page.should have_no_selector(".//*[@id='easementClause']")
+    assert_no_selector(".//*[@id='easementClause']")
   else
-    page.should have_selector(".//*[@id='easementClause']")
+    assert_selector(".//*[@id='easementClause']")
   end
 end
 
 Then(/^alienation clause (NOT|is) displayed$/) do |alienation_clause_displayed|
   if alienation_clause_displayed == 'NOT' then
-    page.should have_no_selector(".//*[@id='alienationClause']")
+    assert_no_selector(".//*[@id='alienationClause']")
   else
-    page.should have_selector(".//*[@id='alienationClause']")
+    assert_selector(".//*[@id='alienationClause']")
   end
 end
 
 Then(/^landlords title registered clause (NOT|is) displayed$/) do |landlords_clause_displayed|
   if landlords_clause_displayed == 'NOT' then
-    page.should have_no_selector(".//*[@id='titleRegisteredClause']")
+    assert_no_selector(".//*[@id='titleRegisteredClause']")
   else
-    page.should have_selector(".//*[@id='titleRegisteredClause']")
+    assert_selector(".//*[@id='titleRegisteredClause']")
   end
 end
