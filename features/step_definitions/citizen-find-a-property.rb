@@ -48,7 +48,7 @@ Given(/^I have registered (.*) property data$/) do |tenure|
   $regData['charges'][0]['chargee_address'] = '12 Test Street, London, SE1 33S'
   $regData['charges'][0]['chargee_name'] = 'Test Bank'
   $regData['charges'][0]['chargee_registration_number'] = '1234567'
-  $regData['easements'] = Array.new()
+
   puts 'Title number' + $regData['title_number']
 
 end
@@ -90,8 +90,7 @@ end
 
 Given(/^I have a registered property with an easement$/) do
   step "I have registered Freehold property data"
-  $regData['extent'] = genenerate_title_extent(1)
-
+  $regData['easements'] = Array.new()
   $regData['easements'][0] = {}
   $regData['easements'][0]['easement_geometry'] = generate_easement_for_title_extent($regData['extent'])
   $regData['easements'][0]['easement_description'] = 'Easement Description'
@@ -101,8 +100,7 @@ end
 
 Given(/^I have a registered property with multiple easement$/) do
   step "I have registered property data"
-  $regData['extent'] = genenerate_title_extent(1)
-
+  $regData['easements'] = Array.new()
   $regData['easements'] = []
   $regData['easements'][0] = {}
   $regData['easements'][0]['easement_geometry'] = generate_multiple_easement_for_title_extent($regData['extent'],2)

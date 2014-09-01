@@ -177,7 +177,7 @@ When(/^I enter valid term start date$/) do
 end
 
 When(/^I enter Lessor name$/) do
-  lessor_name = full_name()
+  lessor_name = fullName()
   fill_in('leases-0-lessor_name', :with => lessor_name)
 end
 
