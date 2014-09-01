@@ -36,10 +36,10 @@ Given(/^I have registered (.*) property data$/) do |tenure|
     $regData['leases'][0]['lease_easements'] = true
     $regData['leases'][0]['lease_date'] = Date.today.prev_day.strftime("%Y-%m-%d")
     $regData['leases'][0]['title_registered'] = true
-    $regData['leases'][0]['lessee_name'] = firstName() + ' ' + surname() +'s, '+firstName() + ' ' + surname() + 's'
+    $regData['leases'][0]['lessee_name'] = fullName() +'s'
     $regData['leases'][0]['alienation_clause'] = true
     $regData['leases'][0]['lease_from'] = Date.today.prev_day.strftime("%Y-%m-%d")
-    $regData['leases'][0]['lessor_name'] = firstName() + ' ' + surname() +', '+firstName() + ' ' + surname()
+    $regData['leases'][0]['lessor_name'] = fullName()
   end
 
   $regData['charges'] = Array.new()
@@ -144,9 +144,9 @@ end
 Given(/^at least two registers with the same Title Number beginning exists$/) do
   # Currently I am unsure how to do this as the developer aren't sure how it will happen.
   $results = Array[]
-  step "I have a registered freehold property"
+  step "I have a registered Freehold property"
   $results[0] = $regData
-  step "I have a registered freehold property"
+  step "I have a registered Freehold property"
   $results[1] = $regData
   # For now I am calling this step twice to create 2 registers, I will then search for TEST*
 end
@@ -211,6 +211,6 @@ Given(/^Lessee name is (different|same) as proprietor$/) do |lessee_name_as_prop
   #lessee name is alreday different so only need to make same as necessary
   #only puts the first proprietor name as lessee, varients should be covered in unit test
   if lessee_name_as_proprietor == 'same' then
-    $regData['leases'][0]['lessee_name'] = $regData['proprietors'][0]['first_name'] + ' ' + $regData['proprietors'][0]['last_name']
+    $regData['leases'][0]['lessee_name'] = $regData['proprietors'][0]['full_name']
   end
 end

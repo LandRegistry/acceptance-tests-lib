@@ -61,7 +61,7 @@ Then(/^Lessee name (NOT|is) displayed$/) do |lessee_to_be_displayed|
   if lessee_to_be_displayed =='is' then
     assert_selector(".//*[@id='parties']", text: /2. #{$regData['leases'][0]['lessee_name']}/)
   else
-    assert_selector(".//*[@id='parties']", text: /The names of this party are only available if you view the full register of title/)
+    assert_not_selector(".//*[@id='parties']", text: /2. #{$regData['leases'][0]['lessee_name']}/)
   end
 end
 

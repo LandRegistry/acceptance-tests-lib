@@ -177,20 +177,18 @@ When(/^I enter valid term start date$/) do
 end
 
 When(/^I enter Lessor name$/) do
-  lessor_name = firstName() + ' ' + surname() +', '+firstName() + ' ' + surname()
+  lessor_name = full_name()
   fill_in('leases-0-lessor_name', :with => lessor_name)
 end
 
 When(/^I enter proprietor as lessee name$/) do
-  proprietor_lessee_name = $data['forename1'] + ' ' + $data['surname1']
-  if $data['surname2'] !='' then
-    proprietor_lessee_name = proprietor_lessee_name + ', ' +$data['forename2'] + ' ' + $data['surname2']
-  end
+  proprietor_lessee_name = $data['fullName1']
+  #assumption to just use 1 name currently. needs enhancing later
   fill_in('leases-0-lessee_name', :with => proprietor_lessee_name)
 end
 
 When(/^I enter non proprietor lessee name$/) do
-  lessee_name = firstName() + 'diff ' + surname() +'diff, '+firstName() + 'diff ' + surname()
+  lessee_name = fullName() + 'diff '
   fill_in('leases-0-lessee_name', :with => lessee_name)
 end
 
