@@ -94,7 +94,7 @@ def create_change_of_name_by_marriage_request(country)
   step "I enter a new name"
   step "I enter my date of marriage"
   step "I enter my partners name"
-  step "I enter \"#{country}\" as the country of marriage"
+  step "I enter \"#{country}\" as the Country of marriage"
   step "I enter a location of marriage"
   step "I enter a Marriage Certificate Number"
   step "I submit the marriage change of name details"
