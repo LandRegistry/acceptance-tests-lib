@@ -31,9 +31,9 @@ end
 
 Then(/^No lease information is displayed$/) do
   #confirm lease info is not shown when tenure is freehold
-  expect(page).to have_no_selector(".//*[@id='leaseDate']")
-  expect(page).to have_no_selector(".//*[@id='leaseTerm']")
-  expect(page).to have_no_selector(".//*[@id='parties']")
+  assert_no_selector(".//*[@id='leaseDate']")
+  assert_no_selector(".//*[@id='leaseTerm']")
+  assert_no_selector(".//*[@id='parties']")
 end
 
 Then(/^Date of Lease is displayed$/) do
