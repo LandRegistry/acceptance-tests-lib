@@ -9,7 +9,7 @@ And I am logged in
 When I enter a new name
 And I enter my date of marriage
 And I enter my partners name
-And I enter "GB" as the country of marriage
+And I enter "GB" as the Country of marriage
 And I enter a location of marriage
 And I enter a Marriage Certificate Number
 And I submit the marriage change of name details
@@ -24,7 +24,7 @@ And I am logged in
 When I enter a new name
 And I enter my date of marriage
 And I enter my partners name
-And I enter "GB" as the country of marriage
+And I enter "GB" as the Country of marriage
 And I enter a location of marriage
 And I enter a Marriage Certificate Number
 And I submit the marriage change of name details

@@ -31,7 +31,7 @@ When(/^I enter my date of marriage$/) do
   fill_in('marriage_date', :with => $data['dateOfMarriage'])
 end
 
-When(/^I enter "(.*?)" as the country of marriage$/) do |country|
+When(/^I enter "(.*?)" as the Country of marriage$/) do |country|
   $data['countryOfMarriage'] = country
   fill_in('marriage_country', :with => $data['countryOfMarriage'])
 end
@@ -84,7 +84,7 @@ end
 
 def create_change_of_name_by_marriage_request(country)
   step "I have have got married and I want to change my name on the register"
-  step "I have a registered property"
+  step "I have a registered Freehold property"
   step "I have private citizen login credentials"
   step "I want to request I change my name on the register"
   step "I am logged in"

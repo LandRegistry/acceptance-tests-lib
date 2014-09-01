@@ -1,13 +1,57 @@
 @property-frontend
 Feature: Citizen view register
 
-Scenario: view register as citizen
-Given I have a registered property
+Scenario: view freehold register as citizen
+Given I have a registered Freehold property
 And I am a citizen
 When I view the register
 Then the address of property is displayed
 And Title Number is displayed
 And Price Paid is displayed
+And No lease information is displayed
+And Audit for public citizen search of title written
+
+Scenario: view lease register as citizen without clauses and different lessee
+Given I have registered Leasehold property data
+And easements within the lease clause NOT existing
+And alienation clause NOT existing
+And landlords title registered clause NOT existing
+And Lessee name is different as proprietor
+And I submit the registered property data
+And I am a citizen
+When I view the register
+Then the address of property is displayed
+And Title Number is displayed
+And Price Paid is displayed
+And Date of Lease is displayed
+And Lease Term is displayed
+And Lease Term start date is displayed
+And Lessor name is displayed
+And Lessee name is displayed
+And easements within the lease clause NOT displayed
+And alienation clause NOT displayed
+And landlords title registered clause NOT displayed
+And Audit for public citizen search of title written
+
+Scenario: view lease register as citizen with clauses and lessee as proprietor
+Given I have a registered Leasehold property
+And easements within the lease clause is existing
+And alienation clause is existing
+And landlords title registered clause is existing
+And Lessee name is same as proprietor
+And I am a citizen
+When I view the register
+Then the address of property is displayed
+And Title Number is displayed
+And Price Paid is displayed
+And Date of Lease is displayed
+And Lease Term is displayed
+And Lease Term start date is displayed
+And Lessor name is displayed
+And Lessee name NOT displayed
+And easements within the lease clause is displayed
+And alienation clause is displayed
+And landlords title registered clause is displayed
 And Audit for public citizen search of title written
 
 Scenario: try to view register that does not exist

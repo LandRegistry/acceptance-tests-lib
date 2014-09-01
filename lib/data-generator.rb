@@ -393,8 +393,6 @@ def generate_easement_for_title_extent(title_extent)
   polydata['geometry']['properties'] = Hash.new()
   polydata['geometry']['properties']['Description'] = 'Polygon'
 
-  puts polydata.to_json
-
   return polydata
 
 end

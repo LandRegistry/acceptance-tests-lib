@@ -162,8 +162,51 @@ Given(/^I add a charge with no information$/) do
   click_button('Add a charge')
 end
 
+When(/^I enter valid Date of Lease$/) do
+  yesterdayDate =  Date.today.prev_day.strftime("%d-%m-%Y")
+  fill_in('leases-0-lease_date', :with => yesterdayDate)
+end
+
+When(/^I enter valid Term Years$/) do
+  fill_in('leases-0-lease_term', :with => '7')
+end
+
+When(/^I enter valid term start date$/) do
+  todayDate =  Date.today.strftime("%d-%m-%Y")
+  fill_in('leases-0-lease_from', :with => todayDate)
+end
+
+When(/^I enter Lessor name$/) do
+  lessor_name = fullName()
+  fill_in('leases-0-lessor_name', :with => lessor_name)
+end
+
+When(/^I enter proprietor as lessee name$/) do
+  proprietor_lessee_name = $data['fullName1']
+  #assumption to just use 1 name currently. needs enhancing later
+  fill_in('leases-0-lessee_name', :with => proprietor_lessee_name)
+end
+
+When(/^I enter non proprietor lessee name$/) do
+  lessee_name = fullName() + 'diff '
+  fill_in('leases-0-lessee_name', :with => lessee_name)
+end
+
+When(/^I select easement within lease$/) do
+  check('leases-0-lease_easements')
+end
+
+When(/^I select alienation$/) do
+  check('leases-0-alienation_clause')
+end
+
+When(/^I select landlords title registered$/) do
+  check('leases-0-title_registered')
+end
+
 When(/^I enter a valid title easement$/) do
   click_button('Add an easement')
   fill_in('easements-0-easement_description', :with => 'Easement Description')
   fill_in('easements-0-easement_geometry', :with => $data['easement'].to_json)
+
 end

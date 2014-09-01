@@ -1,7 +1,6 @@
 require "net/http"
 
-Given(/^I have registered property data$/) do
-
+Given(/^I have registered (.*) property data$/) do |tenure|
   $regData = Hash.new()
   $regData['title_number'] = titleNumber()
   $regData['proprietors'] = Array.new()
@@ -17,8 +16,11 @@ Given(/^I have registered property data$/) do
   $regData['property']['address']['address_line_4'] = roadName()
   $regData['property']['address']['city'] = townName()
   $regData['property']['address']['postcode'] = postcode()
+
+  $regData['property']['tenure'] = tenure
+
   $regData['property']['address']['country'] = 'GB'
-  $regData['property']['tenure'] = 'freehold'
+
   $regData['property']['class_of_title'] = 'absolute'
   $regData['payment'] = Hash.new()
   $regData['payment']['price_paid'] = pricePaid()
@@ -26,8 +28,19 @@ Given(/^I have registered property data$/) do
   $regData['payment']['titles'][0] = $regData['title_number']
   $regData['extent'] = genenerate_title_extent(1)
 
-
-
+  if tenure =='Leasehold' then
+    #build up the leasehold structure
+    $regData['leases'] = Array.new()
+    $regData['leases'][0] = Hash.new()
+    $regData['leases'][0]['lease_term'] = rand(7..999)
+    $regData['leases'][0]['lease_easements'] = true
+    $regData['leases'][0]['lease_date'] = Date.today.prev_day.strftime("%Y-%m-%d")
+    $regData['leases'][0]['title_registered'] = true
+    $regData['leases'][0]['lessee_name'] = fullName() +'s'
+    $regData['leases'][0]['alienation_clause'] = true
+    $regData['leases'][0]['lease_from'] = Date.today.prev_day.strftime("%Y-%m-%d")
+    $regData['leases'][0]['lessor_name'] = fullName()
+  end
 
   $regData['charges'] = Array.new()
   $regData['charges'][0] = Hash.new()
@@ -59,24 +72,25 @@ end
 
 
 Given(/^I have a registered property$/) do
-
-  step "I have registered property data"
+  step "I have registered Freehold property data"
   step "I submit the registered property data"
+end
 
+Given(/^I have a registered (.*) property$/) do |tenure|
+  step "I have registered " + tenure +" property data"
+  step "I submit the registered property data"
 end
 
 Given(/^I have a registered property with multiple polygons$/) do
-  step "I have registered property data"
+  step "I have registered Freehold property data"
   $regData['extent'] = genenerate_title_extent(2)
   step "I submit the registered property data"
 end
 
 
 Given(/^I have a registered property with an easement$/) do
-  step "I have registered property data"
-  $regData['extent'] = genenerate_title_extent(1)
-
-  $regData['easements'] = []
+  step "I have registered Freehold property data"
+  $regData['easements'] = Array.new()
   $regData['easements'][0] = {}
   $regData['easements'][0]['easement_geometry'] = generate_easement_for_title_extent($regData['extent'])
   $regData['easements'][0]['easement_description'] = 'Easement Description'
@@ -86,8 +100,7 @@ end
 
 Given(/^I have a registered property with multiple easement$/) do
   step "I have registered property data"
-  $regData['extent'] = genenerate_title_extent(1)
-
+  $regData['easements'] = Array.new()
   $regData['easements'] = []
   $regData['easements'][0] = {}
   $regData['easements'][0]['easement_geometry'] = generate_multiple_easement_for_title_extent($regData['extent'],2)
@@ -99,7 +112,7 @@ end
 
 
 Given(/^I have a registered property with donut polygons$/) do
-  step "I have registered property data"
+  step "I have registered Freehold property data"
   $regData['extent'] = genenerate_title_extent_donut(1)
   step "I submit the registered property data"
 end
@@ -143,9 +156,9 @@ end
 Given(/^at least two registers with the same Title Number beginning exists$/) do
   # Currently I am unsure how to do this as the developer aren't sure how it will happen.
   $results = Array[]
-  step "I have a registered property"
+  step "I have a registered Freehold property"
   $results[0] = $regData
-  step "I have a registered property"
+  step "I have a registered Freehold property"
   $results[1] = $regData
   # For now I am calling this step twice to create 2 registers, I will then search for TEST*
 end
@@ -180,4 +193,36 @@ end
 
 When(/^I select a result$/) do
   click_link('Title Number: ' + $regData['title_number'])
+end
+
+Given(/^easements within the lease clause (NOT|is) existing$/) do |easement_clause|
+  if easement_clause == 'NOT' then
+    $regData['leases'][0]['lease_easements'] = false
+  else
+    $regData['leases'][0]['lease_easements'] = true
+  end
+end
+
+Given(/^alienation clause (NOT|is) existing$/) do |alienation_clause|
+  if alienation_clause == 'NOT' then
+    $regData['leases'][0]['alienation_clause'] = false
+  else
+    $regData['leases'][0]['alienation_clause'] = true
+  end
+end
+
+Given(/^landlords title registered clause (NOT|is) existing$/) do |landlord_clause|
+  if landlord_clause =='NOT' then
+    $regData['leases'][0]['title_registered'] = false
+  else
+    $regData['leases'][0]['title_registered'] = true
+  end
+end
+
+Given(/^Lessee name is (different|same) as proprietor$/) do |lessee_name_as_proprietor|
+  #lessee name is alreday different so only need to make same as necessary
+  #only puts the first proprietor name as lessee, varients should be covered in unit test
+  if lessee_name_as_proprietor == 'same' then
+    $regData['leases'][0]['lessee_name'] = $regData['proprietors'][0]['full_name']
+  end
 end
