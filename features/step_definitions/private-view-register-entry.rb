@@ -26,3 +26,28 @@ Then(/^the company charge is displayed$/) do
   assert_match(/#{$regData['charges'][0]['chargee_name']}/i, page.body, 'Expected to find chargee_name')
   assert_match(/#{$regData['charges'][0]['chargee_registration_number']}/i, page.body, 'Expected to find chargee_registration_number')
 end
+
+Then(/^the charge restriction is NOT displayed$/) do
+  restriction_text = "No disposition of the registered estate by the proprietor of the registered estate is to be registered without a written consent signed by the proprietor for the time being of the Charge dated "
+  assert_no_match(/#{restriction_text}/, page.body, 'charge restriction not expected ')
+end
+
+Then(/^the charge restriction is displayed$/) do
+  restriction_text = "No disposition of the registered estate by the proprietor of the registered estate is to be registered without a written consent signed by the proprietor for the time being of the Charge dated "
+  restriction_text = restriction_text + Date.parse($regData['charges'][0]['charge_date']).strftime("%d %B %Y")
+  restriction_text = restriction_text +  " in favour of "
+  restriction_text = restriction_text +  $regData['charges'][0]['chargee_name']
+  restriction_text = restriction_text + " referred to in the Charges Register."
+  puts restriction_text
+  assert_match(/#{restriction_text}/, page.body.gsub(/\s+/, ' '), 'expected to find charge restriction '+restriction_text)
+end
+
+Then(/^the company charge is displayed with no restriction$/) do
+step "the company charge is displayed"
+step "the charge restriction is NOT displayed"
+end
+
+Then(/^the company charge is displayed with a restriction$/) do
+step "the company charge is displayed"
+step "the charge restriction is displayed"
+end
