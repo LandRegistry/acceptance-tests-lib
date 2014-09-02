@@ -15,8 +15,10 @@ And proprietors are displayed
 And the company charge is displayed
 And Audit for private citizen register view written
 
-Scenario: view freehold register as existing authenticated user
-Given I have a registered Freehold property
+Scenario: view freehold register as existing authenticated user with charge but no restriction
+Given I have registered Freehold property data
+And there is NO charge restriction
+And I submit the registered property data
 And I am still authenticated
 When I view the private register
 Then the address of property is displayed
@@ -25,7 +27,21 @@ And Price Paid is displayed
 And Tenure is displayed
 And Class is displayed
 And proprietors are displayed
-And the company charge is displayed
+And the company charge is displayed with no restriction
+
+Scenario: view freehold register as existing authenticated user with charge and a restriction
+Given I have registered Freehold property data
+And there is a charge restriction
+And I submit the registered property data
+And I am still authenticated
+When I view the private register
+Then the address of property is displayed
+And Title Number is displayed
+And Price Paid is displayed
+And Tenure is displayed
+And Class is displayed
+And proprietors are displayed
+And the company charge is displayed with a restriction
 
 Scenario: view lease register as new authenticated user without clauses and different lessee
 Given I have registered Leasehold property data

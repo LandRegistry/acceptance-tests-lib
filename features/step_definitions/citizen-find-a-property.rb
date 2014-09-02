@@ -48,6 +48,7 @@ Given(/^I have registered (.*) property data$/) do |tenure|
   $regData['charges'][0]['chargee_address'] = '12 Test Street, London, SE1 33S'
   $regData['charges'][0]['chargee_name'] = 'Test Bank'
   $regData['charges'][0]['chargee_registration_number'] = '1234567'
+  $regData['charges'][0]['charges-0-has_restriction'] = true
 
   puts 'Title number' + $regData['title_number']
 
@@ -225,4 +226,12 @@ Given(/^Lessee name is (different|same) as proprietor$/) do |lessee_name_as_prop
   if lessee_name_as_proprietor == 'same' then
     $regData['leases'][0]['lessee_name'] = $regData['proprietors'][0]['full_name']
   end
+end
+
+Given(/^there is NO charge restriction$/) do
+  $regData['charges'][0]['charges-0-has_restriction'] = false
+end
+
+Given(/^there is a charge restriction$/) do
+  $regData['charges'][0]['charges-0-has_restriction'] = true
 end
