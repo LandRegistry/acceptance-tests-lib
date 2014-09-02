@@ -358,7 +358,7 @@ def get_polygon_details(image1, image2)
 
   images.last.save("diff2-#{Time.new.to_i}.png")
 
-#puts polygon_data
+  puts polygon_data
 
   return polygon_data
 end

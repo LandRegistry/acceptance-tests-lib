@@ -244,3 +244,18 @@ Given(/^I want to compare easements$/) do
   # Compare the images to get the polygon details
   $map_details = get_polygon_details('tmpimg-1409432299-1.png', 'tmpimg-1409432299-2.png')
 end
+
+
+Given(/^I have a registered property with a polygon with easement and a doughnut polygon$/) do
+  step "I have registered Freehold property data"
+
+  polygon_creation = Array.new()
+  polygon_creation << :polygon_with_easement
+  polygon_creation << :polygon_doughnut
+
+  $regData['extent'] = genenerate_title_extent2(polygon_creation)
+
+
+  puts $regData
+  step "I submit the registered property data"
+end

@@ -119,3 +119,20 @@ And the polygons are edged in red
 And the map can't be zoomed
 And the map can't be moved
 And the Polygons are laid over a map
+
+
+
+Scenario: Private Register with Title Plan Two Polygons, One with an easement, One which is a donut
+Given I have a registered property with a polygon with easement and a doughnut polygon
+And I have private citizen login credentials
+And I am not already logged in as a private citizen
+When I view the private register
+And I login with correct credentials
+And I check the title plan (private view)
+Then there is 2 polygons
+And the whole polygon area is in view
+And the polygons matches that of the title
+And the polygons are edged in red
+And the map can't be zoomed
+And the map can't be moved
+And the Polygons are laid over a map

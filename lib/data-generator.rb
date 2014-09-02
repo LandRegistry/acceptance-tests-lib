@@ -440,3 +440,121 @@ def generate_multiple_easement_for_title_extent(title_extent, polygons)
   return polydata
 
 end
+
+
+def genenerate_title_extent2(polygons)
+
+
+  polydata = Hash.new()
+  polydata['type'] = "Feature"
+  polydata['crs'] = Hash.new()
+  polydata['crs']['type'] = 'name'
+  polydata['crs']['properties'] = Hash.new()
+  polydata['crs']['properties']['name'] = 'urn:ogc:def:crs:EPSG:27700'
+  polydata['geometry'] = Hash.new()
+
+  if (polygons.count > 1) then
+    polydata['geometry']['type'] = 'MultiPolygon'
+    polydata['geometry']['coordinates'] = Array.new()
+    polygons.each do |polygon_type,polygon_value|
+      polydata['geometry']['coordinates'] << add_polygon(polygon_type)
+    end
+  else
+    polydata['geometry']['type'] = 'Polygon'
+    polydata['geometry']['coordinates'] = add_polygon(polygons[0])
+  end
+
+  polydata['geometry']['properties'] = Hash.new()
+  polydata['geometry']['properties']['Description'] = polydata['geometry']['type']
+
+  puts polydata.to_json
+
+  return polydata
+end
+
+
+def add_polygon(type)
+
+  $polycount = ($polycount || 0)
+
+  if ($N.nil?) then
+    $N = rand(404431.0 .. 404439.99999) + ($polycount * 250)
+    $E = rand(369891.0 .. 369899.99999) + ($polycount * 250)
+  end
+
+
+  $N = $N + ($polycount * 150)
+  $E = $E + ($polycount * 150)
+
+  $topLeft = Array.new
+  $topLeft << $N
+  $topLeft << $E
+
+  $bottomRight = Array.new
+  $bottomRight << $N + 250
+  $bottomRight << $E + 250
+
+
+  specificPolygon = Array.new()
+
+  if (type == :polygon_with_easement)
+
+    specificPolygon[0] = Array.new()
+    specificPolygon[0][0] = Array.new()
+    specificPolygon[0][0][0] = $topLeft[0] - rand(0..80)
+    specificPolygon[0][0][1] = $topLeft[1] - rand(0..80)
+    specificPolygon[0][1] = Array.new()
+    specificPolygon[0][1][0] = $bottomRight[0] - rand(0..80)
+    specificPolygon[0][1][1] = $topLeft[1] - rand(0..80)
+    specificPolygon[0][2] = Array.new()
+    specificPolygon[0][2][0] = $bottomRight[0] - rand(0..80)
+    specificPolygon[0][2][1] = $bottomRight[1] - rand(0..80)
+    specificPolygon[0][3] = Array.new()
+    specificPolygon[0][3][0] = $topLeft[0] - rand(0..80)
+    specificPolygon[0][3][1] = $bottomRight[1] - rand(0..80)
+    specificPolygon[0][4] = Array.new()
+    specificPolygon[0][4][0] = specificPolygon[0][0][0]
+    specificPolygon[0][4][1] = specificPolygon[0][0][1]
+
+  elsif (type == :polygon_doughnut)
+
+    specificPolygon[0] = Array.new()
+    specificPolygon[0][0] = Array.new()
+    specificPolygon[0][0][0] = $topLeft[0] - rand(0..80)
+    specificPolygon[0][0][1] = $topLeft[1] - rand(0..80)
+    specificPolygon[0][1] = Array.new()
+    specificPolygon[0][1][0] = $bottomRight[0] - rand(0..80)
+    specificPolygon[0][1][1] = $topLeft[1] - rand(0..80)
+    specificPolygon[0][2] = Array.new()
+    specificPolygon[0][2][0] = $bottomRight[0] - rand(0..80)
+    specificPolygon[0][2][1] = $bottomRight[1] - rand(0..80)
+    specificPolygon[0][3] = Array.new()
+    specificPolygon[0][3][0] = $topLeft[0] - rand(0..80)
+    specificPolygon[0][3][1] = $bottomRight[1] - rand(0..80)
+    specificPolygon[0][4] = Array.new()
+    specificPolygon[0][4][0] = specificPolygon[0][0][0]
+    specificPolygon[0][4][1] = specificPolygon[0][0][1]
+    specificPolygon[1] = Array.new()
+    specificPolygon[1][0] = Array.new()
+    specificPolygon[1][0][0] = specificPolygon[0][0][0] + 70
+    specificPolygon[1][0][1] = specificPolygon[0][0][1] + 70
+    specificPolygon[1][1] = Array.new()
+    specificPolygon[1][1][0] = specificPolygon[0][3][0] + 70
+    specificPolygon[1][1][1] = specificPolygon[0][3][1] - 70
+    specificPolygon[1][2] = Array.new()
+    specificPolygon[1][2][0] = specificPolygon[0][2][0] - 70
+    specificPolygon[1][2][1] = specificPolygon[0][2][1] - 70
+    specificPolygon[1][3] = Array.new()
+    specificPolygon[1][3][0] = specificPolygon[0][1][0] - 70
+    specificPolygon[1][3][1] = specificPolygon[0][1][1] + 70
+    specificPolygon[1][4] = Array.new()
+    specificPolygon[1][4][0] = specificPolygon[1][0][0]
+    specificPolygon[1][4][1] = specificPolygon[1][0][1]
+
+  end
+
+  $polycount = $polycount + 1
+
+  return specificPolygon
+
+end
