@@ -284,11 +284,15 @@ def get_polygon_details(image1, image2)
         g = ChunkyPNG::Color.g(images.last[poly_x,poly_y])
         b = ChunkyPNG::Color.b(images.last[poly_x,poly_y])
 
-        if ((r == 0) && (g == 0) && (b == 255)) then
+        #puts poly_x.to_s + ' - ' + poly_y.to_s + ' - ' + r.to_s + ':' + g.to_s + ':' + b.to_s
+
+        if ((r == 0) && (g < 100) && (b == 255)) then
           if (multi_easements[i][poly_x].nil?) then
             multi_easements[i][poly_x] = {}
           end
           multi_easements[i][poly_x][poly_y] = poly_y
+        #  images.last[poly_x, poly_y] = ChunkyPNG::Color.rgb(0,0,0)
+
         end
       end
     end
@@ -354,7 +358,7 @@ def get_polygon_details(image1, image2)
 
   images.last.save("diff2-#{Time.new.to_i}.png")
 
-  puts polygon_data
+#puts polygon_data
 
   return polygon_data
 end

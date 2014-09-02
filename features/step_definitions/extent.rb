@@ -4,7 +4,7 @@ When(/^I check the title plan \(public view\)$/) do
   sleep(2)
 
   $polygon_main = "tmpimg-#{Time.new.to_i}-main.png"
-  page.execute_script("geoJson.setStyle({weight: 8, opacity: 1});")
+  page.execute_script("extentGeoJson.setStyle({weight: 8, opacity: 1});")
   save_screenshot($polygon_main, :selector => "#map")
 
   # Get names for the 2 files we will produce
@@ -15,21 +15,21 @@ When(/^I check the title plan \(public view\)$/) do
   page.execute_script("map.removeLayer(openspaceLayer);")
 
   # Make the shape more vivid
-  page.execute_script("geoJson.setStyle({opacity: 1, weight: 0, fillOpacity: 1});")
+  page.execute_script("extentGeoJson.setStyle({opacity: 1, weight: 0, fillOpacity: 1});")
 
   # Take a screen show of the map id div tag
   save_screenshot($polygon_file1, :selector => "#map")
 
   # Remove the geojson layer of the map
-  page.execute_script("map.removeLayer(geoJson);")
+  page.execute_script("map.removeLayer(extentGeoJson);")
 
   # Now take another screenshot without the geojson there
   save_screenshot($polygon_file2, :selector => "#map")
 
   # readd the layer back in to in sure the map is correct for other tests
-  page.execute_script("map.addLayer(geoJson);")
+  page.execute_script("map.addLayer(extentGeoJson);")
 
-  page.execute_script("geoJson.setStyle({fillOpacity: 0});")
+  page.execute_script("extentGeoJson.setStyle({fillOpacity: 0});")
 
   # Compare the images to get the polygon details
   $map_details = get_polygon_details($polygon_file1, $polygon_file2)
@@ -58,11 +58,9 @@ When(/^I check the title plan \(private view\)$/) do
   page.execute_script("map.removeLayer(openspaceLayer);")
 
   # Make the shape more vivid
-  page.execute_script("extentGeoJson.setStyle({opacity: 1, weight: 0, fillOpacity: 1});")
-  page.execute_script("easementGeoJson.setStyle({opacity: 1, weight: 0, fillOpacity: 1});")
+  page.execute_script("extentGeoJson.setStyle({weight: 0, fillOpacity: 1});")
+  page.execute_script("easementGeoJson.setStyle({fillOpacity: 1});")
   page.execute_script("extentGeoJson.bringToBack();")
-
-
 
   puts page.evaluate_script("easementGeoJson.options")
 

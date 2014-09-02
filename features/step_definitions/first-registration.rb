@@ -4,8 +4,8 @@ Given(/^I have received an application for a first registration$/) do
   $data = Hash.new()
   $data['address_line_1'] = houseNumber()
   $data['address_line_2'] = roadName()
-  $data['address_line_3'] = roadName()
-  $data['address_line_4'] = roadName()
+  #$data['address_line_3'] = roadName()
+  #$data['address_line_4'] = roadName()
   $data['city'] = townName()
   $data['postcode'] = postcode()
   $data['pricePaid'] = pricePaid()
@@ -26,8 +26,8 @@ end
 When(/^I enter a Property Address$/) do
   fill_in('address_line_1', :with => $data['address_line_1'])
   fill_in('address_line_2', :with => $data['address_line_2'])
-  fill_in('address_line_3', :with => $data['address_line_3'])
-  fill_in('address_line_4', :with => $data['address_line_4'])
+  #fill_in('address_line_3', :with => $data['address_line_3'])
+  #fill_in('address_line_4', :with => $data['address_line_4'])
   fill_in('city', :with => $data['city'])
   fill_in('postcode', :with => $data['postcode'])
 end
@@ -100,6 +100,8 @@ end
 
 Then(/^Title Number is formatted correctly$/) do
   titleNumber = find(".//*[@id='title_number']", :visible => false).value
+
+
 
   assert_equal titleNumber[0,4], 'TEST', 'Title does not have a prefix of TEST'
   assert_equal titleNumber[4,titleNumber.size - 1], titleNumber[4,titleNumber.size - 1].to_i.to_s, 'The title number is not numberic'
@@ -208,5 +210,4 @@ When(/^I enter a valid title easement$/) do
   click_button('Add an easement')
   fill_in('easements-0-easement_description', :with => 'Easement Description')
   fill_in('easements-0-easement_geometry', :with => $data['easement'].to_json)
-
 end
