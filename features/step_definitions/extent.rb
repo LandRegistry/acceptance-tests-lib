@@ -43,6 +43,9 @@ end
 When(/^I check the title plan \(private view\)$/) do
   sleep(2)
 
+  $polygon_orig = "tmpimg-#{Time.new.to_i}-orig.png"
+  save_screenshot($polygon_orig, :selector => "#map")
+
   $polygon_main = "tmpimg-#{Time.new.to_i}-main.png"
   page.execute_script("extentGeoJson.setStyle({weight: 8, opacity: 1});")
   save_screenshot($polygon_main, :selector => "#map")

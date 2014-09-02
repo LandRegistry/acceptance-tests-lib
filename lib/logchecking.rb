@@ -2,7 +2,7 @@ def check_logs_for_message(url, log_message)
 
   if $ENVIRONMENT == "preview" then
 
-    uri = URI.parse(url + "?start="+($log_start_time - 5000).to_s)
+    uri = URI.parse(url + "?start="+($log_start_time - 6000).to_s)
 
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
@@ -10,7 +10,7 @@ def check_logs_for_message(url, log_message)
 
     found = false
     count = 0
-    while (found == false && count < 20) do
+    while (found == false && count < 30) do
       puts 'Checking Audit'
       request = Net::HTTP::Get.new(uri.request_uri)
       response = http.request(request)
