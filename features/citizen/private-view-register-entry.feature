@@ -28,11 +28,12 @@ And proprietors are displayed
 And the company charge is displayed
 
 Scenario: view lease register as new authenticated user without clauses and different lessee
-Given I have a registered Leasehold property
+Given I have registered Leasehold property data
 And easements within the lease clause NOT existing
 And alienation clause NOT existing
 And landlords title registered clause NOT existing
 And Lessee name is different as proprietor
+And I submit the registered property data
 And I have private citizen login credentials
 And I am not already logged in as a private citizen
 When I view the private register
@@ -55,11 +56,12 @@ And landlords title registered clause NOT displayed
 And Audit for private citizen register view written
 
 Scenario: view lease register as new authenticated user with clauses and lessee as proprietor
-Given I have a registered Leasehold property
+Given I have registered Leasehold property data
 And easements within the lease clause is existing
 And alienation clause is existing
 And landlords title registered clause is existing
 And Lessee name is different as proprietor
+And I submit the registered property data
 And I have private citizen login credentials
 And I am not already logged in as a private citizen
 When I view the private register

@@ -26,6 +26,23 @@ def wait_for_register_to_be_created(title_no)
   end
 end
 
+
+def link_title_to_email(email, title_number)
+  uri = URI.parse($LR_FIXTURES_URL)
+  puts $LR_FIXTURES_URL
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Post.new('/create-matching-data-and-ownership')
+  request.basic_auth $http_auth_name, $http_auth_password
+  request.set_form_data({'email' => email, 'title_number' => title_number, 'submit' => 'submit'})
+  response = http.request(request)
+
+  if (response.body != 'OK') then
+    raise "Could not match title and email"
+  end
+
+end
+
+
 def get_register_by_title(title_no)
   uri = URI.parse($SYSTEM_OF_RECORD_API_DOMAIN)
   http = Net::HTTP.new(uri.host, uri.port)

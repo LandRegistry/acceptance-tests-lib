@@ -31,9 +31,9 @@ end
 
 Then(/^No lease information is displayed$/) do
   #confirm lease info is not shown when tenure is freehold
-  expect(page).to have_no_selector(".//*[@id='leaseDate']")
-  expect(page).to have_no_selector(".//*[@id='leaseTerm']")
-  expect(page).to have_no_selector(".//*[@id='parties']")
+  assert_no_selector(".//*[@id='leaseDate']")
+  assert_no_selector(".//*[@id='leaseTerm']")
+  assert_no_selector(".//*[@id='parties']")
 end
 
 Then(/^Date of Lease is displayed$/) do
@@ -67,24 +67,24 @@ end
 
 Then(/^easements within the lease clause (NOT|is) displayed$/) do |easement_clause_displayed|
   if easement_clause_displayed == 'NOT' then
-    expect(page).to have_no_selector(".//*[@id='easementClause']")
+    assert_no_selector(".//*[@id='easementClause']")
   else
-    expect(page).to have_selector(".//*[@id='easementClause']")
+    assert_selector(".//*[@id='easementClause']")
   end
 end
 
 Then(/^alienation clause (NOT|is) displayed$/) do |alienation_clause_displayed|
   if alienation_clause_displayed == 'NOT' then
-    expect(page).to have_no_selector(".//*[@id='alienationClause']")
+    assert_no_selector(".//*[@id='alienationClause']")
   else
-    expect(page).to have_selector(".//*[@id='alienationClause']")
+    assert_selector(".//*[@id='alienationClause']")
   end
 end
 
 Then(/^landlords title registered clause (NOT|is) displayed$/) do |landlords_clause_displayed|
   if landlords_clause_displayed == 'NOT' then
-    expect(page).to have_no_selector(".//*[@id='titleRegisteredClause']")
+    assert_no_selector(".//*[@id='titleRegisteredClause']")
   else
-    expect(page).to have_selector(".//*[@id='titleRegisteredClause']")
+    assert_selector(".//*[@id='titleRegisteredClause']")
   end
 end
