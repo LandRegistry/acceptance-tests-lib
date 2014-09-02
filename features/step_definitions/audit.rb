@@ -23,7 +23,6 @@ end
 #Audit for property frontend (when title is displayed)
 Then(/^Audit for public citizen search of title written$/) do
   url = "https://pull.logentries.com/#{$logentries_key}/hosts/ManualHostProperty/lr-property-frontend/"
-  match_string = 'at=info method=GET path="/property/' + $regData['title_number'] + '"'
-  #match_string = "Audit: user=[anon], request=[<Request 'http://www.gov.uk.landregistryconcept.co.uk/property/" + $regData['title_number'] + "' [GET]"
+  match_string = "Audit: user=[anon], request=[<Request 'http://www.gov.uk.landregistryconcept.co.uk/property/" + $regData['title_number'] + "' [GET]"
   check_logs_for_message(url, match_string)
 end
