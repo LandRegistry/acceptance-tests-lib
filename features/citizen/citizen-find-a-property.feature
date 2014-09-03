@@ -15,24 +15,3 @@ And I am searching for that property
 When I enter the exact Title Number
 And I search
 Then the citizen register is displayed
-
-@wip
-Scenario: Multiple Title Number match for citizen
-Given I am a citizen
-And I am searching for that property
-And at least two registers with the same Title Number beginning exists
-When I enter a Title Number with the same prefix
-And I search
-Then multiple results are displayed
-And results show address details
-And results show Title Number
-
-@wip
-Scenario: View register from multiple results for citizen
-Given I am a citizen
-And I am searching for that property
-And at least two registers with the same Title Number beginning exists
-When I enter a Title Number with the same prefix
-And I search
-And I select a result
-Then the citizen register is displayed

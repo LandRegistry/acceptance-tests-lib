@@ -3,8 +3,8 @@ Feature: Change of Name (marriage)
 Scenario: Change of name Statement (marriage)
 Given I have have got married and I want to change my name on the register
 And I have a registered property
-And I own the property
 And I have private citizen login credentials
+And I own the property
 And I want to request I change my name on the register
 And I am logged in
 When I enter a new name
@@ -19,8 +19,8 @@ Then I am presented to certify my details
 Scenario: Change of name Confirmation Message (marriage)
 Given I have have got married and I want to change my name on the register
 And I have a registered property
-And I own the property
 And I have private citizen login credentials
+And I own the property
 And I want to request I change my name on the register
 And I am logged in
 When I enter a new name
@@ -35,8 +35,8 @@ Then I receive a confirmation that my change of name request has been lodged
 
 Scenario: Change of name Missing fields (marriage)
 Given I have a registered property
-And I own the property
 And I have private citizen login credentials
+And I own the property
 And I want to request I change my name on the register
 And I am logged in
 When I submit the marriage change of name details
