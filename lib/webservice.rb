@@ -37,7 +37,7 @@ def link_title_to_email(email, title_number)
   response = http.request(request)
 
   if (response.body != 'OK') then
-    raise "Could not match title and email"
+    raise "Could not match title(#{title_number}) and email(#{email})"
   end
 
 end

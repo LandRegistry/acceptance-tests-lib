@@ -95,6 +95,7 @@ def create_change_of_name_by_marriage_request(country)
   step "I have have got married and I want to change my name on the register"
   step "I have a registered Freehold property"
   step "I have private citizen login credentials"
+  step "I own the property"
   step "I want to request I change my name on the register"
   step "I am logged in"
   step "I enter a new name"
