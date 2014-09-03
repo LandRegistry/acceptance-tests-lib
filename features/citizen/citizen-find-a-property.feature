@@ -9,7 +9,7 @@ And I search
 Then no results are found
 
 Scenario: Exact Title Number match for citizen
-Given I have a registered propertyB
+Given I have a registered property
 And I am a citizen
 And I am searching for that property
 When I enter the exact Title Number

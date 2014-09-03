@@ -1,4 +1,4 @@
-Given(/^I have a registered property with characteristicsB$/) do |table|
+Given(/^I have a registered property with characteristics$/) do |table|
 
   $data_characteristics, $data_characteristics_types = format_data_characteristics(table)
 
@@ -57,6 +57,6 @@ Given(/^I have a registered property with characteristicsB$/) do |table|
 
 end
 
-Given(/^I have a registered propertyB$/) do
-  step "I have a registered property with characteristicsB", ''
+Given(/^I have a registered property$/) do
+  step "I have a registered property with characteristics", ''
 end

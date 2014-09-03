@@ -2,7 +2,7 @@
 Feature: Citizen view register
 
 Scenario: view freehold register as citizen
-Given I have a registered propertyB
+Given I have a registered property
 And I am a citizen
 When I view the register
 Then the address of property is displayed
@@ -12,7 +12,7 @@ And No lease information is displayed
 And Audit for public citizen search of title written
 
 Scenario: view lease register as citizen without clauses and different lessee
-Given I have a registered property with characteristicsB
+Given I have a registered property with characteristics
   | CHARACTERISTICS                               |
   | leasehold                                     |
   | has no lease clauses                          |
@@ -33,7 +33,7 @@ And landlords title registered clause NOT displayed
 And Audit for public citizen search of title written
 
 Scenario: view lease register as citizen with clauses and lessee as proprietor
-Given I have a registered property with characteristicsB
+Given I have a registered property with characteristics
   | CHARACTERISTICS                            |
   | leasehold                                  |
   | has lease clauses                          |
@@ -59,7 +59,7 @@ When I try to view a register that does not exist
 Then an error will be displayed
 
 Scenario: Public Register with Title Extents
-Given I have a registered property with characteristicsB
+Given I have a registered property with characteristics
     | CHARACTERISTICS                   |
     | has a polygon with easement       |
     | has a doughnut polygon            |

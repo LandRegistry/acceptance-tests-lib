@@ -1,7 +1,7 @@
 Feature: login and view private register
 
 Scenario: view register as new authenticated user
-Given I have a registered propertyB
+Given I have a registered property
 And I have private citizen login credentials
 And I am not already logged in as a private citizen
 When I view the private register
@@ -15,7 +15,7 @@ And proprietors are displayed
 And Audit for private citizen register view written
 
 Scenario: view freehold register as existing authenticated user with charge but no restriction
-Given I have a registered property with characteristicsB
+Given I have a registered property with characteristics
   | CHARACTERISTICS           |
   | two proprietors           |
   | has a charge              |
@@ -31,7 +31,7 @@ And proprietors are displayed
 And the company charge is displayed with no restriction
 
 Scenario: view freehold register as existing authenticated user with charge and a restriction
-Given I have a registered property with characteristicsB
+Given I have a registered property with characteristics
   | CHARACTERISTICS            |
   | has a charge               |
   | has a charge restriction   |
@@ -47,7 +47,7 @@ And the company charge is displayed
 And the company charge is displayed with a restriction
 
 Scenario: view lease register as new authenticated user without clauses and different lessee
-Given I have a registered property with characteristicsB
+Given I have a registered property with characteristics
   | CHARACTERISTICS                               |
   | leasehold                                     |
   | has no lease clauses                          |
@@ -67,7 +67,7 @@ And landlords title registered clause NOT displayed
 And Audit for private citizen register view written
 
 Scenario: view lease register as new authenticated user with clauses and lessee as proprietor
-Given I have a registered property with characteristicsB
+Given I have a registered property with characteristics
   | CHARACTERISTICS                            |
   | leasehold                                  |
   | has lease clauses                          |
@@ -87,13 +87,13 @@ And landlords title registered clause is displayed
 And Audit for private citizen register view written
 
 Scenario: Citizen can only view private register if logged in
-Given I have a registered propertyB
+Given I have a registered property
 And I am not already logged in as a private citizen
 When I view the private register
 Then I am prompted to login as a private citizen
 
 Scenario: Private Register with Title Extents
-Given I have a registered property with characteristicsB
+Given I have a registered property with characteristics
   | CHARACTERISTICS                   |
   | has a polygon with easement       |
   | has a doughnut polygon            |
