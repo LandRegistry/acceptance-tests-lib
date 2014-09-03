@@ -261,7 +261,6 @@ Then(/^there is a normal polygon$/) do
   # Check to see if the polygons are donuts
   normal_count = 0
   $map_details['polygons'].each do |polygon|
-    puts polygon['donut']
     next unless polygon['donut'] == false
     normal_count = normal_count + 1
   end
@@ -269,5 +268,21 @@ Then(/^there is a normal polygon$/) do
 end
 
 Then(/^there are no easements displayed$/) do
-  pending # express the regexp above with the code you wish you had
+  # Check to see if the polygons are donuts
+  easement_count = 0
+  $map_details['polygons'].each do |polygon|
+    next unless polygon['easement'] == true
+    easement_count = easement_count + 1
+  end
+  assert_equal easement_count, 0, 'There shouldn\'t be an easement, but is'
+end
+
+Then(/^there is an easement$/) do
+  # Check to see if the polygons are donuts
+  easement_count = 0
+  $map_details['polygons'].each do |polygon|
+    next unless polygon['easement'] == true
+    easement_count = easement_count + 1
+  end
+  assert_not_equal easement_count, 0, 'There shouldn\'t be an easement, but is'
 end

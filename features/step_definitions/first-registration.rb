@@ -11,8 +11,8 @@ Given(/^I have received an application for a first registration$/) do
   $data['pricePaid'] = pricePaid()
   $data['fullName1'] = fullName()
   $data['fullName2'] = fullName()
-  $data['title_extent'] = genenerate_title_extent(1)
-  $data['easement'] = generate_easement_for_title_extent($data['title_extent'])
+  $data['title_extent'] = genenerate_title_extent2({'has a polygon with easement' => true})
+  $data['easement'] = genenerate_title_easement2({'has a polygon with easement' => true})
 end
 
 Given(/^I want to create a Register of Title$/) do

@@ -43,8 +43,8 @@ Then(/^the charge restriction is displayed$/) do
 end
 
 Then(/^the company charge is displayed with no restriction$/) do
-step "the company charge is displayed"
-step "the charge restriction is NOT displayed"
+  step "the company charge is displayed"
+  step "the charge restriction is NOT displayed"
 end
 
 Then(/^the company charge is displayed with a restriction$/) do
