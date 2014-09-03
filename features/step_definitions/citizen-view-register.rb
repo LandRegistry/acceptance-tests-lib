@@ -65,6 +65,8 @@ Then(/^Lessee name (NOT|is) displayed$/) do |lessee_to_be_displayed|
   end
 end
 
+
+
 Then(/^easements within the lease clause (NOT|is) displayed$/) do |easement_clause_displayed|
   if easement_clause_displayed == 'NOT' then
     assert_no_selector(".//*[@id='easementClause']")

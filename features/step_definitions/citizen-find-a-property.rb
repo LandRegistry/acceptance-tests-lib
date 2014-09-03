@@ -196,28 +196,40 @@ When(/^I select a result$/) do
   click_link('Title Number: ' + $regData['title_number'])
 end
 
-Given(/^easements within the lease clause (NOT|is) existing$/) do |easement_clause|
-  if easement_clause == 'NOT' then
+And(/^There are no lease clauses$/) do
+  step "easements within the lease clause does NOT exist"
+  step "alienation clause does NOT exist"
+  step "landlords title registered clause does NOT exist"
+end
+
+And(/^All the lease clauses exist$/) do
+  step "easements within the lease clause exists"
+  step "alienation clause exists"
+  step "landlords title registered clause exists"
+end
+
+Given(/^easements within the lease clause does NOT exist$/) do
     $regData['leases'][0]['lease_easements'] = false
-  else
+end
+
+Given(/^easements within the lease clause exists$/) do
     $regData['leases'][0]['lease_easements'] = true
-  end
 end
 
-Given(/^alienation clause (NOT|is) existing$/) do |alienation_clause|
-  if alienation_clause == 'NOT' then
+Given(/^alienation clause does NOT exist$/) do
     $regData['leases'][0]['alienation_clause'] = false
-  else
-    $regData['leases'][0]['alienation_clause'] = true
-  end
 end
 
-Given(/^landlords title registered clause (NOT|is) existing$/) do |landlord_clause|
-  if landlord_clause =='NOT' then
+Given(/^alienation clause exists$/) do
+    $regData['leases'][0]['alienation_clause'] = true
+end
+
+Given(/^landlords title registered clause does NOT exist$/) do
     $regData['leases'][0]['title_registered'] = false
-  else
+end
+
+Given(/^landlords title registered clause exists$/) do
     $regData['leases'][0]['title_registered'] = true
-  end
 end
 
 Given(/^Lessee name is (different|same) as proprietor$/) do |lessee_name_as_proprietor|
