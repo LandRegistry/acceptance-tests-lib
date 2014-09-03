@@ -246,16 +246,28 @@ Given(/^I want to compare easements$/) do
 end
 
 
-Given(/^I have a registered property with a polygon with easement and a doughnut polygon$/) do
-  step "I have registered Freehold property data"
+Then(/^there is a donut polygon$/) do
+  # Check to see if the polygons are donuts
+  donut_count = 0
+  $map_details['polygons'].each do |polygon|
+    next unless polygon['donut'] == true
+    donut_count = donut_count + 1
+  end
+  assert_operator donut_count, :>=, 1, 'There should be a donut Polygon, but isn\'t'
+end
 
-  polygon_creation = Array.new()
-  polygon_creation << :polygon_with_easement
-  polygon_creation << :polygon_doughnut
 
-  $regData['extent'] = genenerate_title_extent2(polygon_creation)
+Then(/^there is a normal polygon$/) do
+  # Check to see if the polygons are donuts
+  normal_count = 0
+  $map_details['polygons'].each do |polygon|
+    puts polygon['donut']
+    next unless polygon['donut'] == false
+    normal_count = normal_count + 1
+  end
+  assert_operator normal_count, :>=, 1, 'There should be a normal Polygon, but isn\'t'
+end
 
-
-  puts $regData
-  step "I submit the registered property data"
+Then(/^there are no easements displayed$/) do
+  pending # express the regexp above with the code you wish you had
 end

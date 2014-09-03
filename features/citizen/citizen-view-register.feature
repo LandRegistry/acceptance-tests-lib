@@ -100,3 +100,23 @@ And the polygons are edged in red
 And the map can't be zoomed
 And the map can't be moved
 And the Polygons are laid over a map
+
+Scenario: Public Register with Title Extents
+Given I have a registered propertyB
+    | CHARACTERISTICS       |
+    | Freehold              |
+    | polygon with easement |
+    | doughnut polygon      |
+And I am a citizen
+When I view the register
+And I check the title plan (public view)
+Then there is 2 polygons
+And the whole polygon area is in view
+And the polygons matches that of the title
+And the polygons are edged in red
+And there is a donut polygon
+And there is a normal polygon
+And there are no easements displayed
+And the map can't be zoomed
+And the map can't be moved
+And the Polygons are laid over a map

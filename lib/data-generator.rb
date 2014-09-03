@@ -445,6 +445,7 @@ end
 def genenerate_title_extent2(polygons)
 
 
+
   polydata = Hash.new()
   polydata['type'] = "Feature"
   polydata['crs'] = Hash.new()
@@ -461,7 +462,7 @@ def genenerate_title_extent2(polygons)
     end
   else
     polydata['geometry']['type'] = 'Polygon'
-    polydata['geometry']['coordinates'] = add_polygon(polygons[0])
+    polydata['geometry']['coordinates'] = add_polygon(polygons.first)
   end
 
   polydata['geometry']['properties'] = Hash.new()
@@ -478,26 +479,26 @@ def add_polygon(type)
   $polycount = ($polycount || 0)
 
   if ($N.nil?) then
-    $N = rand(404431.0 .. 404439.99999) + ($polycount * 250)
-    $E = rand(369891.0 .. 369899.99999) + ($polycount * 250)
+    $N = rand(404431.0 .. 404439.99999)
+    $E = rand(369891.0 .. 369899.99999)
   end
 
-
-  $N = $N + ($polycount * 150)
-  $E = $E + ($polycount * 150)
 
   $topLeft = Array.new
   $topLeft << $N
   $topLeft << $E
 
+  $N = $N + 250
+  $E = $E + 250
+
   $bottomRight = Array.new
-  $bottomRight << $N + 250
-  $bottomRight << $E + 250
+  $bottomRight << $N
+  $bottomRight << $E
 
 
   specificPolygon = Array.new()
 
-  if (type == :polygon_with_easement)
+  if ((type == 'polygon with easement') || (type == 'polygon'))
 
     specificPolygon[0] = Array.new()
     specificPolygon[0][0] = Array.new()
@@ -516,7 +517,9 @@ def add_polygon(type)
     specificPolygon[0][4][0] = specificPolygon[0][0][0]
     specificPolygon[0][4][1] = specificPolygon[0][0][1]
 
-  elsif (type == :polygon_doughnut)
+    $easementCount = ($easementCount || 0) + 1
+
+  elsif (type == 'doughnut polygon')
 
     specificPolygon[0] = Array.new()
     specificPolygon[0][0] = Array.new()
@@ -554,6 +557,82 @@ def add_polygon(type)
   end
 
   $polycount = $polycount + 1
+
+  $E = $E
+  $N = $N + 120
+  return specificPolygon
+
+end
+
+
+def genenerate_title_easement2(polygons)
+
+  $easementCount = ($easementCount || 0)
+
+  polydata = Hash.new()
+  polydata['type'] = "Feature"
+  polydata['crs'] = Hash.new()
+  polydata['crs']['type'] = 'name'
+  polydata['crs']['properties'] = Hash.new()
+  polydata['crs']['properties']['name'] = 'urn:ogc:def:crs:EPSG:27700'
+  polydata['geometry'] = Hash.new()
+
+  if ($easementCount > 1) then
+    polydata['geometry']['type'] = 'MultiPolygon'
+    polydata['geometry']['coordinates'] = Array.new()
+    polygons.each do |polygon_type,polygon_value|
+      polydata['geometry']['coordinates'] << add_easement_polygon(polygon_type)
+    end
+  else
+    polydata['geometry']['type'] = 'Polygon'
+    polydata['geometry']['coordinates'] = add_easement_polygon(polygons.first)
+  end
+
+  polydata['geometry']['properties'] = Hash.new()
+  polydata['geometry']['properties']['Description'] = polydata['geometry']['type']
+
+  puts polydata.to_json
+
+  return polydata
+end
+
+
+def add_easement_polygon(type)
+
+  $polycounteasement = ($polycounteasement || 0)
+
+  specificPolygon = Array.new()
+
+puts $regData['extent']['geometry']['coordinates']
+
+  if ($polycount > 0) then
+    title_extent = $regData['extent']['geometry']['coordinates'][$polycounteasement]
+  else
+    title_extent = $regData['extent']['geometry']['coordinates']
+  end
+
+  if (type == 'polygon with easement')
+
+    specificPolygon[0] = Array.new()
+    specificPolygon[0][0] = Array.new()
+    specificPolygon[0][0][0] = title_extent[0][0][0] + 50
+    specificPolygon[0][0][1] = title_extent[0][0][1] + 50
+    specificPolygon[0][1] = Array.new()
+    specificPolygon[0][1][0] = title_extent[0][1][0] - 50
+    specificPolygon[0][1][1] = title_extent[0][1][1] + 50
+    specificPolygon[0][2] = Array.new()
+    specificPolygon[0][2][0] = title_extent[0][2][0] - 50
+    specificPolygon[0][2][1] = title_extent[0][2][1] - 50
+    specificPolygon[0][3] = Array.new()
+    specificPolygon[0][3][0] = title_extent[0][3][0] + 50
+    specificPolygon[0][3][1] = title_extent[0][3][1] - 50
+    specificPolygon[0][4] = Array.new()
+    specificPolygon[0][4][0] = specificPolygon[0][0][0]
+    specificPolygon[0][4][1] = specificPolygon[0][0][1]
+
+  end
+
+  $polycounteasement = $polycounteasement + 1
 
   return specificPolygon
 

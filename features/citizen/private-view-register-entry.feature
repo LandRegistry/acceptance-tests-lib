@@ -29,9 +29,7 @@ And the company charge is displayed
 
 Scenario: view lease register as new authenticated user without clauses and different lessee
 Given I have registered Leasehold property data
-And easements within the lease clause NOT existing
-And alienation clause NOT existing
-And landlords title registered clause NOT existing
+
 And Lessee name is different as proprietor
 And I submit the registered property data
 And I have private citizen login credentials
@@ -123,7 +121,10 @@ And the Polygons are laid over a map
 
 
 Scenario: Private Register with Title Plan Two Polygons, One with an easement, One which is a donut
-Given I have a registered property with a polygon with easement and a doughnut polygon
+Given I have a registered propertyB
+    | CHARACTERISTICS       |
+    | polygon with easement |
+    | doughnut polygon      |
 And I have private citizen login credentials
 And I am not already logged in as a private citizen
 When I view the private register

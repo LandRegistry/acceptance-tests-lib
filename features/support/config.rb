@@ -3,6 +3,7 @@ require_relative '../../lib/data-generator.rb'
 require_relative '../../lib/webservice.rb'
 require_relative '../../lib/logchecking.rb'
 require_relative '../../lib/polygonchecking.rb'
+require_relative '../../lib/dataFormatting.rb'
 require 'net/https'
 require 'digest/md5'
 

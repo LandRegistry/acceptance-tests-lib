@@ -12,8 +12,6 @@ Given(/^I have registered (.*) property data$/) do |tenure|
   $regData['property']['address'] = Hash.new()
   $regData['property']['address']['address_line_1'] = houseNumber()
   $regData['property']['address']['address_line_2'] = roadName()
-  $regData['property']['address']['address_line_3'] = roadName()
-  $regData['property']['address']['address_line_4'] = roadName()
   $regData['property']['address']['city'] = townName()
   $regData['property']['address']['postcode'] = postcode()
 
@@ -195,7 +193,7 @@ When(/^I select a result$/) do
   click_link('Title Number: ' + $regData['title_number'])
 end
 
-Given(/^easements within the lease clause (NOT|is) existing$/) do |easement_clause|
+Given(/^easements within the lease clause is( NOT|) existing$/) do |easement_clause|
   if easement_clause == 'NOT' then
     $regData['leases'][0]['lease_easements'] = false
   else

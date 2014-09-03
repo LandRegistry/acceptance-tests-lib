@@ -180,13 +180,12 @@ def get_polygon_details(image1, image2)
   # connect, then it must mean they are a different edge
 
   # Loop though each polygon
-  for polygon_i in 0..(multi_array_tmp.count - 1)
+  for polygon_i in 0..(multi_array_area.count - 1)
 
     multi_array_edge[polygon_i] = []
 
-
     # Loop though all the polygons that are different
-    multi_array_area[0].each do |x, y|
+    multi_array_area[polygon_i].each do |x, y|
 
       coords = []
 
@@ -249,6 +248,7 @@ def get_polygon_details(image1, image2)
       end
     end
   end
+
 
   polgyon_edges = []
 
