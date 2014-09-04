@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 Given(/^I have received an application for a first registration$/) do
+  $regData = nil
   $data = Hash.new()
   $data['address_line_1'] = houseNumber()
   $data['address_line_2'] = roadName()
@@ -112,9 +113,8 @@ end
 
 Then(/^I have received confirmation that the property has been registered$/) do
   assert_match(/New title created/i, page.body, 'Expected registration message but was not present')
-  wait_for_register_to_be_created($data['titleNumber'])
 
-  registered_property = get_register_by_title($data['titleNumber'])
+  registered_property = wait_for_register_to_be_created($data['titleNumber'])
 
   assert_match($data['titleNumber'].to_s, registered_property, 'Title number does not match')
   assert_match($data['fullName1'].to_s, registered_property, 'FullName 1 does not match')

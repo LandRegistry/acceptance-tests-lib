@@ -37,7 +37,6 @@ Then(/^No lease information is displayed$/) do
 end
 
 Then(/^Date of Lease is displayed$/) do
-
   lease_date_formatted = Date.parse($regData['leases'][0]['lease_date'])
   lease_date_formatted = lease_date_formatted.strftime("%d %B %Y")
   assert_selector(".//*[@id='leaseDate']", text: lease_date_formatted)

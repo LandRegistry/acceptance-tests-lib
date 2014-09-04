@@ -40,8 +40,6 @@ Given(/^I have a registered property with characteristics$/) do |table|
 
   generate_title_extent_information()
 
-  puts $regData
-
   uri = URI.parse($MINT_API_DOMAIN)
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Post.new('/titles/' + $regData['title_number'],  initheader = {'Content-Type' =>'application/json'})

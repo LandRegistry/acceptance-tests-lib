@@ -77,8 +77,6 @@ end
 def generate_title_extent_information()
 
   if ($data_characteristics_types['polygon']) then
-    $polycount = 0
-    $easementCount = 0
 
     $regData['extent'] = genenerate_title_extent2($data_characteristics)
 
