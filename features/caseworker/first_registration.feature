@@ -82,6 +82,7 @@ And I select class of Absolute
 And I enter a valid title extent
 And I submit the title details
 Then the user will be prompted again for a proprietor
+And Title Number is formatted correctly
 
 Scenario: Trying to process a first registration with no address (8)
 Given I have received an application for a first registration
