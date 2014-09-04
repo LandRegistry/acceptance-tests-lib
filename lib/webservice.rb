@@ -34,8 +34,8 @@ end
 def link_title_to_email(email, title_number, role)
 
   $roles = {}
-  $roles['1'] = 'CITIZEN'
-  $roles['2'] = 'CONVEYANCER'
+  $roles['CITIZEN'] = '1'
+  $roles['CONVEYANCER'] = '2'
 
   uri = URI.parse($LR_FIXTURES_URL)
   puts $LR_FIXTURES_URL
