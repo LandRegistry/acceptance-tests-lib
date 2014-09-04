@@ -10,7 +10,7 @@ function create_test_data {
   cd ../casework-frontend
   ./create-user-for-integration-tests.sh  
   cd ../matching
-  ./create_test_data.sh  > /vagrant/logs/acceptance-tests.log 2>&1
+  ./create_test_data.sh
 }
 
 if [[ ! -f /vagrant/logs/acceptance-tests.log ]]; then
