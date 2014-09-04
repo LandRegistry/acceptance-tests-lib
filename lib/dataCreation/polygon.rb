@@ -1,6 +1,8 @@
 def genenerate_title_extent2(polygons)
   $easementCount = 0
   $polycount = 0
+  $easementCount = 0
+  $polycounteasement = 0
 
   polydata = Hash.new()
   polydata['type'] = "Feature"
@@ -24,7 +26,7 @@ def genenerate_title_extent2(polygons)
   polydata['geometry']['properties'] = Hash.new()
   polydata['geometry']['properties']['Description'] = polydata['geometry']['type']
 
-  puts polydata.to_json
+  $temp_poly_data = polydata
 
   return polydata
 end
@@ -32,13 +34,10 @@ end
 
 def add_polygon(type)
 
-  $polycount = ($polycount || 0)
-
   if ($N.nil?) then
     $N = rand(404431.0 .. 404439.99999)
     $E = rand(369891.0 .. 369899.99999)
   end
-
 
   $topLeft = Array.new
   $topLeft << $N
@@ -50,7 +49,6 @@ def add_polygon(type)
   $bottomRight = Array.new
   $bottomRight << $N
   $bottomRight << $E
-
 
   specificPolygon = Array.new()
 
@@ -73,7 +71,7 @@ def add_polygon(type)
     specificPolygon[0][4][0] = specificPolygon[0][0][0]
     specificPolygon[0][4][1] = specificPolygon[0][0][1]
 
-    $easementCount = ($easementCount || 0) + 1
+    $easementCount = $easementCount + 1
 
   elsif (type == 'has a doughnut polygon')
 
@@ -114,16 +112,15 @@ def add_polygon(type)
 
   $polycount = $polycount + 1
 
-  $E = $E
+  $E = $E - 320
   $N = $N + 120
+
   return specificPolygon
 
 end
 
 
 def genenerate_title_easement2(polygons)
-
-  $easementCount = ($easementCount || 0)
 
   polydata = Hash.new()
   polydata['type'] = "Feature"
@@ -148,8 +145,6 @@ def genenerate_title_easement2(polygons)
   polydata['geometry']['properties'] = Hash.new()
   polydata['geometry']['properties']['Description'] = polydata['geometry']['type']
 
-  puts polydata.to_json
-
   return polydata
 end
 
@@ -163,14 +158,12 @@ def add_easement_polygon(type)
   if ($polycount > 1) then
     title_extent = $regData['extent']['geometry']['coordinates'][$polycounteasement]
   else
-    if (!$data.nil?)
-      title_extent = $data['title_extent']['geometry']['coordinates']
-    else
+    if (!$regData.nil?)
       title_extent = $regData['extent']['geometry']['coordinates']
+    else
+      title_extent = $data['title_extent']['geometry']['coordinates']
     end
   end
-
-  puts title_extent
 
   if (type == 'has a polygon with easement')
 

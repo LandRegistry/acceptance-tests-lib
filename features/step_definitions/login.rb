@@ -33,9 +33,7 @@ When(/^I login with incorrect username$/) do
 end
 
 Then(/^I fail to login $/) do
-  if (!page.body.include? 'Specified user does not exist') then
-    raise "Expected error message informing the user was unsuccessful in logging in"
-  end
+  assert_match('Specified user does not exist', page.body, 'Expected error message informing the user was unsuccessful in logging in')
 end
 
 When(/^I login with incorrect password$/) do
@@ -45,15 +43,11 @@ When(/^I login with incorrect password$/) do
 end
 
 Then(/^I fail to login \(incorrect username\)$/) do
-  if (!page.body.include? 'Specified user does not exist') then
-    raise "Expected error message informing the user was unsuccessful in logging in"
-  end
+  assert_match('Specified user does not exist', page.body, 'Expected error message informing the user was unsuccessful in logging in')
 end
 
 Then(/^I fail to login \(incorrect password\)$/) do
-  if (!page.body.include? 'Invalid password') then
-    raise "Expected error message informing the user was unsuccessful in logging in"
-  end
+  assert_match('Invalid password', page.body, 'Expected error message informing the user was unsuccessful in logging in')
 end
 
 Given(/^I am still authenticated$/) do
@@ -80,9 +74,7 @@ Then(/^I am prompted to login as a private citizen$/) do
 end
 
 Then(/^I fail to login$/) do
-  if (!page.body.include? 'Invalid login') then
-    raise "Expected error message informing the user was unsuccessful in logging in"
-  end
+  assert_match('Invalid login', page.body, 'Expected error message informing the user was unsuccessful in logging in')
 end
 
 When(/^I logout as a caseworker$/) do
@@ -102,4 +94,8 @@ Given(/^I am still authenticated as a caseworker$/) do
   step "I have caseworker login credentials"
   visit("#{$CASEWORK_FRONTEND_DOMAIN}")
   step "I login with correct credentials"
+end
+
+Then(/^I get an unauthorised message$/) do
+  assert_match('Unauthorized', page.body, 'Expected to have an Unauthorized message')
 end

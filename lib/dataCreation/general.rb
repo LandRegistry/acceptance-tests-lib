@@ -7,32 +7,32 @@ end
 def fullName()
 
 	fname = Array.new
-	fname << 'Adam'
-	fname << 'Bob'
-	fname << 'Charles'
-	fname << 'Diane'
-	fname << 'Eric'
-	fname << 'Fiona'
-	fname << 'Gareth'
-	fname << 'Helen'
-	fname << 'Ingrid'
-	fname << 'Julie'
-	fname << 'Kieran'
-	fname << 'Louise'
-	fname << 'Michael'
-	fname << 'Neil'
-	fname << 'Ola'
-	fname << 'Peter'
-	fname << 'Quincy'
-	fname << 'Rachel'
-	fname << 'Sam'
-	fname << 'Terry'
-	fname << 'Una'
-	fname << 'Vicky'
-	fname << 'Will'
-	fname << 'Xavier'
-	fname << 'Yvana'
-	fname << 'Zach'
+	fname << 'Adam Jones'
+	fname << 'Bob Moore'
+	fname << 'Charles Lewis'
+	fname << 'Diane Pease'
+	fname << 'Eric Downey'
+	fname << 'Fiona Devetak'
+	fname << 'Gareth Shaw'
+	fname << 'Helen Wall'
+	fname << 'Ingrid Jones'
+	fname << 'Julie Howell'
+	fname << 'Kieran Wills'
+	fname << 'Louise Taylor'
+	fname << 'Michael Jobnes'
+	fname << 'Neil Wright'
+	fname << 'Ola Harris'
+	fname << 'Peter Morgan'
+	fname << 'Quincy Edwards'
+	fname << 'Rachel Clark'
+	fname << 'Sam Thompson'
+	fname << 'Terry Jackson'
+	fname << 'Una Griffiths'
+	fname << 'Vicky Chapman'
+	fname << 'Will Wood'
+	fname << 'Xavier Berry'
+	fname << 'Yvana Foster'
+	fname << 'Zach Dixon'
 
 	fname_num = rand(0 .. fname.length - 1)
 
@@ -180,54 +180,4 @@ end
 
 def certificateNumber()
   return rand(1000000000..9000000000)
-end
-
-
-
-
-
-
-
-def generate_multiple_easement_for_title_extent(title_extent, polygons)
-
-  polydata = Hash.new()
-  polydata['type'] = "Feature"
-  polydata['crs'] = Hash.new()
-  polydata['crs']['type'] = 'name'
-  polydata['crs']['properties'] = Hash.new()
-  polydata['crs']['properties']['name'] = 'urn:ogc:def:crs:EPSG:27700'
-  polydata['geometry'] = Hash.new()
-
-  polydata['geometry']['type'] = 'MultiPolygon'
-  polydata['geometry']['coordinates'] = Array.new()
-
-  for i in 0..(polygons - 1)
-
-    polydata['geometry']['coordinates'][i] = Array.new
-    polydata['geometry']['coordinates'][i][0] = Array.new()
-    polydata['geometry']['coordinates'][i][0][0] = Array.new()
-    polydata['geometry']['coordinates'][i][0][0][0] = title_extent['geometry']['coordinates'][0][0][0] + 100
-    polydata['geometry']['coordinates'][i][0][0][1] = title_extent['geometry']['coordinates'][0][0][1] + 75 + (i * 80)
-    polydata['geometry']['coordinates'][i][0][1] = Array.new()
-    polydata['geometry']['coordinates'][i][0][1][0] = polydata['geometry']['coordinates'][i][0][0][0] + 50 - rand(0..10)
-    polydata['geometry']['coordinates'][i][0][1][1] = polydata['geometry']['coordinates'][i][0][0][1] - rand(0..10)
-    polydata['geometry']['coordinates'][i][0][2] = Array.new()
-    polydata['geometry']['coordinates'][i][0][2][0] = polydata['geometry']['coordinates'][i][0][1][0] - rand(0..10)
-    polydata['geometry']['coordinates'][i][0][2][1] = polydata['geometry']['coordinates'][i][0][1][1] + 50 - rand(0..10)
-    polydata['geometry']['coordinates'][i][0][3] = Array.new()
-    polydata['geometry']['coordinates'][i][0][3][0] = polydata['geometry']['coordinates'][i][0][0][0] + rand(0..10)
-    polydata['geometry']['coordinates'][i][0][3][1] = polydata['geometry']['coordinates'][i][0][0][1] + 50 - rand(0..10)
-    polydata['geometry']['coordinates'][i][0][4] = Array.new()
-    polydata['geometry']['coordinates'][i][0][4][0] = polydata['geometry']['coordinates'][i][0][0][0]
-    polydata['geometry']['coordinates'][i][0][4][1] = polydata['geometry']['coordinates'][i][0][0][1]
-
-  end
-
-  polydata['geometry']['properties'] = Hash.new()
-  polydata['geometry']['properties']['Description'] = 'MultiPolygon'
-
-  puts polydata.to_json
-
-  return polydata
-
 end

@@ -7,12 +7,10 @@ end
 
 Then(/^Title Number is displayed$/) do
   assert_match(/#{$regData['title_number']}/i, page.body, 'Expected to see title number')
-  #assert_selector(".//*[@id='content']/div/h1/span", text: /#{$regData['title_number']}/)
 end
 
 Then(/^Price Paid is displayed$/) do
   assert_match(/#{$regData['payment']['price_paid'].to_s.reverse.gsub(/...(?=.)/,'\&,').reverse}/i, page.body, 'Expected to see price paid')
-  #assert_selector(".//*[@id='price-paid']", text: /#{$regData['payment']['price_paid'].to_s.reverse.gsub(/...(?=.)/,'\&,').reverse}/)
 end
 
 When(/^I try to view a register that does not exist$/) do
@@ -20,9 +18,7 @@ When(/^I try to view a register that does not exist$/) do
 end
 
 Then(/^an error will be displayed$/) do
-  if (!page.body.include? 'Page not found') then
-    raise "Expected not to find the page"
-  end
+  assert_match('Page not found', page.body, 'Expected not to find the page')
 end
 
 When(/^I view the register$/) do
@@ -30,14 +26,12 @@ When(/^I view the register$/) do
 end
 
 Then(/^No lease information is displayed$/) do
-  #confirm lease info is not shown when tenure is freehold
   assert_no_selector(".//*[@id='leaseDate']")
   assert_no_selector(".//*[@id='leaseTerm']")
   assert_no_selector(".//*[@id='parties']")
 end
 
 Then(/^Date of Lease is displayed$/) do
-
   lease_date_formatted = Date.parse($regData['leases'][0]['lease_date'])
   lease_date_formatted = lease_date_formatted.strftime("%d %B %Y")
   assert_selector(".//*[@id='leaseDate']", text: lease_date_formatted)
@@ -57,36 +51,22 @@ Then(/^Lessor name is displayed$/) do
   assert_selector(".//*[@id='parties']", text: /1. #{$regData['leases'][0]['lessor_name']}/)
 end
 
-Then(/^Lessee name (NOT|is) displayed$/) do |lessee_to_be_displayed|
-  if lessee_to_be_displayed =='is' then
-    assert_selector(".//*[@id='parties']", text: /2. #{$regData['leases'][0]['lessee_name']}/)
-  else
-    assert_no_selector(".//*[@id='parties']", text: /2. #{$regData['leases'][0]['lessee_name']}/)
-  end
+Then(/^Lessee name is displayed$/) do
+  assert_selector(".//*[@id='parties']", text: /2. #{$regData['leases'][0]['lessee_name']}/)
 end
 
-
-
-Then(/^easements within the lease clause (NOT|is) displayed$/) do |easement_clause_displayed|
-  if easement_clause_displayed == 'NOT' then
-    assert_no_selector(".//*[@id='easementClause']")
-  else
-    assert_selector(".//*[@id='easementClause']")
-  end
+Then(/^Lessee name is not displayed$/) do
+  assert_no_selector(".//*[@id='parties']", text: /2. #{$regData['leases'][0]['lessee_name']}/)
 end
 
-Then(/^alienation clause (NOT|is) displayed$/) do |alienation_clause_displayed|
-  if alienation_clause_displayed == 'NOT' then
-    assert_no_selector(".//*[@id='alienationClause']")
-  else
-    assert_selector(".//*[@id='alienationClause']")
-  end
+Then(/^the lease clauses are not displayed$/) do
+  assert_no_selector(".//*[@id='easementClause']")
+  assert_no_selector(".//*[@id='easementClause']")
+  assert_no_selector(".//*[@id='alienationClause']")
 end
 
-Then(/^landlords title registered clause (NOT|is) displayed$/) do |landlords_clause_displayed|
-  if landlords_clause_displayed == 'NOT' then
-    assert_no_selector(".//*[@id='titleRegisteredClause']")
-  else
-    assert_selector(".//*[@id='titleRegisteredClause']")
-  end
+Then(/^the lease clauses are displayed$/) do
+  assert_selector(".//*[@id='easementClause']")
+  assert_selector(".//*[@id='easementClause']")
+  assert_selector(".//*[@id='alienationClause']")
 end

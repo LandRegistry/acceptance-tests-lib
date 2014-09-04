@@ -1,11 +1,10 @@
 # encoding: UTF-8
 
 Given(/^I have received an application for a first registration$/) do
+  $regData = nil
   $data = Hash.new()
   $data['address_line_1'] = houseNumber()
   $data['address_line_2'] = roadName()
-  #$data['address_line_3'] = roadName()
-  #$data['address_line_4'] = roadName()
   $data['city'] = townName()
   $data['postcode'] = postcode()
   $data['pricePaid'] = pricePaid()
@@ -26,8 +25,6 @@ end
 When(/^I enter a Property Address$/) do
   fill_in('address_line_1', :with => $data['address_line_1'])
   fill_in('address_line_2', :with => $data['address_line_2'])
-  #fill_in('address_line_3', :with => $data['address_line_3'])
-  #fill_in('address_line_4', :with => $data['address_line_4'])
   fill_in('city', :with => $data['city'])
   fill_in('postcode', :with => $data['postcode'])
 end
@@ -94,27 +91,17 @@ When(/^I enter an invalid price paid$/) do
 end
 
 Then(/^a Title Number is displayed$/) do
-  #assert_not_equal find(".//*[@id='title_number']", :visible => false).value, '', 'There is no titleNumber!'
   assert_match(/#{$regData['title_number']}/i, page.body, 'Expected to see title number')
 end
 
 Then(/^Title Number is formatted correctly$/) do
-  titleNumber = find(".//*[@id='title_number']", :visible => false).value
-
-
-
-  assert_equal titleNumber[0,4], 'TEST', 'Title does not have a prefix of TEST'
-  assert_equal titleNumber[4,titleNumber.size - 1], titleNumber[4,titleNumber.size - 1].to_i.to_s, 'The title number is not numberic'
-  assert_operator titleNumber[4,titleNumber.size - 1].to_i, :>=, 1, 'The number is less than 0'
-  assert_operator titleNumber[4,titleNumber.size - 1].to_i, :<=, 99999, 'The number is greater than 99999'
-
+  validate_title_number(find(".//*[@id='title_number']", :visible => false).value)
 end
 
 Then(/^I have received confirmation that the property has been registered$/) do
   assert_match(/New title created/i, page.body, 'Expected registration message but was not present')
-  wait_for_register_to_be_created($data['titleNumber'])
 
-  registered_property = get_register_by_title($data['titleNumber'])
+  registered_property = wait_for_register_to_be_created($data['titleNumber'])
 
   assert_match($data['titleNumber'].to_s, registered_property, 'Title number does not match')
   assert_match($data['fullName1'].to_s, registered_property, 'FullName 1 does not match')
@@ -185,7 +172,6 @@ end
 
 When(/^I enter proprietor as lessee name$/) do
   proprietor_lessee_name = $data['fullName1']
-  #assumption to just use 1 name currently. needs enhancing later
   fill_in('leases-0-lessee_name', :with => proprietor_lessee_name)
 end
 

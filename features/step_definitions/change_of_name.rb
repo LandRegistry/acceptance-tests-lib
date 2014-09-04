@@ -1,4 +1,4 @@
-Given(/^I have have got married and I want to change my name on the register$/) do
+Given(/^I have got married and I want to change my name on the register$/) do
   $data = Hash.new()
   $data['newName'] = fullName()
   $data['partnerFullName'] = fullName()
@@ -13,20 +13,15 @@ Given(/^I have have got married and I want to change my name on the register$/) 
 end
 
 Given(/^I want to request I change my name on the register$/) do
-  #visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}/edit")
-
   visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}/edit/title.proprietor.1")
-  puts "#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}/edit/title.proprietor.1"
-
 end
 
 Given(/^I own the property$/) do
-  puts
-  link_title_to_email($userdetails['email'], $regData['title_number'])
+  link_title_to_email($userdetails['email'], $regData['title_number'], 'CITIZEN')
 end
 
 Given(/^I don't own the property$/) do
-# Don't do anything.
+  # Don't do anything.
 end
 
 When(/^I enter a new name$/) do
@@ -85,30 +80,19 @@ When(/^I accept the certify statement$/) do
 end
 
 Given(/^a change of name by marriage application that requires reviewing by a caseworker$/) do
-  create_change_of_name_by_marriage_request("GB")
+  step "I have got married and I want to change my name on the register"
+  step "I have a registered property"
+
+  $data['countryOfMarriage'] = 'GB'
+
+  submit_changeOfName_request($data)
 end
 
 Given(/^a change of name by marriage application that requires checking$/) do
-  create_change_of_name_by_marriage_request("Not GB")
-end
-
-def create_change_of_name_by_marriage_request(country)
-  step "I have have got married and I want to change my name on the register"
+  step "I have got married and I want to change my name on the register"
   step "I have a registered property"
-  step "I have private citizen login credentials"
-  step "I own the property"
-  step "I want to request I change my name on the register"
-  step "I am logged in"
-  step "I enter a new name"
-  step "I enter my date of marriage"
-  step "I enter my partners name"
-  step "I enter \"#{country}\" as the Country of marriage"
-  step "I enter a location of marriage"
-  step "I enter a Marriage Certificate Number"
-  step "I submit the marriage change of name details"
-  step "I accept the certify statement"
-end
 
-Then(/^I get an unauthorised message$/) do
-  assert_match('Unauthorized', page.body, 'Expected to have an Unauthorized message')
+  $data['countryOfMarriage'] = 'Not GB'
+
+  submit_changeOfName_request($data)
 end

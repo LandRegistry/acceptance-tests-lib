@@ -61,9 +61,7 @@ And Lease Term is displayed
 And Lease Term start date is displayed
 And Lessor name is displayed
 And Lessee name is displayed
-And easements within the lease clause NOT displayed
-And alienation clause NOT displayed
-And landlords title registered clause NOT displayed
+And the lease clauses are not displayed
 And Audit for private citizen register view written
 
 Scenario: view lease register as new authenticated user with clauses and lessee as proprietor
@@ -81,9 +79,7 @@ And Lease Term is displayed
 And Lease Term start date is displayed
 And Lessor name is displayed
 And Lessee name is displayed
-And easements within the lease clause is displayed
-And alienation clause is displayed
-And landlords title registered clause is displayed
+And the lease clauses are displayed
 And Audit for private citizen register view written
 
 Scenario: Citizen can only view private register if logged in

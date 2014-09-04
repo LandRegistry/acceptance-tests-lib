@@ -6,10 +6,8 @@ Given(/^I have a registered property with characteristics$/) do |table|
   $regData['title_number'] = titleNumber()
 
   $regData['proprietors'] = Array.new()
-
   $regData['proprietors'][0] = Hash.new()
   $regData['proprietors'][0]['full_name'] = fullName()
-
   $regData['proprietors'][1] = Hash.new()
 
   if (!$data_characteristics['two proprietors'].nil?)
@@ -39,8 +37,6 @@ Given(/^I have a registered property with characteristics$/) do |table|
   generate_charge_information()
 
   generate_title_extent_information()
-
-  puts $regData
 
   uri = URI.parse($MINT_API_DOMAIN)
   http = Net::HTTP.new(uri.host, uri.port)

@@ -1,12 +1,13 @@
 ### Include Custom function libraries
 require_relative '../../lib/dataCreation/general.rb'
 require_relative '../../lib/dataCreation/polygon.rb'
-require_relative '../../lib/dataCreation/registerCreation.rb'
+require_relative '../../lib/dataCreation/register_creation.rb'
 
 require_relative '../../lib/webservice.rb'
-require_relative '../../lib/logchecking.rb'
-require_relative '../../lib/polygonchecking.rb'
-require_relative '../../lib/dataFormatting.rb'
+require_relative '../../lib/log_checking.rb'
+require_relative '../../lib/polygon_checking.rb'
+require_relative '../../lib/data_formatting.rb'
+require_relative '../../lib/validation.rb'
 
 require 'net/https'
 require 'digest/md5'
