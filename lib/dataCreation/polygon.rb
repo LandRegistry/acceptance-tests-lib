@@ -112,7 +112,7 @@ def add_polygon(type)
 
   $polycount = $polycount + 1
 
-  $E = $E
+  $E = $E - 320
   $N = $N + 120
 
   return specificPolygon

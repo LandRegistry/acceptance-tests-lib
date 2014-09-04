@@ -51,36 +51,22 @@ Then(/^Lessor name is displayed$/) do
   assert_selector(".//*[@id='parties']", text: /1. #{$regData['leases'][0]['lessor_name']}/)
 end
 
-Then(/^Lessee name (NOT|is) displayed$/) do |lessee_to_be_displayed|
-  if lessee_to_be_displayed =='is' then
-    assert_selector(".//*[@id='parties']", text: /2. #{$regData['leases'][0]['lessee_name']}/)
-  else
-    assert_no_selector(".//*[@id='parties']", text: /2. #{$regData['leases'][0]['lessee_name']}/)
-  end
+Then(/^Lessee name is displayed$/) do
+  assert_selector(".//*[@id='parties']", text: /2. #{$regData['leases'][0]['lessee_name']}/)
 end
 
-
-
-Then(/^easements within the lease clause (NOT|is) displayed$/) do |easement_clause_displayed|
-  if easement_clause_displayed == 'NOT' then
-    assert_no_selector(".//*[@id='easementClause']")
-  else
-    assert_selector(".//*[@id='easementClause']")
-  end
+Then(/^Lessee name is not displayed$/) do
+  assert_no_selector(".//*[@id='parties']", text: /2. #{$regData['leases'][0]['lessee_name']}/)
 end
 
-Then(/^alienation clause (NOT|is) displayed$/) do |alienation_clause_displayed|
-  if alienation_clause_displayed == 'NOT' then
-    assert_no_selector(".//*[@id='alienationClause']")
-  else
-    assert_selector(".//*[@id='alienationClause']")
-  end
+Then(/^the lease clauses are not displayed$/) do
+  assert_no_selector(".//*[@id='easementClause']")
+  assert_no_selector(".//*[@id='easementClause']")
+  assert_no_selector(".//*[@id='alienationClause']")
 end
 
-Then(/^landlords title registered clause (NOT|is) displayed$/) do |landlords_clause_displayed|
-  if landlords_clause_displayed == 'NOT' then
-    assert_no_selector(".//*[@id='titleRegisteredClause']")
-  else
-    assert_selector(".//*[@id='titleRegisteredClause']")
-  end
+Then(/^the lease clauses are displayed$/) do
+  assert_selector(".//*[@id='easementClause']")
+  assert_selector(".//*[@id='easementClause']")
+  assert_selector(".//*[@id='alienationClause']")
 end

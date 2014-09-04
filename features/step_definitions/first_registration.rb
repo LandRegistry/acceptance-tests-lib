@@ -5,8 +5,6 @@ Given(/^I have received an application for a first registration$/) do
   $data = Hash.new()
   $data['address_line_1'] = houseNumber()
   $data['address_line_2'] = roadName()
-  #$data['address_line_3'] = roadName()
-  #$data['address_line_4'] = roadName()
   $data['city'] = townName()
   $data['postcode'] = postcode()
   $data['pricePaid'] = pricePaid()
@@ -27,8 +25,6 @@ end
 When(/^I enter a Property Address$/) do
   fill_in('address_line_1', :with => $data['address_line_1'])
   fill_in('address_line_2', :with => $data['address_line_2'])
-  #fill_in('address_line_3', :with => $data['address_line_3'])
-  #fill_in('address_line_4', :with => $data['address_line_4'])
   fill_in('city', :with => $data['city'])
   fill_in('postcode', :with => $data['postcode'])
 end
@@ -99,13 +95,7 @@ Then(/^a Title Number is displayed$/) do
 end
 
 Then(/^Title Number is formatted correctly$/) do
-  titleNumber = find(".//*[@id='title_number']", :visible => false).value
-
-  assert_equal titleNumber[0,4], 'TEST', 'Title does not have a prefix of TEST'
-  assert_equal titleNumber[4,titleNumber.size - 1], titleNumber[4,titleNumber.size - 1].to_i.to_s, 'The title number is not numberic'
-  assert_operator titleNumber[4,titleNumber.size - 1].to_i, :>=, 1, 'The number is less than 0'
-  assert_operator titleNumber[4,titleNumber.size - 1].to_i, :<=, 99999, 'The number is greater than 99999'
-
+  validate_title_number(find(".//*[@id='title_number']", :visible => false).value)
 end
 
 Then(/^I have received confirmation that the property has been registered$/) do

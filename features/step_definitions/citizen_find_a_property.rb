@@ -29,12 +29,3 @@ end
 When(/^I enter a Title Number with the same prefix$/) do
   fill_in('search', :with => 'TEST')
 end
-
-Then(/^results show address details$/) do
-  for i in 0..$results.count
-    assert_match(/#{$results[i]['property']['address']['house_number']}/i, page.body, 'Expected to find house_number')
-    assert_match(/#{$results[i]['property']['address']['road'].gsub(')', '\)').gsub('(', '\(')}/i, page.body, 'Expected to find road')
-    assert_match(/#{$results[i]['property']['address']['town']}/i, page.body, 'Expected to find town')
-    assert_match(/#{$results[i]['property']['address']['postcode']}/i, page.body, 'Expected to find postcode')
-  end
-end

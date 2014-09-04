@@ -12,7 +12,6 @@ And I enter 1 proprietor
 And I enter a valid title extent
 And I submit the title details
 Then I have received confirmation that the property has been registered
-And Audit for new registration is written
 
 Scenario: Processing Good Leasehold First Registration with 1 proprietor and all valid details but no clauses and lessee as a proprietor
 Given I have received an application for a first registration
@@ -83,6 +82,7 @@ And I select class of Absolute
 And I enter a valid title extent
 And I submit the title details
 Then the user will be prompted again for a proprietor
+And Title Number is formatted correctly
 
 Scenario: Trying to process a first registration with no address (8)
 Given I have received an application for a first registration
