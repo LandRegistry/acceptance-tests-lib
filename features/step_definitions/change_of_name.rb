@@ -17,7 +17,7 @@ Given(/^I want to request I change my name on the register$/) do
 end
 
 Given(/^I own the property$/) do
-  link_title_to_email($userdetails['email'], $regData['title_number'])
+  link_title_to_email($userdetails['email'], $regData['title_number'], 'CITIZEN')
 end
 
 Given(/^I don't own the property$/) do
