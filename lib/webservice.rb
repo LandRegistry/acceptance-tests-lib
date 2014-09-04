@@ -77,14 +77,14 @@ def submit_changeOfName_request(request)
   changeOfName_decission["context"]["session-id"] = "123456"
   changeOfName_decission["context"]["transaction-id"] = "ABCDEFG"
 
-  uri = URI.parse('http://decision.landregistry.local')
+  uri = URI.parse($DECISION_URL)
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Post.new('/decisions',  initheader = {'Content-Type' =>'application/json'})
   request.basic_auth $http_auth_name, $http_auth_password
   request.body = changeOfName_decission.to_json
   response = http.request(request)
 
-  decission_url = JSON.parse(response.body)['url']
+  decision_forward_url = JSON.parse(response.body)['url']
 
   changeOfName_submission = {}
   changeOfName_submission['marriage_country'] = $data['countryOfMarriage']
@@ -98,9 +98,9 @@ def submit_changeOfName_request(request)
   changeOfName_submission['proprietor_previous_full_name'] = $regData['proprietors'][0]['full_name']
   changeOfName_submission['marriage_date'] = Date.today.to_time.to_i
 
-  puts decission_url
+  puts decision_forward_url
 
-  uri = URI.parse(decission_url)
+  uri = URI.parse(decision_forward_url)
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Post.new(uri.path,  initheader = {'Content-Type' =>'application/json'})
   request.basic_auth $http_auth_name, $http_auth_password

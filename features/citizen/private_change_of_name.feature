@@ -1,7 +1,7 @@
 Feature: Change of Name (marriage)
 
 Scenario: Change of name Statement (marriage)
-Given I have have got married and I want to change my name on the register
+Given I have got married and I want to change my name on the register
 And I have a registered property
 And I have private citizen login credentials
 And I own the property
@@ -17,7 +17,7 @@ And I submit the marriage change of name details
 Then I am presented to certify my details
 
 Scenario: Change of name Confirmation Message (marriage)
-Given I have have got married and I want to change my name on the register
+Given I have got married and I want to change my name on the register
 And I have a registered property
 And I have private citizen login credentials
 And I own the property

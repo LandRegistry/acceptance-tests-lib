@@ -1,4 +1,4 @@
-Given(/^I have have got married and I want to change my name on the register$/) do
+Given(/^I have got married and I want to change my name on the register$/) do
   $data = Hash.new()
   $data['newName'] = fullName()
   $data['partnerFullName'] = fullName()
@@ -80,7 +80,7 @@ When(/^I accept the certify statement$/) do
 end
 
 Given(/^a change of name by marriage application that requires reviewing by a caseworker$/) do
-  step "I have have got married and I want to change my name on the register"
+  step "I have got married and I want to change my name on the register"
   step "I have a registered property"
 
   $data['countryOfMarriage'] = 'GB'
@@ -89,7 +89,7 @@ Given(/^a change of name by marriage application that requires reviewing by a ca
 end
 
 Given(/^a change of name by marriage application that requires checking$/) do
-  step "I have have got married and I want to change my name on the register"
+  step "I have got married and I want to change my name on the register"
   step "I have a registered property"
 
   $data['countryOfMarriage'] = 'Not GB'
