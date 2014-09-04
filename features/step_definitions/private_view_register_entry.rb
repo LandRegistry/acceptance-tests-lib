@@ -3,8 +3,6 @@ When(/^I view the private register$/) do
   visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}")
 end
 
-#public detail checks located in citizen-view-register
-
 Then(/^Tenure is displayed$/) do
   assert_match(/#{$regData['property']['tenure']}/i, page.body, 'Expected to see tenure value')
 end
@@ -38,7 +36,7 @@ Then(/^the charge restriction is displayed$/) do
   restriction_text = restriction_text +  " in favour of "
   restriction_text = restriction_text +  $regData['charges'][0]['chargee_name']
   restriction_text = restriction_text + " referred to in the Charges Register."
-  puts restriction_text
+
   assert_match(/#{restriction_text}/, page.body.gsub(/\s+/, ' '), 'expected to find charge restriction '+restriction_text)
 end
 
@@ -48,6 +46,6 @@ Then(/^the company charge is displayed with no restriction$/) do
 end
 
 Then(/^the company charge is displayed with a restriction$/) do
-step "the company charge is displayed"
-step "the charge restriction is displayed"
+  step "the company charge is displayed"
+  step "the charge restriction is displayed"
 end

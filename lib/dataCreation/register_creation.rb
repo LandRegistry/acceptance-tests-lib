@@ -16,24 +16,18 @@ def generate_lease_information()
   if $regData['property']['tenure'] =='Leasehold' then
     #build up the leasehold structure
 
-
-
     $regData['leases'] = Array.new()
     $regData['leases'][0] = Hash.new()
     $regData['leases'][0]['lease_term'] = rand(7..999)
 
     if (!$data_characteristics['has no lease clauses'].nil?)
-
       $regData['leases'][0]['lease_easements'] = false
       $regData['leases'][0]['title_registered'] = false
       $regData['leases'][0]['alienation_clause'] = false
-
     else
-
       $regData['leases'][0]['lease_easements'] = true
       $regData['leases'][0]['title_registered'] = true
       $regData['leases'][0]['alienation_clause'] = true
-
     end
 
     if (!$data_characteristics['has a lessee name different to the proprietor'].nil?)
@@ -48,7 +42,6 @@ def generate_lease_information()
     $regData['leases'][0]['lease_from'] = Date.today.prev_day.strftime("%Y-%m-%d")
 
   end
-
 end
 
 
@@ -77,23 +70,19 @@ end
 def generate_title_extent_information()
 
   if ($data_characteristics_types['polygon']) then
-    $polycount = 0
-    $easementCount = 0
 
     $regData['extent'] = genenerate_title_extent2($data_characteristics)
 
     if ($easementCount > 0)
-
       $regData['easements'] = Array.new()
       $regData['easements'] = []
       $regData['easements'][0] = {}
       $regData['easements'][0]['easement_geometry'] = genenerate_title_easement2($data_characteristics)
       $regData['easements'][0]['easement_description'] = 'Easement Description'
-
     end
 
   else
-    $regData['extent'] = genenerate_title_extent2({'polygon' => true})
+    $regData['extent'] = genenerate_title_extent2({'has a polygon' => true})
   end
 
 end
