@@ -95,14 +95,11 @@ When(/^I enter an invalid price paid$/) do
 end
 
 Then(/^a Title Number is displayed$/) do
-  #assert_not_equal find(".//*[@id='title_number']", :visible => false).value, '', 'There is no titleNumber!'
   assert_match(/#{$regData['title_number']}/i, page.body, 'Expected to see title number')
 end
 
 Then(/^Title Number is formatted correctly$/) do
   titleNumber = find(".//*[@id='title_number']", :visible => false).value
-
-
 
   assert_equal titleNumber[0,4], 'TEST', 'Title does not have a prefix of TEST'
   assert_equal titleNumber[4,titleNumber.size - 1], titleNumber[4,titleNumber.size - 1].to_i.to_s, 'The title number is not numberic'
@@ -185,7 +182,6 @@ end
 
 When(/^I enter proprietor as lessee name$/) do
   proprietor_lessee_name = $data['fullName1']
-  #assumption to just use 1 name currently. needs enhancing later
   fill_in('leases-0-lessee_name', :with => proprietor_lessee_name)
 end
 

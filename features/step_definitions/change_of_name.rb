@@ -13,20 +13,15 @@ Given(/^I have have got married and I want to change my name on the register$/) 
 end
 
 Given(/^I want to request I change my name on the register$/) do
-  #visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}/edit")
-
   visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}/edit/title.proprietor.1")
-  puts "#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}/edit/title.proprietor.1"
-
 end
 
 Given(/^I own the property$/) do
-  puts
   link_title_to_email($userdetails['email'], $regData['title_number'])
 end
 
 Given(/^I don't own the property$/) do
-# Don't do anything.
+  # Don't do anything.
 end
 
 When(/^I enter a new name$/) do
@@ -85,28 +80,19 @@ When(/^I accept the certify statement$/) do
 end
 
 Given(/^a change of name by marriage application that requires reviewing by a caseworker$/) do
-
   step "I have have got married and I want to change my name on the register"
   step "I have a registered property"
 
   $data['countryOfMarriage'] = 'GB'
 
   submit_changeOfName_request($data)
-
 end
 
 Given(/^a change of name by marriage application that requires checking$/) do
-
   step "I have have got married and I want to change my name on the register"
   step "I have a registered property"
 
   $data['countryOfMarriage'] = 'Not GB'
 
   submit_changeOfName_request($data)
-
-end
-
-
-Then(/^I get an unauthorised message$/) do
-  assert_match('Unauthorized', page.body, 'Expected to have an Unauthorized message')
 end

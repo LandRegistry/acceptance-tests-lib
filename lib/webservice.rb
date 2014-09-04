@@ -1,34 +1,27 @@
-# http://taf2.github.io/curb/
-
-
 def wait_for_register_to_be_created(title_no)
   found = false
   count = 0
 
-  sleep(10)
-
-  while (found == false && count < 100) do
+  while (found == false && count < 10) do
     puts 'waiting for registration to be created'
 
     uri = URI.parse($LR_SEARCH_API_DOMAIN)
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Get.new('/auth/titles/' + title_no,  initheader = {'Content-Type' =>'application/json'})
     request.basic_auth $http_auth_name, $http_auth_password
-    puts Time.now()
     response = http.request(request)
-puts Time.now()
 
     json_response = JSON.parse(response.body);
 
     if ((response.code != '404') && (!json_response['title_number'].nil?)) then
         found = true
         puts 'registration created: ' + json_response['title_number']
+    else
+      sleep(1)
     end
 
     count = count + 1
-    sleep(0.1)
   end
-puts Time.now()
 
   if (found == false) then
     raise "No records found for title " + title_no

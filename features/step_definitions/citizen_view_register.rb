@@ -7,12 +7,10 @@ end
 
 Then(/^Title Number is displayed$/) do
   assert_match(/#{$regData['title_number']}/i, page.body, 'Expected to see title number')
-  #assert_selector(".//*[@id='content']/div/h1/span", text: /#{$regData['title_number']}/)
 end
 
 Then(/^Price Paid is displayed$/) do
   assert_match(/#{$regData['payment']['price_paid'].to_s.reverse.gsub(/...(?=.)/,'\&,').reverse}/i, page.body, 'Expected to see price paid')
-  #assert_selector(".//*[@id='price-paid']", text: /#{$regData['payment']['price_paid'].to_s.reverse.gsub(/...(?=.)/,'\&,').reverse}/)
 end
 
 When(/^I try to view a register that does not exist$/) do
@@ -20,9 +18,7 @@ When(/^I try to view a register that does not exist$/) do
 end
 
 Then(/^an error will be displayed$/) do
-  if (!page.body.include? 'Page not found') then
-    raise "Expected not to find the page"
-  end
+  assert_match('Page not found', page.body, 'Expected not to find the page')
 end
 
 When(/^I view the register$/) do
@@ -30,7 +26,6 @@ When(/^I view the register$/) do
 end
 
 Then(/^No lease information is displayed$/) do
-  #confirm lease info is not shown when tenure is freehold
   assert_no_selector(".//*[@id='leaseDate']")
   assert_no_selector(".//*[@id='leaseTerm']")
   assert_no_selector(".//*[@id='parties']")
