@@ -82,7 +82,7 @@ def generate_title_extent_information()
     end
 
   else
-    $regData['extent'] = genenerate_title_extent2({'polygon' => true})
+    $regData['extent'] = genenerate_title_extent2({'has a polygon' => true})
   end
 
 end
