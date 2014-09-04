@@ -42,7 +42,7 @@ def link_title_to_email(email, title_number, role)
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Post.new('/create-matching-data-and-ownership')
   request.basic_auth $http_auth_name, $http_auth_password
-  request.set_form_data({'email' => email, 'title_number' => title_number, 'role' => $roles[role],'submit' => 'submit'})
+  request.set_form_data({'email' => email, 'title_number' => title_number, 'role_id' => $roles[role],'submit' => 'submit'})
   response = http.request(request)
 
   if (response.body != 'OK') then
