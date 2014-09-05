@@ -62,7 +62,6 @@ And Lease Term start date is displayed
 And Lessor name is displayed
 And Lessee name is displayed
 And the lease clauses are not displayed
-And Audit for private citizen register view written
 
 Scenario: view lease register as new authenticated user with clauses and lessee as proprietor
 Given I have a registered property with characteristics
@@ -80,7 +79,6 @@ And Lease Term start date is displayed
 And Lessor name is displayed
 And Lessee name is displayed
 And the lease clauses are displayed
-And Audit for private citizen register view written
 
 Scenario: Citizen can only view private register if logged in
 Given I have a registered property

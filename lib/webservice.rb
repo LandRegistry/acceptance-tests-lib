@@ -2,7 +2,7 @@ def wait_for_register_to_be_created(title_no)
   found = false
   count = 0
 
-  while (found == false && count < 50) do
+  while (found == false && count < 25) do
     puts 'waiting for registration to be created'
 
     uri = URI.parse($LR_SEARCH_API_DOMAIN)
