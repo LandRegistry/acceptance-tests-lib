@@ -38,7 +38,7 @@ end
 
 When(/^I enter "(.*?)" as the Country of marriage$/) do |country|
   $data['countryOfMarriage'] = country
-  fill_in('marriage_country', :with => $data['countryOfMarriage'])
+  select(country, :from => "marriage_country")
 end
 
 When(/^I enter a location of marriage$/) do
@@ -92,7 +92,7 @@ Given(/^a change of name by marriage application that requires checking$/) do
   step "I have got married and I want to change my name on the register"
   step "I have a registered property"
 
-  $data['countryOfMarriage'] = 'Not GB'
+  $data['countryOfMarriage'] = 'AU'
 
   submit_changeOfName_request($data)
 end

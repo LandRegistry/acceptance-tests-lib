@@ -10,7 +10,7 @@ And I am logged in
 When I enter a new name
 And I enter my date of marriage
 And I enter my partners name
-And I enter "GB" as the Country of marriage
+And I enter "United Kingdom" as the Country of marriage
 And I enter a location of marriage
 And I enter a Marriage Certificate Number
 And I submit the marriage change of name details
@@ -26,7 +26,7 @@ And I am logged in
 When I enter a new name
 And I enter my date of marriage
 And I enter my partners name
-And I enter "GB" as the Country of marriage
+And I enter "United Kingdom" as the Country of marriage
 And I enter a location of marriage
 And I enter a Marriage Certificate Number
 And I submit the marriage change of name details
@@ -44,7 +44,6 @@ Then a "This field is required." message for "error_proprietor_new_full_name" is
 And a "This field is required." message for "error_partner_name" is returned
 And a "This field is required." message for "error_marriage_date" is returned
 And a "This field is required." message for "error_marriage_place" is returned
-And a "This field is required." message for "error_marriage_country" is returned
 And a "This field is required." message for "error_marriage_certificate_number" is returned
 
 Scenario: Unauthorised Access
