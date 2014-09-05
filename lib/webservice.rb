@@ -32,7 +32,7 @@ end
 
 
 def link_title_to_email(email, title_number, role)
-
+ 
   $roles = {}
   $roles['CITIZEN'] = '1'
   $roles['CONVEYANCER'] = '2'
@@ -46,7 +46,7 @@ def link_title_to_email(email, title_number, role)
   response = http.request(request)
 
   if (response.body != 'OK') then
-    raise "Could not match title(#{title_number}) and email(#{email})"
+    raise "Could not match title(#{title_number}), email(#{email}) and role(#{role}): " + response.body
   end
 
 end

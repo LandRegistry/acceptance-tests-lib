@@ -1,7 +1,7 @@
 require 'oily_png'
 
 When(/^I check the title plan \(public view\)$/) do
-  sleep(3)
+  wait_for_map_to_load()
 
   $polygon_main = "tmpimg-#{Time.new.to_i}-main.png"
   page.execute_script("extentGeoJson.setStyle({weight: 8, opacity: 1});")
@@ -41,7 +41,7 @@ When(/^I check the title plan \(public view\)$/) do
 end
 
 When(/^I check the title plan \(private view\)$/) do
-  sleep(3)
+  wait_for_map_to_load()
 
   $polygon_orig = "tmpimg-#{Time.new.to_i}-orig.png"
   save_screenshot($polygon_orig, :selector => "#map")
