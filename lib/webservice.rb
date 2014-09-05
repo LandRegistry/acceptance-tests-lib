@@ -2,7 +2,7 @@ def wait_for_register_to_be_created(title_no)
   found = false
   count = 0
 
-  while (found == false && count < 10) do
+  while (found == false && count < 50) do
     puts 'waiting for registration to be created'
 
     uri = URI.parse($LR_SEARCH_API_DOMAIN)
@@ -17,7 +17,7 @@ def wait_for_register_to_be_created(title_no)
         found = true
         puts 'registration created: ' + json_response['title_number']
     else
-      sleep(1)
+      sleep(0.2)
     end
 
     count = count + 1
@@ -32,7 +32,7 @@ end
 
 
 def link_title_to_email(email, title_number, role)
- 
+
   $roles = {}
   $roles['CITIZEN'] = '1'
   $roles['CONVEYANCER'] = '2'

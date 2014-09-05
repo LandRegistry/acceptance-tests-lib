@@ -36,7 +36,7 @@ When(/^I check the title plan \(public view\)$/) do
 
   # Re add the map layer
   page.execute_script("map.addLayer(openspaceLayer);")
-  sleep(1)
+  wait_for_map_to_load()
 
 end
 
@@ -86,7 +86,7 @@ When(/^I check the title plan \(private view\)$/) do
 
   # Re add the map layer
   page.execute_script("map.addLayer(openspaceLayer);")
-  sleep(1)
+  wait_for_map_to_load()
 
 end
 
@@ -163,7 +163,7 @@ Then(/^the map can't be zoomed$/) do
 
   # Send plus key to see if the map zooms
   find(".//*[@id='map']").native.send_key('+')
-  sleep(1)
+  wait_for_map_to_load()
   # save a screen with the image after the key press
   save_screenshot(map_file2, :selector => "#map")
 
@@ -185,7 +185,7 @@ Then(/^the map can't be moved$/) do
 
   # Send an arrow key to see if the map zooms
   find(".//*[@id='map']").native.send_key(:arrow_down)
-  sleep(1)
+  wait_for_map_to_load()
 
   # save a screen with the image after the key press
   save_screenshot(map_file2, :selector => "#map")
@@ -209,7 +209,7 @@ Then(/^the Polygon(s are| is) laid over a map$/) do |wording|
 
   # Remove the underlying map layer
   page.execute_script("map.removeLayer(openspaceLayer);")
-  sleep(1)
+  wait_for_map_to_load()
 
   # save a screen with the image after the key press
   save_screenshot(map_file2, :selector => "#map")
