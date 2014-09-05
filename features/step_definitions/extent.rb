@@ -200,28 +200,32 @@ end
 
 Then(/^the Polygon(s are| is) laid over a map$/) do |wording|
 
-  # Generate some new map names.
-  map_file1 = "tmpimg-#{Time.new.to_i}-1.png"
-  map_file2 = "tmpimg-#{Time.new.to_i}-2.png"
+  if (ENV['WEBDRIVER'] != 'Firefox') then
 
-  # Save the map area as a screenshot
-  save_screenshot(map_file1, :selector => "#map")
+    # Generate some new map names.
+    map_file1 = "tmpimg-#{Time.new.to_i}-1.png"
+    map_file2 = "tmpimg-#{Time.new.to_i}-2.png"
 
-  # Remove the underlying map layer
-  page.execute_script("map.removeLayer(openspaceLayer);")
-  wait_for_map_to_load()
+    # Save the map area as a screenshot
+    save_screenshot(map_file1, :selector => "#map")
 
-  # save a screen with the image after the key press
-  save_screenshot(map_file2, :selector => "#map")
+    # Remove the underlying map layer
+    page.execute_script("map.removeLayer(openspaceLayer);")
+    wait_for_map_to_load()
 
-  # See if the maps now compare
-  maps_match = compare_maps(map_file1, map_file2)
+    # save a screen with the image after the key press
+    save_screenshot(map_file2, :selector => "#map")
 
-  # If they do match, it means there was no map layer
-  assert_equal false, maps_match, 'The two map images match, this means they aren\'t on a map layer'
+    # See if the maps now compare
+    maps_match = compare_maps(map_file1, map_file2)
 
-  # Re add the map layer
-  page.execute_script("map.addLayer(openspaceLayer);")
+    # If they do match, it means there was no map layer
+    assert_equal false, maps_match, 'The two map images match, this means they aren\'t on a map layer'
+
+    # Re add the map layer
+    page.execute_script("map.addLayer(openspaceLayer);")
+
+  end
 
 end
 
