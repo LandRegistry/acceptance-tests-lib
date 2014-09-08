@@ -1,35 +1,57 @@
+def rest_get_call(url)
+  uri = URI.parse(url)
+
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Get.new(uri.path,  initheader = {'Content-Type' =>'application/json'})
+  request.basic_auth $http_auth_name, $http_auth_password
+  response = http.request(request)
+
+  return response
+end
+
+
+
 def wait_for_register_to_be_created(title_no)
-  found = false
+  found_count = 0
   count = 0
 
-  while (found == false && count < 10) do
+  while (found_count != 2 && count < 25) do
     puts 'waiting for registration to be created'
 
-    uri = URI.parse($LR_SEARCH_API_DOMAIN)
-    http = Net::HTTP.new(uri.host, uri.port)
-    request = Net::HTTP::Get.new('/auth/titles/' + title_no,  initheader = {'Content-Type' =>'application/json'})
-    request.basic_auth $http_auth_name, $http_auth_password
-    response = http.request(request)
+    found_count = 0
 
+    sleep(0.2)
+
+    response = rest_get_call($LR_SEARCH_API_DOMAIN + '/titles/' + title_no)
     json_response = JSON.parse(response.body);
 
     if ((response.code != '404') && (!json_response['title_number'].nil?)) then
-        found = true
-        puts 'registration created: ' + json_response['title_number']
-    else
-      sleep(1)
+        found_count = found_count + 1
+    end
+
+    response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_no)
+    json_response = JSON.parse(response.body);
+
+    if ((response.code != '404') && (!json_response['title_number'].nil?)) then
+        found_count = found_count + 1
     end
 
     count = count + 1
   end
 
-  if (found == false) then
+  if (found_count != 2) then
     raise "No records found for title " + title_no
   end
 
   return response.body
 end
 
+def get_register_details(title_no)
+
+  response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_no)
+  return response.body
+
+end
 
 def link_title_to_email(email, title_number, role)
 
@@ -46,7 +68,7 @@ def link_title_to_email(email, title_number, role)
   response = http.request(request)
 
   if (response.body != 'OK') then
-    raise "Could not match title(#{title_number}) and email(#{email})"
+    raise "Could not match title(#{title_number}), email(#{email}) and role(#{role}): " + response.body
   end
 
 end

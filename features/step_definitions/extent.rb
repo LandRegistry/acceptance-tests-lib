@@ -1,7 +1,7 @@
 require 'oily_png'
 
 When(/^I check the title plan \(public view\)$/) do
-  sleep(3)
+  wait_for_map_to_load()
 
   $polygon_main = "tmpimg-#{Time.new.to_i}-main.png"
   page.execute_script("extentGeoJson.setStyle({weight: 8, opacity: 1});")
@@ -36,12 +36,12 @@ When(/^I check the title plan \(public view\)$/) do
 
   # Re add the map layer
   page.execute_script("map.addLayer(openspaceLayer);")
-  sleep(1)
+  wait_for_map_to_load()
 
 end
 
 When(/^I check the title plan \(private view\)$/) do
-  sleep(3)
+  wait_for_map_to_load()
 
   $polygon_orig = "tmpimg-#{Time.new.to_i}-orig.png"
   save_screenshot($polygon_orig, :selector => "#map")
@@ -86,7 +86,7 @@ When(/^I check the title plan \(private view\)$/) do
 
   # Re add the map layer
   page.execute_script("map.addLayer(openspaceLayer);")
-  sleep(1)
+  wait_for_map_to_load()
 
 end
 
@@ -163,7 +163,7 @@ Then(/^the map can't be zoomed$/) do
 
   # Send plus key to see if the map zooms
   find(".//*[@id='map']").native.send_key('+')
-  sleep(1)
+  wait_for_map_to_load()
   # save a screen with the image after the key press
   save_screenshot(map_file2, :selector => "#map")
 
@@ -185,7 +185,7 @@ Then(/^the map can't be moved$/) do
 
   # Send an arrow key to see if the map zooms
   find(".//*[@id='map']").native.send_key(:arrow_down)
-  sleep(1)
+  wait_for_map_to_load()
 
   # save a screen with the image after the key press
   save_screenshot(map_file2, :selector => "#map")
@@ -200,28 +200,32 @@ end
 
 Then(/^the Polygon(s are| is) laid over a map$/) do |wording|
 
-  # Generate some new map names.
-  map_file1 = "tmpimg-#{Time.new.to_i}-1.png"
-  map_file2 = "tmpimg-#{Time.new.to_i}-2.png"
+  if (ENV['WEBDRIVER'] != 'Firefox') then
 
-  # Save the map area as a screenshot
-  save_screenshot(map_file1, :selector => "#map")
+    # Generate some new map names.
+    map_file1 = "tmpimg-#{Time.new.to_i}-1.png"
+    map_file2 = "tmpimg-#{Time.new.to_i}-2.png"
 
-  # Remove the underlying map layer
-  page.execute_script("map.removeLayer(openspaceLayer);")
-  sleep(1)
+    # Save the map area as a screenshot
+    save_screenshot(map_file1, :selector => "#map")
 
-  # save a screen with the image after the key press
-  save_screenshot(map_file2, :selector => "#map")
+    # Remove the underlying map layer
+    page.execute_script("map.removeLayer(openspaceLayer);")
+    wait_for_map_to_load()
 
-  # See if the maps now compare
-  maps_match = compare_maps(map_file1, map_file2)
+    # save a screen with the image after the key press
+    save_screenshot(map_file2, :selector => "#map")
 
-  # If they do match, it means there was no map layer
-  assert_equal false, maps_match, 'The two map images match, this means they aren\'t on a map layer'
+    # See if the maps now compare
+    maps_match = compare_maps(map_file1, map_file2)
 
-  # Re add the map layer
-  page.execute_script("map.addLayer(openspaceLayer);")
+    # If they do match, it means there was no map layer
+    assert_equal false, maps_match, 'The two map images match, this means they aren\'t on a map layer'
+
+    # Re add the map layer
+    page.execute_script("map.addLayer(openspaceLayer);")
+
+  end
 
 end
 

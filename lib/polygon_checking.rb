@@ -220,12 +220,14 @@ def get_polygon_details(image1, image2)
           end
 
           # Loop through the edging to merge an array if they connect
-          multi_array_edge_tmp[polygon_i][coords[i]].each do |poly_x, poly_x_value |
-            multi_array_edge_tmp[polygon_i][coords[i]][poly_x].each do |poly_y, poly_y_value|
-              if (multi_array_edge[polygon_i][my_polymulti][poly_x].nil?)
-                multi_array_edge[polygon_i][my_polymulti][poly_x] = {}
+          if (!multi_array_edge_tmp[polygon_i][coords[i]].nil?)
+            multi_array_edge_tmp[polygon_i][coords[i]].each do |poly_x, poly_x_value |
+              multi_array_edge_tmp[polygon_i][coords[i]][poly_x].each do |poly_y, poly_y_value|
+                if (multi_array_edge[polygon_i][my_polymulti][poly_x].nil?)
+                  multi_array_edge[polygon_i][my_polymulti][poly_x] = {}
+                end
+                multi_array_edge[polygon_i][my_polymulti][poly_x][poly_y] = poly_y
               end
-              multi_array_edge[polygon_i][my_polymulti][poly_x][poly_y] = poly_y
             end
           end
           #delete the old edging because it has now been merged into another
@@ -367,6 +369,27 @@ def compare_maps(image1, image2)
     return true
   else
     return false
+  end
+
+end
+
+def wait_for_map_to_load()
+
+  loaded = false
+  count = 0
+
+  while (loaded == false && count < 100) do
+    puts 'waiting for mapping to fully load'
+
+    save_screenshot('loadingimg1.png', :selector => "#map")
+    sleep(0.1)
+    save_screenshot('loadingimg2.png', :selector => "#map")
+
+    if (compare_maps('loadingimg1.png', 'loadingimg2.png') == true) then
+        loaded = true
+    end
+    
+    count = count + 1
   end
 
 end

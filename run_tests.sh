@@ -10,6 +10,7 @@ function create_test_data {
   ./create-user-for-integration-tests.sh
   cd ../matching
   ./create_test_data.sh
+  cd ../acceptance-tests
 }
 
 rm -rf diff2*
@@ -17,6 +18,13 @@ rm -rf tmpimg*
 rm -rf sshot*
 
 bundle install
+
+if [[ ! -f /vagrant/logs/acceptance-tests.data ]]; then
+	echo "Creating test data"
+	create_test_data 
+        touch /vagrant/logs/acceptance-tests.data	
+fi
+
 
 if [ -z "$1" ]
   then
