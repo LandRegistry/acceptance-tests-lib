@@ -56,3 +56,7 @@ end
 Given(/^I have a registered property$/) do
   step "I have a registered property with characteristics", ''
 end
+
+Given(/^a registered title$/) do
+  step "I have a registered property with characteristics", ''
+end

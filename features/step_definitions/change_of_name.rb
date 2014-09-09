@@ -98,7 +98,7 @@ end
 
 
 
-Given(/^I am the owner of a registered title$/) do
+Given(/^I am the proprietor of a registered title$/) do
   step "I have a registered property with characteristics", ''
   step "I have private citizen login credentials"
   link_title_to_email($userdetails['email'], $regData['title_number'], 'CITIZEN')
@@ -129,32 +129,24 @@ When(/^I provide details of my change of name by marriage$/) do
 end
 
 Then(/^the details of my change of name by marriage request are reflected back to me in a statement$/) do
-  assert_match('Confirm', page.body, 'Expected to certify statement including personnal details')
-  assert_match($data['newName'], page.body, 'Expected to certify statement including personnal details')
-  assert_match($data['dateOfMarriage'], page.body, 'Expected to certify statement including personnal details')
-  assert_match($data['locationOfMarriage'], page.body, 'Expected to certify statement including personnal details')
-  #assert_match($data['countryOfMarriage'], page.body, 'Expected to certify statement including personnal details')
-  assert_match($data['partnerFullName'], page.body, 'Expected to certify statement including personnal details')
-
-  date1 = Date.strptime($data['dateOfMarriage'], "%d-%m-%Y")
-  formattedDate = date1.strftime("%d %B %Y").to_s
+  dateOfMarriage = Date.strptime($data['dateOfMarriage'], "%d-%m-%Y")
+  formattedDate = dateOfMarriage.strftime("%d %B %Y").to_s
 
   text1 = "I confirm that I, #{$data['newName']}, was married to #{$data['partnerFullName']} on #{formattedDate} in #{$data['locationOfMarriage']}, GB."
-  puts text1
-  puts page.body
-  assert_match(text1, page.body, 'Expected to certify statement including personnal details')
+  assert_match(text1, page.body, 'Expected to see confirmation message with marriage details')
 
+  text2 = "The information I provide in this application will be used to change the name on registered title number #{$regData['title_number']}."
+  assert_match(text2, page.body, 'Expected to see message with title number')
+
+  assert_match('Confirm', page.body, 'Expected to certify statement including personnal details')
 end
 
-When(/^I confirm the statement reflecting my change of name by marriage is accurate$/) do
+When(/^I confirm the statement reflecting my change of name by marriage is accurate and submit it$/) do
     check('confirm')
+    click_button('Submit')
 end
 
-When(/^I submit it$/) do
-  click_button('Submit')
-end
-
-Then(/^I receive an acknowledgement$/) do
+Then(/^I receive an acknowledgement my request has been sent to Land Registry$/) do
   assert_match('Application complete', page.body, 'Expected Application complete')
 end
 
@@ -162,4 +154,17 @@ When(/^I submit my change of name by way of marriage details without entering an
   visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}/edit/title.proprietor.1")
   step "I login with correct credentials"
   click_button('Submit')
+end
+
+When(/^I do not confirm the statement reflecting my change of name by marriage is accurate and submit it$/) do
+  click_button('Submit')
+end
+
+Given(/^I am not the proprietor$/) do
+
+end
+
+When(/^I try to make a change of name by marriage request for the title$/) do
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}/edit/title.proprietor.1")
+  step "I login with correct credentials"
 end
