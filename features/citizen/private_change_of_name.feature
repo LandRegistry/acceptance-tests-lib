@@ -1,45 +1,26 @@
 Feature: Change of Name (marriage)
 
-Scenario: Change of name Statement (marriage)
-Given I have got married and I want to change my name on the register
-And I have a registered property
-And I have private citizen login credentials
-And I own the property
-And I want to request I change my name on the register
-And I am logged in
-When I enter a new name
-And I enter my date of marriage
-And I enter my partners name
-And I enter "United Kingdom" as the Country of marriage
-And I enter a location of marriage
-And I enter a Marriage Certificate Number
-And I submit the marriage change of name details
-Then I am presented to certify my details
+Scenario: Proprietor can change name on title after they have been married
+Given I am the proprietor of a registered title
+When I provide details of my change of name by marriage
+Then the details of my change of name by marriage request are reflected back to me in a statement
 
-Scenario: Change of name Confirmation Message (marriage)
-Given I have got married and I want to change my name on the register
-And I have a registered property
-And I have private citizen login credentials
-And I own the property
-And I want to request I change my name on the register
-And I am logged in
-When I enter a new name
-And I enter my date of marriage
-And I enter my partners name
-And I enter "United Kingdom" as the Country of marriage
-And I enter a location of marriage
-And I enter a Marriage Certificate Number
-And I submit the marriage change of name details
-And I accept the certify statement
-Then I receive a confirmation that my change of name request has been lodged
+When I confirm the statement reflecting my change of name by marriage is accurate and submit it
+Then I receive an acknowledgement
 
-Scenario: Change of name Missing fields (marriage)
-Given I have a registered property
-And I have private citizen login credentials
-And I own the property
-And I want to request I change my name on the register
-And I am logged in
-When I submit the marriage change of name details
+
+Scenario: Proprietor must confirm change of name before submitting change of name by way of marriage details
+Given I am the proprietor of a registered title
+When I provide details of my change of name by marriage
+Then the details of my change of name by marriage request are reflected back to me in a statement
+
+When I submit it
+Then the details of my change of name by marriage request are reflected back to me in a statement
+
+
+Scenario: Proprietor must fill in all mandatory fields before submitting change of name by way of marrige request
+Given I am the owner of a registered title
+When I submit my change of name by way of marriage details without entering any information
 Then a "This field is required." message for "error_proprietor_new_full_name" is returned
 And a "This field is required." message for "error_partner_name" is returned
 And a "This field is required." message for "error_marriage_date" is returned
@@ -52,4 +33,10 @@ And I don't own the property
 And I have private citizen login credentials
 And I want to request I change my name on the register
 And I am logged in
+Then I get an unauthorised message
+
+Scenario: Registered users who are not the proprietor of a property cannot request to change a proprietor name
+Given a registered title
+And I am not the proprietor
+When I try to make a change of name by marriage request for the title
 Then I get an unauthorised message
