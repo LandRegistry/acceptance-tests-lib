@@ -57,9 +57,5 @@ end
 
 Given(/^I would like to change name name as I have been married$/) do
   click_button('Edit the register')
-  puts $regData['title_number']
-  puts "//dd[contains(text(),'" + $regData['proprietors'][0]['full_name'] + "')]//a"
-  #click_link("//dd[contains(text(),'" + $regData['proprietors'][0]['full_name'] + "')]//a")
   find("//dd[contains(text(),'" + $regData['proprietors'][0]['full_name'] + "')]//a").click
-  #:xpath, ".//tr[td//text()[contains(.,'" + $regData['title_number'] + "')]]"
 end
