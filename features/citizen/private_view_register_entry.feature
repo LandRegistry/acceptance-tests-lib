@@ -3,7 +3,6 @@ Feature: login and view private register
 Scenario: view register as new authenticated user
 Given I have a registered property
 And I have private citizen login credentials
-And I am not already logged in as a private citizen
 When I view the private register
 And I login with correct credentials
 Then the address of property is displayed
@@ -53,7 +52,6 @@ Given I have a registered property with characteristics
   | has no lease clauses                          |
   | has a lessee name different to the proprietor |
 And I have private citizen login credentials
-And I am not already logged in as a private citizen
 When I view the private register
 And I login with correct credentials
 Then Date of Lease is displayed
@@ -70,7 +68,6 @@ Given I have a registered property with characteristics
   | has lease clauses                          |
   | has a lessee name matching the proprietor  |
 And I have private citizen login credentials
-And I am not already logged in as a private citizen
 When I view the private register
 And I login with correct credentials
 Then Date of Lease is displayed
@@ -82,7 +79,6 @@ And the lease clauses are displayed
 
 Scenario: Citizen can only view private register if logged in
 Given I have a registered property
-And I am not already logged in as a private citizen
 When I view the private register
 Then I am prompted to login as a private citizen
 
@@ -92,7 +88,6 @@ Given I have a registered property with characteristics
   | has a polygon with easement       |
   | has a doughnut polygon            |
 And I have private citizen login credentials
-And I am not already logged in as a private citizen
 When I view the private register
 And I login with correct credentials
 And I check the title plan (private view)
