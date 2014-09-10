@@ -1,4 +1,6 @@
 Given(/^I have private citizen login credentials$/) do
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
+  
   $userdetails = Hash.new()
   $userdetails['email'] = 'citizen@example.org'
   $userdetails['password'] = 'dummypassword'
@@ -49,10 +51,6 @@ Given(/^I am still authenticated$/) do
   step "I have private citizen login credentials"
   visit("#{$SERVICE_FRONTEND_DOMAIN}/login")
   step "I login with correct credentials"
-end
-
-Given(/^I am not already logged in as a private citizen$/) do
-  visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
 end
 
 When(/^I logout as a private citizen$/) do
