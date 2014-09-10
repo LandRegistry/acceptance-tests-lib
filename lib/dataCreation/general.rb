@@ -1,3 +1,22 @@
+def getlrid(email)
+  uri = URI.parse($LR_FIXTURES_URL)
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Get.new('/get-lrid-by-email/' + email)
+  request.basic_auth $http_auth_name, $http_auth_password
+  response = http.request(request)
+
+  if (response.code != '201') then
+    raise "Error in finding LRID: " + response.body
+  end
+  return response.body
+end
+
+def emailAddress()
+  prefix = Time.now.strftime('%Y%m%d%H%M%S%L').to_s
+  domain = "@example.org"
+  return prefix + domain
+end
+
 def titleNumber()
   number = rand(999999999).to_s
   prefix = "TEST"
