@@ -63,7 +63,7 @@ Given(/^I have a relationship token for a registered property$/) do
   $link_relationship['clients'] = Array.new()
   $link_relationship['clients'][0] = getlrid('client1@example.org')
   $link_relationship['clients'][1] = getlrid('client2@example.org')
-  $token_code = get_token_code()
+  $token_code = get_token_code($link_relationship)
 end
 
 Given(/^others are yet to complete conveyancer authorisation$/) do
@@ -76,7 +76,8 @@ Given(/^I want to authorise my conveyancer to act on my behalf to buy the proper
 end
 
 When(/^I enter the relationship token code$/) do
-  #fill_in('full-name', :with => $relationshipData['clients'][i]['full_name'])
+  fill_in('token', :with => $token_code)
+  click_button('Submit')
 end
 
 Then(/^the relationship details are correctly presented$/) do
@@ -92,7 +93,10 @@ Then(/^relationship confirmed but not completed$/) do
 end
 
 Given(/^others have completed the conveyancer authorisation$/) do
-  pending # express the regexp above with the code you wish you had
+  $client_to_token = Hash.new()
+  $client_to_token['client_lrid'] = $link_relationship['clients'][1]
+  $client_to_token['code'] = $token_code
+  associate_client_with_token($client_to_token)
 end
 
 Given(/^I want to authorise my conveyancer to act on my behalf to sell the property$/) do
@@ -104,7 +108,8 @@ Then(/^relationship confirmed and shown as completed$/) do
 end
 
 When(/^I enter an invalid relationship token code$/) do
-  pending # express the regexp above with the code you wish you had
+  fill_in('token', :with => "Rubbish")
+  click_button('Submit')
 end
 
 Then(/^message informing relationship token code is invalid$/) do

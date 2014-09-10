@@ -136,17 +136,17 @@ def submit_changeOfName_request(request)
 
 end
 
-def get_token_code()
+def get_token_code(relationship_hash)
   uri = URI.parse($INTRODUCTIONS_DOMAIN)
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Post.new('/relationship',  initheader = {'Content-Type' =>'application/json'})
   request.basic_auth $http_auth_name, $http_auth_password
-  request.body = $link_relationship.to_json
+  request.body = relationship_hash.to_json
   response = http.request(request)
   if (response.code != '200') then
     raise "Failed creating relationship: " + response.body
   end
-  return response.body
+  return JSON.parse(response.body)['code']
 end
 
 def getlrid(email)
@@ -157,6 +157,20 @@ def getlrid(email)
   response = http.request(request)
   if (response.code != '200') then
     raise "Error in finding email for: " + email
+  end
+  return response.body
+end
+
+def associate_client_with_token(data_hash)
+  uri = URI.parse($INTRODUCTIONS_DOMAIN)
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Post.new('/confirm',  initheader = {'Content-Type' =>'application/json'})
+  request.basic_auth $http_auth_name, $http_auth_password
+  request.body = data_hash.to_json
+  puts request.body
+  response = http.request(request)
+  if (response.code != '200') then
+    raise "Failed to associate client with token: " + response.body
   end
   return response.body
 end
