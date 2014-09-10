@@ -2,19 +2,19 @@
 
 Given(/^am acting on behalf of (\d+) buyers$/) do |client_number|
   visit("#{$SERVICE_FRONTEND_DOMAIN}/relationship/conveyancer")
-  click_button('Start now')
-  $conveyancer_client_number = client_number
+  #click_button('Start now')
+  $conveyancer_client_number = client_number.to_i
   $relationshipData = Hash.new()
   $relationshipData['title_number'] = $regData['title_number']
   $relationshipData['transaction'] = 'buyer'
   $relationshipData['clients'] = Array.new()
-  for i in 0..client_number -1
+  for i in 0..$conveyancer_client_number -1
     $relationshipData['clients'][i] = Hash.new()
-    $relationshipData['clients'][i]['full_name'] = full_name()
+    $relationshipData['clients'][i]['full_name'] = fullName()
     $relationshipData['clients'][i]['dob_day'] = '04'
     $relationshipData['clients'][i]['dob_month'] = '08'
     $relationshipData['clients'][i]['dob_year'] = '1980'
-    $relationshipData['clients'][i]['address'] = houseNumber() + ', ' + roadName() + ', ' + townName() + ', ' + postcode()
+    $relationshipData['clients'][i]['address'] = houseNumber().to_s + ', ' + roadName() + ', ' + townName() + ', ' + postcode()
     $relationshipData['clients'][i]['telephone'] = '01752 909 878'
     $relationshipData['clients'][i]['email'] = emailAddress()
   end
@@ -39,7 +39,7 @@ When(/^I enter my clients details$/) do
     fill_in('dob_month', :with => $relationshipData['clients'][i]['dob_month'])
     fill_in('dob_year', :with => $relationshipData['clients'][i]['dob_year'])
     fill_in('tel', :with => $relationshipData['clients'][i]['telephone'])
-    fill_in('email', :with => $relationshipData['clients'][i]['email'])
+    fill_in('email', :with => $relationshipData['clients'][i][email])
     click_button('Add client')
   end
 
@@ -53,6 +53,7 @@ Then(/^a relationship token code is generated$/) do
 end
 
 Given(/^I have a relationship token for a registered property$/) do
+  step "I have a registered property"
   step "am acting on behalf of 2 buyers"
 
   #link conveyancer, title and clients together
@@ -60,21 +61,9 @@ Given(/^I have a relationship token for a registered property$/) do
   $link_relationship['conveyancer_lrid'] = getlrid('conveyancer@example.org')
   $link_relationship['title_number'] = $relationshipData['title_number']
   $link_relationship['clients'] = Array.new()
-  $link_relationship['clients'][0] = getlrid($relationshipData['clients'][0]['email'])
-  $link_relationship['clients'][1] = getlrid($relationshipData['clients'][1]['email'])
-
-  token - /relationship/conveyancer/token
-  uri = URI.parse($INTRODUCTIONS_DOMAIN)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Post.new('/relationship/',  initheader = {'Content-Type' =>'application/json'})
-  request.basic_auth $http_auth_name, $http_auth_password
-  request.body = $link_relationship.to_json
-  response = http.request(request)
-  if (response.code != '201') then
-    raise "Failed creating relationship: " + response.body
-  end
-  $token_code = response.body
-
+  $link_relationship['clients'][0] = getlrid('client1@example.org')
+  $link_relationship['clients'][1] = getlrid('client2@example.org')
+  $token_code = get_token_code()
 end
 
 Given(/^others are yet to complete conveyancer authorisation$/) do

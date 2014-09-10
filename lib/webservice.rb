@@ -135,3 +135,28 @@ def submit_changeOfName_request(request)
   puts response.body
 
 end
+
+def get_token_code()
+  uri = URI.parse($INTRODUCTIONS_DOMAIN)
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Post.new('/relationship',  initheader = {'Content-Type' =>'application/json'})
+  request.basic_auth $http_auth_name, $http_auth_password
+  request.body = $link_relationship.to_json
+  response = http.request(request)
+  if (response.code != '200') then
+    raise "Failed creating relationship: " + response.body
+  end
+  return response.body
+end
+
+def getlrid(email)
+  uri = URI.parse($LR_FIXTURES_URL)
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Get.new('/get-lrid-by-email/' + email)
+  request.basic_auth $http_auth_name, $http_auth_password
+  response = http.request(request)
+  if (response.code != '200') then
+    raise "Error in finding email for: " + email
+  end
+  return response.body
+end
