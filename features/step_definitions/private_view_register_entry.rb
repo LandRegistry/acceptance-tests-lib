@@ -49,3 +49,17 @@ Then(/^the company charge is displayed with a restriction$/) do
   step "the company charge is displayed"
   step "the charge restriction is displayed"
 end
+
+Given(/^I am viewing my title of register$/) do
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}")
+  step "I login with correct credentials"
+end
+
+Given(/^I would like to change name name as I have been married$/) do
+  click_button('Edit the register')
+  puts $regData['title_number']
+  puts "//dd[contains(text(),'" + $regData['proprietors'][0]['full_name'] + "')]//a"
+  #click_link("//dd[contains(text(),'" + $regData['proprietors'][0]['full_name'] + "')]//a")
+  find("//dd[contains(text(),'" + $regData['proprietors'][0]['full_name'] + "')]//a").click
+  #:xpath, ".//tr[td//text()[contains(.,'" + $regData['title_number'] + "')]]"
+end
