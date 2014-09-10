@@ -70,10 +70,11 @@ Given(/^I have a relationship token for a registered property$/) do
   request.basic_auth $http_auth_name, $http_auth_password
   request.body = $link_relationship.to_json
   response = http.request(request)
-
   if (response.code != '201') then
     raise "Failed creating relationship: " + response.body
   end
+  $token_code = response.body
+
 end
 
 Given(/^others are yet to complete conveyancer authorisation$/) do
@@ -81,11 +82,12 @@ Given(/^others are yet to complete conveyancer authorisation$/) do
 end
 
 Given(/^I want to authorise my conveyancer to act on my behalf to buy the property$/) do
-  pending # express the regexp above with the code you wish you had
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/relationship/client")
+  click_button('Start now')
 end
 
 When(/^I enter the relationship token code$/) do
-  pending # express the regexp above with the code you wish you had
+  #fill_in('full-name', :with => $relationshipData['clients'][i]['full_name'])
 end
 
 Then(/^the relationship details are correctly presented$/) do
