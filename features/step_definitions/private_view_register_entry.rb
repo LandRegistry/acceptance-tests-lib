@@ -49,3 +49,13 @@ Then(/^the company charge is displayed with a restriction$/) do
   step "the company charge is displayed"
   step "the charge restriction is displayed"
 end
+
+Given(/^I am viewing my title of register$/) do
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}")
+  step "I login with correct credentials"
+end
+
+Given(/^I would like to change name name as I have been married$/) do
+  click_button('Edit the register')
+  find("//dd[contains(text(),'" + $regData['proprietors'][0]['full_name'] + "')]//a").click
+end

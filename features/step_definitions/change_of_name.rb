@@ -39,8 +39,6 @@ end
 When(/^I provide details of my change of name by marriage$/) do
   step "I have got married and I want to change my name on the register"
   $data['countryOfMarriage'] = 'United Kingdom'
-  visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}/edit/title.proprietor.1")
-  step "I login with correct credentials"
   fill_in('proprietor_new_full_name', :with => $data['newName'])
   fill_in('partner_name', :with => $data['partnerFullName'])
   fill_in('marriage_date', :with => $data['dateOfMarriage'])
@@ -73,8 +71,6 @@ Then(/^I receive an acknowledgement my request has been sent to Land Registry$/)
 end
 
 When(/^I submit my change of name by way of marriage details without entering any information$/) do
-  visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}/edit/title.proprietor.1")
-  step "I login with correct credentials"
   click_button('Submit')
 end
 
