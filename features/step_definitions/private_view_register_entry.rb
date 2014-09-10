@@ -55,7 +55,7 @@ Given(/^I am viewing my title of register$/) do
   step "I login with correct credentials"
 end
 
-Given(/^I would like to change name name as I have been married$/) do
+Given(/^I would like to change my name as I have been married$/) do
   click_button('Edit the register')
   find("//dd[contains(text(),'" + $regData['proprietors'][0]['full_name'] + "')]//a").click
 end
