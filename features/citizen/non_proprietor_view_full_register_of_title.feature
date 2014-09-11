@@ -1,7 +1,8 @@
 Feature: Non proprietor view full register of title
 
 Scenario: Citizen can view full register of title
-Given I am a citizena
+
+  Given I am a citizen
   And a registered title with characteristics
     | CHARACTERISTICS           |
     | two proprietors           |
@@ -16,6 +17,3 @@ Given I am a citizena
   And proprietors are displayed
   And the company charge is displayed with no restriction
   And I do not have the option to edit the register
-
-
-Scenario: Citizen who is not a proprietor cannot edit register

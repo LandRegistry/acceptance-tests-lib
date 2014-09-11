@@ -3,7 +3,7 @@ Feature: Citizen view register
 
 Scenario: view freehold register as citizen
 
-  Given I am a citizena
+  Given I am a citizen
   And a registered title
   When I view the full register of title
   Then the Property Address is displayed
@@ -13,7 +13,7 @@ Scenario: view freehold register as citizen
 
 Scenario: view lease register as citizen without clauses and different lessee
 
-  Given I am a citizena
+  Given I am a citizen
   And a registered title with characteristics
     | CHARACTERISTICS                               |
     | leasehold                                     |
@@ -31,7 +31,7 @@ Scenario: view lease register as citizen without clauses and different lessee
   And the lease clauses are not displayed
 
 Scenario: view lease register as citizen with clauses and lessee as proprietor
-  Given I am a citizena
+  Given I am a citizen
   And a registered title with characteristics
     | CHARACTERISTICS                            |
     | leasehold                                  |
@@ -49,25 +49,27 @@ Scenario: view lease register as citizen with clauses and lessee as proprietor
   And the lease clauses are displayed
 
 Scenario: try to view register that does not exist
-  Given I am a citizena
+
+  Given I am a citizen
   When I try to view a register that does not exist
   Then an error is displayed
 
 Scenario: Public Register with Title Extents
-Given I am a citizena
-And a registered title with characteristics
-    | CHARACTERISTICS                   |
-    | has a polygon with easement       |
-    | has a doughnut polygon            |
-When I view the full register of title
-And I check the title plan (public view)
-Then there is 2 polygons
-And the whole polygon area is in view
-And the polygons matches that of the title
-And the polygons are edged in red
-And there is a donut polygon
-And there is a normal polygon
-And there are no easements displayed
-And the map can't be zoomed
-And the map can't be moved
-And the Polygons are laid over a map
+
+  Given I am a citizen
+  And a registered title with characteristics
+      | CHARACTERISTICS                   |
+      | has a polygon with easement       |
+      | has a doughnut polygon            |
+  When I view the full register of title
+  And I check the title plan (public view)
+  Then there is 2 polygons
+  And the whole polygon area is in view
+  And the polygons matches that of the title
+  And the polygons are edged in red
+  And there is a donut polygon
+  And there is a normal polygon
+  And there are no easements displayed
+  And the map can't be zoomed
+  And the map can't be moved
+  And the Polygons are laid over a map

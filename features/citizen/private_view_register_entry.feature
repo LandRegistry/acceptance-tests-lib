@@ -2,7 +2,7 @@ Feature: login and view private register
 
 Scenario: view register as new authenticated user
 
-  Given I am a citizena
+  Given I am a citizen
   And a registered title
   When I view the full register of title
   Then the Property Address is displayed
@@ -15,7 +15,7 @@ Scenario: view register as new authenticated user
 
 Scenario: view freehold register as existing authenticated user with charge but no restriction
 
-  Given I am a citizena
+  Given I am a citizen
   And a registered title with characteristics
     | CHARACTERISTICS           |
     | two proprietors           |
@@ -32,7 +32,7 @@ Scenario: view freehold register as existing authenticated user with charge but 
 
 Scenario: view freehold register as existing authenticated user with charge and a restriction
 
-  Given I am a citizena
+  Given I am a citizen
   And a registered title with characteristics
     | CHARACTERISTICS            |
     | has a charge               |
@@ -49,7 +49,7 @@ Scenario: view freehold register as existing authenticated user with charge and 
 
 Scenario: view lease register as new authenticated user without clauses and different lessee
 
-  Given I am a citizena
+  Given I am a citizen
   And a registered title with characteristics
     | CHARACTERISTICS                               |
     | leasehold                                     |
@@ -65,7 +65,7 @@ Scenario: view lease register as new authenticated user without clauses and diff
 
 Scenario: view lease register as new authenticated user with clauses and lessee as proprietor
 
-  Given I am a citizena
+  Given I am a citizen
   And a registered title with characteristics
     | CHARACTERISTICS                            |
     | leasehold                                  |
@@ -87,7 +87,7 @@ Scenario: Citizen can only view private register if logged in
 
 Scenario: Private Register with Title Extents
 
-  Given I am a citizena
+  Given I am a citizen
   And a registered title with characteristics
     | CHARACTERISTICS                   |
     | has a polygon with easement       |

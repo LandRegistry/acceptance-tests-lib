@@ -2,10 +2,6 @@ Given(/^I am searching for that property$/) do
   visit("#{$PROPERTY_FRONTEND_DOMAIN}/search")
 end
 
-Given(/^I am a citizen$/) do
-  visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
-end
-
 When(/^I enter an incorrect Title Number \(non\-matching\)$/) do
   fill_in('search', :with => '123456')
 end
