@@ -9,7 +9,7 @@ This repository contains the front end tests for all the systems.
 
 ### Running the tests in the vagrant image
 
-Navigate to the acceptance test repoistory
+Navigate to the acceptance test repository
 
 ```
 cd apps/acceptance-tests/
@@ -40,10 +40,9 @@ To run against the preview enviornment, then use:
 ```
 ./run_tests_preview.sh
 ```
- 
+
 You will need to set the following enviornment variables:
 ```
 HTTPAUTH_USERNAME
 HTTPAUTH_PASSWORD
 ```
-
