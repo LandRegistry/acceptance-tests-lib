@@ -97,3 +97,9 @@ end
 Given(/^I am a user$/) do
 
 end
+
+Given(/^I am a caseworker$/) do
+  $userdetails = Hash.new()
+  $userdetails['email'] = 'caseworker@example.org'
+  $userdetails['password'] = 'dummypassword'
+end

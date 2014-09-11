@@ -1,8 +1,12 @@
 When(/^I view the caseworker worklist$/) do
+  visit("#{$CASEWORK_FRONTEND_DOMAIN}")
+  step "I login with correct credentials"
   click_link('Casework list')
 end
 
 When(/^I view the check worklist$/) do
+  visit("#{$CASEWORK_FRONTEND_DOMAIN}")
+  step "I login with correct credentials"
   click_link('Check list')
 end
 
