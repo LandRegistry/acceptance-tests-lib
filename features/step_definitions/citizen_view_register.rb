@@ -13,7 +13,7 @@ Then(/^Price Paid is displayed$/) do
   assert_match(/#{$regData['payment']['price_paid'].to_s.reverse.gsub(/...(?=.)/,'\&,').reverse}/i, page.body, 'Expected to see price paid')
 end
 
-When(/^I try to view a register that does not exist$/) do
+When(/^I try to view a property that does not exist$/) do
   visit("#{$PROPERTY_FRONTEND_DOMAIN}/property/XXXXXXXXX")
 end
 
@@ -73,4 +73,8 @@ end
 
 Then(/^I have the option to view the full register$/) do
   assert_equal has_link?('View full register'), true, 'Expected View full register button to be on the page'
+end
+
+When(/^I view the property details$/) do
+  visit("#{$PROPERTY_FRONTEND_DOMAIN}/property/#{$regData['title_number']}")
 end

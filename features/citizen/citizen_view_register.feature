@@ -5,7 +5,7 @@ Scenario: view freehold register as citizen
 
   Given I am a citizen
   And a registered title
-  When I view the full register of title
+  When I view the property details
   Then the Property Address is displayed
   And Title Number is displayed
   And Price Paid is displayed
@@ -19,7 +19,7 @@ Scenario: view lease register as citizen without clauses and different lessee
     | leasehold                                     |
     | has no lease clauses                          |
     | has a lessee name different to the proprietor |
-  When I view the full register of title
+  When I view the property details
   Then the Property Address is displayed
   And Title Number is displayed
   And Price Paid is displayed
@@ -37,7 +37,7 @@ Scenario: view lease register as citizen with clauses and lessee as proprietor
     | leasehold                                  |
     | has lease clauses                          |
     | has a lessee name matching the proprietor  |
-  When I view the full register of title
+  When I view the property details
   Then the Property Address is displayed
   And Title Number is displayed
   And Price Paid is displayed
@@ -51,7 +51,7 @@ Scenario: view lease register as citizen with clauses and lessee as proprietor
 Scenario: try to view register that does not exist
 
   Given I am a citizen
-  When I try to view a register that does not exist
+  When I try to view a property that does not exist
   Then an error is displayed
 
 Scenario: Public Register with Title Extents
@@ -61,7 +61,7 @@ Scenario: Public Register with Title Extents
       | CHARACTERISTICS                   |
       | has a polygon with easement       |
       | has a doughnut polygon            |
-  When I view the full register of title
+  When I view the property details
   And I check the title plan (public view)
   Then there is 2 polygons
   And the whole polygon area is in view
