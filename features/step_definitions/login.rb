@@ -1,6 +1,6 @@
 Given(/^I have private citizen login credentials$/) do
   visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
-  
+
   $userdetails = Hash.new()
   $userdetails['email'] = 'citizen@example.org'
   $userdetails['password'] = 'dummypassword'
@@ -92,4 +92,8 @@ Given(/^I am a citizena$/) do
   $userdetails = Hash.new()
   $userdetails['email'] = 'citizen@example.org'
   $userdetails['password'] = 'dummypassword'
+end
+
+Given(/^I am a user$/) do
+
 end

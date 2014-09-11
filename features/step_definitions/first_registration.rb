@@ -90,10 +90,6 @@ When(/^I enter an invalid price paid$/) do
   fill_in('price_paid', :with => $data['pricePaid'])
 end
 
-Then(/^a Title Number is displayed$/) do
-  assert_match(/#{$regData['title_number']}/i, page.body, 'Expected to see title number')
-end
-
 Then(/^Title Number is formatted correctly$/) do
   validate_title_number(find(".//*[@id='title_number']", :visible => false).value)
 end

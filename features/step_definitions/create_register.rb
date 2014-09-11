@@ -53,8 +53,24 @@ Given(/^I have a registered property with characteristics$/) do |table|
 
 end
 
-Given(/^a registered title with characteristics$/) do |table|
+Given(/^I am the proprietor of a registered title with characteristics$/) do |table|
+  createTitleWithCharacteristics(table)
+  link_title_to_email($userdetails['email'], $regData['title_number'], 'CITIZEN')
+end
 
+Given(/^a registered title with characteristics$/) do |table|
+  createTitleWithCharacteristics(table)
+end
+
+Given(/^I have a registered property$/) do
+  step "I have a registered property with characteristics", ''
+end
+
+Given(/^a registered title$/) do
+  step "I have a registered property with characteristics", ''
+end
+
+def createTitleWithCharacteristics(table)
   $data_characteristics, $data_characteristics_types = format_data_characteristics(table)
 
   $regData = Hash.new()
@@ -105,13 +121,17 @@ Given(/^a registered title with characteristics$/) do |table|
   end
 
   wait_for_register_to_be_created($regData['title_number'])
-
 end
 
-Given(/^I have a registered property$/) do
+Given(/^I am the proprietor of a registered title$/) do
   step "I have a registered property with characteristics", ''
+  link_title_to_email($userdetails['email'], $regData['title_number'], 'CITIZEN')
 end
 
-Given(/^a registered title$/) do
+Given(/^I am not the proprietor$/) do
+
+end
+
+Given(/^a registered property$/) do
   step "I have a registered property with characteristics", ''
 end

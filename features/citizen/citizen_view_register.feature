@@ -2,62 +2,64 @@
 Feature: Citizen view register
 
 Scenario: view freehold register as citizen
-Given I have a registered property
-And I am a citizen
-When I view the register
-Then the address of property is displayed
-And Title Number is displayed
-And Price Paid is displayed
-And No lease information is displayed
+
+  Given I am a citizena
+  And a registered title
+  When I view the full register of title
+  Then the Property Address is displayed
+  And Title Number is displayed
+  And Price Paid is displayed
+  And No lease information is displayed
 
 Scenario: view lease register as citizen without clauses and different lessee
-Given I have a registered property with characteristics
-  | CHARACTERISTICS                               |
-  | leasehold                                     |
-  | has no lease clauses                          |
-  | has a lessee name different to the proprietor |
-And I am a citizen
-When I view the register
-Then the address of property is displayed
-And Title Number is displayed
-And Price Paid is displayed
-And Date of Lease is displayed
-And Lease Term is displayed
-And Lease Term start date is displayed
-And Lessor name is displayed
-And Lessee name is displayed
-And the lease clauses are not displayed
+
+  Given I am a citizena
+  And a registered title with characteristics
+    | CHARACTERISTICS                               |
+    | leasehold                                     |
+    | has no lease clauses                          |
+    | has a lessee name different to the proprietor |
+  When I view the full register of title
+  Then the Property Address is displayed
+  And Title Number is displayed
+  And Price Paid is displayed
+  And Date of Lease is displayed
+  And Lease Term is displayed
+  And Lease Term start date is displayed
+  And Lessor name is displayed
+  And Lessee name is displayed
+  And the lease clauses are not displayed
 
 Scenario: view lease register as citizen with clauses and lessee as proprietor
-Given I have a registered property with characteristics
-  | CHARACTERISTICS                            |
-  | leasehold                                  |
-  | has lease clauses                          |
-  | has a lessee name matching the proprietor  |
-And I am a citizen
-When I view the register
-Then the address of property is displayed
-And Title Number is displayed
-And Price Paid is displayed
-And Date of Lease is displayed
-And Lease Term is displayed
-And Lease Term start date is displayed
-And Lessor name is displayed
-And Lessee name is not displayed
-And the lease clauses are displayed
+  Given I am a citizena
+  And a registered title with characteristics
+    | CHARACTERISTICS                            |
+    | leasehold                                  |
+    | has lease clauses                          |
+    | has a lessee name matching the proprietor  |
+  When I view the full register of title
+  Then the Property Address is displayed
+  And Title Number is displayed
+  And Price Paid is displayed
+  And Date of Lease is displayed
+  And Lease Term is displayed
+  And Lease Term start date is displayed
+  And Lessor name is displayed
+  And Lessee name is not displayed
+  And the lease clauses are displayed
 
 Scenario: try to view register that does not exist
-Given I am a citizen
-When I try to view a register that does not exist
-Then an error will be displayed
+  Given I am a citizena
+  When I try to view a register that does not exist
+  Then an error is displayed
 
 Scenario: Public Register with Title Extents
-Given I have a registered property with characteristics
+Given I am a citizena
+And a registered title with characteristics
     | CHARACTERISTICS                   |
     | has a polygon with easement       |
     | has a doughnut polygon            |
-And I am a citizen
-When I view the register
+When I view the full register of title
 And I check the title plan (public view)
 Then there is 2 polygons
 And the whole polygon area is in view

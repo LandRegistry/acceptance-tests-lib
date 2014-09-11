@@ -30,11 +30,6 @@ Given(/^a change of name by marriage application that requires checking$/) do
   submit_changeOfName_request($data)
 end
 
-Given(/^I am the proprietor of a registered title$/) do
-  step "I have a registered property with characteristics", ''
-  link_title_to_email($userdetails['email'], $regData['title_number'], 'CITIZEN')
-end
-
 When(/^I provide details of my change of name by marriage$/) do
   step "I have got married and I want to change my name on the register"
   $data['countryOfMarriage'] = 'United Kingdom'
@@ -75,10 +70,6 @@ end
 
 When(/^I do not confirm the statement reflecting my change of name by marriage is accurate and submit it$/) do
   click_button('Submit')
-end
-
-Given(/^I am not the proprietor$/) do
-
 end
 
 When(/^I try to make a change of name by marriage request for the title$/) do

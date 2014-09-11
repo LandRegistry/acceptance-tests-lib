@@ -7,7 +7,7 @@ Then(/^Tenure is displayed$/) do
   assert_match(/#{$regData['property']['tenure']}/i, page.body, 'Expected to see tenure value')
 end
 
-Then(/^Class is displayed$/) do
+Then(/^Class of Title is displayed$/) do
   assert_match(/#{$regData['property']['class_of_title']}/i, page.body, 'Expected to see class of title value')
 end
 
@@ -51,6 +51,7 @@ Then(/^the company charge is displayed with a restriction$/) do
 end
 
 Given(/^I view the full register of title$/) do
+  puts $regData['title_number']
   visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}")
   step "I login with correct credentials"
 end
@@ -62,4 +63,8 @@ end
 
 Then(/^I do not have the option to edit the register$/) do
   assert_equal has_button?('Edit the register'), false, 'Expected Edit the register button to not be on the page'
+end
+
+Then(/^I have the option to edit the register$/) do
+  assert_equal has_button?('Edit the register'), true, 'Expected Edit the register button to be on the page'
 end
