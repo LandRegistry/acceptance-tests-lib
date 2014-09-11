@@ -14,7 +14,7 @@ end
 
 Given(/^a change of name by marriage application that requires reviewing by a caseworker$/) do
   step "I have got married and I want to change my name on the register"
-  step "a registered title with characteristics"
+  step "a registered title with characteristics", ''
 
   $data['countryOfMarriage'] = 'GB'
 
@@ -23,7 +23,8 @@ end
 
 Given(/^a change of name by marriage application that requires checking$/) do
   step "I have got married and I want to change my name on the register"
-  step "a registered title with characteristics"
+  puts "step 1 complete"
+  step "a registered title with characteristics", ''
 
   $data['countryOfMarriage'] = 'AU'
 
@@ -46,7 +47,7 @@ Then(/^the details of my change of name by marriage request are reflected back t
   dateOfMarriage = Date.strptime($data['dateOfMarriage'], "%d-%m-%Y")
   formattedDate = dateOfMarriage.strftime("%d %B %Y").to_s
 
-  text1 = "I confirm that I, #{$data['newName']}, was married to #{$data['partnerFullName']} on #{formattedDate} in #{$data['locationOfMarriage']}, GB."
+  text1 = "I confirm that I, #{$data['newName']}, was married to #{$data['partnerFullName']} on #{formattedDate} in #{$data['locationOfMarriage']}, #{$data['countryOfMarriage']}."
   assert_match(text1, page.body, 'Expected to see confirmation message with marriage details')
 
   text2 = "The information I provide in this application will be used to change the name on registered title number #{$regData['title_number']}."
