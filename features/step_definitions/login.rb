@@ -89,3 +89,9 @@ end
 Then(/^I get an unauthorised message$/) do
   assert_match('Unauthorized', page.body, 'Expected to have an Unauthorized message')
 end
+
+Given(/^I am a citizena$/) do
+  $userdetails = Hash.new()
+  $userdetails['email'] = 'citizen@example.org'
+  $userdetails['password'] = 'dummypassword'
+end

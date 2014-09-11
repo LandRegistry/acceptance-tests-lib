@@ -32,7 +32,6 @@ end
 
 Given(/^I am the proprietor of a registered title$/) do
   step "I have a registered property with characteristics", ''
-  step "I have private citizen login credentials"
   link_title_to_email($userdetails['email'], $regData['title_number'], 'CITIZEN')
 end
 
