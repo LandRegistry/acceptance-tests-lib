@@ -82,6 +82,8 @@ end
 
 Then(/^the relationship details are correctly presented$/) do
   pending # express the regexp above with the code you wish you had
+  #check page summary
+  click_button('Confirm relationship')
 end
 
 When(/^the relationship is confirmed$/) do
