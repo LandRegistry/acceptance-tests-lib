@@ -4,6 +4,7 @@ Given(/^I have a registered property with characteristics$/) do |table|
 
   $regData = Hash.new()
   $regData['title_number'] = titleNumber()
+  puts $regData['title_number']
 
   $regData['proprietors'] = Array.new()
   $regData['proprietors'][0] = Hash.new()

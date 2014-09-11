@@ -5,6 +5,7 @@ Given I have conveyancer login credentials
 And I am not already logged in as a conveyancer
 And I have a registered property
 When I request to create a client relationship
+And I login with correct credentials
 And I select the property
 And the clients want to buy the property
 And I am acting on behalf of 2 clients
