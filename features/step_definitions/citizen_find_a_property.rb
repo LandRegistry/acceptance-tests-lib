@@ -3,7 +3,7 @@ Given(/^I am searching for that property$/) do
 end
 
 Given(/^I am a citizen$/) do
-  step "I am not already logged in as a private citizen"
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
 end
 
 When(/^I enter an incorrect Title Number \(non\-matching\)$/) do
