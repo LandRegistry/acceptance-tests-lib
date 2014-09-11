@@ -21,10 +21,6 @@ Then(/^an error is displayed$/) do
   assert_match('Page not found', page.body, 'Expected not to find the page')
 end
 
-When(/^I view the register$/) do
-  visit("#{$PROPERTY_FRONTEND_DOMAIN}/property/#{$regData['title_number']}")
-end
-
 Then(/^No lease information is displayed$/) do
   assert_no_selector(".//*[@id='leaseDate']")
   assert_no_selector(".//*[@id='leaseTerm']")

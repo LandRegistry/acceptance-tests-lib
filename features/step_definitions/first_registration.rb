@@ -85,11 +85,6 @@ When(/^I select class of Qualified$/) do
   choose('Qualified')
 end
 
-When(/^I enter an invalid price paid$/) do
-  $data['pricePaid'] = "@£$%^&*Broken10"
-  fill_in('price_paid', :with => $data['pricePaid'])
-end
-
 Then(/^Title Number is formatted correctly$/) do
   validate_title_number(find(".//*[@id='title_number']", :visible => false).value)
 end
@@ -109,10 +104,6 @@ Then(/^I have received confirmation that the property has been registered$/) do
   assert_match($data['propertyPostcode'].to_s, registered_property, 'Postcode does not match')
   assert_match($data['propertyRoad'].to_s, registered_property, 'Road does not match')
 
-end
-
-Then(/^Title Number is unique$/) do
-  assert_equal does_title_exist($data['titleNumber']), false, "A title with " + $data['titleNumber'] + " already exists"
 end
 
 When(/^I enter a valid title extent$/) do

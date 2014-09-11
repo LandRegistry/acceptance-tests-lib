@@ -14,7 +14,7 @@ end
 
 Given(/^a change of name by marriage application that requires reviewing by a caseworker$/) do
   step "I have got married and I want to change my name on the register"
-  step "I have a registered property"
+  step "a registered title with characteristics"
 
   $data['countryOfMarriage'] = 'GB'
 
@@ -23,7 +23,7 @@ end
 
 Given(/^a change of name by marriage application that requires checking$/) do
   step "I have got married and I want to change my name on the register"
-  step "I have a registered property"
+  step "a registered title with characteristics"
 
   $data['countryOfMarriage'] = 'AU'
 
