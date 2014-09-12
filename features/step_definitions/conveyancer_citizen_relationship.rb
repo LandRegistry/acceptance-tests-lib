@@ -68,7 +68,7 @@ Given(/^I want to authorise my conveyancer to act on my behalf$/) do
 end
 
 Given(/^I have a relationship token for a registered property$/) do
-  step "I have a registered property"
+  step "a registered property"
   step "clients have provided their details for me to act on their behalf"
 
   #link conveyancer, title and clients together
