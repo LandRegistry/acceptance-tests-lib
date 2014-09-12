@@ -14,7 +14,7 @@ end
 
 Given(/^a change of name by marriage application that requires reviewing by a caseworker$/) do
   step "I have got married and I want to change my name on the register"
-  step "I have a registered property"
+  step "a registered title with characteristics", ''
 
   $data['countryOfMarriage'] = 'GB'
 
@@ -23,17 +23,12 @@ end
 
 Given(/^a change of name by marriage application that requires checking$/) do
   step "I have got married and I want to change my name on the register"
-  step "I have a registered property"
+  puts "step 1 complete"
+  step "a registered title with characteristics", ''
 
   $data['countryOfMarriage'] = 'AU'
 
   submit_changeOfName_request($data)
-end
-
-Given(/^I am the proprietor of a registered title$/) do
-  step "I have a registered property with characteristics", ''
-  step "I have private citizen login credentials"
-  link_title_to_email($userdetails['email'], $regData['title_number'], 'CITIZEN')
 end
 
 When(/^I provide details of my change of name by marriage$/) do
@@ -52,7 +47,7 @@ Then(/^the details of my change of name by marriage request are reflected back t
   dateOfMarriage = Date.strptime($data['dateOfMarriage'], "%d-%m-%Y")
   formattedDate = dateOfMarriage.strftime("%d %B %Y").to_s
 
-  text1 = "I confirm that I, #{$data['newName']}, was married to #{$data['partnerFullName']} on #{formattedDate} in #{$data['locationOfMarriage']}, GB."
+  text1 = "I confirm that I, #{$data['newName']}, was married to #{$data['partnerFullName']} on #{formattedDate} in #{$data['locationOfMarriage']}, #{$data['countryOfMarriage']}."
   assert_match(text1, page.body, 'Expected to see confirmation message with marriage details')
 
   text2 = "The information I provide in this application will be used to change the name on registered title number #{$regData['title_number']}."
@@ -76,10 +71,6 @@ end
 
 When(/^I do not confirm the statement reflecting my change of name by marriage is accurate and submit it$/) do
   click_button('Submit')
-end
-
-Given(/^I am not the proprietor$/) do
-
 end
 
 When(/^I try to make a change of name by marriage request for the title$/) do

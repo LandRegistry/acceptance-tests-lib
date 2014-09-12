@@ -1,4 +1,4 @@
-Then(/^the address of property is displayed$/) do
+Then(/^the Property Address is displayed$/) do
   assert_match(/#{$regData['property']['address']['address_line_1']}/i, page.body, 'Expected to find address line 1')
   assert_match(/#{$regData['property']['address']['address_line_2'].gsub(')', '\)').gsub('(', '\(')}/i, page.body, 'Expected to find address line 2')
   assert_match(/#{$regData['property']['address']['city']}/i, page.body, 'Expected to find city')
@@ -13,16 +13,12 @@ Then(/^Price Paid is displayed$/) do
   assert_match(/#{$regData['payment']['price_paid'].to_s.reverse.gsub(/...(?=.)/,'\&,').reverse}/i, page.body, 'Expected to see price paid')
 end
 
-When(/^I try to view a register that does not exist$/) do
+When(/^I try to view a property that does not exist$/) do
   visit("#{$PROPERTY_FRONTEND_DOMAIN}/property/XXXXXXXXX")
 end
 
-Then(/^an error will be displayed$/) do
+Then(/^an error is displayed$/) do
   assert_match('Page not found', page.body, 'Expected not to find the page')
-end
-
-When(/^I view the register$/) do
-  visit("#{$PROPERTY_FRONTEND_DOMAIN}/property/#{$regData['title_number']}")
 end
 
 Then(/^No lease information is displayed$/) do
@@ -69,4 +65,16 @@ Then(/^the lease clauses are displayed$/) do
   assert_selector(".//*[@id='easementClause']")
   assert_selector(".//*[@id='easementClause']")
   assert_selector(".//*[@id='alienationClause']")
+end
+
+Then(/^the property details page is displayed$/) do
+  assert_match('Property details', page.body, 'Expected Property Details page')
+end
+
+Then(/^I have the option to view the full register$/) do
+  assert_equal has_link?('View full register'), true, 'Expected View full register button to be on the page'
+end
+
+When(/^I view the property details on gov\.uk$/) do
+  visit("#{$PROPERTY_FRONTEND_DOMAIN}/property/#{$regData['title_number']}")
 end
