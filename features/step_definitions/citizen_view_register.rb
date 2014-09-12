@@ -75,6 +75,6 @@ Then(/^I have the option to view the full register$/) do
   assert_equal has_link?('View full register'), true, 'Expected View full register button to be on the page'
 end
 
-When(/^I view the property details$/) do
+When(/^I view the property details on gov\.uk$/) do
   visit("#{$PROPERTY_FRONTEND_DOMAIN}/property/#{$regData['title_number']}")
 end
