@@ -18,10 +18,6 @@ Given(/^I have caseworker login credentials$/) do
   $userdetails['password'] = 'dummypassword'
 end
 
-Given(/^I am logged in$/) do
-  step "I login with correct credentials"
-end
-
 When(/^I login with correct credentials$/) do
   fill_in('email', :with => $userdetails['email'])
   fill_in('password', :with => $userdetails['password'])
@@ -100,4 +96,20 @@ end
 
 Then(/^I get an unauthorised message$/) do
   assert_match('Unauthorized', page.body, 'Expected to have an Unauthorized message')
+end
+
+Given(/^I am a citizen$/) do
+  $userdetails = Hash.new()
+  $userdetails['email'] = 'citizen@example.org'
+  $userdetails['password'] = 'dummypassword'
+end
+
+Given(/^I am a user$/) do
+
+end
+
+Given(/^I am a caseworker$/) do
+  $userdetails = Hash.new()
+  $userdetails['email'] = 'caseworker@example.org'
+  $userdetails['password'] = 'dummypassword'
 end
