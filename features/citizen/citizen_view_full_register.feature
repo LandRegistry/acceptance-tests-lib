@@ -23,12 +23,12 @@ Scenario: Register of title with a charge but no restriction
   Given I am a citizen
   And a registered title with characteristics
     | CHARACTERISTICS           |
-    | two proprietors           |
     | has a charge              |
     | has no charge restriction |
   When I view the full register of title
   Then I can see the following information displayed
     | INFORMATION                          |
+    | Register Details          |
     | Company Charge With No Restriction   |
 
 Scenario: Register of title with a charge and a restriction
@@ -41,6 +41,7 @@ Scenario: Register of title with a charge and a restriction
   When I view the full register of title
   Then I can see the following information displayed
     | INFORMATION                          |
+    | Register Details                     |
     | Company Charge With A Restriction    |
 
 Scenario: Register of title with lease with different lessee and without clauses
@@ -54,6 +55,7 @@ Scenario: Register of title with lease with different lessee and without clauses
   When I view the full register of title
   Then I can see the following information displayed
     | INFORMATION           |
+    | Register Details      |
     | Date Of Lease         |
     | Lease Term            |
     | Lease Term Start Date |
@@ -74,6 +76,7 @@ Scenario: Register of title with clauses and lessee as proprietor
   When I view the full register of title
   Then I can see the following information displayed
     | INFORMATION           |
+    | Register Details      |
     | Date Of Lease         |
     | Lease Term            |
     | Lease Term Start Date |

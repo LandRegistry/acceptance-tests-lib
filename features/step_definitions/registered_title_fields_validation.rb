@@ -26,17 +26,14 @@ end
 
 def checkPricePaid()
   assert_match(/#{$regData['payment']['price_paid'].to_s.reverse.gsub(/...(?=.)/,'\&,').reverse}/i, page.body, 'Expected to see price paid')
-  puts "Price Paid is on page"
 end
 
 def checkTenure()
   assert_match(/#{$regData['property']['tenure']}/i, page.body, 'Expected to see tenure value')
-  puts "Tenure is on page"
 end
 
 def checkClassOfTitle()
   assert_match(/#{$regData['property']['class_of_title']}/i, page.body, 'Expected to see class of title value')
-  puts "Class of Title is on page"
 end
 
 def checkPropertyAddress()
@@ -51,6 +48,15 @@ def checkProprietors()
   if $regData['proprietors'][1]['full_name'] != "" then
     assert_match(/#{$regData['proprietors'][1]['full_name']}/i, page.body, 'Expected to see proprietor name')
   end
+end
+
+def checkRegisterDetails()
+  checkTitleNumber()
+  checkPricePaid()
+  checkTenure()
+  checkClassOfTitle()
+  checkPropertyAddress()
+  checkProprietors()
 end
 
 #charges
