@@ -1,4 +1,4 @@
-Given(/^a registered title with characteristics$/) do |table|
+Given(/^a registered title with characteristics exists$/) do |table|
 
   $data_characteristics, $data_characteristics_types = format_data_characteristics(table)
 
@@ -59,7 +59,7 @@ Given(/^I am the proprietor of a registered title with characteristics$/) do |ta
   link_title_to_email($userdetails['email'], $regData['title_number'], 'CITIZEN')
 end
 
-Given(/^a registered title$/) do
+Given(/^a registered title exist$/) do
   step "a registered title with characteristics", ''
 end
 

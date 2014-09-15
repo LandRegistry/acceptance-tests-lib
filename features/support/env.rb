@@ -5,5 +5,5 @@ $SERVICE_FRONTEND_DOMAIN=(ENV['SERVICE_FRONTEND_DOMAIN'] || 'http://service-fron
 $LR_SEARCH_API_DOMAIN=(ENV['LR_SEARCH_API_DOMAIN'] || 'http://search-api.landregistry.local')
 $SYSTEM_OF_RECORD_API_DOMAIN=(ENV['SYSTEM_OF_RECORD_API_DOMAIN'] || 'http://system-of-record.landregistry.local')
 $LR_FIXTURES_URL=(ENV['LR_FIXTURES_URL'] || 'http://fixtures.landregistry.local')
-$DECISION_URL=(ENV['DECISION_URL'] || 'http://decision.landregistry.local')
 $INTRODUCTIONS_DOMAIN = (ENV['INTRODUCTIONS_DOMAIN'] || 'http://introductions.landregistry.local')
+$DECISION_URL=(ENV['DECISION_URL'] || 'http://cases.landregistry.local')

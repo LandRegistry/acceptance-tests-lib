@@ -1,53 +1,31 @@
-Given(/^I have got married and I want to change my name on the register$/) do
-  $data = Hash.new()
-  $data['newName'] = fullName()
-  $data['partnerFullName'] = fullName()
-  $data['dateOfMarriage'] = dateInThePast().strftime("%d-%m-%Y")
-  $data['propertyPostcode'] = postcode()
-  $data['locationOfMarriage'] = townName()
-  $data['countryOfMarriage'] = countryName()
-  $data['marriageCertificateNumber'] = certificateNumber()
-  $data['witnessFullName'] = fullName()
-  $data['witnessAddress'] = houseNumber().to_s + ' ' + roadName() + "\n" + townName() + "\n" + postcode()
-  $data['dateSubmitted'] = Date.today.strftime("%d %B %Y").to_s
-end
-
 Given(/^a change of name by marriage application that requires reviewing by a caseworker$/) do
-  step "I have got married and I want to change my name on the register"
   step "a registered title with characteristics", ''
-
-  $data['countryOfMarriage'] = 'GB'
-
-  submit_changeOfName_request($data)
+  create_marriage_data('GB')
+  create_change_of_name_marriage_request()
 end
 
 Given(/^a change of name by marriage application that requires checking$/) do
-  step "I have got married and I want to change my name on the register"
-  puts "step 1 complete"
   step "a registered title with characteristics", ''
-
-  $data['countryOfMarriage'] = 'AU'
-
-  submit_changeOfName_request($data)
+  create_marriage_data('AU')
+  create_change_of_name_marriage_request()
 end
 
 When(/^I provide details of my change of name by marriage$/) do
-  step "I have got married and I want to change my name on the register"
-  $data['countryOfMarriage'] = 'United Kingdom'
-  fill_in('proprietor_new_full_name', :with => $data['newName'])
-  fill_in('partner_name', :with => $data['partnerFullName'])
-  fill_in('marriage_date', :with => $data['dateOfMarriage'])
-  fill_in('marriage_place', :with => $data['locationOfMarriage'])
-  select($data['countryOfMarriage'], :from => "marriage_country")
-  fill_in('marriage_certificate_number', :with => $data['marriageCertificateNumber'])
+  create_marriage_data('United Kingdom')
+  fill_in('proprietor_new_full_name', :with => $marriage_data['proprietor_new_name'])
+  fill_in('partner_name', :with => $marriage_data['partner_name'])
+  fill_in('marriage_date', :with => $marriage_data['marriage_date'])
+  fill_in('marriage_place', :with => $marriage_data['marriage_place'])
+  select($marriage_data['marriage_country'], :from => "marriage_country")
+  fill_in('marriage_certificate_number', :with => $marriage_data['marriage_certificate_number'])
   click_button('Submit')
 end
 
 Then(/^the details of my change of name by marriage request are reflected back to me in a statement$/) do
-  dateOfMarriage = Date.strptime($data['dateOfMarriage'], "%d-%m-%Y")
+  dateOfMarriage = Date.strptime($marriage_data['marriage_date'], "%d-%m-%Y")
   formattedDate = dateOfMarriage.strftime("%d %B %Y").to_s
 
-  text1 = "I confirm that I, #{$data['newName']}, was married to #{$data['partnerFullName']} on #{formattedDate} in #{$data['locationOfMarriage']}, #{$data['countryOfMarriage']}."
+  text1 = "I confirm that I, #{$marriage_data['proprietor_new_name']}, was married to #{$marriage_data['partner_name']} on #{formattedDate} in #{$marriage_data['marriage_place']}, #{$marriage_data['marriage_country']}."
   assert_match(text1, page.body, 'Expected to see confirmation message with marriage details')
 
   text2 = "The information I provide in this application will be used to change the name on registered title number #{$regData['title_number']}."
@@ -76,4 +54,16 @@ end
 When(/^I try to make a change of name by marriage request for the title$/) do
   visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}/edit/title.proprietor.1")
   step "I login with correct credentials"
+end
+
+def create_marriage_data(country)
+  $marriage_data = {}
+  $marriage_data['proprietor_full_name'] = fullName()
+  $marriage_data['proprietor_new_name'] = $regData['proprietors'][0]['full_name']
+  $marriage_data['partner_name'] = fullName()
+  $marriage_data['marriage_date'] = dateInThePast().strftime("%d-%m-%Y")
+  $marriage_data['marriage_place'] = townName()
+  $marriage_data['marriage_country'] = country
+  $marriage_data['marriage_certificate_number'] = certificateNumber()
+  puts $marriage_data.to_json
 end
