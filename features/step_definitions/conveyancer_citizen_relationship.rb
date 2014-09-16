@@ -33,7 +33,7 @@ Given(/^clients have provided their details for me to act on their behalf$/) do
 end
 
 When(/^I enter the clients details$/) do
-  for i in 0..1
+  for i in 0..0
     fill_in('full_name', :with => $relationshipData['clients'][i]['full_name'])
     fill_in('date_of_birth', :with => $relationshipData['clients'][i]['date_of_birth'])
     fill_in('address', :with => $relationshipData['clients'][i]['address'])
