@@ -54,11 +54,11 @@ Given(/^a registered title with characteristics$/) do |table|
 end
 
 Given(/^I am the proprietor of a registered title with characteristics$/) do |table|
-  step "a registered title with characteristics exists", table
+  step "a registered title with characteristics", table
   link_title_to_email($userdetails['email'], $regData['title_number'], 'CITIZEN')
 end
 
-Given(/^a registered title exists$/) do
+Given(/^a registered title$/) do
   step "a registered title with characteristics", ''
 end
 
