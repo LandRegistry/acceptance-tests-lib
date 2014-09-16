@@ -174,24 +174,18 @@ def wait_for_case_to_exist(title_no)
 
   while (found_count != 1 && count < 25) do
     puts 'waiting for case to be created'
-
-    found_count = 0
-
     sleep(0.2)
-
     response = rest_get_call($DECISION_URL + '/cases/property/' + title_no)
-    #json_response = JSON.parse(response.body);
-
-    puts $DECISION_URL + '/cases/property/' + title_no
-    puts response.to_json
-    #if ((response.code != '404') && (!json_response['title_number'].nil?)) then
-    #    found_count = found_count + 1
-    #end
-
+    if (!response.nil?)
+      puts 'xxxxxx'
+      if (!JSON.parse(response.body)[0]['work_queue'].nil?)
+        found_count + 1
+        puts 'case assigned to ' + JSON.parse(response.body)[0]['work_queue'] + ' queue'
+      end
+    end
     count = count + 1
   end
-
-  if (found_count != 2) then
+  if (found_count != 1) then
     raise "No case found for title " + title_no
   end
 
