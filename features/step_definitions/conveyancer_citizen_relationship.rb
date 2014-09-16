@@ -4,10 +4,10 @@ When(/^I select the property$/) do
   click_button('Select this property')
 end
 
-When(/^I am acting on behalf of my clients$/) do
-  fill_in('num_of_clients', :with => '1')
-  click_button('Next')
-end
+#When(/^I am acting on behalf of my clients$/) do
+#  fill_in('num_of_clients', :with => '1')
+#  click_button('Next')
+#end
 
 When(/^the clients want to buy the property$/) do
   choose('Buying this property')

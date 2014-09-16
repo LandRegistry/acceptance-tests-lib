@@ -9,12 +9,13 @@ When I request to create a client relationship
 And I login with correct credentials
 And I select the property
 And the clients want to buy the property
-And I am acting on behalf of my clients
+#And I am acting on behalf of my clients
 And I enter the clients details
 And I check all the details previously entered for this relationship
 And I confirm the details entered
 Then a relationship token code is generated
 
+@wip
 Scenario: First citizen of a couple authorises the conveyancer client relationship
 Given I have private citizen login credentials
 And I am not already logged in as a private citizen
@@ -29,6 +30,7 @@ When I have ticked that the information I have read is correct
 And the relationship is confirmed
 Then the relationship is confirmed but not completed
 
+@wip
 Scenario: Last citizen of couple authorises conveyancer client relationship
 Given I have private citizen login credentials
 And I am not already logged in as a private citizen
@@ -43,6 +45,7 @@ When I have ticked that the information I have read is correct
 And the relationship is confirmed
 Then relationship confirmed and shown as completed
 
+@wip
 Scenario: Citizen enters invalid relationship token
 Given I have private citizen login credentials
 And I am not already logged in as a private citizen
