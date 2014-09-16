@@ -4,7 +4,7 @@ Scenario: Create relationship token for buyers
 Given I have conveyancer login credentials
 And I am not already logged in as a conveyancer
 And clients have provided their details for me to act on their behalf
-And a registered title exists
+And a registered title
 When I request to create a client relationship
 And I login with correct credentials
 And I select the property
