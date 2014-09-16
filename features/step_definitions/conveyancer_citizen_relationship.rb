@@ -5,7 +5,7 @@ When(/^I select the property$/) do
 end
 
 When(/^I am acting on behalf of my clients$/) do
-  fill_in('num_of_clients', :with => '2')
+  fill_in('num_of_clients', :with => '1')
   click_button('Next')
 end
 
