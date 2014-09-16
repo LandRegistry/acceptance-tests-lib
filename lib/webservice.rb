@@ -167,3 +167,33 @@ def submit_changeOfName_request(request)
   puts response.body
 
 end
+
+def wait_for_case_to_exist(title_no)
+  found_count = 0
+  count = 0
+
+  while (found_count != 1 && count < 25) do
+    puts 'waiting for case to be created'
+
+    found_count = 0
+
+    sleep(0.2)
+
+    response = rest_get_call($DECISION_URL + '/cases/property/' + title_no)
+    #json_response = JSON.parse(response.body);
+
+    puts $DECISION_URL + '/cases/property/' + title_no
+    puts response.to_json
+    #if ((response.code != '404') && (!json_response['title_number'].nil?)) then
+    #    found_count = found_count + 1
+    #end
+
+    count = count + 1
+  end
+
+  if (found_count != 2) then
+    raise "No case found for title " + title_no
+  end
+
+  return response.body
+end

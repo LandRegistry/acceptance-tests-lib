@@ -2,12 +2,14 @@ Given(/^a change of name by marriage application that requires reviewing by a ca
   step "a registered title with characteristics", ''
   create_marriage_data('GB')
   create_change_of_name_marriage_request()
+  wait_for_case_to_exist($regData['title_number'])
 end
 
 Given(/^a change of name by marriage application that requires checking$/) do
   step "a registered title with characteristics", ''
   create_marriage_data('AU')
   create_change_of_name_marriage_request()
+  wait_for_case_to_exist($regData['title_number'])
 end
 
 When(/^I provide details of my change of name by marriage$/) do
