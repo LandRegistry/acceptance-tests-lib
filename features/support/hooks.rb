@@ -14,6 +14,8 @@ Before do | scenario |
     page.driver.add_header("Referer", "", permanent: true)
   end
   page.driver.clear_network_traffic
+
+  $step = 0
 end
 
 After do | scenario |
@@ -26,17 +28,103 @@ end
 
 
 AfterStep do | scenario |
+   step_name = scenario.steps.to_a[$step].name
+   $step = $step + 1
 
-  puts scenario.name
 
-  page.driver.network_traffic.each do |request|
-    begin
-      puts request.url
-      puts '--- ' + request.method
-      puts '--- ' + request.data
-    rescue
+  perf_file_name = 'features/step_definitions/performance/' + scenario.name.gsub(/ /, '_') + '.rb'
 
-    end
+  if (!File.file?(perf_file_name))
+
+    file_structure = %{
+
+      def v_init
+
+        #v_init end
+      end
+
+      def v_action
+
+        #v_action end
+      end
+
+      def v_end
+
+        #v_end end
+      end
+
+    }
+
+    File.open(perf_file_name, 'w') { |file| file.write(file_structure) }
+
+
+  end
+    if (page.driver.network_traffic.to_a.count > 0) then
+
+    v_action_text = %{
+
+        start_traction("#{step_name}")
+        #v_action end
+    }
+
+    file_text = File.read(perf_file_name)
+    file_text_mod = file_text.gsub('#v_action end', v_action_text)
+
+
+    open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
+
+
+      page.driver.network_traffic.each do |request|
+        begin
+
+
+          if (request.method == 'POST')
+
+            v_action_text = %{
+                  http_post("#{request.url}", "#{Base64.decode64(request.data)}")
+                #v_action end
+            }
+
+
+
+          else
+
+            v_action_text = %{
+                  http_get("#{request.url}")
+                #v_action end
+            }
+
+          end
+
+          puts v_action_text
+
+
+          file_text = File.read(perf_file_name)
+          file_text_mod = file_text.gsub('#v_action end', v_action_text)
+
+
+          open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
+
+
+        rescue
+
+        end
+      end
+
+    v_action_text = %{
+        end_traction("#{step_name}")
+
+        #v_action end
+    }
+
+    file_text = File.read(perf_file_name)
+    file_text_mod = file_text.gsub('#v_action end', v_action_text)
+
+
+    open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
+
+
+
   end
 
   page.driver.clear_network_traffic
