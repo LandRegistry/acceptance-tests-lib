@@ -43,6 +43,8 @@ def wait_for_register_to_be_created(title_no)
     raise "No records found for title " + title_no
   end
 
+  puts title_no
+
   return response.body
 end
 
