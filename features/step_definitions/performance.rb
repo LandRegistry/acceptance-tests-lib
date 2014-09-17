@@ -26,24 +26,6 @@ Given(/^I want to run a performance$/) do
     features['elements'].each do |scenarios|
       $features_hash[scenarios['name'].to_s] = features['uri'].to_s + ':' + scenarios['line'].to_s
       $scenario_steps[features['uri'].to_s + ':' + scenarios['line'].to_s] = []
-      scenarios['steps'].each do |steps|
-
-        #puts steps
-        puts 'a' + steps['keyword'].strip + 'a'
-        puts 'a1' + steps['keyword'].strip + 'a1'
-        if (steps['keyword'].strip.to_s != 'And') then
-          $steptype = steps['keyword'].strip.to_s
-        end
-        puts 'a2' + $steptype + 'a2'
-
-
-
-        if ($steptype != 'Then')
-          puts 'b' + steps['keyword'].strip + 'b' + $steptype + 'b'
-          $scenario_steps[features['uri'].to_s + ':' + scenarios['line'].to_s] << steps['name']
-        end
-
-      end
     end
   end
 
@@ -56,6 +38,8 @@ Given(/^I have the following scenarios$/) do |table|
 
   $running_scenarios_hash = {}
 
+  $running_scenarios_hash_name = {}
+
   $amount_of_users = 0
 
   $vuser_scenarios = []
@@ -64,6 +48,8 @@ Given(/^I have the following scenarios$/) do |table|
     if (!$features_hash[value[0]].nil?)
       $amount_of_users = $amount_of_users + value[1].to_i
       $running_scenarios_hash[$features_hash[value[0]]] = value[1].to_i
+      $running_scenarios_hash_name[$features_hash[value[0]]] = value[0]
+
       for i in 0..value[1].to_i - 1
         $vuser_scenarios << $features_hash[value[0]]
       end
@@ -91,7 +77,13 @@ When(/^I run the performance test$/) do
 
   $results2 = Hash.new()
 
+  $results_transactions = Hash.new()
+
+  $results_scenarios = Hash.new()
+
   $starttime = Time.new.to_i
+
+  $total_failures = 0
 
   puts 'Start Time: ' + $starttime.to_s
 
@@ -116,7 +108,7 @@ When(/^I run the performance test$/) do
 
 end
 
-Then(/^I expect less than (\d+) failures$/) do |arg1|
+Then(/^I expect less than (\d+) failures$/) do |failures|
 
 
   for i in 0..($duration - 1)
@@ -141,17 +133,28 @@ Then(/^I expect less than (\d+) failures$/) do |arg1|
 
   puts $results2
 
+  puts $results_transactions
+  puts $results_scenarios
+
+  assert_operator $total_failures, :<, failures.to_i, 'The failures weren\'t below the threshold'
 
 
-
-
-
-
-
-  pending # express the regexp above with the code you wish you had
 end
 
 Then(/^the scenarios response times were below:$/) do |table|
+
+
+  table.raw.each do |value|
+    if (!$features_hash[value[0]].nil?)
+      $amount_of_users = $amount_of_users + value[1].to_i
+      $running_scenarios_hash[$features_hash[value[0]]] = value[1].to_i
+      for i in 0..value[1].to_i - 1
+        $vuser_scenarios << $features_hash[value[0]]
+      end
+    end
+  end
+
+
   # table is a Cucumber::Ast::Table
   pending # express the regexp above with the code you wish you had
 end
@@ -160,126 +163,105 @@ end
 
 
 def loadtest(cucumber_scenario)
-$stdout.puts cucumber_scenario
+
+  $stdout.puts cucumber_scenario
   puts cucumber_scenario
 
-### Configures Capybara to use Xpath selectors and use poltergeist driver
-Capybara.default_driver = :poltergeist
-Capybara.javascript_driver = :poltergeist
+    scenario_name = $running_scenarios_hash_name[cucumber_scenario].gsub('(','').gsub(')', '').gsub(/ /, '_').capitalize
 
-### Set the options for poltergeist to use
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, :inspector => true, :js_errors => false)
-end
+    require_relative 'performance/' + scenario_name.downcase
+    script = Module.const_get(scenario_name).new
 
-#This removes the referer for the map tiles to be returned
-page.driver.add_header("Referer", "", permanent: true)
+  	while ((Time.new.to_i)  < ($starttime + $duration)) do
 
-	while ((Time.new.to_i)  < ($starttime + $duration)) do
+    	scriptstart_time = Time.new.to_i
 
-    status = Timeout::timeout(30) {
+      begin
+        $stdout.puts 'dsadsa'
+        script.v_action()
 
-  		scriptstart_time = Time.new.to_i
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, :inspector => true, :js_errors => false)
-end
-Capybara::Session.new(cucumber_scenario)
-
-        @in = StringIO.new
-        @out = StringIO.new
-        @err = StringIO.new
+      rescue Exception=>e
+        $total_failures = $total_failures + 1
+      end
 
 
-        args = []
-        args << '-r'
-        args << 'features'
-        args << '--format'
-        args << 'json'
-        args << cucumber_scenario
-        $stdout.puts 'a'
+    	script_duration = Time.new.to_i - scriptstart_time
 
+      if ($results_scenarios[cucumber_scenario].nil?) then
 
+        $results_scenarios[cucumber_scenario] = {}
+      end
 
-          #step step_name
-            begin
-              Capybara.session_name = cucumber_scenario
+      current_time_id = $duration - (($starttime + $duration) - Time.new.to_i) + 1
 
+      if($results_scenarios[cucumber_scenario][current_time_id].nil? == true) then
 
-            #  $scenario_steps[cucumber_scenario].each do |step_name|
-            #    status = Timeout::timeout(7) {
-            #      $stdout.puts step_name
+        $results_scenarios[cucumber_scenario][current_time_id] = Array.new()
 
-              #    $stdout.puts step step_name
-              #  }
-              #end
-              #
-                  stdin, stdout, stderr = Open3.popen3('cucumber -r features ' + cucumber_scenario)
+      end
 
-                  puts stdout.readlines
-
-            # system('cucumber -r features ' + cucumber_scenario)
-          #  Capybara.session_name = cucumber_scenario
-
-          #  cuke2 = Cucumber::Cli::Main.new(args, @in, @out, @err).execute!
-            #  Capybara.session_name = cucumber_scenario
-            #  run_test(cucumber_scenario)
-            rescue Exception=>e
-
-              $stdout.puts @out.string
-              $stdout.puts @err.string
-
-
-            end
-
-            $stdout.puts @out.string
-              $stdout.puts @err.string
-
-
-
-        #  Process.wait
-
-
-      $stdout.puts @out.string
-      $stdout.puts @err.string
-
-  		script_duration = Time.new.to_i - scriptstart_time
-
-  		if($results2[$duration - (($starttime + $duration) - Time.new.to_i) + 1].nil? == true) then
-
-  			$results2[$duration - (($starttime + $duration) - Time.new.to_i) + 1] = Array.new()
-
-  		end
-
-      $results.push(script_duration)
-  		$results2[$duration - (($starttime + $duration) - Time.new.to_i) + 1].push(script_duration)
+      $results_scenarios[cucumber_scenario][current_time_id].push(script_duration)
 
       sleep(1)
       puts $results2
 
-    }
-
-	end
+  	end
 
 end
 
 
 
 
-def run_test(cucumber_scenario)
+def start_traction(step_name)
 
-  @in = StringIO.new
-  @out = StringIO.new
-  @err = StringIO.new
+  scriptstart_time = Time.new.to_i
 
-  args = []
-  args << '-r'
-  args << 'features'
-  args << '--format'
-  args << 'json'
-  args << cucumber_scenario
+end
 
-  cuke2 = Cucumber::Cli::Main.new(args, @in, @out, @err).execute!
 
-  return cuke2, @in, @out, @err
+def end_traction(step_name, start_time)
+
+  transaction_duration = Time.new.to_i - start_time
+
+  if ($results_transactions[step_name].nil?) then
+
+    $results_transactions[step_name] = {}
+  end
+
+  current_time_id = $duration - (($starttime + $duration) - Time.new.to_i) + 1
+
+  if($results_transactions[step_name][current_time_id].nil? == true) then
+
+    $results_transactions[step_name][current_time_id] = Array.new()
+
+  end
+
+  $results_transactions[step_name][current_time_id].push(transaction_duration)
+
+end
+
+def http_get(url)
+
+  $stdout.puts url
+
+	uri = URI.parse(url)
+
+	http = Net::HTTP.new(uri.host, uri.port)
+
+	request = Net::HTTP::Get.new(uri.request_uri)
+	response = http.request(request)
+
+end
+
+def http_post(url, data)
+
+  $stdout.puts url
+
+  uri = URI.parse(url)
+
+  http = Net::HTTP.new(uri.host, uri.port)
+
+  request = Net::HTTP::Get.new(uri.request_uri)
+  response = http.request(request)
 
 end

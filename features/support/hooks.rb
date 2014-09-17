@@ -28,42 +28,51 @@ end
 
 
 AfterStep do | scenario |
-   step_name = scenario.steps.to_a[$step].name
+   step_name = scenario.steps.to_a[$step].name.gsub('(','').gsub(')', '').gsub(/ /, '_').capitalize
+   scenario_name  = scenario.name.gsub('(','').gsub(')', '').gsub(/ /, '_').capitalize
    $step = $step + 1
+  if (page.driver.network_traffic.to_a.count > 0) then
+
+    perf_file_name = 'features/step_definitions/performance/' + scenario_name.downcase + '.rb'
+
+    if (!File.file?(perf_file_name))
+
+      file_structure = %{
+
+        class #{scenario_name}
+
+          def initialize()
+            @curl = ''
+          end
+
+          def v_init()
+
+            #v_init end
+          end
+
+          def v_action()
+
+            #v_action end
+          end
+
+          def v_end()
+
+            #v_end end
+          end
+
+        end
+
+      }
+
+      File.open(perf_file_name, 'w') { |file| file.write(file_structure) }
 
 
-  perf_file_name = 'features/step_definitions/performance/' + scenario.name.gsub(/ /, '_') + '.rb'
+    end
 
-  if (!File.file?(perf_file_name))
-
-    file_structure = %{
-
-      def v_init
-
-        #v_init end
-      end
-
-      def v_action
-
-        #v_action end
-      end
-
-      def v_end
-
-        #v_end end
-      end
-
-    }
-
-    File.open(perf_file_name, 'w') { |file| file.write(file_structure) }
-
-
-  end
-    if (page.driver.network_traffic.to_a.count > 0) then
 
     v_action_text = %{
 
-        start_traction("#{step_name}")
+        trans_time = start_traction("#{step_name}")
         #v_action end
     }
 
@@ -112,7 +121,7 @@ AfterStep do | scenario |
       end
 
     v_action_text = %{
-        end_traction("#{step_name}")
+        end_traction("#{step_name}", trans_time)
 
         #v_action end
     }
@@ -120,10 +129,7 @@ AfterStep do | scenario |
     file_text = File.read(perf_file_name)
     file_text_mod = file_text.gsub('#v_action end', v_action_text)
 
-
     open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
-
-
 
   end
 
