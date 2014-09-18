@@ -82,9 +82,9 @@ Then(/^message informing relationship token code is invalid is displayed$/) do
 end
 
 When(/^I have ticked that the information I have read is correct$/) do
-  pending # express the regexp above with the code you wish you had
+    check('check-1')
 end
 
-Then(/^the relationship is confirmed but not completed$/) do
-  pending # express the regexp above with the code you wish you had
+Then(/^the relationship is confirmed$/) do
+  assert_match(/Confirmed/i, page.body, 'Expected to get message saying the relationship was confirmed')
 end

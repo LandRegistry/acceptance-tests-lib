@@ -20,7 +20,7 @@ And I have a relationship token for a registered property
 When I want to authorise my conveyancer to act on my behalf
 And I enter the relationship token code
 And I have ticked that the information I have read is correct
-Then the relationship is confirmed but not completed
+Then the relationship is confirmed
 
 Scenario: Citizen enters invalid relationship token
 Given I have private citizen login credentials
