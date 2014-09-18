@@ -11,7 +11,7 @@ export LR_SEARCH_API_DOMAIN="http://lr-search-api.herokuapp.com"
 export SYSTEM_OF_RECORD_API_DOMAIN="http://lr-system-of-record.herokuapp.com"
 export SERVICE_FRONTEND_DOMAIN="http://land.service.gov.uk.landregistryconcept.co.uk"
 export LR_FIXTURES_URL="http://lr-fixtures.herokuapp.com"
-export DECISION_URL="http://lr-decision.herokuapp.com"
+export CASES_URL="http://lr-cases.herokuapp.com"
 export ENVIRONMENT="preview"
 
 if [ -z "$1" ]

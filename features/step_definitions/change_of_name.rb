@@ -2,17 +2,20 @@ Given(/^a change of name by marriage application that requires reviewing by a ca
   step "a registered title with characteristics", ''
   create_marriage_data('GB')
   create_change_of_name_marriage_request()
+  wait_for_case_to_exist($regData['title_number'])
 end
 
 Given(/^a change of name by marriage application that requires checking$/) do
   step "a registered title with characteristics", ''
   create_marriage_data('AU')
   create_change_of_name_marriage_request()
+  wait_for_case_to_exist($regData['title_number'])
 end
 
 When(/^I provide details of my change of name by marriage$/) do
+  validateChangeNameMarriageForm()
   create_marriage_data('United Kingdom')
-  fill_in('proprietor_new_full_name', :with => $marriage_data['proprietor_new_name'])
+  fill_in('proprietor_new_full_name', :with => $marriage_data['proprietor_new_full_name'])
   fill_in('partner_name', :with => $marriage_data['partner_name'])
   fill_in('marriage_date', :with => $marriage_data['marriage_date'])
   fill_in('marriage_place', :with => $marriage_data['marriage_place'])
@@ -25,7 +28,7 @@ Then(/^the details of my change of name by marriage request are reflected back t
   dateOfMarriage = Date.strptime($marriage_data['marriage_date'], "%d-%m-%Y")
   formattedDate = dateOfMarriage.strftime("%d %B %Y").to_s
 
-  text1 = "I confirm that I, #{$marriage_data['proprietor_new_name']}, was married to #{$marriage_data['partner_name']} on #{formattedDate} in #{$marriage_data['marriage_place']}, #{$marriage_data['marriage_country']}."
+  text1 = "I confirm that I, #{$marriage_data['proprietor_new_full_name']}, was married to #{$marriage_data['partner_name']} on #{formattedDate} in #{$marriage_data['marriage_place']}, #{$marriage_data['marriage_country']}."
   assert_match(text1, page.body, 'Expected to see confirmation message with marriage details')
 
   text2 = "The information I provide in this application will be used to change the name on registered title number #{$regData['title_number']}."
@@ -43,10 +46,6 @@ Then(/^I receive an acknowledgement my request has been sent to Land Registry$/)
   assert_match('Application complete', page.body, 'Expected Application complete')
 end
 
-When(/^I submit my change of name by way of marriage details without entering any information$/) do
-  click_button('Submit')
-end
-
 When(/^I do not confirm the statement reflecting my change of name by marriage is accurate and submit it$/) do
   click_button('Submit')
 end
@@ -56,14 +55,26 @@ When(/^I try to make a change of name by marriage request for the title$/) do
   step "I login with correct credentials"
 end
 
+Then(/^my change of name by marriage request is now with Land Registry$/) do
+  wait_for_case_to_exist($regData['title_number'])
+end
+
 def create_marriage_data(country)
   $marriage_data = {}
-  $marriage_data['proprietor_full_name'] = fullName()
-  $marriage_data['proprietor_new_name'] = $regData['proprietors'][0]['full_name']
+  $marriage_data['proprietor_full_name'] = $regData['proprietors'][0]['full_name']
+  $marriage_data['proprietor_new_full_name'] = fullName()
   $marriage_data['partner_name'] = fullName()
   $marriage_data['marriage_date'] = dateInThePast().strftime("%d-%m-%Y")
   $marriage_data['marriage_place'] = townName()
   $marriage_data['marriage_country'] = country
   $marriage_data['marriage_certificate_number'] = certificateNumber()
-  puts $marriage_data.to_json
+end
+
+def validateChangeNameMarriageForm()
+  click_button('Submit')
+  validateField('error_proprietor_new_full_name', 'This field is required.')
+  validateField('error_partner_name', 'This field is required.')
+  validateField('error_marriage_date', 'This field is required.')
+  validateField('error_marriage_place', 'This field is required.')
+  validateField('error_marriage_certificate_number', 'This field is required.')
 end
