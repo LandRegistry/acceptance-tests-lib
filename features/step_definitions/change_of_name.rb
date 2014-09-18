@@ -13,6 +13,7 @@ Given(/^a change of name by marriage application that requires checking$/) do
 end
 
 When(/^I provide details of my change of name by marriage$/) do
+  validateChangeNameMarriageForm()
   create_marriage_data('United Kingdom')
   fill_in('proprietor_new_full_name', :with => $marriage_data['proprietor_new_full_name'])
   fill_in('partner_name', :with => $marriage_data['partner_name'])
@@ -45,10 +46,6 @@ Then(/^I receive an acknowledgement my request has been sent to Land Registry$/)
   assert_match('Application complete', page.body, 'Expected Application complete')
 end
 
-When(/^I submit my change of name by way of marriage details without entering any information$/) do
-  click_button('Submit')
-end
-
 When(/^I do not confirm the statement reflecting my change of name by marriage is accurate and submit it$/) do
   click_button('Submit')
 end
@@ -56,6 +53,10 @@ end
 When(/^I try to make a change of name by marriage request for the title$/) do
   visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}/edit/title.proprietor.1")
   step "I login with correct credentials"
+end
+
+Then(/^my change of name by marriage request is now with Land Registry$/) do
+  wait_for_case_to_exist($regData['title_number'])
 end
 
 def create_marriage_data(country)
@@ -67,5 +68,13 @@ def create_marriage_data(country)
   $marriage_data['marriage_place'] = townName()
   $marriage_data['marriage_country'] = country
   $marriage_data['marriage_certificate_number'] = certificateNumber()
-  puts $marriage_data.to_json
+end
+
+def validateChangeNameMarriageForm()
+  click_button('Submit')
+  validateField('error_proprietor_new_full_name', 'This field is required.')
+  validateField('error_partner_name', 'This field is required.')
+  validateField('error_marriage_date', 'This field is required.')
+  validateField('error_marriage_place', 'This field is required.')
+  validateField('error_marriage_certificate_number', 'This field is required.')
 end

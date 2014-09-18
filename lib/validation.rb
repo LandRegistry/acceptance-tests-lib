@@ -4,3 +4,7 @@ def validate_title_number(titleNumber)
   assert_operator titleNumber[4,titleNumber.size - 1].to_i, :>=, 1, 'The number is less than 0'
   #assert_operator titleNumber[4,titleNumber.size - 1].to_i, :<=, 99999, 'The number is greater than 99999'
 end
+
+def validateField(fieldId, errorMessage)
+  assert_selector(".//*[@id='" + fieldId + "']", text: errorMessage)
+end
