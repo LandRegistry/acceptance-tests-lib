@@ -22,7 +22,6 @@ And I enter the relationship token code
 And I have ticked that the information I have read is correct
 Then the relationship is confirmed but not completed
 
-@wip
 Scenario: Citizen enters invalid relationship token
 Given I have private citizen login credentials
 And I am not already logged in as a private citizen
