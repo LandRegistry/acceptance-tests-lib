@@ -89,21 +89,18 @@ AfterStep do | scenario |
           puts request.response_parts[0].redirect_url
           begin
 
+            v_action_text = %{
+                  data = {}
+                #v_action end
+            }
+          file_text = File.read(perf_file_name)
+          file_text_mod = file_text.gsub('#v_action end', v_action_text)
+          open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
 
 
 
-if (prevredirect != '302') then
 
-
-v_action_text = %{
-      data = {}
-    #v_action end
-}
-file_text = File.read(perf_file_name)
-file_text_mod = file_text.gsub('#v_action end', v_action_text)
-open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
-
-
+if (prevredirect == '') then
 
 if (request.headers.count > 0) then
 
@@ -120,19 +117,19 @@ if (request.headers.count > 0) then
 
 
   request.headers.each do |value|
+      if (value['name'] != 'Content-Length') then
+        puts value
+        v_action_text = %{
+              data["header"]["#{value['name']}"] = "#{value['value']}"
+            #v_action end
+        }
 
-      puts value
-      v_action_text = %{
-            data["header"]["#{value['name']}"] = "#{value['value']}"
-          #v_action end
-      }
+        file_text = File.read(perf_file_name)
+        file_text_mod = file_text.gsub('#v_action end', v_action_text)
 
-      file_text = File.read(perf_file_name)
-      file_text_mod = file_text.gsub('#v_action end', v_action_text)
+        open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
 
-      open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
-
-
+    end
   end
 
 end
@@ -160,27 +157,24 @@ end
   open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
 
 end
-puts request.response_parts[request.response_parts.count -1].status
-puts request.response_parts[0].status
+puts request.response_parts[request.response_parts.count -1].redirect_url
+puts request.response_parts[0].redirect_url
+if (request.response_parts[request.response_parts.count - 1].redirect_url.to_s == '') then
 
-if (request.method != 'POST')
-
-  if (request.response_parts[request.response_parts.count - 1].status.to_s != '302') then
-
-    puts 'aaaaaa' + request.response_parts[request.response_parts.count - 1].status.to_s + 'aaaaa'
-    v_action_text = %{
-    assert_http_status(response, #{request.response_parts[request.response_parts.count -1].status})
-    #v_action end
-    }
+  puts 'aaaaaa' + request.response_parts[request.response_parts.count - 1].status.to_s + 'aaaaa'
+  v_action_text = %{
+  assert_http_status(response, #{request.response_parts[request.response_parts.count -1].status})
+  #v_action end
+  }
 
 
-    file_text = File.read(perf_file_name)
-    file_text_mod = file_text.gsub('#v_action end', v_action_text)
-    open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
-
-  end
+  file_text = File.read(perf_file_name)
+  file_text_mod = file_text.gsub('#v_action end', v_action_text)
+  open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
 
 end
+
+
 
           rescue
 
@@ -189,7 +183,7 @@ end
 
       end
 
-      prevredirect = request.response_parts[request.response_parts.count - 1].status.to_s
+      prevredirect = request.response_parts[request.response_parts.count - 1].redirect_url.to_s
 
 
     end

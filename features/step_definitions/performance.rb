@@ -368,8 +368,9 @@ def http_post(curl, data, url, data2)
 
   puts 'POST: ' + url
 
-
+  curl.max_redirects =1
   curl.url = url
+#  curl.verbose = true
   curl.headers = data['header']
   puts curl.http_post(data2)
 
