@@ -101,21 +101,15 @@ def create_change_of_name_marriage_request()
   change_of_name["request_details"]["action"] = "change-name-marriage"
 
   $marriage_data['title'] = $regData
-
   dateOfMarriage = Date.strptime($marriage_data['marriage_date'], "%d-%m-%Y")
-  $marriage_data['marriage_date'] = dateOfMarriage.strftime("%s").to_s
-
-
-  #$marriage_data = $marriage_data['marriage_date'].strftime("%s")
+  $marriage_data['marriage_date'] = dateOfMarriage.strftime("%s").to_i
   change_of_name["request_details"]["data"] = $marriage_data.to_json.to_s
 
   change_of_name["request_details"]["context"] = {}
   change_of_name["request_details"]["context"]["session-id"] = "123456"
   change_of_name["request_details"]["context"]["transaction-id"] = "ABCDEFG"
 
-  puts change_of_name.to_json
-
-  uri = URI.parse($DECISION_URL)
+  uri = URI.parse($CASES_URL)
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Post.new('/cases',  initheader = {'Content-Type' =>'application/json'})
   request.basic_auth $http_auth_name, $http_auth_password
@@ -124,48 +118,27 @@ def create_change_of_name_marriage_request()
 
 end
 
-def submit_changeOfName_request(request)
+def wait_for_case_to_exist(title_no)
+  found_count = 0
+  count = 0
 
-  changeOfName_decission = {}
-  changeOfName_decission["action"] = "change-name-marriage"
-  changeOfName_decission["data"] = {}
-  changeOfName_decission["data"]["iso-country-code"] = $data['countryOfMarriage']
-  changeOfName_decission["context"] = {}
-  changeOfName_decission["context"]["session-id"] = "123456"
-  changeOfName_decission["context"]["transaction-id"] = "ABCDEFG"
+  while (found_count != 1 && count < 25) do
+    puts 'waiting for case to be created'
+    sleep(0.2)
+    response = rest_get_call($CASES_URL + '/cases/property/' + title_no)
+    if (!response.nil?)
+      if (!JSON.parse(response.body)[0]['work_queue'].nil?)
+        found_count = 1
+        puts 'case assigned to ' + JSON.parse(response.body)[0]['work_queue'] + ' queue'
+      end
+    end
+    count = count + 1
+  end
+  if (found_count != 1) then
+    raise "No case found for title " + title_no
+  end
 
-  uri = URI.parse($DECISION_URL)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Post.new('/decisions',  initheader = {'Content-Type' =>'application/json'})
-  request.basic_auth $http_auth_name, $http_auth_password
-  request.body = changeOfName_decission.to_json
-  response = http.request(request)
-
-  decision_forward_url = JSON.parse(response.body)['url']
-
-  changeOfName_submission = {}
-  changeOfName_submission['marriage_country'] = $data['countryOfMarriage']
-  changeOfName_submission['partner_name'] = $data['partnerFullName']
-  changeOfName_submission['application_type'] = 'change-name-marriage'
-  changeOfName_submission['confirm'] = true
-  changeOfName_submission['proprietor_new_full_name'] = $data['newName']
-  changeOfName_submission['marriage_place'] = $data['locationOfMarriage']
-  changeOfName_submission['title_number'] = $regData['title_number']
-  changeOfName_submission['marriage_certificate_number'] = $data['marriageCertificateNumber']
-  changeOfName_submission['proprietor_previous_full_name'] = $regData['proprietors'][0]['full_name']
-  changeOfName_submission['marriage_date'] = Date.today.to_time.to_i
-
-  puts decision_forward_url
-
-  uri = URI.parse(decision_forward_url)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Post.new(uri.path,  initheader = {'Content-Type' =>'application/json'})
-  request.basic_auth $http_auth_name, $http_auth_password
-  request.body = changeOfName_submission.to_json
-  response = http.request(request)
-
-  puts response.body
-
+  return response.body
 end
 
 def get_token_code(relationship_hash)

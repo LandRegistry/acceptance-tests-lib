@@ -10,3 +10,7 @@ def validate_token_format(token_code)
   puts token_code
   assert_operator token_code.size, :<=, 4, 'The token is not 4 in length'
 end
+
+def validateField(fieldId, errorMessage)
+  assert_selector(".//*[@id='" + fieldId + "']", text: errorMessage)
+end

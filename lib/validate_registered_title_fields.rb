@@ -1,24 +1,3 @@
-
-Then(/^I can see the following information displayed$/) do |table|
- if (table != '')
-   table.raw.each do |value|
-     if (value[0] != 'INFORMATION') then
-       send 'check' + value[0].gsub(/ /, '')
-     end
-   end
- end
-end
-
-Then(/^I cannot see the following information displayed$/) do |table|
- if (table != '')
-   table.raw.each do |value|
-     if (value[0] != 'INFORMATION') then
-       send 'checkNotExist' + value[0].gsub(/ /, '')
-     end
-   end
- end
-end
-
 #required fields
 def checkTitleNumber()
   assert_match(/#{$regData['title_number']}/i, page.body, 'Expected to see title number')
