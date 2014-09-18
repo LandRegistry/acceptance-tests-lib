@@ -178,7 +178,7 @@ def get_token_code(relationship_hash)
   if (response.code != '200') then
     raise "Failed creating relationship: " + response.body
   end
-  return JSON.parse(response.body)['code']
+  return JSON.parse(response.body)['token']
 end
 
 def getlrid(email)
