@@ -11,6 +11,7 @@ require_relative '../../lib/validation.rb'
 
 require 'net/https'
 require 'digest/md5'
+require 'curb'
 
 ### Includes Capybara (the visit, find, fill_in commands) and poltergeist (channel to phantomjs headless browser)
 require 'capybara/cucumber'

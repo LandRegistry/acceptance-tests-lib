@@ -5,7 +5,6 @@ Scenario: Private Register with Title Extents
   And I have the following scenarios
     | SCENARIO                                                               | USERS |
     | Processing Absolute Freehold First Registration with 1 proprietor (3)  | 1     |
-    | view freehold register as citizen                                      | 5     |
   And I run for 1 minute
   And I ramp up 1 user every 1 seconds
   When I run the performance test

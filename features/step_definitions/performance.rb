@@ -284,6 +284,7 @@ def loadtest(cucumber_scenario)
 
       rescue Exception=>e
         $total_failures = $total_failures + 1
+          $stdout.puts  e
       end
 
     	script_duration = Time.new.to_i - scriptstart_time
@@ -347,24 +348,46 @@ def end_traction(step_name, start_time)
 
 end
 
-def http_get(url)
+def http_get(curl, data, url)
 
-  #$stdout.puts url
+  puts 'GET: ' + url
 
-	uri = URI.parse(url)
-	http = Net::HTTP.new(uri.host, uri.port)
-	request = Net::HTTP::Get.new(uri.request_uri)
-	response = http.request(request)
+  curl.url=url
+
+  curl.headers = data['header']
+  curl.perform
+
+  curl.headers = nil
+  #puts curl.header_str
+
+
+  return curl.response_code
+end
+
+def http_post(curl, data, url, data2)
+
+  puts 'POST: ' + url
+
+
+  curl.url = url
+  curl.headers = data['header']
+  puts curl.http_post(data2)
+
+  curl.headers = nil
+
+
+  return curl.response_code
 
 end
 
-def http_post(url, data)
 
-  #$stdout.puts url
+def assert_http_status(curl, status)
 
-  uri = URI.parse(url)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Get.new(uri.request_uri)
-  response = http.request(request)
+  if (curl != status) then
+    $total_failures = $total_failures + 1
+  #  $stdout.puts 'Expected response of ' + status.to_s + ' but was ' + curl.to_s
 
+
+  end
+  $stdout.puts 'Expected response of ' + status.to_s + ' but was ' + curl.to_s
 end
