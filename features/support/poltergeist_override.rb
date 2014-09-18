@@ -5,12 +5,7 @@ module Capybara::Poltergeist::NetworkTraffic
     def initialize(data, response_parts = [])
       @data           = data
       @response_parts = response_parts
-
-puts '##########@data'
-pp @data
-puts '##########@response_parts'
-pp @response_parts
-end
+    end
 
     def response_parts
       @response_parts
@@ -61,7 +56,6 @@ module Capybara::Poltergeist::NetworkTraffic
     end
 
     def redirect_url
-
       @data['redirectURL']
     end
 

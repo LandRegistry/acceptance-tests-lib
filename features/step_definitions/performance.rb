@@ -361,34 +361,29 @@ def http_get(curl, data, url)
   #puts curl.header_str
 
 
-  return curl.response_code
+  return curl
 end
 
 def http_post(curl, data, url, data2)
 
-  puts 'POST: ' + url
-
-  curl.max_redirects =1
   curl.url = url
-#  curl.verbose = true
   curl.headers = data['header']
   puts curl.http_post(data2)
 
   curl.headers = nil
 
-
-  return curl.response_code
+  return curl
 
 end
 
 
 def assert_http_status(curl, status)
 
-  if (curl != status) then
+  if (curl.response_code != status) then
     $total_failures = $total_failures + 1
-  #  $stdout.puts 'Expected response of ' + status.to_s + ' but was ' + curl.to_s
 
+      $stdout.puts curl.url +': Expected response of ' + status.to_s + ' but was ' + curl.response_code.to_s
 
+      raise 'Expected response of ' + status.to_s + ' but was ' + curl.response_code.to_s
   end
-  $stdout.puts 'Expected response of ' + status.to_s + ' but was ' + curl.to_s
 end

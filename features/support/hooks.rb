@@ -80,106 +80,96 @@ AfterStep do | scenario |
     }
 
     file_text = File.read(perf_file_name)
-    file_text_mod = file_text.gsub('#v_action end', v_action_text)
+    file_text_mod = file_text.gsub('#v_action end', v_action_text.rstrip)
     open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
 
       prevredirect = '';
       page.driver.network_traffic.each do |request|
 
-          puts request.response_parts[0].redirect_url
-          begin
+        if (!request.url.include? 'data:application') then
+
+
+
+          if (prevredirect == '') then
+
+            puts request.response_parts[0].redirect_url
+
+
+              v_action_text = %{
+                    data = {}
+                  #v_action end
+              }
+
+            file_text = File.read(perf_file_name)
+            file_text_mod = file_text.gsub('#v_action end', v_action_text.rstrip)
+            open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
 
             v_action_text = %{
-                  data = {}
+                  data["header"] = {}
                 #v_action end
             }
-          file_text = File.read(perf_file_name)
-          file_text_mod = file_text.gsub('#v_action end', v_action_text)
-          open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
+
+            file_text = File.read(perf_file_name)
+            file_text_mod = file_text.gsub('#v_action end', v_action_text.rstrip)
+            open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
+
+            if (request.headers.count > 0) then
+
+              request.headers.each do |value|
+                  if (value['name'] != 'Content-Length') then
+                    puts value
+                    v_action_text = %{
+                          data["header"]["#{value['name']}"] = "#{value['value']}"
+                        #v_action end
+                    }
+
+                    file_text = File.read(perf_file_name)
+                    file_text_mod = file_text.gsub('#v_action end', v_action_text.rstrip)
+
+                    open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
+
+                end
+
+              end
+
+            end
+
+            if (request.method == 'POST')
+
+              v_action_text = %{
+                    response = http_post(@curl, data, "#{request.url}", "#{Base64.decode64(request.data)}")
+                  #v_action end
+              }
+
+            else
+
+              v_action_text = %{
+                    response = http_get(@curl, data, "#{request.url}")
+                  #v_action end
+              }
+
+            end
+
+            file_text = File.read(perf_file_name)
+            file_text_mod = file_text.gsub('#v_action end', v_action_text.rstrip)
+            open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
+
+          end
 
 
+          if (request.response_parts[request.response_parts.count - 1].redirect_url.to_s == '') then
 
-
-if (prevredirect == '') then
-
-if (request.headers.count > 0) then
-
-  v_action_text = %{
-        data["header"] = {}
-      #v_action end
-  }
-
-  file_text = File.read(perf_file_name)
-  file_text_mod = file_text.gsub('#v_action end', v_action_text)
-
-  open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
-
-
-
-  request.headers.each do |value|
-      if (value['name'] != 'Content-Length') then
-        puts value
-        v_action_text = %{
-              data["header"]["#{value['name']}"] = "#{value['value']}"
+            puts 'aaaaaa' + request.response_parts[request.response_parts.count - 1].status.to_s + 'aaaaa'
+            v_action_text = %{
+            assert_http_status(response, #{request.response_parts[request.response_parts.count -1].status})
             #v_action end
-        }
+            }
 
-        file_text = File.read(perf_file_name)
-        file_text_mod = file_text.gsub('#v_action end', v_action_text)
+            file_text = File.read(perf_file_name)
+            file_text_mod = file_text.gsub('#v_action end', v_action_text.rstrip)
+            open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
 
-        open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
-
-    end
-  end
-
-end
-
-  if (request.method == 'POST')
-
-    v_action_text = %{
-          response = http_post(@curl, data, "#{request.url}", "#{Base64.decode64(request.data)}")
-        #v_action end
-    }
-
-
-
-  else
-
-    v_action_text = %{
-          response = http_get(@curl, data, "#{request.url}")
-        #v_action end
-    }
-
-  end
-
-  file_text = File.read(perf_file_name)
-  file_text_mod = file_text.gsub('#v_action end', v_action_text)
-  open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
-
-end
-puts request.response_parts[request.response_parts.count -1].redirect_url
-puts request.response_parts[0].redirect_url
-if (request.response_parts[request.response_parts.count - 1].redirect_url.to_s == '') then
-
-  puts 'aaaaaa' + request.response_parts[request.response_parts.count - 1].status.to_s + 'aaaaa'
-  v_action_text = %{
-  assert_http_status(response, #{request.response_parts[request.response_parts.count -1].status})
-  #v_action end
-  }
-
-
-  file_text = File.read(perf_file_name)
-  file_text_mod = file_text.gsub('#v_action end', v_action_text)
-  open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
-
-end
-
-
-
-          rescue
-
-
-
+          end
 
       end
 
@@ -195,7 +185,7 @@ end
     }
 
     file_text = File.read(perf_file_name)
-    file_text_mod = file_text.gsub('#v_action end', v_action_text)
+    file_text_mod = file_text.gsub('#v_action end', v_action_text.rstrip)
 
     open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
 
