@@ -22,13 +22,14 @@ end
 Given(/^clients have provided their details for me to act on their behalf$/) do
   $relationshipData = Hash.new()
   $relationshipData['clients'] = Array.new()
-  for i in 0..1
+  for i in 0..0
     $relationshipData['clients'][i] = Hash.new()
-    $relationshipData['clients'][i]['full_name'] = fullName()
-    $relationshipData['clients'][i]['date_of_birth'] = Date.today.prev_day.strftime("%d-%m-%Y")
-    $relationshipData['clients'][i]['address'] = houseNumber().to_s + ', ' + roadName() + ', ' + townName() + ', ' + postcode()
+    $relationshipData['clients'][i]['full_name'] = 'Walter White'
+    $relationshipData['clients'][i]['date_of_birth'] = '07-09-1959'
+    $relationshipData['clients'][i]['address'] = '1 High St, London, N1 4LT'
     $relationshipData['clients'][i]['telephone'] = '01752 909 878'
-    $relationshipData['clients'][i]['email'] = emailAddress()
+    $relationshipData['clients'][i]['email'] = 'client@example.org'
+    $relationshipData['clients'][i]['gender'] = 'M'
   end
 end
 
@@ -39,14 +40,9 @@ When(/^I enter the clients details$/) do
     fill_in('address', :with => $relationshipData['clients'][i]['address'])
     fill_in('telephone', :with => $relationshipData['clients'][i]['telephone'])
     fill_in('email', :with => $relationshipData['clients'][i]['email'])
+    select('M', :from => 'gender')
     click_button('Add client')
   end
-end
-
-When(/^I check all the details previously entered for this relationship$/) do
-  assert_selector(".//*[@class='heading-large']", text: /Confirm/)
-  #Check summary details
-
 end
 
 When(/^I confirm the details entered$/) do

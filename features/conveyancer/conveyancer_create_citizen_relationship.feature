@@ -9,9 +9,7 @@ When I request to create a client relationship
 And I login with correct credentials
 And I select the property
 And the clients want to buy the property
-#And I am acting on behalf of my clients
 And I enter the clients details
-And I check all the details previously entered for this relationship
 And I confirm the details entered
 Then a relationship token code is generated
 
