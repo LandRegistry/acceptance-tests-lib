@@ -8,7 +8,7 @@ Scenario: View Change of Name in work queue
   Then I can see the following information displayed
      | INFORMATION                              |
      | Marriage Details                         |
-     | Worklist Title Number                    |
+     | Title Number In Worklist                 |
      | Date Request Was Submitted               |
      | Application Type Of Change Name Marriage |
   And an option to approve the change of name request

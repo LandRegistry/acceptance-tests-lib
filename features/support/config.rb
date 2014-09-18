@@ -9,6 +9,8 @@ require_relative '../../lib/polygon_checking.rb'
 require_relative '../../lib/data_formatting.rb'
 require_relative '../../lib/validation.rb'
 require_relative '../../lib/validate_worklist_fields.rb'
+require_relative '../../lib/validate_registered_title_fields.rb'
+
 
 require 'net/https'
 require 'digest/md5'

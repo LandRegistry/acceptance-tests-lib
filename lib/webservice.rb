@@ -109,7 +109,7 @@ def create_change_of_name_marriage_request()
   change_of_name["request_details"]["context"]["session-id"] = "123456"
   change_of_name["request_details"]["context"]["transaction-id"] = "ABCDEFG"
 
-  uri = URI.parse($DECISION_URL)
+  uri = URI.parse($CASES_URL)
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Post.new('/cases',  initheader = {'Content-Type' =>'application/json'})
   request.basic_auth $http_auth_name, $http_auth_password
@@ -125,7 +125,7 @@ def wait_for_case_to_exist(title_no)
   while (found_count != 1 && count < 25) do
     puts 'waiting for case to be created'
     sleep(0.2)
-    response = rest_get_call($DECISION_URL + '/cases/property/' + title_no)
+    response = rest_get_call($CASES_URL + '/cases/property/' + title_no)
     if (!response.nil?)
       if (!JSON.parse(response.body)[0]['work_queue'].nil?)
         found_count = 1
