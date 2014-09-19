@@ -113,3 +113,11 @@ Given(/^I am a caseworker$/) do
   $userdetails['email'] = 'caseworker@example.org'
   $userdetails['password'] = 'dummypassword'
 end
+
+Given(/^I have blocked private citizen login credentials$/) do
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
+  
+  $userdetails = Hash.new()
+  $userdetails['email'] = 'blocked@example.org'
+  $userdetails['password'] = 'dummypassword'
+end
