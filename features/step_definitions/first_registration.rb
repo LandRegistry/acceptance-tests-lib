@@ -2,16 +2,7 @@
 
 Given(/^I have received an application for a first registration$/) do
   $regData = nil
-  $data = Hash.new()
-  $data['address_line_1'] = houseNumber()
-  $data['address_line_2'] = roadName()
-  $data['city'] = townName()
-  $data['postcode'] = postcode()
-  $data['pricePaid'] = pricePaid()
-  $data['fullName1'] = fullName()
-  $data['fullName2'] = fullName()
-  $data['title_extent'] = genenerate_title_extent2({'has a polygon with easement' => true})
-  $data['easement'] = genenerate_title_easement2({'has a polygon with easement' => true})
+  $data = first_registration_data()
 end
 
 Given(/^I want to create a Register of Title$/) do
@@ -19,7 +10,7 @@ Given(/^I want to create a Register of Title$/) do
   visit("#{$CASEWORK_FRONTEND_DOMAIN}")
   step "I login with correct credentials"
   click_link('First registration')
-  $data['titleNumber'] = find(".//input[@id='title_number']", :visible => false).value
+  $titleNumber = find(".//input[@id='title_number']", :visible => false).value
 end
 
 When(/^I enter a Property Address$/) do
@@ -92,9 +83,9 @@ end
 Then(/^I have received confirmation that the property has been registered$/) do
   assert_match(/New title created/i, page.body, 'Expected registration message but was not present')
 
-  wait_for_register_to_be_created($data['titleNumber'])
+  wait_for_register_to_be_created($titleNumber)
 
-  registered_property = get_register_details($data['titleNumber'])
+  registered_property = get_register_details($titleNumber)
 
   assert_match($data['titleNumber'].to_s, registered_property, 'Title number does not match')
   assert_match($data['fullName1'].to_s, registered_property, 'FullName 1 does not match')

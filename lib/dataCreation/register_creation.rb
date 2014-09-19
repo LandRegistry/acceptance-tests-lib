@@ -10,7 +10,6 @@ def genRegDetails_tenure()
 end
 
 
-
 def generate_lease_information()
 
   if $regData['property']['tenure'] =='Leasehold' then
@@ -85,4 +84,29 @@ def generate_title_extent_information()
     $regData['extent'] = genenerate_title_extent2({'has a polygon' => true})
   end
 
+end
+
+
+
+
+def first_registration_data()
+
+  data = Hash.new()
+  data['title_number'] = titleNumber() # This title number isn't needed for the first registation tests, but is here for performance testing
+  data['address_line_1'] = houseNumber()
+  data['address_line_2'] = roadName()
+  data['city'] = townName()
+  data['postcode'] = postcode()
+  data['pricePaid'] = pricePaid()
+  data['fullName1'] = fullName()
+  data['fullName2'] = fullName()
+  data['title_extent'] = genenerate_title_extent2({'has a polygon with easement' => true})
+
+  $data = data
+  data['easement'] = genenerate_title_easement2({'has a polygon with easement' => true})
+
+  $function_call_name << 'first_registration_data'
+  $function_call_data << data
+
+  return data
 end

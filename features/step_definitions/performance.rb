@@ -364,8 +364,25 @@ def http_get(curl, data, url)
   return curl
 end
 
-def http_post(curl, data, url, data2)
+def http_post(curl, data, url)
 
+  data2 = ''
+
+  puts data
+
+  data["post_data"].each do |key, value|
+    if (data2 != '') then
+      data2 = data2 + '&'
+    end
+
+    if (value.nil?) then
+      data2 = data2 + CGI::escape(key.to_s) + '='
+    else
+      data2 = data2 + CGI::escape(key.to_s) + '=' + CGI::escape(value.to_s)
+    end
+  end
+
+  puts data2
   curl.url = url
   curl.headers = data['header']
   puts curl.http_post(data2)
@@ -380,10 +397,6 @@ end
 def assert_http_status(curl, status)
 
   if (curl.response_code != status) then
-    $total_failures = $total_failures + 1
-
-      $stdout.puts curl.url +': Expected response of ' + status.to_s + ' but was ' + curl.response_code.to_s
-
-      raise 'Expected response of ' + status.to_s + ' but was ' + curl.response_code.to_s
+    raise ' Expected response of ' + status.to_s + ' but was ' + curl.response_code.to_s
   end
 end

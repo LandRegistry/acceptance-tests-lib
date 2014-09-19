@@ -16,6 +16,11 @@ Before do | scenario |
   page.driver.clear_network_traffic
 
   $step = 0
+
+  $function_call_name = []
+  $function_call_data = []
+  $function_call_start = 0
+
 end
 
 After do | scenario |
@@ -27,6 +32,7 @@ end
 
 
 AfterStep do | scenario |
+
    step_name = scenario.steps.to_a[$step].name.gsub('(','').gsub(')', '').gsub(/ /, '_').capitalize
    scenario_name  = scenario.name.gsub('(','').gsub(')', '').gsub(/ /, '_').capitalize
    $step = $step + 1
@@ -79,9 +85,30 @@ AfterStep do | scenario |
     }
 
     file_text = File.read(perf_file_name)
-    file_text_mod = file_text.gsub('#v_action end', '          ' + v_action_text.strip + "\n" + '#v_action temp end')
+    file_text_mod = file_text.gsub('#v_action end', '          ' + v_action_text.strip + "\n\n" + '#v_action temp end')
     file_text_mod = file_text_mod.gsub('#v_action temp end', '#v_action end')
     open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
+
+    if ($function_call_name.count > 0) then
+
+      for i in $function_call_start..$function_call_name.count - 1
+
+        v_action_text = %{
+
+            genData#{i} = #{$function_call_name[i]}()
+        }
+
+        file_text = File.read(perf_file_name)
+        file_text_mod = file_text.gsub('#v_action end', '             ' + v_action_text.strip + "\n\n" + '#v_action temp end')
+        file_text_mod = file_text_mod.gsub('#v_action temp end', '#v_action end')
+        open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
+
+      end
+
+      $function_call_start = $function_call_name.count
+
+    end
+
 
       prevredirect = '';
       page.driver.network_traffic.each do |request|
@@ -117,7 +144,7 @@ AfterStep do | scenario |
 
               request.headers.each do |value|
                   if (value['name'] != 'Content-Length') then
-                    puts value
+
                     v_action_text = %{
                           data["header"]["#{value['name']}"] = "#{value['value']}"
                     }
@@ -135,18 +162,59 @@ AfterStep do | scenario |
             end
 
             if (request.method == 'POST')
-
               data_str = Base64.decode64(request.data)
               data_str_and = data_str.split('&')
 
+              v_action_text = %{
+                    data["post_data"] = {}
+              }
+
+              file_text = File.read(perf_file_name)
+              file_text_mod = file_text.gsub('#v_action end', '             ' + v_action_text.strip + "\n" + '#v_action temp end')
+              file_text_mod = file_text_mod.gsub('#v_action temp end', '#v_action end')
+              open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
+
+
               data_str_and.each do |elements|
-                elements.split('=').each do |key, value|
-                  puts key + ' - ' + value
+                data_str_keyvalue = elements.split('=')
+                puts data_str_keyvalue
+                post_key = CGI::unescape(data_str_keyvalue[0])
+
+                if (data_str_keyvalue[1].nil?) then
+                  data_str_keyvalue[1] = ''
                 end
+
+                post_value = '"' + CGI::unescape(data_str_keyvalue[1]).gsub('"', '\"') + '"'
+
+                for i in 0..$function_call_data.count - 1
+
+                    $function_call_data[i].each do |data_key, data_value|
+                      if (CGI::unescape(data_str_keyvalue[1]).to_s == data_value.to_s) then
+                        post_value = "genData#{i}[\"#{data_key.to_s}\"]"
+                      #  puts data_key.to_s + ' - ' + data_value.to_s
+                      end
+                    end
+
+                end
+
+
+                v_action_text = %{
+                      data["post_data"]["#{post_key}"] = #{post_value}
+                }
+
+
+                file_text = File.read(perf_file_name)
+                file_text_mod = file_text.gsub('#v_action end', '             ' + v_action_text.strip + "\n" + '#v_action temp end')
+                file_text_mod = file_text_mod.gsub('#v_action temp end', '#v_action end')
+                open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
+
               end
 
+              #v_action_text = %{
+              #      response = http_post(@curl, data, "#{request.url}", "#{Base64.decode64(request.data)}")
+              #}
               v_action_text = %{
-                    response = http_post(@curl, data, "#{request.url}", "#{Base64.decode64(request.data)}")
+                    response = http_post(@curl, data, "#{request.url}")
               }
 
             else
