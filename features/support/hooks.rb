@@ -38,31 +38,32 @@ AfterStep do | scenario |
 
       file_structure = %{
 
-        class #{scenario_name}
+  class #{scenario_name}
 
-          def initialize()
+      def initialize()
 
-          end
+      end
 
-          def v_init()
+      def v_init()
 
 
-            #v_init end
-          end
+          #v_init end
+      end
 
-          def v_action()
-@curl = Curl::Easy.new
-@curl.follow_location = true
-@curl.enable_cookies = true
-            #v_action end
-          end
+      def v_action()
+          @curl = Curl::Easy.new
+          @curl.follow_location = true
+          @curl.enable_cookies = true
 
-          def v_end()
+#v_action end
+      end
 
-            #v_end end
-          end
+      def v_end()
 
-        end
+          #v_end end
+      end
+
+  end
 
       }
 
@@ -75,19 +76,17 @@ AfterStep do | scenario |
     v_action_text = %{
 
         trans_time = start_traction("#{step_name}")
-        #v_action end
     }
 
     file_text = File.read(perf_file_name)
-    file_text_mod = file_text.gsub('#v_action end', v_action_text.rstrip)
+    file_text_mod = file_text.gsub('#v_action end', '          ' + v_action_text.strip + "\n" + '#v_action temp end')
+    file_text_mod = file_text_mod.gsub('#v_action temp end', '#v_action end')
     open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
 
       prevredirect = '';
       page.driver.network_traffic.each do |request|
 
         if (!request.url.include? 'data:application') then
-
-
 
           if (prevredirect == '') then
 
@@ -96,21 +95,23 @@ AfterStep do | scenario |
 
               v_action_text = %{
                     data = {}
-                  #v_action end
               }
 
             file_text = File.read(perf_file_name)
-            file_text_mod = file_text.gsub('#v_action end', v_action_text.rstrip)
+            file_text_mod = file_text.gsub('#v_action end', '             ' + v_action_text.strip + "\n" + '#v_action temp end')
+            file_text_mod = file_text_mod.gsub('#v_action temp end', '#v_action end')
             open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
 
             v_action_text = %{
                   data["header"] = {}
-                #v_action end
             }
 
             file_text = File.read(perf_file_name)
-            file_text_mod = file_text.gsub('#v_action end', v_action_text.rstrip)
+            file_text_mod = file_text.gsub('#v_action end', '             ' + v_action_text.strip + "\n" + '#v_action temp end')
+            file_text_mod = file_text_mod.gsub('#v_action temp end', '#v_action end')
             open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
+
+
 
             if (request.headers.count > 0) then
 
@@ -119,13 +120,13 @@ AfterStep do | scenario |
                     puts value
                     v_action_text = %{
                           data["header"]["#{value['name']}"] = "#{value['value']}"
-                        #v_action end
                     }
 
                     file_text = File.read(perf_file_name)
-                    file_text_mod = file_text.gsub('#v_action end', v_action_text.rstrip)
-
+                    file_text_mod = file_text.gsub('#v_action end', '             ' + v_action_text.strip + "\n" + '#v_action temp end')
+                    file_text_mod = file_text_mod.gsub('#v_action temp end', '#v_action end')
                     open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
+
 
                 end
 
@@ -135,22 +136,30 @@ AfterStep do | scenario |
 
             if (request.method == 'POST')
 
+              data_str = Base64.decode64(request.data)
+              data_str_and = data_str.split('&')
+
+              data_str_and.each do |elements|
+                elements.split('=').each do |key, value|
+                  puts key + ' - ' + value
+                end
+              end
+
               v_action_text = %{
                     response = http_post(@curl, data, "#{request.url}", "#{Base64.decode64(request.data)}")
-                  #v_action end
               }
 
             else
 
               v_action_text = %{
                     response = http_get(@curl, data, "#{request.url}")
-                  #v_action end
               }
 
             end
 
             file_text = File.read(perf_file_name)
-            file_text_mod = file_text.gsub('#v_action end', v_action_text.rstrip)
+            file_text_mod = file_text.gsub('#v_action end', '             ' + v_action_text.strip + "\n" + '#v_action temp end')
+            file_text_mod = file_text_mod.gsub('#v_action temp end', '#v_action end')
             open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
 
           end
@@ -158,15 +167,15 @@ AfterStep do | scenario |
 
           if (request.response_parts[request.response_parts.count - 1].redirect_url.to_s == '') then
 
-            puts 'aaaaaa' + request.response_parts[request.response_parts.count - 1].status.to_s + 'aaaaa'
             v_action_text = %{
             assert_http_status(response, #{request.response_parts[request.response_parts.count -1].status})
-            #v_action end
             }
 
             file_text = File.read(perf_file_name)
-            file_text_mod = file_text.gsub('#v_action end', v_action_text.rstrip)
+            file_text_mod = file_text.gsub('#v_action end', '             ' + v_action_text.strip + "\n\n" + '#v_action temp end')
+            file_text_mod = file_text_mod.gsub('#v_action temp end', '#v_action end')
             open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
+
 
           end
 
@@ -179,13 +188,11 @@ AfterStep do | scenario |
 
     v_action_text = %{
         end_traction("#{step_name}", trans_time)
-
-        #v_action end
     }
 
     file_text = File.read(perf_file_name)
-    file_text_mod = file_text.gsub('#v_action end', v_action_text.rstrip)
-
+    file_text_mod = file_text.gsub('#v_action end', '          ' + v_action_text.strip + "\n\n" + '#v_action temp end')
+    file_text_mod = file_text_mod.gsub('#v_action temp end', '#v_action end')
     open(perf_file_name, 'w') { |file| file.puts(file_text_mod) }
 
   end
