@@ -3,7 +3,7 @@ Feature: Find a property on gov.uk and view its details
 Scenario: A user can find a property and view its details
 
   Given I am a user
-  And a registered property
+  And a registered title
   When I search for the property on gov.uk
   Then the property details page is displayed
   And the Property Address is displayed

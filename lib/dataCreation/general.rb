@@ -1,3 +1,9 @@
+def emailAddress()
+  prefix = Time.now.strftime('%Y%m%d%H%M%S%L').to_s
+  domain = "@example.org"
+  return prefix + domain
+end
+
 def titleNumber()
   number = rand(999999999).to_s
   prefix = "TEST"

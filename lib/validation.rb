@@ -5,6 +5,12 @@ def validate_title_number(titleNumber)
   #assert_operator titleNumber[4,titleNumber.size - 1].to_i, :<=, 99999, 'The number is greater than 99999'
 end
 
+def validate_token_format(token_code)
+  #need to confirm is alpha
+  puts token_code
+  assert_operator token_code.size, :<=, 4, 'The token is not 4 in length'
+end
+
 def validateField(fieldId, errorMessage)
   assert_selector(".//*[@id='" + fieldId + "']", text: errorMessage)
 end
