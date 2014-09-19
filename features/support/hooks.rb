@@ -19,7 +19,6 @@ Before do | scenario |
 end
 
 After do | scenario |
-
   if (scenario.failed?)
       save_screenshot("sshot-#{Time.new.to_i}.png", :full => true)
   end
@@ -192,6 +191,5 @@ AfterStep do | scenario |
   end
 
   page.driver.clear_network_traffic
-
 
 end

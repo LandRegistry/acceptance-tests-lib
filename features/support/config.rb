@@ -8,6 +8,9 @@ require_relative '../../lib/log_checking.rb'
 require_relative '../../lib/polygon_checking.rb'
 require_relative '../../lib/data_formatting.rb'
 require_relative '../../lib/validation.rb'
+require_relative '../../lib/validate_worklist_fields.rb'
+require_relative '../../lib/validate_registered_title_fields.rb'
+
 
 require 'net/https'
 require 'digest/md5'
@@ -42,13 +45,7 @@ else
 
   ### Set the options for poltergeist to use
   Capybara.register_driver :poltergeist do |app|
-    options = {
-        :js_errors => true,
-        :timeout => 10,
-        :debug => false,
-        :inspector => true,
-    }
-    Capybara::Poltergeist::Driver.new(app, options)
+    Capybara::Poltergeist::Driver.new(app, :inspector => true, :js_errors => false)
   end
   #This removes the referer for the map tiles to be returned
   page.driver.add_header("Referer", "", permanent: true)
