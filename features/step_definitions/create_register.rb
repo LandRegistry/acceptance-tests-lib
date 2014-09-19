@@ -4,6 +4,7 @@ Given(/^a registered title with characteristics$/) do |table|
 
   $regData = Hash.new()
   $regData['title_number'] = titleNumber()
+  puts $regData['title_number']
 
   $regData['proprietors'] = Array.new()
   $regData['proprietors'][0] = Hash.new()
@@ -54,7 +55,7 @@ Given(/^a registered title with characteristics$/) do |table|
 end
 
 Given(/^I am the proprietor of a registered title with characteristics$/) do |table|
-  step "a registered title with characteristics", table
+  step "a registered title with characteristics exists", table
   link_title_to_email($userdetails['email'], $regData['title_number'], 'CITIZEN')
 end
 
@@ -68,5 +69,5 @@ Given(/^I am the proprietor of a registered title$/) do
 end
 
 Given(/^a registered property$/) do
-  step "a registered title with characteristics", ''
+  step "a registered title with characteristics exists", ''
 end
