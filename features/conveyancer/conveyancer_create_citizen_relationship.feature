@@ -15,11 +15,11 @@ Then a relationship token code is generated
 
 Scenario: Citizen authorises the conveyancer client relationship
 Given I have private citizen login credentials
-And I am not already logged in as a private citizen
+And I login with correct credentials
 And I have a relationship token for a registered property
 When I want to authorise my conveyancer to act on my behalf
 And I enter the relationship token code
-And I have ticked that the information I have read is correct
+And I confirm the relationship
 Then the relationship is confirmed
 
 Scenario: Citizen enters invalid relationship token

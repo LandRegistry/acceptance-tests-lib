@@ -46,7 +46,9 @@ Then(/^a relationship token code is generated$/) do
 end
 
 Given(/^I want to authorise my conveyancer to act on my behalf$/) do
-  visit("#{$SERVICE_FRONTEND_DOMAIN}/relationship/client")
+  visit("#{$SERVICE_FRONTEND_DOMAIN}")
+  step "I login with correct credentials"
+  click_link('Confirm a relationship')
 end
 
 Given(/^I have a relationship token for a registered property$/) do
@@ -59,12 +61,12 @@ Given(/^I have a relationship token for a registered property$/) do
   $link_relationship['conveyancer_address'] = '123 Bad Place, Rottentown, ABC 123'
   $link_relationship['clients'] = Array.new()
   $link_relationship['clients'][0] = Hash.new()
-  $link_relationship['clients'][0]['lrid'] = getlrid('client1@example.org')
+  $link_relationship['clients'][0]['lrid'] = getlrid('citizen@example.org')
   $link_relationship['title_number'] = $regData['title_number']
   $link_relationship['task'] = 'sell'
 
   $token_code = get_token_code($link_relationship)
-
+  puts $token_code
 end
 
 When(/^I enter the relationship token code$/) do
@@ -81,10 +83,11 @@ Then(/^message informing relationship token code is invalid is displayed$/) do
   assert_match(/Sorry there was an error/i, page.body, 'Expected to get invalid error message')
 end
 
-When(/^I have ticked that the information I have read is correct$/) do
+When(/^I confirm the relationship$/) do
     check('check-1')
+    click_button('Confirm relationship')
 end
 
 Then(/^the relationship is confirmed$/) do
-  assert_match(/Confirmed/i, page.body, 'Expected to get message saying the relationship was confirmed')
+  assert_match(/You have confirmed your relationship/i, page.body, 'Expected to get message saying the relationship was confirmed')
 end
