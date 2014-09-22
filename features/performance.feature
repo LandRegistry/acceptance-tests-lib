@@ -1,5 +1,6 @@
 Feature: Performance test scenario
 
+@performance_test
 Scenario: Private Register with Title Extents
   Given I want to run a performance
   And I have the following scenarios

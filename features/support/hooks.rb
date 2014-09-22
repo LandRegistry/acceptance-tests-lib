@@ -33,7 +33,8 @@ end
 
 
 AfterStep do | scenario |
-
-  generate_performance_test_script(scenario)
+  if (!ENV['GENERATE_PERFORMANCE_SCRIPT'].nil?) then
+    generate_performance_test_script(scenario)
+  end
 
 end
