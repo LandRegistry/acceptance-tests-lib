@@ -18,6 +18,7 @@ require_relative '../../lib/performance_script_generation.rb'
 require 'net/https'
 require 'digest/md5'
 require 'curb'
+require 'sinatra'
 
 ### Includes Capybara (the visit, find, fill_in commands) and poltergeist (channel to phantomjs headless browser)
 require 'capybara/cucumber'

@@ -348,7 +348,10 @@ end
 
 
 def controller()
-#  $stdout.puts 'controller '
+
+  $stdout = StringIO.new
+
+  $sinatra_instance = Sinatra.new()
 
   $sinatra_instance.get '/data' do
 

@@ -18,7 +18,7 @@ def recursive_list_variable(variable, prev = '')
       end
     end
 
-  else
+  elsif (variable.kind_of?(Hash)) then
 
     variable.each do |key, value|
 
@@ -35,6 +35,8 @@ def recursive_list_variable(variable, prev = '')
       end
 
     end
+  elsif (variable.nil?)
+    data['nil'] = ''
   end
 
   return data
@@ -51,7 +53,8 @@ def generate_performance_test_script(scenario)
 
   perf_file_name = 'features/step_definitions/performance/' + scenario_name.downcase + '.rb'
 
-  if (!File.file?(perf_file_name))
+  #if (!File.file?(perf_file_name))
+  if ($file_not_created == true) then
 
     file_structure = %{
 
@@ -130,15 +133,30 @@ def generate_performance_test_script(scenario)
             if (i > 0) then
               for i2 in 0..i - 1
                 value_list = recursive_list_variable($function_call_data[i2])
-                  value_list.each do |data_key, data_value|
-                    if (data_value.to_s.length > 0) then
-                    func_value = func_value.gsub(/#{data_value.to_s}/i, "genData#{i2}" + data_key)
+                value_list.each do |data_key, data_value|
+
+                  if (data_value.to_s.length > 0) then
+                    puts data_value.to_s + ' - ' + '"#{' + "genData#{i2}" + data_key + '}"' + ' - ' + "genData#{i2}" + data_key
+                    func_value = func_value.gsub(/"#{data_value.to_s}"/is, '"#{' + "genData#{i2}" + data_key + '}"')
+
+                    func_value = func_value.gsub(/ "#{data_value.to_s}"/is, ' "#{' + "genData#{i2}" + data_key + '}"')
+                    func_value = func_value.gsub(/"#{data_value.to_s}",/is, '"#{' + "genData#{i2}" + data_key + '}",')
+                    func_value = func_value.gsub(/\=\>"#{data_value.to_s}\}"/is, '=>"#{' + "genData#{i2}" + data_key + '}"}')
+                    func_value = func_value.gsub(/\["#{data_value.to_s}"\]/is, '["#{' + "genData#{i2}" + data_key + '}"]')
+
+
+                    func_value = func_value.gsub(/ #{data_value.to_s}/is, " genData#{i2}" + data_key)
+                    func_value = func_value.gsub(/#{data_value.to_s},/is, "genData#{i2}" + data_key + ',')
+                    func_value = func_value.gsub(/\=\>#{data_value.to_s}\}/is, '=>' + "genData#{i2}" + data_key + '}')
+                    func_value = func_value.gsub(/\[#{data_value.to_s}\]/is, '[' + "genData#{i2}" + data_key + ']')
+
                   end
                 end
               end
             end
 
-            function_argouments = function_argouments + value.to_s
+
+            function_argouments = function_argouments + func_value
           end
         end
 

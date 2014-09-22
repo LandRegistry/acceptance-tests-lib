@@ -2,7 +2,7 @@ def genenerate_title_extent2(data_characteristics)
   polydata = Hash.new()
   polydata['type'] = "Feature"
   polydata['crs'] = Hash.new()
-  polydata['crs']['type'] = 'name'
+  polydata['crs']['type'] = 'title property'
   polydata['crs']['properties'] = Hash.new()
   polydata['crs']['properties']['name'] = 'urn:ogc:def:crs:EPSG:27700'
   polydata['geometry'] = Hash.new()

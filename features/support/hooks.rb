@@ -22,6 +22,7 @@ Before do | scenario |
   $function_call_arguments = []
   $function_call_start = 0
 
+  $file_not_created = true
 end
 
 After do | scenario |

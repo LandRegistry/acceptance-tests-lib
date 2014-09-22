@@ -1,14 +1,14 @@
 Given(/^a change of name by marriage application that requires reviewing by a caseworker$/) do
   step "a registered title with characteristics", ''
-  create_marriage_data('GB')
-  create_change_of_name_marriage_request()
+  $marriage_data = create_marriage_data('GB', $regData['proprietors'][0]['full_name'])
+  create_change_of_name_marriage_request($regData, $marriage_data)
   wait_for_case_to_exist($regData['title_number'])
 end
 
 Given(/^a change of name by marriage application that requires checking$/) do
   step "a registered title with characteristics", ''
-  create_marriage_data('AU')
-  create_change_of_name_marriage_request()
+  $marriage_data = create_marriage_data('AU', $regData['proprietors'][0]['full_name'])
+  create_change_of_name_marriage_request($regData, $marriage_data)
   wait_for_case_to_exist($regData['title_number'])
 end
 
