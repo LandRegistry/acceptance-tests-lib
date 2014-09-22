@@ -7,7 +7,6 @@ end
 
 def validate_token_format(token_code)
   #need to confirm is alpha
-  puts token_code
   assert_operator token_code.size, :<=, 4, 'The token is not 4 in length'
 end
 

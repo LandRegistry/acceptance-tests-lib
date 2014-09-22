@@ -102,11 +102,11 @@ def generate_performance_test_script(scenario)
     for i in $function_call_start..$function_call_name.count - 1
 
       function_argouments = ''
-      puts $function_call_arguments[i]
+      #puts $function_call_arguments[i]
 
       if (!$function_call_arguments[i].nil?)
         $function_call_arguments[i].each do |key, value|
-          puts $function_call_arguments[i]
+          #puts $function_call_arguments[i]
          if (function_argouments != '') then
            function_argouments = function_argouments + ', '
          end
@@ -138,7 +138,7 @@ def generate_performance_test_script(scenario)
                 value_list.each do |data_key, data_value|
 
                   if (data_value.to_s.length > 0) then
-                    puts data_value.to_s + ' - ' + '"#{' + "genData#{i2}" + data_key + '}"' + ' - ' + "genData#{i2}" + data_key
+                    #puts data_value.to_s + ' - ' + '"#{' + "genData#{i2}" + data_key + '}"' + ' - ' + "genData#{i2}" + data_key
                     func_value = func_value.gsub(/"#{data_value.to_s}"/is, '"#{' + "genData#{i2}" + data_key + '}"')
 
                     func_value = func_value.gsub(/ "#{data_value.to_s.gsub('(', '\(').gsub(')', '\)')}"/is, ' "#{' + "genData#{i2}" + data_key + '}"')
@@ -199,7 +199,7 @@ def generate_performance_test_script(scenario)
 
         if (prevredirect == '') then
 
-          puts request.response_parts[0].redirect_url
+          #puts request.response_parts[0].redirect_url
 
 
             v_action_text = %{
@@ -256,7 +256,7 @@ def generate_performance_test_script(scenario)
 
                 if (request_url.include? "#{CGI::escape(data_value.to_s)}")
 
-                  puts CGI::unescape(data_value.to_s)
+                  #puts CGI::unescape(data_value.to_s)
                   request_url = request_url.gsub(/#{CGI::escape(data_value.to_s)}/i, '#{' + "genData#{i}" + data_key + '}')
 
                 end

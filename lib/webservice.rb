@@ -60,7 +60,6 @@ def link_title_to_email(email, title_number, role)
   $roles['CONVEYANCER'] = '2'
 
   uri = URI.parse($LR_FIXTURES_URL)
-  puts $LR_FIXTURES_URL
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Post.new('/create-matching-data-and-ownership')
   request.basic_auth $http_auth_name, $http_auth_password
@@ -145,7 +144,6 @@ def associate_client_with_token(data_hash)
   request = Net::HTTP::Post.new('/confirm',  initheader = {'Content-Type' =>'application/json'})
   request.basic_auth $http_auth_name, $http_auth_password
   request.body = data_hash.to_json
-  puts request.body
   response = http.request(request)
   if (response.code != '200') then
     raise "Failed to associate client with token: " + response.body

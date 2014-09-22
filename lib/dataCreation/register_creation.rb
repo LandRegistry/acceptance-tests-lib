@@ -142,8 +142,6 @@ def generate_charge_information(regData, data_characteristics)
 end
 
 def generate_title_extent_information(regData, data_characteristics)
-  puts data_characteristics
-  puts count_characteristic_types(data_characteristics, 'polygon')
 
   if (count_characteristic_types(data_characteristics, 'polygon') > 1) then
 
