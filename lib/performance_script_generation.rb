@@ -56,6 +56,8 @@ def generate_performance_test_script(scenario)
   #if (!File.file?(perf_file_name))
   if ($file_not_created == true) then
 
+    $file_not_created = false
+
     file_structure = %{
 
 #  #{scenario.name}
@@ -139,16 +141,16 @@ def generate_performance_test_script(scenario)
                     puts data_value.to_s + ' - ' + '"#{' + "genData#{i2}" + data_key + '}"' + ' - ' + "genData#{i2}" + data_key
                     func_value = func_value.gsub(/"#{data_value.to_s}"/is, '"#{' + "genData#{i2}" + data_key + '}"')
 
-                    func_value = func_value.gsub(/ "#{data_value.to_s}"/is, ' "#{' + "genData#{i2}" + data_key + '}"')
-                    func_value = func_value.gsub(/"#{data_value.to_s}",/is, '"#{' + "genData#{i2}" + data_key + '}",')
-                    func_value = func_value.gsub(/\=\>"#{data_value.to_s}\}"/is, '=>"#{' + "genData#{i2}" + data_key + '}"}')
-                    func_value = func_value.gsub(/\["#{data_value.to_s}"\]/is, '["#{' + "genData#{i2}" + data_key + '}"]')
+                    func_value = func_value.gsub(/ "#{data_value.to_s.gsub('(', '\(').gsub(')', '\)')}"/is, ' "#{' + "genData#{i2}" + data_key + '}"')
+                    func_value = func_value.gsub(/"#{data_value.to_s.gsub('(', '\(').gsub(')', '\)')}",/is, '"#{' + "genData#{i2}" + data_key + '}",')
+                    func_value = func_value.gsub(/\=\>"#{data_value.to_s.gsub('(', '\(').gsub(')', '\)')}\}"/is, '=>"#{' + "genData#{i2}" + data_key + '}"}')
+                    func_value = func_value.gsub(/\["#{data_value.to_s.gsub('(', '\(').gsub(')', '\)')}"\]/is, '["#{' + "genData#{i2}" + data_key + '}"]')
 
 
-                    func_value = func_value.gsub(/ #{data_value.to_s}/is, " genData#{i2}" + data_key)
-                    func_value = func_value.gsub(/#{data_value.to_s},/is, "genData#{i2}" + data_key + ',')
-                    func_value = func_value.gsub(/\=\>#{data_value.to_s}\}/is, '=>' + "genData#{i2}" + data_key + '}')
-                    func_value = func_value.gsub(/\[#{data_value.to_s}\]/is, '[' + "genData#{i2}" + data_key + ']')
+                    func_value = func_value.gsub(/ #{data_value.to_s.gsub('(', '\(').gsub(')', '\)')}/is, " genData#{i2}" + data_key)
+                    func_value = func_value.gsub(/#{data_value.to_s.gsub('(', '\(').gsub(')', '\)')},/is, "genData#{i2}" + data_key + ',')
+                    func_value = func_value.gsub(/\=\>#{data_value.to_s.gsub('(', '\(').gsub(')', '\)')}\}/is, '=>' + "genData#{i2}" + data_key + '}')
+                    func_value = func_value.gsub(/\[#{data_value.to_s.gsub('(', '\(').gsub(')', '\)')}\]/is, '[' + "genData#{i2}" + data_key + ']')
 
                   end
                 end
