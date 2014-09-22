@@ -14,7 +14,9 @@ end
 
 When(/^I provide details of my change of name by marriage$/) do
   validateChangeNameMarriageForm()
-  create_marriage_data('United Kingdom')
+
+  $marriage_data = create_marriage_data('United Kingdom', $regData['proprietors'][0]['full_name'])
+
   fill_in('proprietor_new_full_name', :with => $marriage_data['proprietor_new_full_name'])
   fill_in('partner_name', :with => $marriage_data['partner_name'])
   fill_in('marriage_date', :with => $marriage_data['marriage_date'])
@@ -59,16 +61,6 @@ Then(/^my change of name by marriage request is now with Land Registry$/) do
   wait_for_case_to_exist($regData['title_number'])
 end
 
-def create_marriage_data(country)
-  $marriage_data = {}
-  $marriage_data['proprietor_full_name'] = $regData['proprietors'][0]['full_name']
-  $marriage_data['proprietor_new_full_name'] = fullName()
-  $marriage_data['partner_name'] = fullName()
-  $marriage_data['marriage_date'] = dateInThePast().strftime("%d-%m-%Y")
-  $marriage_data['marriage_place'] = townName()
-  $marriage_data['marriage_country'] = country
-  $marriage_data['marriage_certificate_number'] = certificateNumber()
-end
 
 def validateChangeNameMarriageForm()
   click_button('Submit')

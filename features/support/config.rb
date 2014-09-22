@@ -3,6 +3,7 @@ require_relative '../../lib/dataCreation/general.rb'
 require_relative '../../lib/dataCreation/polygon.rb'
 require_relative '../../lib/dataCreation/register_creation.rb'
 require_relative '../../lib/dataCreation/conveyancer_client_token.rb'
+require_relative '../../lib/dataCreation/change_of_name.rb'
 
 require_relative '../../lib/webservice.rb'
 require_relative '../../lib/log_checking.rb'
