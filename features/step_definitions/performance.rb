@@ -3,6 +3,35 @@ require 'open3'
 
 Given(/^I want to run a performance$/) do
 
+  $PERFROMANCETEST = true
+
+  $results = Array.new()
+
+  $results2 = Hash.new()
+
+  $results_transactions = Hash.new()
+  $results_scenarios = Hash.new()
+
+  $results_transactions_graph = Hash.new()
+  $results_scenarios_graph = Hash.new()
+
+  $running_v_users = 0
+
+  $results_vusers = Hash.new()
+
+  $scriptdelaytime = 0
+
+  $starttime = Time.new.to_i
+
+  $total_failures = 0
+
+  $error_log = []
+
+  $max_x = 3
+
+  controller_thread = Thread.new{controller}
+
+
   args = []
   args << '--dry-run'
   args << '--format'
@@ -71,57 +100,36 @@ end
 
 When(/^I run the performance test$/) do
 
+  $duration = $duration + ($amount_of_users * $ramp_up_time)
 
-  $results = Array.new()
-
-  $results2 = Hash.new()
-
-  $results_transactions = Hash.new()
-  $results_scenarios = Hash.new()
-
-  $results_transactions_graph = Hash.new()
-  $results_scenarios_graph = Hash.new()
-
-  $running_v_users = 0
-
-  $results_vusers = Hash.new()
-
-  $scriptdelaytime = 0
-
-  $starttime = Time.new.to_i
-
-  $total_failures = 0
-
-  $max_x = 3
-
-  puts 'Start Time: ' + $starttime.to_s
+  #puts 'Start Time: ' + $starttime.to_s
 
   threads = Array.new()
 
-  list_of_tests = Array.new()
+  $list_of_tests = Array.new()
 
 
 
   $vuser_scenarios.each do |value|
     found = false
-    for i in 0..(list_of_tests.count - 1)
-      if (list_of_tests[i] == value) then
+    for i in 0..($list_of_tests.count - 1)
+      if ($list_of_tests[i] == value) then
         found = true
       end
     end
     if (found == false) then
-      list_of_tests << value
+      $list_of_tests << value
     end
   end
 
+  $vuser_inc = 0
+
   for i in 0..($amount_of_users - 1)
 
-    threads.push(Thread.new{loadtest($vuser_scenarios[i])})
+    threads.push(Thread.new{loadtest()})
 
   end
 
-
-  File.open('graph/results.js', 'w') { |file| file.write('') }
 
   cur_time = 0
 
@@ -131,90 +139,26 @@ When(/^I run the performance test$/) do
 
     cur_time = cur_time + 1
 
-    graph_time = $duration
+    $graph_time = $duration
     if (cur_time > $duration) then
-      graph_time = cur_time
+      $graph_time = cur_time
     end
 
-  	logfile = ''
+    for i in 0..((Time.new.to_i - $starttime + 1))
 
-    for i in 1..10
+      if ($results_vusers[i + 1].nil? == true) then
 
-      logfile  = logfile + "var graph_data#{i} = []; \n"
-
-    end
-
-  	logfile = logfile + "var graph_xmax = " + (graph_time * 1.05).ceil.to_s + "; \n"
-  	logfile  = logfile + "var graph_ymax = 1; \n"
-  	logfile  = logfile + "var graph_ymax = " + ($amount_of_users * 1.2).ceil.to_s + "; \n"
-  	logfile  = logfile + "graph_data1[0] = 0; \n"
-
-  	for i in 0..((Time.new.to_i - $starttime + 1))
-
-  		if ($results_vusers[i + 1].nil? == true) then
-
-  			$results_vusers[i + 1] = $running_v_users
-
-  		end
-
-  		logfile  = logfile + 'graph_data1[' + i.to_s + '] = "' + $results_vusers[i + 1].to_s + '" ' + ";\n"
-
-
-      num = 1
-      $results_scenarios_graph.each do |key, results2|
-        num = num + 1
-    		if (results2[i + 1].nil? == false) then
-
-    			sum = 0
-    			results2[i + 1].each { |a| sum+=a }
-
-    			logfile  = logfile + 'graph_data' + num.to_s + '[' + i.to_s + '] = "' + (sum / results2[i + 1].size.to_f).round(2).to_s + '" ' + ";\n"
-    			logfile  = logfile + "var graph_y2max = " + ($max_x * 1.1).ceil.to_s + " \n"
-    		end
-
-      end
-
-  	end
-
-    logfile  = logfile + "var graph_details_name = []; \n"
-    logfile  = logfile + "var graph_details_min = []; \n"
-    logfile  = logfile + "var graph_details_max = []; \n"
-    logfile  = logfile + "var graph_details_avg = []; \n"
-
-    for i in 0..(list_of_tests.count - 1)
-
-
-      logfile  = logfile + "graph_details_name[#{i}] = '#{list_of_tests[i]}' \n"
-
-      if (!$results_scenarios[list_of_tests[i]].nil?) then
-
-        logfile  = logfile + "graph_details_max[#{i}] = '#{$results_scenarios[list_of_tests[i]].max}' \n"
-        logfile  = logfile + "graph_details_min[#{i}] = '#{$results_scenarios[list_of_tests[i]].min}' \n"
-        logfile  = logfile + "graph_details_avg[#{i}] = '#{($results_scenarios[list_of_tests[i]].inject{ |sum, el| sum + el }.to_f / $results_scenarios[list_of_tests[i]].size)}' \n"
-
-      else
-
-        logfile  = logfile + "graph_details_max[#{i}] = '0' \n"
-        logfile  = logfile + "graph_details_min[#{i}] = '0' \n"
-        logfile  = logfile + "graph_details_avg[#{i}] = '0' \n"
+        $results_vusers[i + 1] = $running_v_users
 
       end
 
     end
 
-
-
-
-
-
-
-          if ($running_v_users == 0) then
-              running = false
-          else
-              running = true
-          end
-
-  	File.open('graph/results.js', 'w') { |file| file.write(logfile) }
+    if ($running_v_users == 0) then
+      running = false
+    else
+      running = true
+    end
 
   	sleep(1)
 
@@ -224,11 +168,13 @@ When(/^I run the performance test$/) do
 
 
 
-
   for i in 0..($amount_of_users - 1)
      threads[i].join
   end
 
+  visit('http://localhost:4567')
+
+  save_screenshot("performance-#{Time.new.to_i}.pdf")
 
 end
 
@@ -243,13 +189,9 @@ Then(/^the scenarios response times were below:$/) do |table|
   table.raw.each do |value|
     if (value[0] != 'SCENARIO')
 
-      puts value[0]
-      puts value[1]
-      puts $features_hash[value[0]]
+      response_time = ($results_scenarios[$features_hash[value[0]]].inject{ |sum, el| sum + el }.to_f / $results_scenarios[$features_hash[value[0]]].size) / 1000
 
-      puts value[0] + ' Actual Average: ' + ($results_scenarios[$features_hash[value[0]]].inject{ |sum, el| sum + el }.to_f / $results_scenarios[$features_hash[value[0]]].size).to_s
-
-      assert_operator ($results_scenarios[$features_hash[value[0]]].inject{ |sum, el| sum + el }.to_f / $results_scenarios[$features_hash[value[0]]].size), :<, value[1].to_i, 'The average response time wasn\'t below the threshold'
+      assert_operator response_time, :<, value[1].to_i, 'The average response time wasn\'t below the threshold (' + value[0] + ')'
     end
   end
 
@@ -258,15 +200,18 @@ end
 
 
 
-def loadtest(cucumber_scenario)
+def loadtest()
+
+  $stdout = StringIO.new
 
 	$scriptdelaytime = $scriptdelaytime + $ramp_up_time
 
 	sleep $scriptdelaytime
 
+  cucumber_scenario = $vuser_scenarios[$vuser_inc]
+  $vuser_inc = $vuser_inc + 1
 
-  $stdout.puts cucumber_scenario
-  puts cucumber_scenario
+#  puts cucumber_scenario
 
     scenario_name = $running_scenarios_hash_name[cucumber_scenario].gsub('(','').gsub(')', '').gsub(/ /, '_').capitalize
 
@@ -276,21 +221,22 @@ def loadtest(cucumber_scenario)
 
   	while ((Time.new.to_i)  < ($starttime + $duration)) do
 
-    	scriptstart_time = Time.new.to_i
+    	scriptstart_time = Time.now
 
       begin
-        $stdout.puts 'dsadsa'
         script.v_action()
 
       rescue Exception=>e
+
+        $error_log << e
         $total_failures = $total_failures + 1
           $stdout.puts  e
       end
 
-    	script_duration = Time.new.to_i - scriptstart_time
+    	script_duration = (Time.now - scriptstart_time) * 1000
 
-      if (script_duration > $max_x) then
-        $max_x = script_duration
+      if ((script_duration / 1000) > $max_x) then
+        $max_x = (script_duration / 1000).ceil + 1
       end
 
       if ($results_scenarios[cucumber_scenario].nil?) then
@@ -314,7 +260,6 @@ def loadtest(cucumber_scenario)
 
     $running_v_users = $running_v_users - 1
 
-
 end
 
 
@@ -322,14 +267,14 @@ end
 
 def start_traction(step_name)
 
-  scriptstart_time = Time.new.to_i
+  scriptstart_time = Time.now
 
 end
 
 
 def end_traction(step_name, start_time)
 
-  transaction_duration = Time.new.to_i - start_time
+  transaction_duration = (Time.now - start_time) * 1000
 
   if ($results_transactions[step_name].nil?) then
     $results_transactions[step_name] = []
@@ -350,7 +295,7 @@ end
 
 def http_get(curl, data, url)
 
-  puts 'GET: ' + url
+  #puts 'GET: ' + url
 
   curl.url=url
 
@@ -366,9 +311,9 @@ end
 
 def http_post(curl, data, url)
 
-  data2 = ''
+#  puts 'POST: ' + url
 
-  puts data
+  data2 = ''
 
   data["post_data"].each do |key, value|
     if (data2 != '') then
@@ -382,10 +327,9 @@ def http_post(curl, data, url)
     end
   end
 
-  puts data2
+
   curl.url = url
   curl.headers = data['header']
-  puts curl.http_post(data2)
 
   curl.headers = nil
 
@@ -397,6 +341,108 @@ end
 def assert_http_status(curl, status)
 
   if (curl.response_code != status) then
-    raise ' Expected response of ' + status.to_s + ' but was ' + curl.response_code.to_s
+    raise  curl.url + ': Expected response of ' + status.to_s + ' but was ' + curl.response_code.to_s
   end
+end
+
+
+
+def controller()
+#  $stdout.puts 'controller '
+
+  $sinatra_instance.get '/data' do
+
+    data = {}
+
+    data['graph_data'] = []
+
+
+
+    data['error_log'] = $error_log
+
+    for i in 0..10
+
+      data['graph_data'][i] = []
+
+    end
+
+
+    data['graph_xmax'] = (($graph_time || 0) * 1.05).ceil.to_s
+    data['graph_ymax'] = (($amount_of_users || 0) * 1.2).ceil.to_s
+    data['graph_ymax'] = (($amount_of_users || 0) * 1.2).ceil.to_s
+
+    data['graph_data'][0][0] = 0
+
+
+    for i in 0..((Time.new.to_i - $starttime ))
+
+      data['graph_data'][0][i] = $results_vusers[i + 1]
+
+      num = 0
+      $results_scenarios_graph.each do |key, results2|
+        num = num + 1
+        if (results2[i + 1].nil? == false) then
+
+          sum = 0
+          results2[i + 1].each { |a| sum+=a }
+
+          data['graph_data'][num][i] = ((sum / results2[i + 1].size.to_f) / 1000).round(2)
+          data['graph_y2max'] = ($max_x * 1.1)
+        end
+      end
+    end
+
+
+
+
+    data['graph_details_name'] = []
+    data['graph_details_min'] = []
+    data['graph_details_max'] = []
+    data['graph_details_avg'] = []
+
+    data['graph_details_name'][0] = 'Vusers'
+
+    if (!data['graph_data'].nil?) then
+      data['graph_details_min'][0] = data['graph_data'][0].min.round(2)
+      data['graph_details_max'][0] = data['graph_data'][0].max.round(2)
+      data['graph_details_avg'][0] =  (data['graph_data'][0].inject{ |sum, el| sum + el }.to_f / data['graph_data'][0].size).round(2)
+    else
+      data['graph_details_min'][0] = 0
+      data['graph_details_max'][0] = 0
+      data['graph_details_avg'][0] = 0
+      end
+
+    for i in 0..($list_of_tests.count - 1)
+
+      data['graph_details_name'][i + 1] = $list_of_tests[i]
+
+      if (!$results_scenarios[$list_of_tests[i]].nil?) then
+
+        data['graph_details_min'][i + 1] = ($results_scenarios[$list_of_tests[i]].min / 1000).round(2)
+        data['graph_details_max'][i + 1] = ($results_scenarios[$list_of_tests[i]].max / 1000).round(2)
+        data['graph_details_avg'][i + 1] = (($results_scenarios[$list_of_tests[i]].inject{ |sum, el| sum + el }.to_f / $results_scenarios[$list_of_tests[i]].size) / 1000).round(2)
+
+      else
+
+        data['graph_details_min'][i + 1] = 0
+        data['graph_details_max'][i + 1] = 0
+        data['graph_details_avg'][i + 1] = 0
+
+      end
+
+    end
+
+
+
+    return data.to_json
+  end
+
+  $sinatra_instance.get '/' do
+
+    erb :'index.html'
+
+  end
+
+  $sinatra_instance.run!
+
 end

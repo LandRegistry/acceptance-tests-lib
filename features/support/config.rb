@@ -2,6 +2,7 @@
 require_relative '../../lib/dataCreation/general.rb'
 require_relative '../../lib/dataCreation/polygon.rb'
 require_relative '../../lib/dataCreation/register_creation.rb'
+require_relative '../../lib/dataCreation/conveyancer_client_token.rb'
 
 require_relative '../../lib/webservice.rb'
 require_relative '../../lib/log_checking.rb'
@@ -10,6 +11,7 @@ require_relative '../../lib/data_formatting.rb'
 require_relative '../../lib/validation.rb'
 require_relative '../../lib/validate_worklist_fields.rb'
 require_relative '../../lib/validate_registered_title_fields.rb'
+require_relative '../../lib/performance_script_generation.rb'
 
 
 require 'net/https'

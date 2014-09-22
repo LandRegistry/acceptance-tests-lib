@@ -1,25 +1,27 @@
 
 
+#  Processing Absolute Freehold First Registration with 1 proprietor (3)
+
   class Processing_absolute_freehold_first_registration_with_1_proprietor_3
 
-      def initialize()
+    def initialize()
 
-      end
+    end
 
-      def v_init()
+    def v_init()
 
 
-          #v_init end
-      end
+        #v_init end
+    end
 
-      def v_action()
-          @curl = Curl::Easy.new
-          @curl.follow_location = true
-          @curl.enable_cookies = true
+    def v_action()
+        @curl = Curl::Easy.new
+        @curl.follow_location = true
+        @curl.enable_cookies = true
 
-          trans_time = start_traction("I_want_to_create_a_register_of_title")
+           genData0 = first_registration_data()
 
-             genData0 = first_registration_data()
+         trans_time = start_traction("I_want_to_create_a_register_of_title")
 
              data = {}
              data["header"] = {}
@@ -95,7 +97,7 @@
 
           end_traction("I_want_to_create_a_register_of_title", trans_time)
 
-          trans_time = start_traction("I_submit_the_title_details")
+         trans_time = start_traction("I_submit_the_title_details")
 
              data = {}
              data["header"] = {}
@@ -105,7 +107,7 @@
              data["header"]["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
              data["header"]["Authorization"] = "Basic Og=="
              data["post_data"] = {}
-             data["post_data"]["title_number"] = "TEST1411140594306"
+             data["post_data"]["title_number"] = genData0["titleNumber"]
              data["post_data"]["full_name1"] = genData0["fullName1"]
              data["post_data"]["full_name2"] = genData0["fullName2"]
              data["post_data"]["address_line_1"] = genData0["address_line_1"]
@@ -116,20 +118,20 @@
              data["post_data"]["property_tenure"] = "Freehold"
              data["post_data"]["property_class"] = "Absolute"
              data["post_data"]["price_paid"] = genData0["pricePaid"]
-             data["post_data"]["extent"] = "{\"type\":\"Feature\",\"crs\":{\"type\":\"name\",\"properties\":{\"name\":\"urn:ogc:def:crs:EPSG:27700\"}},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[404368.050867167,369838.4434234676],[404661.050867167,369848.4434234676],[404683.050867167,370124.4434234676],[404412.050867167,370132.4434234676],[404368.050867167,369838.4434234676]]],\"properties\":{\"Description\":\"Polygon\"}}}"
+             data["post_data"]["extent"] = genData0["title_extent"]
              response = http_post(@curl, data, "http://172.16.42.43:8004/registration")
              assert_http_status(response, 200)
 
           end_traction("I_submit_the_title_details", trans_time)
 
 #v_action end
-      end
+    end
 
-      def v_end()
+    def v_end()
 
-          #v_end end
-      end
+        #v_end end
+    end
 
   end
 
-      
+    

@@ -10,7 +10,7 @@ Given(/^I want to create a Register of Title$/) do
   visit("#{$CASEWORK_FRONTEND_DOMAIN}")
   step "I login with correct credentials"
   click_link('First registration')
-  $titleNumber = find(".//input[@id='title_number']", :visible => false).value
+  $data['titleNumber'] = find(".//input[@id='title_number']", :visible => false).value
 end
 
 When(/^I enter a Property Address$/) do
@@ -83,9 +83,9 @@ end
 Then(/^I have received confirmation that the property has been registered$/) do
   assert_match(/New title created/i, page.body, 'Expected registration message but was not present')
 
-  wait_for_register_to_be_created($titleNumber)
+  wait_for_register_to_be_created($data['titleNumber'])
 
-  registered_property = get_register_details($titleNumber)
+  registered_property = get_register_details($data['titleNumber'])
 
   assert_match($data['titleNumber'].to_s, registered_property, 'Title number does not match')
   assert_match($data['fullName1'].to_s, registered_property, 'FullName 1 does not match')
@@ -98,7 +98,7 @@ Then(/^I have received confirmation that the property has been registered$/) do
 end
 
 When(/^I enter a valid title extent$/) do
-  fill_in('extent', :with => $data['title_extent'].to_json)
+  fill_in('extent', :with => $data['title_extent'])
 end
 
 Then(/^a \"([^\"]*)\" message for \"([^\"]*)\" is returned$/) do |errorMessage, fieldId|
@@ -175,5 +175,5 @@ end
 When(/^I enter a valid title easement$/) do
   click_button('Add an easement')
   fill_in('easements-0-easement_description', :with => 'Easement Description')
-  fill_in('easements-0-easement_geometry', :with => $data['easement'].to_json)
+  fill_in('easements-0-easement_geometry', :with => $data['easement'])
 end
