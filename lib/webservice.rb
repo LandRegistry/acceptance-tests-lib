@@ -60,7 +60,6 @@ def link_title_to_email(email, title_number, role)
   $roles['CONVEYANCER'] = '2'
 
   uri = URI.parse($LR_FIXTURES_URL)
-  puts $LR_FIXTURES_URL
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Post.new('/create-matching-data-and-ownership')
   request.basic_auth $http_auth_name, $http_auth_password
@@ -88,33 +87,6 @@ def does_title_exist(title_no)
   else
     return true
   end
-
-end
-
-def create_change_of_name_marriage_request()
-  change_of_name = {}
-  change_of_name["application_type"] = "change-name-marriage"
-  change_of_name["title_number"]  = $regData['title_number']
-  change_of_name["submitted_by"] = $regData['proprietors'][0]['full_name']
-
-  change_of_name["request_details"] = {}
-  change_of_name["request_details"]["action"] = "change-name-marriage"
-
-  $marriage_data['title'] = $regData
-  dateOfMarriage = Date.strptime($marriage_data['marriage_date'], "%d-%m-%Y")
-  $marriage_data['marriage_date'] = dateOfMarriage.strftime("%s").to_i
-  change_of_name["request_details"]["data"] = $marriage_data.to_json.to_s
-
-  change_of_name["request_details"]["context"] = {}
-  change_of_name["request_details"]["context"]["session-id"] = "123456"
-  change_of_name["request_details"]["context"]["transaction-id"] = "ABCDEFG"
-
-  uri = URI.parse($CASES_URL)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Post.new('/cases',  initheader = {'Content-Type' =>'application/json'})
-  request.basic_auth $http_auth_name, $http_auth_password
-  request.body = change_of_name.to_json
-  response = http.request(request)
 
 end
 
@@ -172,7 +144,6 @@ def associate_client_with_token(data_hash)
   request = Net::HTTP::Post.new('/confirm',  initheader = {'Content-Type' =>'application/json'})
   request.basic_auth $http_auth_name, $http_auth_password
   request.body = data_hash.to_json
-  puts request.body
   response = http.request(request)
   if (response.code != '200') then
     raise "Failed to associate client with token: " + response.body

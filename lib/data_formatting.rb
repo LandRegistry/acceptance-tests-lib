@@ -8,26 +8,34 @@
 $valid_characteristics = {}
 
 ## Polygon related characteristics
-$valid_characteristics['has a polygon with easement'] = 'polygon'
-$valid_characteristics['has a polygon'] =               'polygon'
-$valid_characteristics['has a doughnut polygon'] =      'polygon'
+$valid_characteristics['polygon'] = {}
+$valid_characteristics['polygon']['has a polygon with easement'] = true
+$valid_characteristics['polygon']['has a polygon'] =               true
+$valid_characteristics['polygon']['has a doughnut polygon'] =      true
+
+## Easements
+$valid_characteristics['easement'] = {}
+$valid_characteristics['easement']['has a polygon with easement'] = true
 
 ## Core Register related characteristics
-$valid_characteristics['freehold'] =                    'core'
-$valid_characteristics['leasehold'] =                   'core'
-$valid_characteristics['two proprietors'] =             'core'
-$valid_characteristics['one proprietor'] =              'core'
+$valid_characteristics['core'] = {}
+$valid_characteristics['core']['freehold'] =                    true
+$valid_characteristics['core']['leasehold'] =                   true
+$valid_characteristics['core']['two proprietors'] =             true
+$valid_characteristics['core']['one proprietor'] =              true
 
 ## Leasehold related characteristics
-$valid_characteristics['has no lease clauses'] =        'lease'
-$valid_characteristics['has lease clauses'] =           'lease'
-$valid_characteristics['has a lessee name different to the proprietor'] = 'lease'
-$valid_characteristics['has a lessee name matching the proprietor'] =     'lease'
+$valid_characteristics['lease'] = {}
+$valid_characteristics['lease']['has no lease clauses'] =        true
+$valid_characteristics['lease']['has lease clauses'] =          true
+$valid_characteristics['lease']['has a lessee name different to the proprietor'] = true
+$valid_characteristics['lease']['has a lessee name matching the proprietor'] =     true
 
 ## charged related characteristics
-$valid_characteristics['has a charge'] =                'charge'
-$valid_characteristics['has no charge restriction'] =   'charge'
-$valid_characteristics['has a charge restriction'] =    'charge'
+$valid_characteristics['charge'] = {}
+$valid_characteristics['charge']['has a charge'] =                true
+$valid_characteristics['charge']['has no charge restriction'] =   true
+$valid_characteristics['charge']['has a charge restriction'] =    true
 
 ##
 ## How does this now work?
@@ -54,19 +62,51 @@ def format_data_characteristics(table)
   data_characteristics['types'] = {}
   data_characteristics['entities'] = {}
 
+  if (table.to_s.empty?) then
+    table = []
+
+  elsif (!table.kind_of?(Array)) then
+    table = table.raw
+  end
+
+
   if (table != '')
-    table.raw.each do |value|
+    table.each do |value|
       if (value[0] != 'CHARACTERISTICS') then
-        if (!$valid_characteristics[value[0]].nil?)
-          data_characteristics['types'][$valid_characteristics[value[0]]] = true
-          data_characteristics['entities'][value[0]] = true
-        else
+        found = false
+        $valid_characteristics.each do |charKey, charChild|
+
+          if (!$valid_characteristics[charKey][value[0]].nil?)
+            if (data_characteristics['types'][$valid_characteristics[charKey][value[0]]].nil?) then
+              data_characteristics['types'][$valid_characteristics[charKey][value[0]]] = []
+            end
+
+            data_characteristics['types'][$valid_characteristics[charKey][value[0]]] << value[0]
+            data_characteristics['entities'][value[0]] = true
+            found = true
+          end
+
+        end
+        if (found == false) then
           raise "Unexpected characteristic: " + value[0]
         end
+
+
       end
     end
   end
 
   return data_characteristics['entities'], data_characteristics['types']
 
+end
+
+def count_characteristic_types(data_characteristics, type)
+
+  count = 0
+  data_characteristics.each do |key, value|
+    if (!$valid_characteristics[type][key].nil?) then
+      count += 1
+    end
+  end
+  return count;
 end

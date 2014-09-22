@@ -144,7 +144,7 @@ Then(/^the polygon(s are| is) edged in red$/) do |wording|
 
         # Red has a high r value and low g and b. So lets see if any break that rule
         if ((r != 255) || (g != 0) || (b != 0)) then
-          puts i_x.to_s + ' - ' + i_y.to_s + ' - ' + r.to_s + ':' + g.to_s + ':' + b.to_s
+          #puts i_x.to_s + ' - ' + i_y.to_s + ' - ' + r.to_s + ':' + g.to_s + ':' + b.to_s
           raise 'Found a colour that isn\'t red on the border.'
         end
       end
