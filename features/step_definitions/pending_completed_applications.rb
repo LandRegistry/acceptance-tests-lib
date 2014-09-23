@@ -1,11 +1,26 @@
 Given(/^pending applications exist$/) do
-  # Andy is writing a function for this
-  pending # express the regexp above with the code you wish you had
+  $pending_cases = []
+
+  $marriage_data = create_marriage_data('GB', $regData['proprietors'][0]['full_name'])
+  $pending_cases << create_change_of_name_marriage_request($regData, $marriage_data)
+
+  $marriage_data = create_marriage_data('GB', $regData['proprietors'][0]['full_name'])
+  $pending_cases << create_change_of_name_marriage_request($regData, $marriage_data)
+
 end
 
 Given(/^completed applications exist$/) do
-  # Andy is writing a function for this
-  pending # express the regexp above with the code you wish you had
+
+  $completed_cases = []
+
+  $marriage_data = create_marriage_data('GB', $regData['proprietors'][0]['full_name'])
+  $completed_cases << create_change_of_name_marriage_request($regData, $marriage_data)
+  complete_case($completed_cases[0]['case_id'])
+
+  $marriage_data = create_marriage_data('GB', $regData['proprietors'][0]['full_name'])
+  $completed_cases << create_change_of_name_marriage_request($regData, $marriage_data)
+  complete_case($completed_cases[1]['case_id'])
+
 end
 
 When(/^I elect to view requests$/) do
