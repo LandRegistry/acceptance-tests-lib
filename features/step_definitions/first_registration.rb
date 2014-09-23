@@ -2,16 +2,7 @@
 
 Given(/^I have received an application for a first registration$/) do
   $regData = nil
-  $data = Hash.new()
-  $data['address_line_1'] = houseNumber()
-  $data['address_line_2'] = roadName()
-  $data['city'] = townName()
-  $data['postcode'] = postcode()
-  $data['pricePaid'] = pricePaid()
-  $data['fullName1'] = fullName()
-  $data['fullName2'] = fullName()
-  $data['title_extent'] = genenerate_title_extent2({'has a polygon with easement' => true})
-  $data['easement'] = genenerate_title_easement2({'has a polygon with easement' => true})
+  $data = first_registration_data()
 end
 
 Given(/^I want to create a Register of Title$/) do
@@ -107,7 +98,7 @@ Then(/^I have received confirmation that the property has been registered$/) do
 end
 
 When(/^I enter a valid title extent$/) do
-  fill_in('extent', :with => $data['title_extent'].to_json)
+  fill_in('extent', :with => $data['title_extent'])
 end
 
 Then(/^a \"([^\"]*)\" message for \"([^\"]*)\" is returned$/) do |errorMessage, fieldId|
@@ -184,5 +175,5 @@ end
 When(/^I enter a valid title easement$/) do
   click_button('Add an easement')
   fill_in('easements-0-easement_description', :with => 'Easement Description')
-  fill_in('easements-0-easement_geometry', :with => $data['easement'].to_json)
+  fill_in('easements-0-easement_geometry', :with => $data['easement'])
 end

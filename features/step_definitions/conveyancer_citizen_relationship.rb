@@ -15,15 +15,7 @@ When(/^I request to create a client relationship$/) do
 end
 
 Given(/^clients have provided their details for me to act on their behalf$/) do
-  $relationshipData = Hash.new()
-
-  $relationshipData['clients'] = Hash.new()
-  $relationshipData['clients']['full_name'] = 'Walter White'
-  $relationshipData['clients']['date_of_birth'] = '07-09-1959'
-  $relationshipData['clients']['address'] = '1 High St, London, N1 4LT'
-  $relationshipData['clients']['telephone'] = '01752 909 878'
-  $relationshipData['clients']['email'] = 'citizen@example.org'
-  $relationshipData['clients']['gender'] = 'M'
+  $relationshipData = generate_client_details()
 end
 
 When(/^I enter the clients details$/) do
@@ -54,18 +46,8 @@ end
 Given(/^I have a relationship token for a registered property$/) do
   step "a registered title"
 
-  $link_relationship = Hash.new()
-  $link_relationship['conveyancer_lrid'] = getlrid('conveyancer@example.org')
-  $link_relationship['title_number'] = $regData['title_number']
-  $link_relationship['conveyancer_name'] = 'Tuco Salamanca'
-  $link_relationship['conveyancer_address'] = '123 Bad Place, Rottentown, ABC 123'
-  $link_relationship['clients'] = Array.new()
-  $link_relationship['clients'][0] = Hash.new()
-  $link_relationship['clients'][0]['lrid'] = getlrid('citizen@example.org')
-  $link_relationship['title_number'] = $regData['title_number']
-  $link_relationship['task'] = 'sell'
-
-  $token_code = get_token_code($link_relationship)
+  $relationship_details = generate_relationship_details($regData['title_number'])
+  $token_code = $relationship_details['token']
   puts $token_code
 end
 
