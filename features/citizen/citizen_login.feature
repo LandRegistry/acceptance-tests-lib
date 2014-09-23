@@ -6,6 +6,7 @@ Scenario: Citizen Invalid username login failed
   When I login with incorrect username
   Then I fail to login
 
+@performance_test_script
 Scenario: Citizen Invalid password login failed
 
   Given I have private citizen login credentials

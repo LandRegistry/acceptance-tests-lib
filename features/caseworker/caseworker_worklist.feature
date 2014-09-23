@@ -1,5 +1,6 @@
 Feature: caseworker worklist
 
+@performance_test_script
 Scenario: View Change of Name in work queue
 
   Given I am a caseworker

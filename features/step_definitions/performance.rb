@@ -92,7 +92,11 @@ Given(/^I have the following scenarios$/) do |table|
         $vuser_scenarios << $features_hash[value[0]]
       end
 
-      require_relative '../../performanceTests/' +  + value[0].gsub('(','').gsub(')', '').gsub(/ /, '_').capitalize.downcase
+      begin
+        require_relative '../../performanceTests/' +  value[0].gsub('(','').gsub(')', '').gsub(/ /, '_').capitalize.downcase + '.rb'
+      rescue Exception=>e
+        raise "Unable to load: " + value[0].gsub('(','').gsub(')', '').gsub(/ /, '_').capitalize.downcase + '.rb'
+      end
 
     end
   end

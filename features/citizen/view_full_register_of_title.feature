@@ -1,5 +1,6 @@
 Feature: View full register of title
 
+@performance_test_script
 Scenario: view register as new authenticated user
 
   Given I am a citizen

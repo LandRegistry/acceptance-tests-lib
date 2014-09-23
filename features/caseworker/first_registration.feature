@@ -1,6 +1,7 @@
 @casework-frontend
 Feature: Create a First Register from a received application
 
+@performance_test_script
 Scenario: Processing Absolute Freehold First Registration with 1 proprietor (3)
 Given I have received an application for a first registration
 And I want to create a Register of Title
