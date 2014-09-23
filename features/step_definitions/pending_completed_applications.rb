@@ -24,7 +24,7 @@ Given(/^completed applications exist$/) do
 end
 
 When(/^I elect to view requests$/) do
-  #click_link
+    click_link('View pending and historical changes to this title')
 end
 
 Then(/^a separate list of pending requests followed by completed requests are shown in order of receipt by date & time$/) do
@@ -54,10 +54,6 @@ end
 Given(/^I am not the proprietor of a registered title$/) do
     step "a registered title with characteristics", ''
     #do not link title to email i.e. this title will not be owned by this propritor
-end
-
-Given(/^a view requests option is not displayed$/) do
-  pending # express the regexp above with the code you wish you had
 end
 
 When(/^I amend the url to directly go to the pending screen$/) do
