@@ -5,7 +5,8 @@ Given I am a citizen
 And I have private citizen login credentials
 And a registered title
 And I am the proprietor of a registered title
-And some pending and completed applications exist for my title
+And pending applications exist
+And completed applications exist
 When I view the full register of title
 And  I elect to view requests
 Then a separate list of pending requests followed by completed requests are shown in order of receipt by date & time
@@ -17,19 +18,19 @@ Given I am a citizen
 And I have private citizen login credentials
 And a registered title
 And I am the proprietor of a registered title
-And only pending applications exist
+And pending applications exist
 When I view the full register of title
 And I elect to view requests
 Then a list of pending requests are shown in order of receipt by date & time
 And each request shows the details of the change
-And the correct change data is displayed
+And the correct data is displayed
 
 Scenario:As a property owner with only completed applications existing
 Given I am a citizen
 And I have private citizen login credentials
 And a registered title
 And I am the proprietor of a registered title
-And only completed applications exist
+And completed applications exist
 When I view the full register of title
 And I elect to view requests
 Then a separate list of completed requests are shown in order of receipt by date & time
@@ -41,7 +42,6 @@ Given I am a citizen
 And I have private citizen login credentials
 And a registered title
 And I am the proprietor of a registered title
-And no pending nor completed applications exist
 When I view the full register of title
 Then a view requests option is not displayed
 
@@ -51,7 +51,7 @@ Given I am a citizen
 And I have private citizen login credentials
 And a registered title
 And I am not the proprietor of a registered title
-And some pending applications exist
+And pending applications exist
 When I view the full register of title
 Then a view requests option is not displayed
 
@@ -60,7 +60,7 @@ Given I am a citizen
 And I have private citizen login credentials
 And a registered title
 And I am not the proprietor of a registered title
-And some completed applications exist
+And completed applications exist
 And I view the full register of title
 And a view requests option is not displayed
 When I amend the url to directly go to the pending screen
