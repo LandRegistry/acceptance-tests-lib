@@ -3,7 +3,6 @@ Feature: Property owner view of pending & completed applications
 Scenario:As a property owner with pending and completed applications
 Given I am a citizen
 And I have private citizen login credentials
-And a registered title
 And I am the proprietor of a registered title
 And pending applications exist
 And completed applications exist
@@ -16,7 +15,6 @@ And the correct data is displayed
 Scenario:As a property owner with only pending applications existing
 Given I am a citizen
 And I have private citizen login credentials
-And a registered title
 And I am the proprietor of a registered title
 And pending applications exist
 When I view the full register of title
@@ -28,7 +26,6 @@ And the correct data is displayed
 Scenario:As a property owner with only completed applications existing
 Given I am a citizen
 And I have private citizen login credentials
-And a registered title
 And I am the proprietor of a registered title
 And completed applications exist
 When I view the full register of title
@@ -40,7 +37,6 @@ And the correct data is displayed
 Scenario:As a property owner with neither completed nor pending applications
 Given I am a citizen
 And I have private citizen login credentials
-And a registered title
 And I am the proprietor of a registered title
 When I view the full register of title
 Then a view requests option is not displayed
@@ -50,7 +46,6 @@ Scenario:As a property owner but not the proprietor of the title
 Given I am a citizen
 And I have private citizen login credentials
 And a registered title
-And I am not the proprietor of a registered title
 And pending applications exist
 When I view the full register of title
 Then a view requests option is not displayed
@@ -59,7 +54,6 @@ Scenario:As a property owner but not the proprietor of the title who edits the u
 Given I am a citizen
 And I have private citizen login credentials
 And a registered title
-And I am not the proprietor of a registered title
 And completed applications exist
 And I view the full register of title
 And a view requests option is not displayed
