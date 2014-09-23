@@ -233,7 +233,6 @@ end
 def loadtest()
 
   # Redirect $stdout (Console output) to nil
-  $stdout = StringIO.new
 
   # Workout the delay time of the script
 	$scriptdelaytime = $scriptdelaytime + $ramp_up_time
@@ -255,8 +254,12 @@ def loadtest()
     # Increase the variable which keeps track of running virtual users
     $running_v_users = $running_v_users + 1
 
+    iteration = 0
+
     # Loop through for the duration of the test, this will run the test each time it loops
   	while ((Time.new.to_i)  < ($starttime + $duration)) do
+
+      iteration += 1
 
       # Works out the start time of the current test (iteration)
     	scriptstart_time = Time.now
@@ -268,7 +271,15 @@ def loadtest()
 
       rescue Exception=>e
         # If it fails, keep a log of why, then carry on
-        $error_log << e
+
+        error = {}
+        error['error_message'] = e
+        error['error_iteration'] = iteration
+        error['error_script'] = cucumber_scenario
+
+
+        $error_log << error
+
         $total_failures = $total_failures + 1
           $stdout.puts  e
       end
@@ -376,8 +387,9 @@ def http_get(curl, data, url)
 
   # Specify the headers we want to hit
   curl.headers = data['header']
+
   # perform the call
-  curl.perform
+  curl.http_get
 
   # Set headers to nil so none get reused elsewhere
   curl.headers = nil
