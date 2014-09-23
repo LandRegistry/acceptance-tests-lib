@@ -1,27 +1,31 @@
 
 
-#  Processing Absolute Freehold First Registration with 1 proprietor (3)
+  # Scenario Name: View Change of Name in work queue
 
-  class Processing_absolute_freehold_first_registration_with_1_proprietor_3
+    class View_change_of_name_in_work_queue
 
-    def initialize()
+      def initialize()
 
-    end
+      end
 
-    def v_init()
+      def v_init()
 
 
-        #v_init end
-    end
+          #v_init end
+      end
 
-    def v_action()
-        @curl = Curl::Easy.new
-        @curl.follow_location = true
-        @curl.enable_cookies = true
+      def v_action()
+          @curl = Curl::Easy.new
+          @curl.follow_location = true
+          @curl.enable_cookies = true
 
-           genData0 = first_registration_data()
+             genData0 = generic_register_data()
 
-         trans_time = start_traction("I_want_to_create_a_register_of_title")
+             genData1 = create_marriage_data("#{genData0["property"]["address"]["country"]}", "#{genData0["proprietors"][0]["full_name"]}")
+
+             genData2 = create_change_of_name_marriage_request({"title_number"=>"#{genData0["payment"]["titles"][0]}", "proprietors"=>[{"full_name"=>"#{genData0["proprietors"][0]["full_name"]}"}, {"full_name"=>""}], "property"=>{"address"=>{"address_line_1"=>genData0["property"]["address"]["address_line_1"], "address_line_2"=>"#{genData0["property"]["address"]["address_line_2"]}", "city"=>"#{genData0["property"]["address"]["city"]}", "postcode"=>"#{genData0["property"]["address"]["postcode"]}", "country"=>"#{genData0["property"]["address"]["country"]}"}, "tenure"=>"#{genData0["property"]["tenure"]}", "class_of_title"=>"#{genData0["property"]["class_of_title"]}"}, "payment"=>{"price_paid"=>genData0["payment"]["price_paid"], "titles"=>["#{genData0["payment"]["titles"][0]}"]}, "extent"=>{"type"=>"#{genData0["extent"]["type"]}", "crs"=>{"type"=>"#{genData0["extent"]["crs"]["type"]}", "properties"=>{"#{genData0["extent"]["crs"]["type"]}"=>"#{genData0["extent"]["crs"]["properties"]["#{genData0["extent"]["crs"]["type"]}"]}"}}, "geometry"=>{"type"=>"#{genData0["extent"]["geometry"]["properties"]["Description"]}", "coordinates"=>[[[genData0["extent"]["geometry"]["coordinates"][0][4][0], genData0["extent"]["geometry"]["coordinates"][0][4][1]], [genData0["extent"]["geometry"]["coordinates"][0][1][0], genData0["extent"]["geometry"]["coordinates"][0][1][1]], [genData0["extent"]["geometry"]["coordinates"][0][2][0], genData0["extent"]["geometry"]["coordinates"][0][2][1]], [genData0["extent"]["geometry"]["coordinates"][0][3][0], genData0["extent"]["geometry"]["coordinates"][0][3][1]], [genData0["extent"]["geometry"]["coordinates"][0][4][0], genData0["extent"]["geometry"]["coordinates"][0][4][1]]]], "properties"=>{"Description"=>"#{genData0["extent"]["geometry"]["properties"]["Description"]}"}}}}, {"proprietor_full_name"=>"#{genData0["proprietors"][0]["full_name"]}", "proprietor_new_full_name"=>"#{genData1["proprietor_new_full_name"]}", "partner_name"=>"#{genData1["partner_name"]}", "marriage_date"=>genData1["marriage_date"], "marriage_place"=>"#{genData1["marriage_place"]}", "marriage_country"=>"#{genData0["property"]["address"]["country"]}", "marriage_certificate_number"=>genData1["marriage_certificate_number"]})
+
+             trans_time = start_traction("I_view_the_caseworker_worklist")
 
              data = {}
              data["header"] = {}
@@ -92,46 +96,19 @@
              data["header"]["User-Agent"] = "Mozilla/5.0 (Macintosh; PPC Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.7 Safari/534.34"
              data["header"]["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
              data["header"]["Authorization"] = "Basic Og=="
-             response = http_get(@curl, data, "http://172.16.42.43:8004/registration")
+             response = http_get(@curl, data, "http://172.16.42.43:8004/casework")
              assert_http_status(response, 200)
 
-          end_traction("I_want_to_create_a_register_of_title", trans_time)
-
-         trans_time = start_traction("I_submit_the_title_details")
-
-             data = {}
-             data["header"] = {}
-             data["header"]["Origin"] = "http://172.16.42.43:8004"
-             data["header"]["User-Agent"] = "Mozilla/5.0 (Macintosh; PPC Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.7 Safari/534.34"
-             data["header"]["Content-Type"] = "application/x-www-form-urlencoded"
-             data["header"]["Accept"] = "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
-             data["header"]["Authorization"] = "Basic Og=="
-             data["post_data"] = {}
-             data["post_data"]["title_number"] = genData0["titleNumber"]
-             data["post_data"]["full_name1"] = genData0["fullName1"]
-             data["post_data"]["full_name2"] = genData0["fullName2"]
-             data["post_data"]["address_line_1"] = genData0["address_line_1"]
-             data["post_data"]["address_line_2"] = genData0["address_line_2"]
-             data["post_data"]["city"] = genData0["city"]
-             data["post_data"]["postcode"] = genData0["postcode"]
-             data["post_data"]["country"] = "GB"
-             data["post_data"]["property_tenure"] = "Freehold"
-             data["post_data"]["property_class"] = "Absolute"
-             data["post_data"]["price_paid"] = genData0["pricePaid"]
-             data["post_data"]["extent"] = genData0["title_extent"]
-             response = http_post(@curl, data, "http://172.16.42.43:8004/registration")
-             assert_http_status(response, 200)
-
-          end_traction("I_submit_the_title_details", trans_time)
+             end_traction("I_view_the_caseworker_worklist", trans_time)
 
 #v_action end
+      end
+
+      def v_end()
+
+          #v_end end
+      end
+
     end
 
-    def v_end()
-
-        #v_end end
-    end
-
-  end
-
-    
+      

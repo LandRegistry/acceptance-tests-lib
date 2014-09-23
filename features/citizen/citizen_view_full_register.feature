@@ -1,5 +1,6 @@
 Feature: Citizen view full register of title
 
+@performance_test_script
 Scenario: Full register of title
 
   Given I am a citizen

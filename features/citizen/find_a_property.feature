@@ -1,5 +1,6 @@
 Feature: Find a property on gov.uk and view its details
 
+@performance_test_script
 Scenario: A user can find a property and view its details
 
   Given I am a user
