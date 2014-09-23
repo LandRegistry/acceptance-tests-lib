@@ -7,7 +7,7 @@ Given(/^pending applications exist$/) do
 
   $marriage_data = create_marriage_data('GB', $regData['proprietors'][0]['full_name'])
   $pending_cases << create_change_of_name_marriage_request($regData, $marriage_data)
-  puts $pending_cases[1]
+  puts $pending_cases
 
 end
 
@@ -35,8 +35,32 @@ Then(/^a separate list of pending requests followed by completed requests are sh
   assert_match('Previous changes', page.body, 'Expected to find Previous changes text displayed on the screen')
 end
 
+  Then(/^the correct data is displayed$/) do
 
-Then(/^each request shows the details of the change$/) do
+  #Loop through the data held on the pending applications table i.e. the cases table
+
+
+    for i in 0 ..$pending_cases.count - 1
+
+
+
+  #assert_match('SUBMITTED ON', page.body, 'Expected to find SUBMITTED ON text displayed on the screen')
+
+
+    puts "row = "
+    puts $pending_cases[i]["title_number"]
+    puts $pending_cases[i]["submitted_by"]
+    puts $pending_cases[i]["proprietor_full_name"]
+    puts $pending_cases[i]["proprietor_new_full_name"]
+    puts $pending_cases[i]["marriage_date"]
+    puts $pending_cases[i]["marriage_certificate_number"]
+    puts $pending_cases[i]["marriage_place"]
+    puts $pending_cases[i]["marriage_country"]
+
+
+
+
+    end
   #$pending_cases
 #  {"application_type"=>"change-name-marriage",
 #    "title_number"=>"TEST474880244",
@@ -53,9 +77,6 @@ Then(/^each request shows the details of the change$/) do
 #          "transaction-id"=>"ABCDEFG"}}, "case_id"=>"33"}
 end
 
-Then(/^the correct data is displayed$/) do
-  pending # express the regexp above with the code you wish you had
-end
 
 Then(/^a list of pending requests are shown in order of receipt by date & time$/) do
   pending # express the regexp above with the code you wish you had

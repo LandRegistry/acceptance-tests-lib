@@ -9,7 +9,6 @@ And completed applications exist
 When I view the full register of title
 And  I elect to view requests
 Then a separate list of pending requests followed by completed requests are shown in order of receipt by date & time
-And each request shows the details of the change
 And the correct data is displayed
 
 Scenario:As a property owner with only pending applications existing
@@ -20,7 +19,6 @@ And pending applications exist
 When I view the full register of title
 And I elect to view requests
 Then a list of pending requests are shown in order of receipt by date & time
-And each request shows the details of the change
 And the correct data is displayed
 
 Scenario:As a property owner with only completed applications existing
@@ -31,7 +29,6 @@ And completed applications exist
 When I view the full register of title
 And I elect to view requests
 Then a separate list of completed requests are shown in order of receipt by date & time
-And each request shows the details of the change
 And the correct data is displayed
 
 Scenario:As a property owner with neither completed nor pending applications
