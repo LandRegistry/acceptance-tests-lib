@@ -78,7 +78,12 @@ end
 
 
 Then(/^a list of pending requests are shown in order of receipt by date & time$/) do
-  pending # express the regexp above with the code you wish you had
+  i = 0
+  page.all(".//ol[@class='register-changes-pending']/li").each do |el|
+    name = el.find('.//div/ul/li[2]').text
+    assert_match($pending_cases[i]["marriage_data"]["proprietor_new_full_name"], 'Previous name: ' + name, 'Expected to find '+ $pending_cases[i]["marriage_data"]["proprietor_new_full_name"] +' displayed on the screen')
+    i += 1
+  end
 end
 
 Then(/^a separate list of completed requests are shown in order of receipt by date & time$/) do
