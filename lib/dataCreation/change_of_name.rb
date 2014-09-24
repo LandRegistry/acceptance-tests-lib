@@ -21,10 +21,11 @@ end
 
 def create_change_of_name_marriage_request(regData, marriage_data)
 
+  marriage_data['marriage_date']  = Date.strptime(marriage_data['marriage_date'], "%d-%m-%Y").strftime("%s").to_i
+  
   data = marriage_data
   data['confirm'] = true
   data['title'] = regData
-  data["request_details"] = Date.strptime(marriage_data['marriage_date'], "%d-%m-%Y").strftime("%s").to_i
 
   change_of_name = {}
   change_of_name["application_type"] = "change-name-marriage"
