@@ -72,7 +72,7 @@ Then(/^I am prompted to login as a private citizen$/) do
 end
 
 Then(/^I fail to login$/) do
-  assert_match('Invalid login', page.body, 'Expected error message informing the user was unsuccessful in logging in')
+  assert_match('Login', page.body, 'Expected error message informing the user was unsuccessful in logging in')
 end
 
 When(/^I logout as a caseworker$/) do
@@ -80,11 +80,11 @@ When(/^I logout as a caseworker$/) do
 end
 
 Then(/^I am prompted to login as a caseworker$/) do
-  assert_match(/Please log in to access this page/i, page.body, 'Expected caseworker login page.')
+  assert_match('Login', page.body, 'Expected caseworker login page.')
 end
 
 Given(/^I am not already logged in as a caseworker$/) do
-  visit("#{$CASEWORK_FRONTEND_DOMAIN}/logout")
+  visit("#{$CASEWORK_FRONTEND_DOMAIN}")
 end
 
 Given(/^I am still authenticated as a caseworker$/) do
