@@ -36,23 +36,14 @@ Given I am a citizen
 And I have private citizen login credentials
 And I am the proprietor of a registered title
 When I view the full register of title
-Then a view requests option is not displayed
+And I elect to view requests
+Then the no pending nor completed requests screen are displayed
 
 
-Scenario:As a property owner but not the proprietor of the title
+Scenario:As a property owner but not the proprietor of this title
 Given I am a citizen
 And I have private citizen login credentials
 And a registered title
 And pending applications exist
 When I view the full register of title
 Then a view requests option is not displayed
-
-Scenario:As a property owner but not the proprietor of the title who edits the url
-Given I am a citizen
-And I have private citizen login credentials
-And a registered title
-And completed applications exist
-And I view the full register of title
-And a view requests option is not displayed
-When I amend the url to directly go to the pending screen
-Then an error message is displayed

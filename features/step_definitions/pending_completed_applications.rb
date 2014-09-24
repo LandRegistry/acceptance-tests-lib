@@ -86,13 +86,14 @@ Then(/^a separate list of completed requests are shown in order of receipt by da
 end
 
 Then(/^a view requests option is not displayed$/) do
-    assert_equal has_link?('View pending and historical changes to this title'), false, 'Expected View pending and historical changes to this title link to not be on the page'  
+    assert_equal has_link?('View pending and historical changes to this title'), false, 'Expected View pending and historical changes to this title link to not be on the page'
 end
 
-When(/^I amend the url to directly go to the pending screen$/) do
-  pending # express the regexp above with the code you wish you had
+Then(/^an error message re unauthorised is displayed$/) do
+  assert_match('Unauthorised', page.body, 'Expected to find Unauthorised text displayed on the screen')
 end
 
-Then(/^an error message is displayed$/) do
-  pending # express the regexp above with the code you wish you had
+Then(/^the no pending nor completed requests screen are displayed$/) do
+  assert_match('No pending changes', page.body, 'Expected to find No pending changes text displayed on the screen')
+  assert_match('No previous changes', page.body, 'Expected to find No previous changes text displayed on the screen')
 end
