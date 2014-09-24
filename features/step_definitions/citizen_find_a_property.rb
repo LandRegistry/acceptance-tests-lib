@@ -11,5 +11,5 @@ Given(/^I search for a property on gov\.uk that does not exist$/) do
 end
 
 Then(/^I get a no results are found message$/) do
-  assert_match('No results found', page.body, 'Expected an error message saying no results found, however this wasn\'t present')
+  assert_match('Sorry, no results found', page.body, 'Expected an error message saying no results found, however this wasn\'t present')
 end
