@@ -1,6 +1,8 @@
 def create_marriage_data(country, full_name)
   marriage_data = {}
   marriage_data['confirm'] = true
+  marriage_data['proprietor_full_name'] = full_name
+  marriage_data['proprietor_new_full_name'] = fullName()
   marriage_data['partner_name'] = fullName()
   marriage_data['application_type'] = 'change-name-marriage'
   marriage_data['marriage_country'] = country
