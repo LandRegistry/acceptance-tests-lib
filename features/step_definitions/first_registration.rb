@@ -8,7 +8,7 @@ end
 Given(/^I want to create a Register of Title$/) do
   step "I have caseworker login credentials"
   visit("#{$CASEWORK_FRONTEND_DOMAIN}")
-  step "I login with correct credentials"
+  step "I login to the casework frontend with correct credentials"
   click_link('First registration')
   $data['titleNumber'] = find(".//input[@id='title_number']", :visible => false).value
 end

@@ -12,8 +12,6 @@ Given(/^pending applications exist$/) do
   $pending_cases << create_change_of_name_marriage_request($regData, $marriage_data)
   $pending_cases[1]['regdata'] = $regData
   $pending_cases[1]['marriage_data'] = $marriage_data
-  puts $pending_cases[1]
-
 
 end
 

@@ -39,7 +39,7 @@ end
 
 Given(/^I want to authorise my conveyancer to act on my behalf$/) do
   visit("#{$SERVICE_FRONTEND_DOMAIN}")
-  step "I login with correct credentials"
+  step "I login to the service frontend with correct credentials"
   click_link('Confirm a relationship')
 end
 
