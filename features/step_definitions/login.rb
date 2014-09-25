@@ -21,13 +21,13 @@ end
 When(/^I login with correct credentials$/) do
   fill_in('email', :with => $userdetails['email'])
   fill_in('password', :with => $userdetails['password'])
-  click_button('Login')
+  click_button('Sign in')
 end
 
 When(/^I login with incorrect username$/) do
   fill_in('email', :with => 'incorrect')
   fill_in('password', :with => $userdetails['password'])
-  click_button('Login')
+  click_button('Sign in')
 end
 
 Then(/^I fail to login $/) do
@@ -37,7 +37,7 @@ end
 When(/^I login with incorrect password$/) do
   fill_in('email', :with => $userdetails['email'])
   fill_in('password', :with => 'incorrect')
-  click_button('Login')
+  click_button('Sign in')
 end
 
 Then(/^I fail to login \(incorrect username\)$/) do
@@ -72,7 +72,7 @@ Then(/^I am prompted to login as a private citizen$/) do
 end
 
 Then(/^I fail to login$/) do
-  assert_match('Login', page.body, 'Expected error message informing the user was unsuccessful in logging in')
+  assert_match('Sign in', page.body, 'Expected error message informing the user was unsuccessful in logging in')
 end
 
 When(/^I logout as a caseworker$/) do
@@ -80,7 +80,7 @@ When(/^I logout as a caseworker$/) do
 end
 
 Then(/^I am prompted to login as a caseworker$/) do
-  assert_match('Login', page.body, 'Expected caseworker login page.')
+  assert_match('Sign in', page.body, 'Expected caseworker login page.')
 end
 
 Given(/^I am not already logged in as a caseworker$/) do
