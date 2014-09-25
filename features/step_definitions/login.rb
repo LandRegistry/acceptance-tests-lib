@@ -18,13 +18,13 @@ Given(/^I have caseworker login credentials$/) do
   $userdetails['password'] = 'dummypassword'
 end
 
-When(/^I login with correct credentials$/) do
-  fill_in('email', :with => $userdetails['email'])
+When(/^I login to the service frontend with incorrect username$/) do
+  fill_in('email', :with => 'incorrect')
   fill_in('password', :with => $userdetails['password'])
-  click_button('Login')
+  click_button('Sign in')
 end
 
-When(/^I login with incorrect username$/) do
+When(/^I login to the casework frontend with incorrect username$/) do
   fill_in('email', :with => 'incorrect')
   fill_in('password', :with => $userdetails['password'])
   click_button('Login')
@@ -34,10 +34,28 @@ Then(/^I fail to login $/) do
   assert_match('Specified user does not exist', page.body, 'Expected error message informing the user was unsuccessful in logging in')
 end
 
-When(/^I login with incorrect password$/) do
+When(/^I login to the service frontend with incorrect password$/) do
+  fill_in('email', :with => $userdetails['email'])
+  fill_in('password', :with => 'incorrect')
+  click_button('Sign in')
+end
+
+When(/^I login to the casework frontend with incorrect password$/) do
   fill_in('email', :with => $userdetails['email'])
   fill_in('password', :with => 'incorrect')
   click_button('Login')
+end
+
+Given(/^I login to the casework frontend with correct credentials$/) do
+  fill_in('email', :with => $userdetails['email'])
+  fill_in('password', :with => $userdetails['password'])
+  click_button('Login')
+end
+
+Given(/^I login to the service frontend with correct credentials$/) do
+  fill_in('email', :with => $userdetails['email'])
+  fill_in('password', :with => $userdetails['password'])
+  click_button('Sign in')
 end
 
 Then(/^I fail to login \(incorrect username\)$/) do
@@ -52,7 +70,7 @@ Given(/^I am still authenticated$/) do
   visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
   step "I have private citizen login credentials"
   visit("#{$SERVICE_FRONTEND_DOMAIN}/login")
-  step "I login with correct credentials"
+  step "I login to the service frontend with incorrect username"
 end
 
 Given(/^I am not already logged in as a private citizen$/) do
@@ -72,7 +90,7 @@ Then(/^I am prompted to login as a private citizen$/) do
 end
 
 Then(/^I fail to login$/) do
-  assert_match('Login', page.body, 'Expected error message informing the user was unsuccessful in logging in')
+  assert_match('Sign in', page.body, 'Expected error message informing the user was unsuccessful in logging in')
 end
 
 When(/^I logout as a caseworker$/) do
@@ -91,7 +109,7 @@ Given(/^I am still authenticated as a caseworker$/) do
   visit("#{$CASEWORK_FRONTEND_DOMAIN}/logout")
   step "I have caseworker login credentials"
   visit("#{$CASEWORK_FRONTEND_DOMAIN}")
-  step "I login with correct credentials"
+  step "I login to the casework frontend with correct credentials"
 end
 
 Then(/^I get an unauthorised message$/) do
