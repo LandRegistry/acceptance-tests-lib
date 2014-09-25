@@ -7,7 +7,7 @@ Given(/^pending applications exist$/) do
   $pending_cases[0]['regdata'] = $regData
   $pending_cases[0]['marriage_data'] = $marriage_data
 
-  $regData['proprietors'][0]['full_name'] = $marriage_data['proprietor_new_full_name']
+  #$regData['proprietors'][0]['full_name'] = $marriage_data['proprietor_new_full_name']
   $marriage_data = create_marriage_data('GB', $regData['proprietors'][0]['full_name'])
   $pending_cases << create_change_of_name_marriage_request($regData, $marriage_data)
   $pending_cases[1]['regdata'] = $regData
@@ -21,11 +21,11 @@ Given(/^completed applications exist$/) do
 
   $completed_cases = []
 
+  #$regData['proprietors'][0]['full_name'] = $marriage_data['proprietor_new_full_name']
   $marriage_data = create_marriage_data('GB', $regData['proprietors'][0]['full_name'])
   $completed_cases << create_change_of_name_marriage_request($regData, $marriage_data)
   $completed_cases[0]['regdata'] = $regData
   $completed_cases[0]['marriage_data'] = $marriage_data
-
   complete_case($completed_cases[0]['case_id'])
 
   $regData['proprietors'][0]['full_name'] = $marriage_data['proprietor_new_full_name']
@@ -34,9 +34,7 @@ Given(/^completed applications exist$/) do
   $completed_cases[1]['regdata'] = $regData
   $completed_cases[1]['marriage_data'] = $marriage_data
   complete_case($completed_cases[1]['case_id'])
-  puts $completed_cases[1]
-
-  sleep(1)
+  sleep(5)
 end
 
 When(/^I elect to view requests$/) do
@@ -50,16 +48,6 @@ Then(/^the correct data is displayed$/) do
     if (!$pending_cases.nil?)
 
       for i in 0 ..$pending_cases.count - 1
-
-        puts "row = "
-        puts $pending_cases[i]["title_number"]
-        puts $pending_cases[i]["submitted_by"]
-        puts $pending_cases[i]["marriage_data"]["proprietor_full_name"]
-        puts $pending_cases[i]["marriage_data"]["proprietor_new_full_name"]
-        puts $pending_cases[i]["marriage_data"]["marriage_date"]
-        puts $pending_cases[i]["marriage_data"]["marriage_certificate_number"]
-        puts $pending_cases[i]["marriage_data"]["marriage_place"]
-        puts $pending_cases[i]["marriage_data"]["marriage_country"]
 
         assert_match($pending_cases[i]["title_number"], page.body, 'Expected to find '+ $pending_cases[i]["title_number"] +' displayed on the screen')
         assert_match($pending_cases[i]["submitted_by"], page.body, 'Expected to find '+ $pending_cases[i]["submitted_by"] +' displayed on the screen')
@@ -76,8 +64,6 @@ Then(/^the correct data is displayed$/) do
 
 
   if (!$completed_cases.nil?)
-
-    puts $completed_cases
 
     for i in 0 ..$completed_cases.count - 1
 
@@ -98,10 +84,8 @@ end # of Then(/^the correct data is displayed$/)
 Then(/^a list of pending requests are shown in order of receipt by date & time$/) do
   i = 0
 
-  puts $pending_cases.count
-
-  page.all(".//ol[@class='register-changes-pending']/li").each do |el|
-    name = el.find('.//div/ul/li[2]').text
+  page.all(".//*[@id='pending']/ol[3]/li/div/ul/li[1]").each do |el|
+    name = el.text
     assert_match($pending_cases[i]["marriage_data"]["proprietor_new_full_name"], 'Previous name: ' + name, 'Expected to find '+ $pending_cases[i]["marriage_data"]["proprietor_new_full_name"] +' displayed on the screen')
     i += 1
   end # of .each loop
@@ -109,7 +93,7 @@ end
 
 Then(/^a separate list of completed requests are shown in order of receipt by date & time$/) do
   i = 0
-  page.all(".//ol[@class='register-changes-previous']/li/div/p").each do |el|
+  page.all(".//*[@id='previous']/ol/li/div/p").each do |el|
     assert_match($completed_cases[i]["marriage_data"]["proprietor_full_name"], 'Submitted by: ' + el.text, 'Expected to find '+ $completed_cases[i]["marriage_data"]["proprietor_full_name"] +'')
     i += 1
   end # of .each loop

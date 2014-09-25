@@ -6,7 +6,6 @@ def create_marriage_data(country, full_name)
   marriage_data['partner_name'] = fullName()
   marriage_data['application_type'] = 'change-name-marriage'
   marriage_data['marriage_country'] = country
-  marriage_data['proprietor_new_full_name'] = 'New Name'
   marriage_data['marriage_place'] = townName()
   marriage_data['title_number'] = $regData['title_number']
   marriage_data['proprietor_full_name'] = full_name
@@ -34,7 +33,7 @@ def create_change_of_name_marriage_request(regData, marriage_data)
 
   change_of_name = {}
   change_of_name["application_type"] = "change-name-marriage"
-  change_of_name["title_number"]  = $regData['title_number']
+  change_of_name["title_number"]  = regData['title_number']
   change_of_name["submitted_by"] = regData['proprietors'][0]['full_name']
   change_of_name["request_details"] = {}
   change_of_name["request_details"]["action"] = "change-name-marriage"
