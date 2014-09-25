@@ -12,7 +12,9 @@ require_relative '../../lib/data_formatting.rb'
 require_relative '../../lib/validation.rb'
 require_relative '../../lib/validate_worklist_fields.rb'
 require_relative '../../lib/validate_registered_title_fields.rb'
-require_relative '../../lib/performance_script_generation.rb'
+
+require_relative '../../lib/performance_testing/performance_script_generation.rb'
+require_relative '../../lib/performance_testing/performance_test.rb'
 
 
 require 'net/https'
