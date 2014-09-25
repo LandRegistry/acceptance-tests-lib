@@ -20,7 +20,7 @@ Scenario: Citizen can logout
   When I logout as a private citizen
   Then I am prompted to login as a private citizen
 
-Scenario: Citizen Invalid password login failed
+Scenario: Blocked Citizen login failed
 
   Given I have blocked private citizen login credentials
   When I login to the service frontend with incorrect password

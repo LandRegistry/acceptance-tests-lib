@@ -69,6 +69,13 @@ def complete_case(case_id)
   request = Net::HTTP::Put.new('/cases/complete/' + case_id)
   request.basic_auth $http_auth_name, $http_auth_password
   response = http.request(request)
+  puts 'response.body'
+  puts response.body
+
+  if (response.body != 'OK') then
+    raise 'Error: ' + response.body
+  end
+
 
   if ($PERFROMANCETEST.nil?) then
     $function_call_name << 'complete_case'

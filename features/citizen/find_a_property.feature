@@ -6,8 +6,10 @@ Scenario: A user can find a property and view its details
   Given I am a user
   And a registered title
   When I search for the property on gov.uk
-  Then the Property Address is displayed
-  And I have the option to view the full register
+  Then I can see the following information displayed
+    | INFORMATION      |
+    | Title Number     |
+    | Property Address |
 
 Scenario: A user cannot find a property that does not exist
 

@@ -48,7 +48,6 @@ Given(/^I have a relationship token for a registered property$/) do
 
   $relationship_details = generate_relationship_details($regData['title_number'])
   $token_code = $relationship_details['token']
-  puts $token_code
 end
 
 When(/^I enter the relationship token code$/) do

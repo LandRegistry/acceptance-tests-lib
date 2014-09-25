@@ -21,19 +21,45 @@ Given(/^completed applications exist$/) do
 
   #$regData['proprietors'][0]['full_name'] = $marriage_data['proprietor_new_full_name']
   $marriage_data = create_marriage_data('GB', $regData['proprietors'][0]['full_name'])
+  puts 'old name: ' + $regData['proprietors'][0]['full_name']
+  puts 'new name: ' + $marriage_data['proprietor_new_full_name']
+
+
+
   $completed_cases << create_change_of_name_marriage_request($regData, $marriage_data)
   $completed_cases[0]['regdata'] = $regData
   $completed_cases[0]['marriage_data'] = $marriage_data
   complete_case($completed_cases[0]['case_id'])
+puts 'A'
 
-  $regData['proprietors'][0]['full_name'] = $marriage_data['proprietor_new_full_name']
+  wait_for_register_to_update_full_name($regData['title_number'], $marriage_data['proprietor_new_full_name'])
+
+
+  title_no = $regData['title_number']
+
+  $regData = get_register_details(title_no)
+
+  pp $regData
+  pp 'a'
+  pp 'a'
+
+
+puts 'B'
   $marriage_data = create_marriage_data('GB', $regData['proprietors'][0]['full_name'])
+
+  puts 'old name: ' + $regData['proprietors'][0]['full_name']
+  puts 'new name: ' + $marriage_data['proprietor_new_full_name']
+
+
   $completed_cases << create_change_of_name_marriage_request($regData, $marriage_data)
   $completed_cases[1]['regdata'] = $regData
   $completed_cases[1]['marriage_data'] = $marriage_data
   complete_case($completed_cases[1]['case_id'])
+puts 'C'
 
-  sleep(3)
+  wait_for_register_to_update_full_name($regData['title_number'], $marriage_data['proprietor_new_full_name'])
+
+
 end
 
 When(/^I elect to view requests$/) do
@@ -84,8 +110,8 @@ Then(/^a list of pending requests are shown in order of receipt by date & time$/
   i = 0
 
   page.all(".//*[@id='pending']/ol[3]/li/div/ul/li[1]").each do |el|
-    name = el.text
-    assert_match($pending_cases[i]["marriage_data"]["proprietor_new_full_name"], 'Previous name: ' + name, 'Expected to find '+ $pending_cases[i]["marriage_data"]["proprietor_new_full_name"] +' displayed on the screen')
+    puts i.to_s + el.text.to_s
+    assert_match($pending_cases[i]["marriage_data"]["proprietor_new_full_name"], el.text, 'Expected to find '+ $pending_cases[i]["marriage_data"]["proprietor_new_full_name"] +' displayed on the screen')
     i += 1
   end # of .each loop
 end
@@ -93,7 +119,7 @@ end
 Then(/^a separate list of completed requests are shown in order of receipt by date & time$/) do
   i = 0
   page.all(".//*[@id='previous']/ol/li/div/p").each do |el|
-    assert_match($completed_cases[i]["marriage_data"]["proprietor_full_name"], 'Submitted by: ' + el.text, 'Expected to find '+ $completed_cases[i]["marriage_data"]["proprietor_full_name"] +'')
+    assert_match($completed_cases[i]["marriage_data"]["proprietor_full_name"], el.text, 'Expected to find '+ $completed_cases[i]["marriage_data"]["proprietor_full_name"] +'')
     i += 1
   end # of .each loop
 end

@@ -49,7 +49,7 @@ end
 def get_register_details(title_no)
 
   response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_no)
-  return response.body
+  return  JSON.parse(response.body)
 
 end
 
@@ -149,4 +149,33 @@ def associate_client_with_token(data_hash)
     raise "Failed to associate client with token: " + response.body
   end
   return response.body
+end
+
+def wait_for_register_to_update_full_name(title_number, full_name)
+
+  found_count = 0
+  count = 0
+  while (found_count != 1 && count < 25) do
+    puts 'waiting for new version of title to be created'
+    sleep(0.2)
+
+    response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_number)
+    if (response.code.to_s == '200') then
+
+      puts 'name on title: ' + JSON.parse(response.body)['proprietors'][0]['full_name']
+      puts 'expected name on title: ' + full_name
+      if (!response.nil?)
+        if (JSON.parse(response.body)['proprietors'][0]['full_name']==full_name)
+          found_count = 1
+          puts 'Title updated'
+        end
+      end
+
+    end
+    count = count + 1
+  end
+  if (found_count != 1) then
+    raise "Title not updated " + title_number
+  end
+
 end

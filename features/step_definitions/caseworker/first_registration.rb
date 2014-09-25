@@ -87,13 +87,13 @@ Then(/^I have received confirmation that the property has been registered$/) do
 
   registered_property = get_register_details($data['titleNumber'])
 
-  assert_match($data['titleNumber'].to_s, registered_property, 'Title number does not match')
-  assert_match($data['fullName1'].to_s, registered_property, 'FullName 1 does not match')
-  assert_match($data['fullName2'].to_s, registered_property, 'FullName 2 does not match')
-  assert_match($data['propertyHouseNumber'].to_s, registered_property, 'House Number does not match')
-  assert_match($data['propertyTown'].to_s, registered_property, 'Town does not match')
-  assert_match($data['propertyPostcode'].to_s, registered_property, 'Postcode does not match')
-  assert_match($data['propertyRoad'].to_s, registered_property, 'Road does not match')
+  assert_match($data['titleNumber'].to_s, registered_property.to_s, 'Title number does not match')
+  assert_match($data['fullName1'].to_s, registered_property.to_s, 'FullName 1 does not match')
+  assert_match($data['fullName2'].to_s, registered_property.to_s, 'FullName 2 does not match')
+  assert_match($data['propertyHouseNumber'].to_s, registered_property.to_s, 'House Number does not match')
+  assert_match($data['propertyTown'].to_s, registered_property.to_s, 'Town does not match')
+  assert_match($data['propertyPostcode'].to_s, registered_property.to_s, 'Postcode does not match')
+  assert_match($data['propertyRoad'].to_s, registered_property.to_s, 'Road does not match')
 
 end
 
