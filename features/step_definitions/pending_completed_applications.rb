@@ -25,7 +25,7 @@ Given(/^completed applications exist$/) do
   $completed_cases[0]['regdata'] = $regData
   $completed_cases[0]['marriage_data'] = $marriage_data
   complete_case($completed_cases[0]['case_id'])
-
+  sleep(5)
   $regData['proprietors'][0]['full_name'] = $marriage_data['proprietor_new_full_name']
   $marriage_data = create_marriage_data('GB', $regData['proprietors'][0]['full_name'])
   $completed_cases << create_change_of_name_marriage_request($regData, $marriage_data)
