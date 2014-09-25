@@ -1,19 +1,24 @@
 Feature: View full register of title
 
-@performance_test_script
-Scenario: view register as new authenticated user
+Scenario: Citizen can view full register of title but cannot edit it
 
   Given I am a citizen
-  And a registered title
+  And a registered title with characteristics
+    | CHARACTERISTICS           |
+    | two proprietors           |
+    | has a charge              |
+    | has no charge restriction |
   When I view the full register of title
-  Then the Property Address is displayed
-  And Title Number is displayed
-  And Price Paid is displayed
-  And Tenure is displayed
-  And Class of Title is displayed
-  And proprietors are displayed
-  And Audit for private citizen register view written
+  Then I do not have the option to edit the register
 
+Scenario: Proprietor can view full register of title
+
+  Given I am a citizen
+  And I am the proprietor of a registered title
+  When I view the full register of title
+  Then I have the option to edit the register
+
+@performance_test_script
 Scenario: view freehold register as existing authenticated user with charge but no restriction
 
   Given I am a citizen
@@ -23,13 +28,15 @@ Scenario: view freehold register as existing authenticated user with charge but 
     | has a charge              |
     | has no charge restriction |
   When I view the full register of title
-  Then the Property Address is displayed
-  And Title Number is displayed
-  And Price Paid is displayed
-  And Tenure is displayed
-  And Class of Title is displayed
-  And proprietors are displayed
-  And the company charge is displayed with no restriction
+  Then I can see the following information displayed
+    | INFORMATION      |
+    | Title Number     |
+    | Proprietors      |
+    | Property Address |
+    | Price Paid       |
+    | Tenure           |
+    | Class Of Title   |
+    | Company Charge With No Restriction   |
 
 Scenario: view freehold register as existing authenticated user with charge and a restriction
 
@@ -39,14 +46,10 @@ Scenario: view freehold register as existing authenticated user with charge and 
     | has a charge               |
     | has a charge restriction   |
   When I view the full register of title
-  Then the Property Address is displayed
-  And Title Number is displayed
-  And Price Paid is displayed
-  And Tenure is displayed
-  And Class of Title is displayed
-  And proprietors are displayed
-  And the company charge is displayed
-  And the company charge is displayed with a restriction
+  Then I can see the following information displayed
+    | INFORMATION                          |
+    | Register Details                     |
+    | Company Charge With A Restriction    |
 
 Scenario: view lease register as new authenticated user without clauses and different lessee
 
@@ -57,12 +60,17 @@ Scenario: view lease register as new authenticated user without clauses and diff
     | has no lease clauses                          |
     | has a lessee name different to the proprietor |
   When I view the full register of title
-  Then Date of Lease is displayed
-  And Lease Term is displayed
-  And Lease Term start date is displayed
-  And Lessor name is displayed
-  And Lessee name is displayed
-  And the lease clauses are not displayed
+  Then I can see the following information displayed
+    | INFORMATION           |
+    | Register Details      |
+    | Date Of Lease         |
+    | Lease Term            |
+    | Lease Term Start Date |
+    | Lessor Name           |
+    | Lessee Name           |
+  And I cannot see the following information displayed
+    | INFORMATION           |
+    | Lease Clauses         |
 
 Scenario: view lease register as new authenticated user with clauses and lessee as proprietor
 
@@ -73,12 +81,17 @@ Scenario: view lease register as new authenticated user with clauses and lessee 
     | has lease clauses                          |
     | has a lessee name matching the proprietor  |
   When I view the full register of title
-  Then Date of Lease is displayed
-  And Lease Term is displayed
-  And Lease Term start date is displayed
-  And Lessor name is displayed
-  And Lessee name is displayed
-  And the lease clauses are displayed
+  Then I can see the following information displayed
+    | INFORMATION           |
+    | Register Details      |
+    | Date Of Lease         |
+    | Lease Term            |
+    | Lease Term Start Date |
+    | Lessor Name           |
+    | Lessee Name           |
+  And I cannot see the following information displayed
+    | INFORMATION           |
+    | Lease Clauses         |
 
 Scenario: Citizen can only view private register if logged in
 

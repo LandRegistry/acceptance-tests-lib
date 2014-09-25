@@ -11,12 +11,8 @@ Scenario: Full register of title
   Then I can see the following information displayed
     | INFORMATION      |
     | Title Number     |
-    | Proprietors      |
     | Property Address |
     | Price Paid       |
-    | Tenure           |
-    | Class Of Title   |
-    | Proprietors      |
   And Audit for private citizen register view written
 
 Scenario: Register of title with a charge but no restriction

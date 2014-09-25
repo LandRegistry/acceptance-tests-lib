@@ -9,18 +9,18 @@ require_relative '../../lib/webservice.rb'
 require_relative '../../lib/log_checking.rb'
 require_relative '../../lib/polygon_checking.rb'
 require_relative '../../lib/data_formatting.rb'
-require_relative '../../lib/validation.rb'
-require_relative '../../lib/validate_worklist_fields.rb'
-require_relative '../../lib/validate_registered_title_fields.rb'
+require_relative '../../lib/validation/validate_worklist_fields.rb'
+require_relative '../../lib/validation/validate_registered_title_fields.rb'
+require_relative '../../lib/validation/validate_general.rb'
 
 require_relative '../../lib/performance_testing/performance_script_generation.rb'
-require_relative '../../lib/performance_testing/performance_test.rb'
 
 
 require 'net/https'
 require 'digest/md5'
 require 'curb'
 require 'sinatra'
+require 'cucumber-performance'
 
 ### Includes Capybara (the visit, find, fill_in commands) and poltergeist (channel to phantomjs headless browser)
 require 'capybara/cucumber'
