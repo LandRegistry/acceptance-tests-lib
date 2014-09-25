@@ -24,11 +24,14 @@ def generic_register_data(table = nil)
 
   regData['property'] = Hash.new()
   regData['property']['address'] = Hash.new()
-  regData['property']['address']['address_line_1'] = houseNumber()
-  regData['property']['address']['address_line_2'] = roadName()
-  regData['property']['address']['city'] = townName()
+  regData['property']['address']['house_number'] = houseNumber()
+  regData['property']['address']['road'] = roadName()
+  regData['property']['address']['town'] = townName()
   regData['property']['address']['postcode'] = postcode()
-  regData['property']['address']['country'] = 'GB'
+
+  regData['property']['address']['address_line_1'] = regData['property']['address']['house_number'] # This is tempory as the other apps haven't been updated with new structure
+  regData['property']['address']['address_line_2'] = regData['property']['address']['road'] # This is tempory as the other apps haven't been updated with new structure
+  #regData['property']['address']['country'] = 'GB'
 
   regData['property']['tenure'] = genRegDetails_tenure(data_characteristics)
   regData['property']['class_of_title'] = 'absolute'
@@ -37,6 +40,59 @@ def generic_register_data(table = nil)
   regData['payment']['price_paid'] = pricePaid()
   regData['payment']['titles'] = Array.new()
   regData['payment']['titles'][0] = regData['title_number']
+
+  regData['proprietorship'] = Hash.new()
+  regData['proprietorship']['text'] = "PROPRIETOR(S): *RP*"
+  regData['proprietorship']['fields'] = Hash.new()
+  regData['proprietorship']['fields']['proprietors'] = Array.new()
+  regData['proprietorship']['fields']['proprietors'][0] = Hash.new()
+  regData['proprietorship']['fields']['proprietors'][0]['name'] = Hash.new()
+  regData['proprietorship']['fields']['proprietors'][0]['name']['title'] = 'MR'
+  regData['proprietorship']['fields']['proprietors'][0]['name']['full_name'] = regData['proprietors'][0]['full_name']
+  regData['proprietorship']['fields']['proprietors'][0]['name']['decoration'] = ''
+  regData['proprietorship']['fields']['proprietors'][0]['address'] = Hash.new()
+  regData['proprietorship']['fields']['proprietors'][0]['address']['full_address'] = "#{regData['property']['address']['house_number']} #{regData['property']['address']['road']}, #{regData['property']['address']['town']}, #{regData['property']['address']['postcode']}"
+  regData['proprietorship']['fields']['proprietors'][0]['address']['house_no'] = regData['property']['address']['house_number']
+  regData['proprietorship']['fields']['proprietors'][0]['address']['street_name'] = regData['property']['address']['road']
+  regData['proprietorship']['fields']['proprietors'][0]['address']['town'] = regData['property']['address']['town']
+  regData['proprietorship']['fields']['proprietors'][0]['address']['postal_county'] = ''
+  regData['proprietorship']['fields']['proprietors'][0]['address']['region_name'] =
+  regData['proprietorship']['fields']['proprietors'][0]['address']['country'] = ''
+  regData['proprietorship']['deeds'] = Array.new()
+  regData['proprietorship']['notes'] = Array.new()
+
+  regData['property_description'] = Hash.new()
+  regData['property_description']['text'] = 'The Freehold land shown edged with red on the plan of the above Title filed at the Registry and being *AD*'
+  regData['property_description']['fields'] = Hash.new()
+  regData['property_description']['fields']['address'] = Hash.new()
+  regData['property_description']['fields']['address']['full_address'] = "#{regData['property']['address']['house_number']} #{regData['property']['address']['road']}, #{regData['property']['address']['town']}, #{regData['property']['address']['postcode']}"
+  regData['property_description']['fields']['address']['house_no'] = regData['property']['address']['house_number']
+  regData['property_description']['fields']['address']['street_name'] = regData['property']['address']['road']
+  regData['property_description']['fields']['address']['town'] = regData['property']['address']['town']
+  regData['property_description']['fields']['address']['postal_county'] = regData['property']['address']['postcode']
+  regData['property_description']['fields']['address']['region_name'] = ""
+  regData['property_description']['fields']['address']['country'] = ""
+  regData['property_description']['deeds'] = Array.new()
+  regData['property_description']['notes'] = Array.new()
+
+  regData['price_paid'] = Hash.new()
+
+  regData['provisions'] = Array.new()
+  regData['provisions'][0] = Hash.new()
+  regData['provisions'][0]['text'] = "A *DT**DE* dated *DD* made between *DP* contains the following provision:-*VT*"
+  regData['provisions'][0]['fields'] = Hash.new()
+  regData['provisions'][0]['fields']['extent'] = "of the land in this title"
+  regData['provisions'][0]['fields']['verbatim_text'] = "The land has the benefit of a right of way along the passageway to the rear of the property, and also a right of way on foot only on to the open ground on the north west boundary of the land in this title"
+  regData['provisions'][0]['deeds'] = Array.new()
+  regData['provisions'][0]['deeds'][0] = Hash.new()
+  regData['provisions'][0]['deeds'][0]['type'] = "Transfer"
+  regData['provisions'][0]['deeds'][0]['date'] = "01.06.1996"
+  regData['provisions'][0]['deeds'][0]['parties'] = Array.new()
+  regData['provisions'][0]['deeds'][0]['parties'][0] = Hash.new()
+  regData['provisions'][0]['deeds'][0]['parties'][0]['title'] = 'Mr'
+  regData['provisions'][0]['deeds'][0]['parties'][0]['full_name'] = regData['proprietors'][0]['full_name']
+  regData['provisions'][0]['deeds'][0]['parties'][0]['decoration'] = ''
+  regData['provisions'][0]['notes'] = Array.new()
 
   regData = generate_lease_information(regData, data_characteristics)
 
