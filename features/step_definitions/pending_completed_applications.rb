@@ -43,39 +43,36 @@ When(/^I elect to view requests$/) do
     click_link('View pending and historical changes to this title')
 end
 
-Then(/^a separate list of pending requests followed by completed requests are shown in order of receipt by date & time$/) do
-  assert_match('Pending changes', page.body, 'Expected to find Pending changes text displayed on the screen')
-  assert_match('Previous changes', page.body, 'Expected to find Previous changes text displayed on the screen')
-end
-
-  Then(/^the correct data is displayed$/) do
+Then(/^the correct data is displayed$/) do
 
   #Loop through the data held on the pending applications table i.e. the cases table
 
     if (!$pending_cases.nil?)
 
-    for i in 0 ..$pending_cases.count - 1
+      for i in 0 ..$pending_cases.count - 1
 
-    puts "row = "
-    puts $pending_cases[i]["title_number"]
-    puts $pending_cases[i]["submitted_by"]
-    puts $pending_cases[i]["marriage_data"]["proprietor_full_name"]
-    puts $pending_cases[i]["marriage_data"]["proprietor_new_full_name"]
-    puts $pending_cases[i]["marriage_data"]["marriage_date"]
-    puts $pending_cases[i]["marriage_data"]["marriage_certificate_number"]
-    puts $pending_cases[i]["marriage_data"]["marriage_place"]
-    puts $pending_cases[i]["marriage_data"]["marriage_country"]
+        puts "row = "
+        puts $pending_cases[i]["title_number"]
+        puts $pending_cases[i]["submitted_by"]
+        puts $pending_cases[i]["marriage_data"]["proprietor_full_name"]
+        puts $pending_cases[i]["marriage_data"]["proprietor_new_full_name"]
+        puts $pending_cases[i]["marriage_data"]["marriage_date"]
+        puts $pending_cases[i]["marriage_data"]["marriage_certificate_number"]
+        puts $pending_cases[i]["marriage_data"]["marriage_place"]
+        puts $pending_cases[i]["marriage_data"]["marriage_country"]
 
-    assert_match($pending_cases[i]["title_number"], page.body, 'Expected to find '+ $pending_cases[i]["title_number"] +' displayed on the screen')
-    assert_match($pending_cases[i]["submitted_by"], page.body, 'Expected to find '+ $pending_cases[i]["submitted_by"] +' displayed on the screen')
-    assert_match($pending_cases[i]["marriage_data"]["proprietor_full_name"], page.body, 'Expected to find '+ $pending_cases[i]["marriage_data"]["proprietor_full_name"] +' displayed on the screen')
-    assert_match($pending_cases[i]["marriage_data"]["proprietor_new_full_name"], page.body, 'Expected to find '+ $pending_cases[i]["marriage_data"]["proprietor_new_full_name"] +' displayed on the screen')
-    assert_match($pending_cases[i]["marriage_data"]['marriage_date'].to_s, page.body, 'Expected to find ' + $pending_cases[i]["marriage_data"]["marriage_date"].to_s + ' displayed on the screen')
-    assert_match($pending_cases[i]["marriage_data"]["marriage_certificate_number"].to_s, page.body, 'Expected to find '+ ($pending_cases[i]["marriage_data"]["marriage_certificate_number"].to_s) +' displayed on the screen')
-    assert_match($pending_cases[i]["marriage_data"]["marriage_place"], page.body, 'Expected to find '+ $pending_cases[i]["marriage_data"]["marriage_place"] +' displayed on the screen')
-    assert_match($pending_cases[i]["marriage_data"]["marriage_country"], page.body, 'Expected to find '+ $pending_cases[i]["marriage_data"]["marriage_country"] +' displayed on the screen')
-    end
-  end  # of $pending_cases loop
+        assert_match($pending_cases[i]["title_number"], page.body, 'Expected to find '+ $pending_cases[i]["title_number"] +' displayed on the screen')
+        assert_match($pending_cases[i]["submitted_by"], page.body, 'Expected to find '+ $pending_cases[i]["submitted_by"] +' displayed on the screen')
+        assert_match($pending_cases[i]["marriage_data"]["proprietor_full_name"], page.body, 'Expected to find '+ $pending_cases[i]["marriage_data"]["proprietor_full_name"] +' displayed on the screen')
+        assert_match($pending_cases[i]["marriage_data"]["proprietor_new_full_name"], page.body, 'Expected to find '+ $pending_cases[i]["marriage_data"]["proprietor_new_full_name"] +' displayed on the screen')
+        assert_match($pending_cases[i]["marriage_data"]['marriage_date'].to_s, page.body, 'Expected to find ' + $pending_cases[i]["marriage_data"]["marriage_date"].to_s + ' displayed on the screen')
+        assert_match($pending_cases[i]["marriage_data"]["marriage_certificate_number"].to_s, page.body, 'Expected to find '+ ($pending_cases[i]["marriage_data"]["marriage_certificate_number"].to_s) +' displayed on the screen')
+        assert_match($pending_cases[i]["marriage_data"]["marriage_place"], page.body, 'Expected to find '+ $pending_cases[i]["marriage_data"]["marriage_place"] +' displayed on the screen')
+        assert_match($pending_cases[i]["marriage_data"]["marriage_country"], page.body, 'Expected to find '+ $pending_cases[i]["marriage_data"]["marriage_country"] +' displayed on the screen')
+
+      end # of $pending_cases loop
+
+    end  # if (!$pending_cases.nil?)
 
 
   if (!$completed_cases.nil?)
@@ -87,25 +84,27 @@ end
       assert_match($completed_cases[i]["title_number"], page.body, 'Expected to find '+ $completed_cases[i]["title_number"] +' displayed on the screen')
       assert_match($completed_cases[i]["submitted_by"], page.body, 'Expected to find '+ $completed_cases[i]["submitted_by"] +' displayed on the screen')
 
-    end  # of $completed_cases loop
+    end  # of for i in 0 ..$completed_cases.count - 1
 
-  end
+  end # if (!$completed_cases.nil?)
+
+  # initialise the 2 cases arrays ready for reuse
   $pending_cases = nil # Lets Tidy up, so that another scenario doesn't resuse this data
   $completed_cases = nil # Lets Tidy up, so that another scenario doesn't resuse this data
 
 
-  end
-
+end # of Then(/^the correct data is displayed$/)
 
 Then(/^a list of pending requests are shown in order of receipt by date & time$/) do
   i = 0
 
   puts $pending_cases.count
+
   page.all(".//ol[@class='register-changes-pending']/li").each do |el|
     name = el.find('.//div/ul/li[2]').text
     assert_match($pending_cases[i]["marriage_data"]["proprietor_new_full_name"], 'Previous name: ' + name, 'Expected to find '+ $pending_cases[i]["marriage_data"]["proprietor_new_full_name"] +' displayed on the screen')
     i += 1
-  end
+  end # of .each loop
 end
 
 Then(/^a separate list of completed requests are shown in order of receipt by date & time$/) do
@@ -113,7 +112,7 @@ Then(/^a separate list of completed requests are shown in order of receipt by da
   page.all(".//ol[@class='register-changes-previous']/li/div/p").each do |el|
     assert_match($completed_cases[i]["marriage_data"]["proprietor_full_name"], 'Submitted by: ' + el.text, 'Expected to find '+ $completed_cases[i]["marriage_data"]["proprietor_full_name"] +'')
     i += 1
-  end
+  end # of .each loop
 end
 
 Then(/^a view requests option is not displayed$/) do
