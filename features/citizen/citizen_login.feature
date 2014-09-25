@@ -3,14 +3,14 @@ Feature: Citizen login
 Scenario: Citizen Invalid username login failed
 
   Given I have private citizen login credentials
-  When I login with incorrect username
+  When I login to the service frontend with incorrect username
   Then I fail to login
 
 @performance_test_script
 Scenario: Citizen Invalid password login failed
 
   Given I have private citizen login credentials
-  When I login with incorrect password
+  When I login to the service frontend with incorrect password
   Then I fail to login
 
 Scenario: Citizen can logout
@@ -23,5 +23,5 @@ Scenario: Citizen can logout
 Scenario: Citizen Invalid password login failed
 
   Given I have blocked private citizen login credentials
-  When I login with incorrect password
+  When I login to the service frontend with incorrect password
   Then I fail to login

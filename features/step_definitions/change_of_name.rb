@@ -54,7 +54,7 @@ end
 
 When(/^I try to make a change of name by marriage request for the title$/) do
   visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}/edit/title.proprietor.1")
-  step "I login with correct credentials"
+  step "I login to the service frontend with correct credentials"
 end
 
 Then(/^my change of name by marriage request is now with Land Registry$/) do

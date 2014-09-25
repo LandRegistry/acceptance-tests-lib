@@ -51,9 +51,8 @@ Then(/^the company charge is displayed with a restriction$/) do
 end
 
 Given(/^I view the full register of title$/) do
-  puts $regData['title_number']
   visit("#{$SERVICE_FRONTEND_DOMAIN}/property/#{$regData['title_number']}")
-  step "I login with correct credentials"
+  step "I login to the service frontend with correct credentials"
 end
 
 Given(/^I would like to change my name as I have been married$/) do

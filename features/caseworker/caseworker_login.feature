@@ -3,13 +3,13 @@ Feature: Caseworker login
 Scenario: Caseworker Invalid username login failed
 Given I have caseworker login credentials
 And I am not already logged in as a caseworker
-And I login with incorrect username
+And I login to the casework frontend with incorrect username
 Then I fail to login (incorrect username)
 
 Scenario: Caseworker Invalid password login failed
 Given I have caseworker login credentials
 And I am not already logged in as a caseworker
-When I login with incorrect password
+When I login to the casework frontend with incorrect password
 Then I fail to login (incorrect password)
 
 Scenario: Caseworker can logout
