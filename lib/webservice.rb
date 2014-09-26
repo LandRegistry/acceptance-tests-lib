@@ -155,7 +155,7 @@ def wait_for_register_to_update_full_name(title_number, full_name)
 
   found_count = 0
   count = 0
-  while (found_count != 1 && count < 25) do
+  while (found_count != 1 && count < 50) do
     puts 'waiting for new version of title to be created'
     sleep(0.2)
 
