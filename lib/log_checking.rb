@@ -2,7 +2,7 @@ def check_logs_for_message(url, log_message)
 
   if $ENVIRONMENT == "preview" then
 
-    uri = URI.parse(url + "?start="+($log_start_time - 6000).to_s)
+    uri = URI.parse(url + "?start="+($log_start_time - 40000).to_s)
 
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
