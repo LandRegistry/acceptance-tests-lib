@@ -1,4 +1,4 @@
-Feature: Citizen view full register of title
+Feature: Citizen view full register of title (does not own property)
 
 @performance_test_script
 Scenario: Full register of title
@@ -11,12 +11,8 @@ Scenario: Full register of title
   Then I can see the following information displayed
     | INFORMATION      |
     | Title Number     |
-    | Proprietors      |
     | Property Address |
     | Price Paid       |
-    | Tenure           |
-    | Class Of Title   |
-    | Proprietors      |
   And Audit for private citizen register view written
 
 Scenario: Register of title with a charge but no restriction
@@ -31,6 +27,7 @@ Scenario: Register of title with a charge but no restriction
     | INFORMATION                          |
     | Register Details          |
     | Company Charge With No Restriction   |
+  And I do not have the option to edit the register
 
 Scenario: Register of title with a charge and a restriction
 
@@ -84,3 +81,38 @@ Scenario: Register of title with clauses and lessee as proprietor
     | Lessor Name           |
     | Lessee Name           |
     | Lease Clauses         |
+
+Scenario: Proprietor can view full register of title
+
+  Given I am a citizen
+  And I am the proprietor of a registered title
+  When I view the full register of title
+  Then I have the option to edit the register
+
+Scenario: Citizen can only view private register if logged in
+
+  Given a registered title
+  When I view the private register
+  Then I am prompted to login as a private citizen
+
+Scenario: Private Register with Title Extents
+
+  Given I am a citizen
+  And a registered title with characteristics
+    | CHARACTERISTICS                   |
+    | has a polygon with easement       |
+    | has a doughnut polygon            |
+  When I view the full register of title
+  And I check the title plan (private view)
+  Then I can see the following information displayed
+    | INFORMATION                   |
+    | multiple polygons             |
+    | whole polygin is in view      |
+    | the polygons match the title  |
+    | the polygons are edged in red |
+    | there is a donut polygon      |
+    | there is a normal polygon     |
+    | there is an easement          |
+    | the map can't be zoomed       |
+    | the map can't be moved        |
+    | the polygons are over a map   |

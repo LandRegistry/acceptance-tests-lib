@@ -1,5 +1,10 @@
 require 'oily_png'
 
+def checkmultiplepolygons()
+  assert_operator $map_details['polygon_count'], :>, 1, 'Expected different amount of polygons'
+end
+
+
 When(/^I check the title plan \(public view\)$/) do
   wait_for_map_to_load()
 
@@ -90,12 +95,7 @@ When(/^I check the title plan \(private view\)$/) do
 
 end
 
-Then(/^there is (\d+) polygon(s|)$/) do |expected_polygon_count, wording|
-  # Compare the polygon count
-  assert_equal expected_polygon_count.to_i, $map_details['polygon_count'], 'Expected different amount of polygons'
-end
-
-Then(/^the whole polygon area is in view$/) do
+def checkwholepolyginisinview()
   # Check to see if the min/max x and y don't touch the border for each polygon
   $map_details['polygons'].each do |polygon|
     assert_not_equal polygon['x.min'], 0, 'The Polygon occupies more than the screen'
@@ -105,14 +105,7 @@ Then(/^the whole polygon area is in view$/) do
   end
 end
 
-Then(/^the polygon is a donut$/) do
-  # Check to see if the polygons are donuts
-  $map_details['polygons'].each do |polygon|
-    assert_equal polygon['donut'], true, 'The Polygon should be a donut, but isn\'t'
-  end
-end
-
-Then(/^the polygon(s|) matches that of the title$/) do |wording|
+def checkthepolygonsmatchthetitle()
   # Check to see of the coordinates exist on the html source code
   for i in 0..($regData['extent']['geometry']['coordinates'].count) -1
     for j in 0..($regData['extent']['geometry']['coordinates'][i].count) -1
@@ -122,7 +115,7 @@ Then(/^the polygon(s|) matches that of the title$/) do |wording|
   end
 end
 
-Then(/^the polygon(s are| is) edged in red$/) do |wording|
+def checkthepolygonsareedgedinred()
   # Check the source code of the html for the stroke of red
   #assert_equal (find(".//*[local-name() = 'path']")['stroke']) , 'red', 'Expected the edging to be red'
 
@@ -153,7 +146,7 @@ Then(/^the polygon(s are| is) edged in red$/) do |wording|
 
 end
 
-Then(/^the map can't be zoomed$/) do
+def checkthemapcantbezoomed()
   # Generate some new map names.
   map_file1 = "tmpimg-#{Time.new.to_i}-1.png"
   map_file2 = "tmpimg-#{Time.new.to_i}-2.png"
@@ -175,8 +168,8 @@ Then(/^the map can't be zoomed$/) do
 
 end
 
-Then(/^the map can't be moved$/) do
-  # Generate some new map names.
+def checkthemapcantbemoved()
+    # Generate some new map names.
   map_file1 = "tmpimg-#{Time.new.to_i}-1.png"
   map_file2 = "tmpimg-#{Time.new.to_i}-2.png"
 
@@ -198,7 +191,7 @@ Then(/^the map can't be moved$/) do
 
 end
 
-Then(/^the Polygon(s are| is) laid over a map$/) do |wording|
+def checkthepolygonsareoveramap()
 
   if (ENV['WEBDRIVER'] != 'Firefox') then
 
@@ -229,28 +222,14 @@ Then(/^the Polygon(s are| is) laid over a map$/) do |wording|
 
 end
 
-Then(/^the polygon( has|s have) an easement$/) do |wording|
-  # Loop through the polygons
-  $map_details['polygons'].each do |polygon|
-    assert_equal true, polygon['easement'], 'The polygon does not have an easement'
-  end
-end
-
-Then(/^the polygon does not have an easement$/) do
+def checkthereisnoeasement()
   # Loop through the polygons
   $map_details['polygons'].each do |polygon|
     assert_equal false, polygon['easement'], 'The polygon does not have an easement'
   end
 end
 
-
-Given(/^I want to compare easements$/) do
-  # Compare the images to get the polygon details
-  $map_details = get_polygon_details('tmpimg-1409432299-1.png', 'tmpimg-1409432299-2.png')
-end
-
-
-Then(/^there is a donut polygon$/) do
+def checkthereisadonutpolygon()
   # Check to see if the polygons are donuts
   donut_count = 0
   $map_details['polygons'].each do |polygon|
@@ -261,7 +240,7 @@ Then(/^there is a donut polygon$/) do
 end
 
 
-Then(/^there is a normal polygon$/) do
+def checkthereisanormalpolygon()
   # Check to see if the polygons are donuts
   normal_count = 0
   $map_details['polygons'].each do |polygon|
@@ -281,7 +260,7 @@ Then(/^there are no easements displayed$/) do
   assert_equal easement_count, 0, 'There shouldn\'t be an easement, but is'
 end
 
-Then(/^there is an easement$/) do
+def checkthereisaneasement()
   # Check to see if the polygons are donuts
   easement_count = 0
   $map_details['polygons'].each do |polygon|

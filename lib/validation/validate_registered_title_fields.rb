@@ -87,6 +87,10 @@ def checkLesseeName()
   assert_selector(".//*[@id='parties']", text: /2. #{$regData['leases'][0]['lessee_name']}/)
 end
 
+def checkNotExistLesseeName()
+  assert_no_selector(".//*[@id='parties']", text: /2. #{$regData['leases'][0]['lessee_name']}/)
+end
+
 def checkLeaseClauses()
   assert_selector(".//*[@id='easementClause']")
   assert_selector(".//*[@id='easementClause']")

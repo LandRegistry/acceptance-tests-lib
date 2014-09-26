@@ -70,6 +70,11 @@ def complete_case(case_id)
   request.basic_auth $http_auth_name, $http_auth_password
   response = http.request(request)
 
+  if (response.body != 'OK') then
+    raise 'Error: ' + response.body
+  end
+
+
   if ($PERFROMANCETEST.nil?) then
     $function_call_name << 'complete_case'
     $function_call_data << nil

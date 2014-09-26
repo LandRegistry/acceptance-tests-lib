@@ -22,6 +22,9 @@ end
 
 Then(/^the register of title is updated with the new name$/) do
 
+
+  wait_for_register_to_update_full_name($regData['title_number'], $marriage_data['proprietor_new_full_name'])
+
   title_number = $regData['title_number']
 
   found_count = 0
