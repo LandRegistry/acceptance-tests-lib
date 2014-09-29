@@ -54,7 +54,7 @@ def get_register_details(title_no)
   response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_no)
 
   puts 'Result'
-  puts json_response
+  puts JSON.parse(response.body)
 
   return  JSON.parse(response.body)
 
