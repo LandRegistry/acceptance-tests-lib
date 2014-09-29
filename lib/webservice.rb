@@ -15,6 +15,7 @@ def wait_for_register_to_be_created(title_no)
   found_count = 0
   count = 0
 
+  sleep(1) # Temp sleep to try and get Jenkins Working.
   while (found_count != 2 && count < 25) do
     puts 'waiting for registration to be created'
 
