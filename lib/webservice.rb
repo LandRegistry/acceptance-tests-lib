@@ -32,9 +32,6 @@ def wait_for_register_to_be_created(title_no)
     response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_no)
     json_response = JSON.parse(response.body);
 
-    puts 'Polling'
-    puts json_response
-
     if ((response.code != '404') && (!json_response['title_number'].nil?)) then
         found_count = found_count + 1
     end
@@ -46,16 +43,12 @@ def wait_for_register_to_be_created(title_no)
     raise "No records found for title " + title_no
   end
 
-  return response.body
+  return JSON.parse(response.body)
 end
 
 def get_register_details(title_no)
 
   response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_no)
-
-  puts 'Result'
-  puts JSON.parse(response.body)
-
   return  JSON.parse(response.body)
 
 end

@@ -83,9 +83,9 @@ end
 Then(/^I have received confirmation that the property has been registered$/) do
   assert_match(/New title created/i, page.body, 'Expected registration message but was not present')
 
-  wait_for_register_to_be_created($data['titleNumber'])
+  registered_property = wait_for_register_to_be_created($data['titleNumber'])
 
-  registered_property = get_register_details($data['titleNumber'])
+  #registered_property = get_register_details($data['titleNumber'])
 
   assert_match($data['titleNumber'].to_s, registered_property.to_s, 'Title number does not match')
   assert_match($data['fullName1'].to_s, registered_property.to_s, 'FullName 1 does not match')
