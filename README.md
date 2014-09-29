@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/LandRegistry/acceptance-tests.svg)](https://travis-ci.org/LandRegistry/acceptance-tests)
+Travis: [![Build Status](https://travis-ci.org/LandRegistry/acceptance-tests.svg)](https://travis-ci.org/LandRegistry/acceptance-tests)<br>
+Jenkins: [![Build Status](http://ci.preview.landregistryconcept.co.uk/job/Test-Acceptance/badge/icon)](http://ci.preview.landregistryconcept.co.uk/job/Test-Acceptance/)
 
 Frontend Acceptance Tests
 ===============
