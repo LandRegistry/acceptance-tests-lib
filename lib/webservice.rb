@@ -32,6 +32,8 @@ def wait_for_register_to_be_created(title_no)
     response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_no)
     json_response = JSON.parse(response.body);
 
+    puts json_response
+
     if ((response.code != '404') && (!json_response['title_number'].nil?)) then
         found_count = found_count + 1
     end

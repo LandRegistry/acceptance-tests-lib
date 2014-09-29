@@ -2,7 +2,12 @@
 
 set -e
 
+rm -rf diff2*
+rm -rf tmpimg*
+rm -rf sshot*
+
 bundle install
+
 
 export CASEWORK_FRONTEND_DOMAIN="http://casework.landregistryconcept.co.uk"
 export PROPERTY_FRONTEND_DOMAIN="http://www.gov.uk.landregistryconcept.co.uk"
@@ -18,7 +23,7 @@ export ENVIRONMENT="preview"
 
 if [ -z "$1" ]
   then
-    cucumber --tags ~@wip --tags ~@removed --tags ~@performance_test
+    cucumber --tags ~@wip --tags ~@removed  --tags ~@performance_test --format json --out report.json --format pretty
 else
     cucumber -r features $1
 fi
