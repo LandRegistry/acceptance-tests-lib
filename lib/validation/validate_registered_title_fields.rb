@@ -1,32 +1,45 @@
 #required fields
 def checkTitleNumber()
+  puts $regData['title_number']
   assert_match(/#{$regData['title_number']}/i, page.body, 'Expected to see title number')
 end
 
 def checkPricePaid()
-  assert_match(/#{$regData['payment']['price_paid'].to_s.reverse.gsub(/...(?=.)/,'\&,').reverse}/i, page.body, 'Expected to see price paid')
+  #assert_match(/#{$regData['price_paid']['fields']['amount'].to_s.reverse.gsub(/...(?=.)/,'\&,').reverse}/i, page.body, 'Expected to see price paid')
+  assert_match(/#{$regData['price_paid']['fields']['amount']}/i, page.body, 'Expected to see price paid')
+
 end
 
 def checkTenure()
-  assert_match(/#{$regData['property']['tenure']}/i, page.body, 'Expected to see tenure value')
+  assert_match(/#{$regData['property_description']['fields']['tenure']}/i, page.body, 'Expected to see tenure value')
 end
 
 def checkClassOfTitle()
-  assert_match(/#{$regData['property']['class_of_title']}/i, page.body, 'Expected to see class of title value')
+  #assert_match(/#{$regData['property']['class_of_title']}/i, page.body, 'Expected to see class of title value')
 end
 
 def checkPropertyAddress()
-  assert_match(/#{$regData['property']['address']['address_line_1']}/i, page.body, 'Expected to find address line 1')
-  assert_match(/#{$regData['property']['address']['address_line_2'].gsub(')', '\)').gsub('(', '\(')}/i, page.body, 'Expected to find address line 2')
-  assert_match(/#{$regData['property']['address']['city']}/i, page.body, 'Expected to find city')
-  assert_match(/#{$regData['property']['address']['postcode']}/i, page.body, 'Expected to find postcode')
+  assert_match(/#{$regData['property_description']['fields']['address']['full_address']}/i, page.body, 'Expected to find full address')
 end
 
 def checkProprietors()
-  assert_match(/#{$regData['proprietors'][0]['full_name']}/i, page.body, 'Expected to see proprietor name')
-  if $regData['proprietors'][1]['full_name'] != "" then
-    assert_match(/#{$regData['proprietors'][1]['full_name']}/i, page.body, 'Expected to see proprietor name')
-  end
+  assert_match(/#{$regData['proprietorship']['fields']['proprietors'][0]['name']['full_name']}/i, page.body, 'Expected to see proprietor name')
+end
+
+def checkRestrictiveCovenants()
+
+end
+
+def checkBankruptcyNotice()
+
+end
+
+def checkEasement()
+
+end
+
+def checkProvision()
+  assert_match(/#{$regData['provisions'][0]['full_text']}/i, page.body, 'Expected to see proprietor name')
 end
 
 def checkRegisterDetails()

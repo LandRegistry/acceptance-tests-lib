@@ -1,11 +1,6 @@
 require_relative '../../lib/dataCreation/register_creation2.rb'
 
 def generic_register_data(table = nil)
-  $registerData = Hash.new()
-  create_base_register()
-  add_proprietors(2)
-  add_price_paid()
-  puts $registerData.to_json
 
   if (!table.nil?) then
     data_characteristics, data_characteristics_types = format_data_characteristics(table)
