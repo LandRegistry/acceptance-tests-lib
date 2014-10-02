@@ -35,6 +35,8 @@ def create_base_register(table)
           add_provision()
         elsif value[0] == 'price paid' then
           add_price_paid()
+        elsif value[0] == 'restriction' then
+          add_restriction()
         end
       end
     end
@@ -59,6 +61,17 @@ def add_restrictive_covenants()
   $regData['restrictive_covenants'][0]['fields'] = Hash.new()
   $regData['restrictive_covenants'][0]['deeds'] = Array.new()
   $regData['restrictive_covenants'][0]['notes'] = Array.new()
+end
+
+def add_restriction()
+  $regData['restrictions'] = Array.new()
+  $regData['restrictions'][0] = Hash.new()
+  $regData['restrictions'][0]['text'] = "RESTRICTION: No disposition by the proprietor of the registered estate or in exercise of the power of sale or leasing in any registered charge (except an exempt disposal as defined by section 81(8) of the Housing Act 1988) is to be registered without the consent of - (a) in relation to a disposal of land in England by a private registered provider of social housing, the Regulator of Social Housing, (b) in relation to any other disposal of land in England, the Secretary of State, and (c) in relation to a disposal of land in Wales, the Welsh Ministers, to that disposition under *M<>M*."
+  $regData['restrictions'][0]['full_text'] = "RESTRICTION: No disposition by the proprietor of the registered estate or in exercise of the power of sale or leasing in any registered charge (except an exempt disposal as defined by section 81(8) of the Housing Act 1988) is to be registered without the consent of - (a) in relation to a disposal of land in England by a private registered provider of social housing, the Regulator of Social Housing, (b) in relation to any other disposal of land in England, the Secretary of State, and (c) in relation to a disposal of land in Wales, the Welsh Ministers, to that disposition under section 133 of that Act."
+  $regData['restrictions'][0]['fields'] = Hash.new()
+  $regData['restrictions'][0]['fields']['miscellaneous'] = "section 133 of that Act"
+  $regData['restrictions'][0]['deeds'] = Array.new()
+  $regData['restrictions'][0]['notes'] = Array.new()
 end
 
 def add_bankruptcy()
@@ -94,7 +107,7 @@ end
 def add_price_paid()
   $regData['price_paid'] = Hash.new()
   $regData['price_paid']['text'] = "The Freehold land shown edged with red on the plan of the above Title filed at the Registry and being *AD*"
-  $regData['price_paid']['full_text'] = "The price stated to have been paid on 15 11 2005 was 100000."
+  $regData['price_paid']['full_text'] = "The price stated to have been paid on 15.11.2005 was 100000."
   $regData['price_paid']['fields'] = Hash.new()
   $regData['price_paid']['fields']['date'] = dateInThePast().strftime("%d/%m/%Y")
   $regData['price_paid']['fields']['amount'] = pricePaid()

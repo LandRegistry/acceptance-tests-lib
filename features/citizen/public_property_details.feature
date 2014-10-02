@@ -19,7 +19,7 @@ Scenario: try to view register that does not exist
   Given I am a citizen
   When I try to view a property that does not exist
   Then an error is displayed
-  
+
 
 Scenario: Public Register with Title Extents
 

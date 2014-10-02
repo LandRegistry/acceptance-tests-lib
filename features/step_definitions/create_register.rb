@@ -26,7 +26,7 @@ Then(/^the register of title is updated with the new name$/) do
     puts 'name on title: '  + JSON.parse(response)['proprietors'][0]['full_name']
     puts 'expected name on title: ' + $marriage_data['proprietor_new_full_name']
     if (!response.nil?)
-      if (JSON.parse(response)['proprietors'][0]['full_name']==$marriage_data['proprietor_new_full_name'])
+      if (JSON.parse(response)['proprietorship']['fields']['proprietors'][0]['name']['full_name']==$marriage_data['proprietor_new_full_name'])
         found_count = 1
         puts 'Title updated'
       end

@@ -11,6 +11,7 @@ Scenario: Full register of title
     | easement                  |
     | provision                 |
     | price paid                |
+    | restriction               |
   When I view the full register of title
   Then I can see the following information displayed
     | INFORMATION           |
@@ -22,6 +23,7 @@ Scenario: Full register of title
     | Bankruptcy Notice     |
     | Easement              |
     | Provision             |
+    | Restriction           |
   And Audit for private citizen register view written
 
 Scenario: Proprietor can edit the register

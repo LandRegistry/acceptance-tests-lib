@@ -25,7 +25,6 @@ Scenario: View Change of Name in work queue (Checking)
      | Date Request Was Submitted               |
      | Application Type Of Change Name Marriage |
 
-@wip
 Scenario: Caseworker can process a change of name by way of marriage request and update the title of register
 
   Given I am a caseworker
