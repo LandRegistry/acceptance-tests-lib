@@ -187,3 +187,16 @@ def wait_for_register_to_update_full_name(title_number, full_name)
   end
 
 end
+
+def post_to_historical(data_hash, title_number)
+  uri = URI.parse($HISTORIAN_URL)
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Post.new('/' + title_number,  initheader = {'Content-Type' =>'application/json'})
+  request.basic_auth $http_auth_name, $http_auth_password
+  request.body = data_hash.to_json
+  response = http.request(request)
+  if (response.code != '200') then
+    raise "Failed to associate client with token: " + response.body
+  end
+  return response.body
+end

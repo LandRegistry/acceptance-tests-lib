@@ -1,3 +1,13 @@
+def create_historical_register()
+  #puts regData['title_number']
+  historicalData = Hash.new()
+  historicalData['key'] = "DN100"
+  historicalData['value'] = "foobar"
+  historicalData['version'] = 1
+
+  post_to_historical(historicalData,"DN100")
+end
+
 def generic_register_data(table = nil)
 
   if (!table.nil?) then
