@@ -13,7 +13,7 @@ def create_base_register(table)
   $regData['property_description']['full_text'] = "The Freehold land shown edged with red on the plan of the above Title filed at the Registry and being 8 Miller Way, Plymouth, Devon, PL6 8UQ"
   $regData['property_description']['fields'] = Hash.new()
   $regData['property_description']['fields']['tenure'] = "Freehold"
-  $regData['property_description']['fields'].merge!(generate_address(''))
+  $regData['property_description']['fields'].merge!(generate_address('United Kingdom'))
   $regData['property_description']['deeds'] = Array.new()
   $regData['property_description']['notes'] = Array.new()
 
@@ -56,7 +56,7 @@ end
 def add_restrictive_covenants()
   $regData['restrictive_covenants'] = Array.new()
   $regData['restrictive_covenants'][0] = Hash.new()
-  $regData['restrictive_covenants'][0]['text'] = "A *DT**DE* dated *DD* made between *DP* contains the following provision:-*VT*"
+  $regData['restrictive_covenants'][0]['text'] = "By an Order of the Upper Tribunal (Lands Chamber) dated *DA* made pursuant to Section 84 of the Law of Property Act 1925 the restrictive covenants contained in the *DT**DE* dated *DD* referred to above were released. *N<¬NOTE: Copy Order filed>N*."
   $regData['restrictive_covenants'][0]['full_text'] = "By an Order of the Upper Tribunal (Lands Chamber) dated 14/06/2013 made pursuant to Section 84 of the Law of Property Act 1925 the restrictive covenants contained in the Conveyance dated 01.06.1996 referred to above were released. NOTE: Copy Order filed"
   $regData['restrictive_covenants'][0]['fields'] = Hash.new()
   $regData['restrictive_covenants'][0]['deeds'] = Array.new()
@@ -77,7 +77,7 @@ end
 def add_bankruptcy()
   $regData['bankruptcy'] = Array.new()
   $regData['bankruptcy'][0] = Hash.new()
-  $regData['bankruptcy'][0]['text'] = "A *DT**DE* dated *DD* made between *DP* contains the following provision:-*VT*"
+  $regData['bankruptcy'][0]['text'] = "BANKRUPTCY NOTICE entered under section 86(2) of the Land Registration Act 2002 in respect of a pending action, as the title of the proprietor of the registered estate appears to be affected by a petition in bankruptcy against *NM* presented in the *M<>M* Court (Court Reference Number *M<>M*) (Land Charges Reference Number PA*M<>M*)."
   $regData['bankruptcy'][0]['full_text'] = "BANKRUPTCY NOTICE entered under section 86(2) of the Land Registration Act 2002 in respect of a pending action, as the title of the proprietor of the registered estate appears to be affected by a petition in bankruptcy against James Lock presented in the Gloucester County Court (Court Reference Number 124578) (Land Charges Reference Number PA102)."
   $regData['bankruptcy'][0]['fields'] = Hash.new()
   $regData['bankruptcy'][0]['deeds'] = Array.new()
@@ -85,9 +85,10 @@ def add_bankruptcy()
 end
 
 def add_easement()
+  #to generate an easement - genenerate_title_easement2($regData['extent'], {'has a polygon with easement' => true})
   $regData['easements'] = Array.new()
   $regData['easements'][0] = Hash.new()
-  $regData['easements'][0]['text'] = "A *DT**DE* dated *DD* made between *DP* contains the following provision:-*VT*"
+  $regData['easements'][0]['text'] = "The land *E<>E* is subject to the rights granted by a *DT**DE* dated *DD* made between *DP*. The said Deed also contains restrictive covenants by the grantor. *N<^NOTE: Copy in Certificate. Copy filed>N*."
   $regData['easements'][0]['full_text'] = "The land tinted pink is subject to the rights granted by a Deed dated 03.03.1976 made between Mr Michael Jones and Mr Jeff Smith. The said Deed also contains restrictive covenants by the grantor. NOTE: Copy filed."
   $regData['easements'][0]['fields'] = Hash.new()
   $regData['easements'][0]['deeds'] = Array.new()
@@ -106,7 +107,7 @@ end
 
 def add_price_paid()
   $regData['price_paid'] = Hash.new()
-  $regData['price_paid']['text'] = "The Freehold land shown edged with red on the plan of the above Title filed at the Registry and being *AD*"
+  $regData['price_paid']['text'] = "The price stated to have been paid on *DA* was *AM*."
   $regData['price_paid']['full_text'] = "The price stated to have been paid on 15.11.2005 was 100000."
   $regData['price_paid']['fields'] = Hash.new()
   $regData['price_paid']['fields']['date'] = dateInThePast().strftime("%d/%m/%Y")
