@@ -116,6 +116,26 @@ def add_price_paid()
   $regData['price_paid']['notes'] = Array.new()
 end
 
+def add_charge()
+  $regData['charges'] = Array.new()
+  $regData['charges'][0] = Hash.new()
+  $regData['charges'][0]['text'] = "CHARGE"
+  $regData['charges'][0]['full_text'] = "CHARGE full text"
+  $regData['charges'][0]['fields'] = Hash.new()
+  $regData['charges'][0]['deeds'] = Array.new()
+  $regData['charges'][0]['notes'] = Array.new()
+end
+
+def add_other()
+  $regData['other'] = Array.new()
+  $regData['other'][0] = Hash.new()
+  $regData['other'][0]['text'] = "OTHER"
+  $regData['other'][0]['full_text'] = "OTHER full text"
+  $regData['other'][0]['fields'] = Hash.new()
+  $regData['other'][0]['deeds'] = Array.new()
+  $regData['other'][0]['notes'] = Array.new()
+end
+
 def add_proprietors(number)
   $regData['proprietorship']['fields']['proprietors'] = Array.new()
   for i in 0..number - 1
