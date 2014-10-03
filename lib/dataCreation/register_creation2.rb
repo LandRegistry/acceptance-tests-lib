@@ -56,7 +56,7 @@ end
 def add_restrictive_covenants()
   $regData['restrictive_covenants'] = Array.new()
   $regData['restrictive_covenants'][0] = Hash.new()
-  $regData['restrictive_covenants'][0]['text'] = "By an Order of the Upper Tribunal (Lands Chamber) dated *DA* made pursuant to Section 84 of the Law of Property Act 1925 the restrictive covenants contained in the *DT**DE* dated *DD* referred to above were released. *N<¬NOTE: Copy Order filed>N*."
+  $regData['restrictive_covenants'][0]['text'] = "By an Order of the Upper Tribunal (Lands Chamber) dated *DA* made pursuant to Section 84 of the Law of Property Act 1925 the restrictive covenants contained in the *DT**DE* dated *DD* referred to above were released. *N< NOTE: Copy Order filed>N*."
   $regData['restrictive_covenants'][0]['full_text'] = "By an Order of the Upper Tribunal (Lands Chamber) dated 14/06/2013 made pursuant to Section 84 of the Law of Property Act 1925 the restrictive covenants contained in the Conveyance dated 01.06.1996 referred to above were released. NOTE: Copy Order filed"
   $regData['restrictive_covenants'][0]['fields'] = Hash.new()
   $regData['restrictive_covenants'][0]['deeds'] = Array.new()
