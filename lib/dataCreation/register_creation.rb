@@ -1,11 +1,18 @@
-def create_historical_register()
-  #puts regData['title_number']
-  historicalData = Hash.new()
-  historicalData['key'] = "DN100"
-  historicalData['value'] = "foobar"
-  historicalData['version'] = 1
+#returns an array of previous titles history
+def get_all_historical_titles(title_number)
+  title_history_list = get_all_history(title_number)
+  title_version_history = Array.new
+  for i in 0..(title_history_list["meta"]["version_id"].to_i)-1 do
+    title_version_history[i] = get_history_version($regData['title_number'], i+1)
+  end
+  return title_version_history
+end
 
-  post_to_historical(historicalData,"DN100")
+#returns the hash to fake a historical title
+def create_historical_data()
+  historicalData = Hash.new()
+  historicalData['some value'] = "Whatever value wanted"+dateInThePast().to_s
+  return historicalData
 end
 
 def generic_register_data(table = nil)

@@ -196,7 +196,27 @@ def post_to_historical(data_hash, title_number)
   request.body = data_hash.to_json
   response = http.request(request)
   if (response.code != '200') then
-    raise "Failed to associate client with token: " + response.body
+    raise "Failed to create the historical data: " + response.body
   end
   return response.body
+end
+
+def get_all_history(title_number)
+  response = rest_get_call($HISTORIAN_URL + '/' + title_number +'?versions=list')
+  if (response.code != '200') then
+    raise "Failed to retrieve list of historical data: " + response.body
+  end
+  return JSON.parse(response.body)
+end
+
+def get_history_version(title_number, version)
+  uri = URI.parse($HISTORIAN_URL)
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Get.new('/' + title_number +'?version=' + version.to_s,  initheader = {'Content-Type' =>'application/json'})
+  request.basic_auth $http_auth_name, $http_auth_password
+  response = http.request(request)
+  if (response.code != '200') then
+    raise "Failed to retrieve historical version specified: " + response.body
+  end
+  return JSON.parse(response.body)
 end
