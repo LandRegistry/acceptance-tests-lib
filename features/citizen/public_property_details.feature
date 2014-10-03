@@ -4,7 +4,14 @@ Feature: View property details on gov.uk
 Scenario: Citizen View public register
 
   Given I am a citizen
-  And a registered title
+And a registered title with characteristics
+  | CHARACTERISTICS           |
+  | restictive covenants      |
+  | bankruptcy notice         |
+  | easement                  |
+  | provision                 |
+  | price paid                |
+  | restriction               |
   When I view the property details on gov.uk
   Then I can see the following information displayed
     | INFORMATION      |
