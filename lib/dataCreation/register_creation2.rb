@@ -137,7 +137,9 @@ def add_other()
 end
 
 def add_proprietors(number)
-  $regData['proprietorship']['fields']['proprietors'] = Array.new()
+  if $regData['proprietorship']['fields']['proprietors'].nil?
+    $regData['proprietorship']['fields']['proprietors'] = Array.new()
+  end
   for i in 0..number - 1
     $regData['proprietorship']['fields']['proprietors'][i] = Hash.new()
     $regData['proprietorship']['fields']['proprietors'][i]['name'] = Hash.new()
