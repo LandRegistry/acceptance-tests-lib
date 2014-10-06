@@ -19,7 +19,6 @@ def checkClassOfTitle()
 end
 
 def checkPropertyAddress()
-  if $structuredData then
     assert_match(/#{$regData['property_description']['fields']['address']['full_address']}/i, page.body, 'Expected to see full address')
 end
 
