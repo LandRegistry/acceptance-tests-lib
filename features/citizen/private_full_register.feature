@@ -16,16 +16,16 @@ Scenario: Full register of title
     | other                     |
   When I view the full register of title
   Then I can see the following information displayed
-    | INFORMATION           |
-    | Title Number          |
-    | Proprietors           |
-    | Property Address      |
-    | Price Paid            |
-    | Restrictive Covenants |
-    | Bankruptcy Notice     |
-    | Easement              |
-    | Provision             |
-    | Restriction           |
+    | INFORMATION                  |
+    | Title Number                 |
+    | Proprietors                  |
+    | Structured Property Address  |
+    | Price Paid                   |
+    | Restrictive Covenants        |
+    | Bankruptcy Notice            |
+    | Easement                     |
+    | Provision                    |
+    | Restriction                  |
   And Audit for private citizen register view written
 
 Scenario: Proprietor can edit the register

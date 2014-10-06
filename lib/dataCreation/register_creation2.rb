@@ -1,4 +1,7 @@
 def create_base_register(table)
+  $structuredData = true
+  puts $structuredData
+
   $regData = Hash.new()
   $regData['title_number'] = titleNumber()
   $regData['proprietorship'] = Hash.new()
@@ -61,6 +64,13 @@ def add_restrictive_covenants()
   $regData['restrictive_covenants'][0]['fields'] = Hash.new()
   $regData['restrictive_covenants'][0]['deeds'] = Array.new()
   $regData['restrictive_covenants'][0]['notes'] = Array.new()
+
+  $regData['restrictive_covenants'][1] = Hash.new()
+  $regData['restrictive_covenants'][1]['text'] = "By an Order of the Upper Tribunal (Lands Chamber) dated *DA* made pursuant to Section 84 of the Law of Property Act 1925 the restrictive covenants contained in the *DT**DE* dated *DD* referred to above were released. *N< NOTE: Copy Order filed>N*."
+  $regData['restrictive_covenants'][1]['full_text'] = "By an Order of the Upper Tribunal (Lands Chamber) dated 14/06/2013 made pursuant to Section 84 of the Law of Property Act 1925 the restrictive covenants contained in the Conveyance dated 01.06.1996 referred to above were released. NOTE: Copy Order filed"
+  $regData['restrictive_covenants'][1]['fields'] = Hash.new()
+  $regData['restrictive_covenants'][1]['deeds'] = Array.new()
+  $regData['restrictive_covenants'][1]['notes'] = Array.new()
 end
 
 def add_restriction()
@@ -151,7 +161,7 @@ def add_proprietors(number)
 end
 
 def generate_address(country)
-  house_no = houseNumber()
+  house_no = houseNumber().to_s
   street_name = roadName()
   town = townName()
   postal_county = 'Greater London'
@@ -161,12 +171,21 @@ def generate_address(country)
   $address = Hash.new()
   $address['address'] = Hash.new()
   $address['address']['full_address'] = "#{house_no} #{street_name}, #{town}, #{postal_county}, #{region_name}, #{country}, #{postcode}"
-  $address['address']['house_no'] = house_no
-  $address['address']['street_name'] = street_name
-  $address['address']['town'] = town
-  $address['address']['postal_county'] = postal_county
-  $address['address']['region_name'] = region_name
-  $address['address']['country'] = country
-  $address['address']['postcode'] = postcode
+  $address['address']['house_no'] = ''
+  $address['address']['street_name'] = ''
+  $address['address']['town'] = ''
+  $address['address']['postal_county'] = ''
+  $address['address']['region_name'] = ''
+  $address['address']['country'] = ''
+  $address['address']['postcode'] = ''
+  if $structuredData then
+    $address['address']['house_no'] = house_no
+    $address['address']['street_name'] = street_name
+    $address['address']['town'] = town
+    $address['address']['postal_county'] = postal_county
+    $address['address']['region_name'] = region_name
+    $address['address']['country'] = country
+    $address['address']['postcode'] = postcode
+  end
   return $address
 end
