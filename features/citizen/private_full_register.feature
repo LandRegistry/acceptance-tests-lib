@@ -12,6 +12,8 @@ Scenario: Full register of title
     | provision                 |
     | price paid                |
     | restriction               |
+    | charge                    |
+    | other                     |
   When I view the full register of title
   Then I can see the following information displayed
     | INFORMATION           |
