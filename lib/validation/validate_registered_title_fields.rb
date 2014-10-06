@@ -19,7 +19,17 @@ def checkClassOfTitle()
 end
 
 def checkPropertyAddress()
-  assert_match(/#{$regData['property_description']['fields']['address']['full_address']}/i, page.body, 'Expected to see full address')
+    assert_match(/#{$regData['property_description']['fields']['address']['full_address']}/i, page.body, 'Expected to see full address')
+end
+
+def checkStructuredPropertyAddress()
+    #assert_match(/#{$regData['property_description']['fields']['address']['house_no']}/i, page.body, 'Expected to see full address')
+    assert_match(/#{$regData['property_description']['fields']['address']['street_name']}/i, page.body, 'Expected to see full address')
+    assert_match(/#{$regData['property_description']['fields']['address']['town']}/i, page.body, 'Expected to see full address')
+    assert_match(/#{$regData['property_description']['fields']['address']['postal_county']}/i, page.body, 'Expected to see full address')
+    assert_match(/#{$regData['property_description']['fields']['address']['region_name']}/i, page.body, 'Expected to see full address')
+    #assert_match(/#{$regData['property_description']['fields']['address']['country']}/i, page.body, 'Expected to see full address')
+    #assert_match(/#{$regData['property_description']['fields']['address']['postcode']}/i, page.body, 'Expected to see full address')
 end
 
 def checkProprietors()
