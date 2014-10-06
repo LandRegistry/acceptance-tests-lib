@@ -1,3 +1,5 @@
+require_relative '../../lib/dataCreation/register_creation2.rb'
+
 def generic_register_data(table = nil)
 
   if (!table.nil?) then

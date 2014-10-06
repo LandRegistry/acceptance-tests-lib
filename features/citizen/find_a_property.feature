@@ -18,8 +18,6 @@ Scenario: A user can find a property and view its details
     | Title Number     |
     | Property Address |
     | Tenure           |
-    | Class Of Title   |
-    | Price Paid       |
 
 
 Scenario: A user cannot find a property that does not exist
