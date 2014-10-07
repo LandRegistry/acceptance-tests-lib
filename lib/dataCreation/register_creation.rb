@@ -10,9 +10,14 @@ end
 
 #returns the hash to fake a historical title
 def create_historical_data()
-  historicalData = Hash.new()
-  historicalData['some value'] = "Whatever value wanted"+dateInThePast().to_s
-  return historicalData
+
+  #historicalData = Hash.new()
+
+  #historicalData['some value'] = "Whatever value wanted"+dateInThePast().to_s
+  $historical_regData = generic_register_data(table)
+
+  #return historicalData
+  return $historical_regData
 end
 
 def generic_register_data(table = nil)

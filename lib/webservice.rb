@@ -21,7 +21,7 @@ def wait_for_register_to_be_created(title_no)
 
     found_count = 0
 
-    sleep(0.2)
+    sleep(1)
 
     response = rest_get_call($LR_SEARCH_API_DOMAIN + '/titles/' + title_no)
     json_response = JSON.parse(response.body);
@@ -97,7 +97,7 @@ def wait_for_case_to_exist(title_no)
 
   while (found_count != 1 && count < 25) do
     puts 'waiting for case to be created'
-    sleep(0.2)
+    sleep(1)
     response = rest_get_call($CASES_URL + '/cases/property/' + title_no)
     if (!response.nil?)
       if (!JSON.parse(response.body)[0]['work_queue'].nil?)
@@ -158,7 +158,7 @@ def wait_for_register_to_update_full_name(title_number, full_name)
   count = 0
   while (found_count != 1 && count < 50) do
     puts 'waiting for new version of title to be created'
-    sleep(0.2)
+    sleep(1)
 
     response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_number)
     if (response.code.to_s == '200') then
