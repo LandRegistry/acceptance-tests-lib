@@ -1,3 +1,21 @@
+#returns an array of previous titles history
+def get_all_historical_titles(title_number)
+  title_history_list = get_all_history(title_number)
+  title_version_history = Array.new
+  for i in 0..(title_history_list["meta"]["version_id"].to_i)-1 do
+    title_version_history[i] = get_history_version($regData['title_number'], i+1)
+  end
+  return title_version_history
+end
+
+#returns the hash to fake a historical title
+def create_historical_data()
+  $historical_regData = $regData
+  $historical_regData['proprietorship']['fields']['proprietors'][0]['name']['full_name'] = fullName()
+  $historical_regData['edition_date'] = DateTime.now.strftime('%d.%m.%Y')
+  return $historical_regData
+end
+
 def create_base_register(table)
   $structuredData = false
   puts $structuredData
@@ -7,6 +25,7 @@ def create_base_register(table)
   $regData['tenure'] = "Freehold"
   $regData['class_of_title'] = "Absolute"
   $regData['edition_date'] = DateTime.now.strftime('%d.%m.%Y')
+  $regData['created_ts'] = DateTime.now.strftime('%d.%m.%Y') #remove me please
   $regData['proprietorship'] = Hash.new()
   $regData['proprietorship']['template'] = "PROPRIETOR(S): *RP*"
   $regData['proprietorship']['full_text'] = "PROPRIETOR(S): Michael Jones of 8 Miller Way, Plymouth, Devon, PL6 8UQ"

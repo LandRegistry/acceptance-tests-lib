@@ -1,3 +1,4 @@
+@wip
 Feature: Option to view previous versions of the register
 
 Scenario: As a property owner I can view historical versions of the register
