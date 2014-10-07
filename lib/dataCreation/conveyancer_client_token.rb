@@ -5,7 +5,7 @@ def generate_client_details()
   relationshipData['clients'] = Hash.new()
   relationshipData['clients']['full_name'] = 'Walter White'
   relationshipData['clients']['date_of_birth'] = '07-09-1959'
-  relationshipData['clients']['address'] = '1 High St, London, N1 4LT'
+  relationshipData['clients']['address'] = '1 High St, London, N1 4QX'
   relationshipData['clients']['telephone'] = '01752 909 878'
   relationshipData['clients']['email'] = 'citizen@example.org'
   relationshipData['clients']['gender'] = 'M'
