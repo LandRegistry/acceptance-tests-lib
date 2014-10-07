@@ -21,23 +21,30 @@ def wait_for_register_to_be_created(title_no)
 
     found_count = 0
 
+    puts 'found_count = ' + found_count.to_s
+
     sleep(1)
 
     response = rest_get_call($LR_SEARCH_API_DOMAIN + '/titles/' + title_no)
     json_response = JSON.parse(response.body);
+    puts 'json_response = ' + json_response.to_s
 
     if ((response.code != '404') && (!json_response['title_number'].nil?)) then
         found_count = found_count + 1
     end
 
+    puts 'found_count = ' + found_count.to_s
+
     response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_no)
     json_response = JSON.parse(response.body);
+    puts 'json_response = ' + json_response
 
     if ((response.code != '404') && (!json_response['title_number'].nil?)) then
         found_count = found_count + 1
     end
 
     count = count + 1
+    puts 'count = ' + count
   end
 
   if (found_count != 2) then
@@ -45,6 +52,7 @@ def wait_for_register_to_be_created(title_no)
   end
 
   return JSON.parse(response.body)
+  puts 'JSON.parse(response.body) = ' + JSON.parse(response.body)
 end
 
 def get_register_details(title_no)

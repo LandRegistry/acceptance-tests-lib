@@ -14,7 +14,9 @@ def create_historical_data()
   #historicalData = Hash.new()
 
   #historicalData['some value'] = "Whatever value wanted"+dateInThePast().to_s
-  $historical_regData = generic_register_data(table)
+
+  #$historical_regData = generic_register_data(table)
+  $historical_regData = create_base_register(table)
 
   #return historicalData
   return $historical_regData
