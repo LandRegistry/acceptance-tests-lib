@@ -3,6 +3,7 @@ def create_base_register(table)
   puts $structuredData
 
   $regData = Hash.new()
+  $regData['created_ts'] = DateTime.now.strftime('%Q')
   $regData['title_number'] = titleNumber()
   $regData['proprietorship'] = Hash.new()
   $regData['proprietorship']['text'] = "PROPRIETOR(S): *RP*"
