@@ -23,18 +23,18 @@ def create_marriage_data(country, full_name, title_number)
 
 end
 
-def create_change_of_name_marriage_request(regData, marriage_data)
+def create_change_of_name_marriage_request(marriage_data)
 
   marriage_data['marriage_date']  = Date.strptime(marriage_data['marriage_date'], "%d-%m-%Y").strftime("%s").to_i
 
   data = marriage_data
   data['confirm'] = true
-  data['title'] = regData
+  data['title'] = $regData
 
   change_of_name = {}
   change_of_name["application_type"] = "change-name-marriage"
-  change_of_name["title_number"]  = regData['title_number']
-  change_of_name["submitted_by"] = regData['proprietors'][0]['full_name']
+  change_of_name["title_number"]  = $regData['title_number']
+  change_of_name["submitted_by"] = $regData['proprietorship']['fields']['proprietors'][0]['name']['full_name']
   change_of_name["request_details"] = {}
   change_of_name["request_details"]["action"] = "change-name-marriage"
   change_of_name["request_details"]["data"] = data.to_json
@@ -73,7 +73,6 @@ def complete_case(case_id)
   if (response.body != 'OK') then
     raise 'Error: ' + response.body
   end
-
 
   if ($PERFROMANCETEST.nil?) then
     $function_call_name << 'complete_case'

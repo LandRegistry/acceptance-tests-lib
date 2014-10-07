@@ -15,7 +15,7 @@ def wait_for_register_to_be_created(title_no)
   found_count = 0
   count = 0
 
-  sleep(1) # Temp sleep to try and get Jenkins Working.
+  sleep(5) # Temp sleep to try and get Jenkins Working.
   while (found_count != 2 && count < 25) do
     puts 'waiting for registration to be created'
 
@@ -163,10 +163,10 @@ def wait_for_register_to_update_full_name(title_number, full_name)
     response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_number)
     if (response.code.to_s == '200') then
 
-      puts 'name on title: ' + JSON.parse(response.body)['proprietors'][0]['full_name']
+      puts 'name on title: ' + JSON.parse(response.body)['proprietorship']['fields']['proprietors'][0]['name']['full_name']
       puts 'expected name on title: ' + full_name
       if (!response.nil?)
-        if (JSON.parse(response.body)['proprietors'][0]['full_name']==full_name)
+        if (JSON.parse(response.body)['proprietorship']['fields']['proprietors'][0]['name']['full_name']==full_name)
           found_count = 1
           puts 'Title updated'
         end

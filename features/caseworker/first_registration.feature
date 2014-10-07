@@ -1,4 +1,4 @@
-@casework-frontend
+@wip
 Feature: Create a First Register from a received application
 
 @performance_test_script

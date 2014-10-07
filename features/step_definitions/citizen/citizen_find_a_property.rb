@@ -17,12 +17,11 @@ Then(/^I get a no results are found message$/) do
 end
 
 Then(/^I have the option to view the property details$/) do
-  assert_equal getSearchResultForTitleNumber().has_link?("#{$regData['property']['address']['house_number']} #{$regData['property']['address']['road']}"), true, 'Expected a link to property'
+  assert_equal getSearchResultForTitleNumber().has_link?("#{$regData['title_number']}"), true, 'Expected a link to property'
 end
 
 When(/^I choose to view the property details$/) do
-  puts $regData['payment']['price_paid']
-  getSearchResultForTitleNumber().click_link("#{$regData['property']['address']['house_number']} #{$regData['property']['address']['road']}")
+  getSearchResultForTitleNumber().click_link("#{$regData['title_number']}")
 end
 
 def getSearchResultForTitleNumber()
