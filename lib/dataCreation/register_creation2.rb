@@ -1,5 +1,5 @@
 def create_base_register(table)
-  $structuredData = true
+  $structuredData = false
   puts $structuredData
 
   $regData = Hash.new()
