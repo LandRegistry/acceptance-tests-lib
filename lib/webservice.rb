@@ -21,23 +21,30 @@ def wait_for_register_to_be_created(title_no)
 
     found_count = 0
 
-    sleep(0.2)
+    puts 'found_count = ' + found_count.to_s
+
+    sleep(1)
 
     response = rest_get_call($LR_SEARCH_API_DOMAIN + '/titles/' + title_no)
     json_response = JSON.parse(response.body);
+    puts 'json_response = ' + json_response.to_s
 
     if ((response.code != '404') && (!json_response['title_number'].nil?)) then
         found_count = found_count + 1
     end
 
+    puts 'found_count = ' + found_count.to_s
+
     response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_no)
     json_response = JSON.parse(response.body);
+    puts "json_response = " + json_response.to_s
 
     if ((response.code != '404') && (!json_response['title_number'].nil?)) then
         found_count = found_count + 1
     end
 
     count = count + 1
+    puts 'count = ' + count.to_s
   end
 
   if (found_count != 2) then
@@ -45,6 +52,7 @@ def wait_for_register_to_be_created(title_no)
   end
 
   return JSON.parse(response.body)
+  puts 'JSON.parse(response.body) = ' + JSON.parse(response.body)
 end
 
 def get_register_details(title_no)
@@ -97,7 +105,7 @@ def wait_for_case_to_exist(title_no)
 
   while (found_count != 1 && count < 25) do
     puts 'waiting for case to be created'
-    sleep(0.2)
+    sleep(1)
     response = rest_get_call($CASES_URL + '/cases/property/' + title_no)
     if (!response.nil?)
       if (!JSON.parse(response.body)[0]['work_queue'].nil?)
@@ -158,7 +166,7 @@ def wait_for_register_to_update_full_name(title_number, full_name)
   count = 0
   while (found_count != 1 && count < 50) do
     puts 'waiting for new version of title to be created'
-    sleep(0.2)
+    sleep(1)
 
     response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_number)
     if (response.code.to_s == '200') then
@@ -186,4 +194,37 @@ def wait_for_register_to_update_full_name(title_number, full_name)
     method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
   end
 
+end
+
+def post_to_historical(data_hash, title_number)
+  uri = URI.parse($HISTORIAN_URL)
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Post.new('/' + title_number,  initheader = {'Content-Type' =>'application/json'})
+  request.basic_auth $http_auth_name, $http_auth_password
+  request.body = data_hash.to_json
+  response = http.request(request)
+  if (response.code != '200') then
+    raise "Failed to create the historical data: " + response.body
+  end
+  return response.body
+end
+
+def get_all_history(title_number)
+  response = rest_get_call($HISTORIAN_URL + '/' + title_number +'?versions=list')
+  if (response.code != '200') then
+    raise "Failed to retrieve list of historical data: " + response.body
+  end
+  return JSON.parse(response.body)
+end
+
+def get_history_version(title_number, version)
+  uri = URI.parse($HISTORIAN_URL)
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Get.new('/' + title_number +'?version=' + version.to_s,  initheader = {'Content-Type' =>'application/json'})
+  request.basic_auth $http_auth_name, $http_auth_password
+  response = http.request(request)
+  if (response.code != '200') then
+    raise "Failed to retrieve historical version specified: " + response.body
+  end
+  return JSON.parse(response.body)
 end

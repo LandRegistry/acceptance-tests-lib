@@ -7,3 +7,4 @@ $SYSTEM_OF_RECORD_API_DOMAIN=(ENV['SYSTEM_OF_RECORD_API_DOMAIN'] || 'http://syst
 $LR_FIXTURES_URL=(ENV['LR_FIXTURES_URL'] || 'http://fixtures.landregistry.local')
 $INTRODUCTIONS_DOMAIN = (ENV['INTRODUCTIONS_DOMAIN'] || 'http://introductions.landregistry.local')
 $CASES_URL=(ENV['CASES_URL'] || 'http://cases.landregistry.local')
+$HISTORIAN_URL=(ENV['HISTORIAN_URL'] || 'http://historian.landregistry.local')
