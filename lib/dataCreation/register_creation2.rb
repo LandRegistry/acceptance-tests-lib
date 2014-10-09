@@ -12,7 +12,7 @@ end
 def create_historical_data()
   $historical_regData = $regData
   $historical_regData['proprietorship']['fields']['proprietors'][0]['name']['full_name'] = fullName()
-  $historical_regData['edition_date'] = DateTime.now.strftime('%d.%m.%Y')
+  $historical_regData['edition_date'] = DateTime.now.strftime('%d.%m.%Y %H:%M:%S')
   return $historical_regData
 end
 
@@ -24,8 +24,8 @@ def create_base_register(table)
   $regData['title_number'] = titleNumber()
   $regData['tenure'] = "Freehold"
   $regData['class_of_title'] = "Absolute"
-  $regData['edition_date'] = DateTime.now.strftime('%d.%m.%Y')
-  $regData['created_ts'] = DateTime.now.strftime('%d.%m.%Y') #remove me please
+  $regData['edition_date'] = DateTime.now.strftime('%d-%m-%Y %H:%M:%S')
+  #$regData['created_ts'] = DateTime.now.strftime('%d-%m-%Y %H:%M:%S') #remove me please
   $regData['proprietorship'] = Hash.new()
   $regData['proprietorship']['template'] = "PROPRIETOR(S): *RP*"
   $regData['proprietorship']['full_text'] = "PROPRIETOR(S): Michael Jones of 8 Miller Way, Plymouth, Devon, PL6 8UQ"
