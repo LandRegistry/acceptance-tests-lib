@@ -18,14 +18,12 @@ end
 
 def create_base_register(table)
   $structuredData = false
-  puts $structuredData
 
   $regData = Hash.new()
   $regData['title_number'] = titleNumber()
   $regData['tenure'] = "Freehold"
   $regData['class_of_title'] = "Absolute"
-  $regData['edition_date'] = DateTime.now.strftime('%d-%m-%Y %H:%M:%S')
-  #$regData['created_ts'] = DateTime.now.strftime('%d-%m-%Y %H:%M:%S') #remove me please
+  $regData['edition_date'] = DateTime.now.strftime('%d-%m-%Y')
   $regData['proprietorship'] = Hash.new()
   $regData['proprietorship']['template'] = "PROPRIETOR(S): *RP*"
   $regData['proprietorship']['full_text'] = "PROPRIETOR(S): Michael Jones of 8 Miller Way, Plymouth, Devon, PL6 8UQ"
@@ -111,13 +109,12 @@ def create_base_register(table)
   $regData['other'][0]['deeds'] = Array.new()
   $regData['other'][0]['notes'] = Array.new()
 
-  $regData['h_schedule'] = Array.new()
-  $regData['h_schedule'][0] = Hash.new()
-  $regData['h_schedule'][0]['template'] = ""
-  $regData['h_schedule'][0]['full_text'] = ""
-  $regData['h_schedule'][0]['fields'] = Hash.new()
-  $regData['h_schedule'][0]['deeds'] = Array.new()
-  $regData['h_schedule'][0]['notes'] = Array.new()
+  $regData['h_schedule'] = Hash.new()
+  $regData['h_schedule']['template'] = ""
+  $regData['h_schedule']['full_text'] = ""
+  $regData['h_schedule']['fields'] = Hash.new()
+  $regData['h_schedule']['deeds'] = Array.new()
+  $regData['h_schedule']['notes'] = Array.new()
 
   add_proprietors(2)
 
