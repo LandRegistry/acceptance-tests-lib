@@ -21,9 +21,12 @@ def create_base_register(table)
 
   $regData = Hash.new()
   $regData['title_number'] = titleNumber()
-  $regData['tenure'] = "Freehold"
   $regData['class_of_title'] = "Absolute"
-  $regData['edition_date'] = DateTime.now.strftime('%d-%m-%Y')
+  $regData['tenure'] = "Freehold"
+  $regData['edition_date'] = DateTime.now.strftime('%Y-%m-%d')
+  #$regData['last_application'] = DateTime.now.strftime('%FT%T%:z')
+  $regData['last_application'] = "2014-02-20T09:03:10.000+01:00"
+
   $regData['proprietorship'] = Hash.new()
   $regData['proprietorship']['template'] = "PROPRIETOR(S): *RP*"
   $regData['proprietorship']['full_text'] = "PROPRIETOR(S): Michael Jones of 8 Miller Way, Plymouth, Devon, PL6 8UQ"
@@ -85,11 +88,13 @@ def create_base_register(table)
   $regData['provisions'][0]['notes'] = Array.new()
 
   $regData['price_paid'] = Hash.new()
-  $regData['price_paid']['template'] = ""
-  $regData['price_paid']['full_text'] = ""
+  $regData['price_paid']['template'] = "The price stated to have been paid on *DA* was *AM*."
+  $regData['price_paid']['full_text'] = "The price stated to have been paid on 15.11.2005 was 100000."
   $regData['price_paid']['fields'] = Hash.new()
-  $regData['price_paid']['fields']['date'] = ""
-  $regData['price_paid']['fields']['amount'] = ""
+  $regData['price_paid']['fields']['date'] = Array.new()
+  $regData['price_paid']['fields']['date'][0] = ""
+  $regData['price_paid']['fields']['amount'] = Array.new()
+  $regData['price_paid']['fields']['amount'][0] = ""
   $regData['price_paid']['deeds'] = Array.new()
   $regData['price_paid']['notes'] = Array.new()
 
@@ -116,8 +121,8 @@ def create_base_register(table)
   $regData['h_schedule']['deeds'] = Array.new()
   $regData['h_schedule']['notes'] = Array.new()
 
-  add_proprietors(2)
-
+  add_proprietors(1)
+  add_price_paid()
   if (table != '')
     table.raw.each do |value|
       if (value[0] != 'CHARACTERISTICS') then
@@ -141,7 +146,7 @@ def create_base_register(table)
       end
     end
   end
-
+  puts 'xxxxx'
   puts $regData.to_json
   uri = URI.parse($MINT_API_DOMAIN)
   http = Net::HTTP.new(uri.host, uri.port)
@@ -183,8 +188,8 @@ end
 def add_price_paid()
   $regData['price_paid']['template'] = "The price stated to have been paid on *DA* was *AM*."
   $regData['price_paid']['full_text'] = "The price stated to have been paid on 15.11.2005 was 100000."
-  $regData['price_paid']['fields']['date'] = dateInThePast().strftime("%d/%m/%Y")
-  $regData['price_paid']['fields']['amount'] = pricePaid()
+  $regData['price_paid']['fields']['date'][0] = dateInThePast().strftime("%d/%m/%Y")
+  $regData['price_paid']['fields']['amount'][0] = pricePaid()
 end
 
 def add_charge()
@@ -220,23 +225,24 @@ def generate_address(country)
   country = country
   postcode = postcode()
   $address = Hash.new()
-  $address['address'] = Hash.new()
-  $address['address']['full_address'] = "#{house_no} #{street_name}, #{town}, #{postal_county}, #{region_name}, #{country}, #{postcode}"
-  $address['address']['house_no'] = ''
-  $address['address']['street_name'] = ''
-  $address['address']['town'] = ''
-  $address['address']['postal_county'] = ''
-  $address['address']['region_name'] = ''
-  $address['address']['country'] = ''
-  $address['address']['postcode'] = ''
+  $address['addresses'] = Array.new()
+  $address['addresses'][0] = Hash.new()
+  $address['addresses'][0]['full_address'] = "#{house_no} #{street_name}, #{town}, #{postal_county}, #{region_name}, #{country}, #{postcode}"
+  $address['addresses'][0]['house_no'] = ''
+  $address['addresses'][0]['street_name'] = ''
+  $address['addresses'][0]['town'] = ''
+  $address['addresses'][0]['postal_county'] = ''
+  $address['addresses'][0]['region_name'] = ''
+  $address['addresses'][0]['country'] = ''
+  $address['addresses'][0]['postcode'] = ''
   if $structuredData then
-    $address['address']['house_no'] = house_no
-    $address['address']['street_name'] = street_name
-    $address['address']['town'] = town
-    $address['address']['postal_county'] = postal_county
-    $address['address']['region_name'] = region_name
-    $address['address']['country'] = country
-    $address['address']['postcode'] = postcode
+    $address['addresses'][0]['house_no'] = house_no
+    $address['addresses'][0]['street_name'] = street_name
+    $address['addresses'][0]['town'] = town
+    $address['addresses'][0]['postal_county'] = postal_county
+    $address['addresses'][0]['region_name'] = region_name
+    $address['addresses'][0]['country'] = country
+    $address['addresses'][0]['postcode'] = postcode
   end
   return $address
 end

@@ -10,7 +10,7 @@ end
 
 Given(/^I would like to change my name as I have been married$/) do
   click_button('Edit the register')
-  find("//dd[contains(text(),'" + $regData['proprietorship']['fields']['proprietors'][0]['name']['full_name'] + "')]/span[1]/a").click
+  find("//li[contains(text(),'" + $regData['proprietorship']['fields']['proprietors'][0]['name']['full_name'] + "')]/span[1]/a").click
 end
 
 Then(/^I do not have the option to edit the register$/) do

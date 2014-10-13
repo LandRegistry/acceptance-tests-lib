@@ -29,12 +29,12 @@ def create_change_of_name_marriage_request(marriage_data)
 
   data = marriage_data
   data['confirm'] = true
-  data['title'] = $regData
+  #data['title'] = $regData
 
   change_of_name = {}
   change_of_name["application_type"] = "change-name-marriage"
   change_of_name["title_number"]  = $regData['title_number']
-  change_of_name["submitted_by"] = $regData['proprietorship']['fields']['proprietors'][0]['name']['full_name']
+  change_of_name["submitted_by"] = marriage_data['proprietor_full_name']
   change_of_name["request_details"] = {}
   change_of_name["request_details"]["action"] = "change-name-marriage"
   change_of_name["request_details"]["data"] = data.to_json
