@@ -1,5 +1,5 @@
 Given(/^I have private citizen login credentials$/) do
-  visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/auth/logout")
 
   $userdetails = Hash.new()
   $userdetails['email'] = 'citizen@example.org'
@@ -67,22 +67,22 @@ Then(/^I fail to login \(incorrect password\)$/) do
 end
 
 Given(/^I am still authenticated$/) do
-  visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/auth/logout")
   step "I have private citizen login credentials"
-  visit("#{$SERVICE_FRONTEND_DOMAIN}/login")
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/auth/login")
   step "I login to the service frontend with incorrect username"
 end
 
 Given(/^I am not already logged in as a private citizen$/) do
-  visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/auth/logout")
 end
 
 Given(/^I am not already logged in as a conveyancer$/) do
-  visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/auth/logout")
 end
 
 When(/^I logout as a private citizen$/) do
-  visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/auth/logout")
 end
 
 Then(/^I am prompted to login as a private citizen$/) do
@@ -133,7 +133,7 @@ Given(/^I am a caseworker$/) do
 end
 
 Given(/^I have blocked private citizen login credentials$/) do
-  visit("#{$SERVICE_FRONTEND_DOMAIN}/logout")
+  visit("#{$SERVICE_FRONTEND_DOMAIN}/auth/logout")
 
   $userdetails = Hash.new()
   $userdetails['email'] = 'blocked@example.org'
