@@ -69,3 +69,10 @@ Scenario: Private Register with Title Extents
     | the map can't be zoomed       |
     | the map can't be moved        |
     | the polygons are over a map   |
+
+Scenario: Block user viewing X number of titles
+  Given I am a citizen
+  And I am unblocked
+  And a registered title
+  When I have viewed the private register 50 times
+  Then I become blocked

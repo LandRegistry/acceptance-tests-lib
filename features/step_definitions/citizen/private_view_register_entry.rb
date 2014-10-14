@@ -20,3 +20,9 @@ end
 Then(/^I have the option to edit the register$/) do
   assert_equal has_button?('Edit the register'), true, 'Expected Edit the register button to be on the page'
 end
+
+When(/^I have viewed the private register (\d+) times$/) do |views|
+  set_user_view_count($userdetails['email'], views.to_i-1)
+  step "I view the private register"
+  checkTitleNumber()
+end
