@@ -9,8 +9,8 @@ Given(/^I view the full register of title$/) do
 end
 
 Given(/^I would like to change my name as I have been married$/) do
-  click_button('Edit the register')
-  find("//li[contains(text(),'" + $regData['proprietorship']['fields']['proprietors'][0]['name']['full_name'] + "')]/span[1]/a").click
+  click_button('Make a change to the register')
+  find("//*[contains(text(),'" + $regData['proprietorship']['fields']['proprietors'][0]['name']['full_name'] + "')]/span[1]/a").click
 end
 
 Then(/^I do not have the option to edit the register$/) do

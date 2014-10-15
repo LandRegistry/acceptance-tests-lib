@@ -65,7 +65,6 @@ Scenario: Private Register with Title Extents
     | the polygons are edged in red |
     | there is a donut polygon      |
     | there is a normal polygon     |
-    | there is an easement          |
     | the map can't be zoomed       |
     | the map can't be moved        |
     | the polygons are over a map   |
