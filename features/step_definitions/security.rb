@@ -14,12 +14,12 @@ Then(/^I become blocked$/) do
   set_user_view_count($userdetails['email'], 0)
 end
 
-def set_user_view_count(email, count)
-  visit("#{$LR_FIXTURES_URL}")
-  select(email, :from => 'user_view_email')
-  fill_in('view_count', :with => count)
-  click_button('Set view count')
-end
+#def set_user_view_count(email, count)
+#  visit("#{$LR_FIXTURES_URL}")
+#  select(email, :from => 'user_view_email')
+#  fill_in('view_count', :with => count)
+#  click_button('Set view count')
+#end
 
 def unblock_user(name)
   visit("#{$LR_FIXTURES_URL}")

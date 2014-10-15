@@ -228,3 +228,16 @@ def get_history_version(title_number, version)
   end
   return JSON.parse(response.body)
 end
+
+def set_user_view_count(email, count)
+  uri = URI.parse($LR_FIXTURES_URL)
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Post.new('/set-user-view-count')
+  request.basic_auth $http_auth_name, $http_auth_password
+  request.set_form_data({'user_view_email' => email, 'view_count' => count.to_s, 'submit' => 'Set view count'})
+  response = http.request(request)
+  if (response.code != '302') then
+    raise "Could not set view count: " + response.body
+  end
+
+end
