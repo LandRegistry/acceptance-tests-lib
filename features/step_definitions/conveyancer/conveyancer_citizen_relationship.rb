@@ -51,11 +51,13 @@ Given(/^I have a relationship token for a registered property$/) do
 end
 
 When(/^I enter the relationship token code$/) do
+  click_link('Start now')
   fill_in('token', :with => $token_code)
   click_button('Submit')
 end
 
 When(/^I enter an invalid relationship token code$/) do
+  click_link('Start now')
   fill_in('token', :with => "Rubbish")
   click_button('Submit')
 end

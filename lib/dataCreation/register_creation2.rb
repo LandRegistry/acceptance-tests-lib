@@ -19,6 +19,13 @@ end
 def create_base_register(table)
   $structuredData = false
 
+  if (!table.nil?) then
+    data_characteristics, data_characteristics_types = format_data_characteristics(table)
+  else
+    data_characteristics = {}
+    data_characteristics_types = {}
+  end
+
   $regData = Hash.new()
   $regData['title_number'] = titleNumber()
   $regData['class_of_title'] = "Absolute"
@@ -44,7 +51,12 @@ def create_base_register(table)
   $regData['property_description']['notes'] = Array.new()
 
   $regData['extent'] = Hash.new()
-  $regData['extent'].merge!(genenerate_title_extent2({'has a polygon' => true}))
+
+  if (count_characteristic_types(data_characteristics, 'polygon') > 0) then
+    $regData['extent'].merge!(genenerate_title_extent2(data_characteristics))
+  else
+    $regData['extent'].merge!(genenerate_title_extent2({'has a polygon' => true}))
+  end
 
   $regData['restrictive_covenants'] = Array.new()
   $regData['restrictive_covenants'][0] = Hash.new()
