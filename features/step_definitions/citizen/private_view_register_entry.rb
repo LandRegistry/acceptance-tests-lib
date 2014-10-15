@@ -25,4 +25,6 @@ When(/^I have viewed the private register (\d+) times$/) do |views|
   set_user_view_count($userdetails['email'], views.to_i-1)
   step "I view the private register"
   checkTitleNumber()
+  step "I view the private register"
+  step "I view the private register"
 end

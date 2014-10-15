@@ -5,13 +5,14 @@ Given(/^I have private citizen login credentials$/) do
   $userdetails['email'] = 'citizen@example.org'
   $userdetails['password'] = 'dummypassword'
   unblock_user($userdetails['email'])
+  set_user_view_count($userdetails['email'], 0)
 end
 
 Given(/^I have conveyancer login credentials$/) do
   $userdetails = Hash.new()
   $userdetails['email'] = 'conveyancer@example.org'
   $userdetails['password'] = 'dummypassword'
-  unblock_user($userdetails['email'])
+  #unblock_user($userdetails['email'])
 end
 
 Given(/^I have caseworker login credentials$/) do
