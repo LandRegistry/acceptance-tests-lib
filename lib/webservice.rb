@@ -239,5 +239,16 @@ def set_user_view_count(email, count)
   if (response.code != '302') then
     raise "Could not set view count: " + response.body
   end
+end
 
+def unblock_user(email)
+  uri = URI.parse($LR_FIXTURES_URL)
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Post.new('/unblock-user')
+  request.basic_auth $http_auth_name, $http_auth_password
+  request.set_form_data({'account_email' => email})
+  response = http.request(request)
+  if (response.body != 'UNBLOCKED') then
+    raise "Could not unblock: " + email + " " + response.body
+  end
 end
