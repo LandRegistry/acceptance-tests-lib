@@ -110,6 +110,6 @@ Then(/^an error message re unauthorised is displayed$/) do
 end
 
 Then(/^the no pending nor completed requests screen are displayed$/) do
-  assert_match('No pending changes', page.body, 'Expected to find No pending changes text displayed on the screen')
-  assert_match('No previous changes', page.body, 'Expected to find No previous changes text displayed on the screen')
+  assert_match('There are no pending changes to this title register', page.body, 'Expected to find No pending changes text displayed on the screen')
+  assert_match('There have been no changes to this title register', page.body, 'Expected to find No previous changes text displayed on the screen')
 end
