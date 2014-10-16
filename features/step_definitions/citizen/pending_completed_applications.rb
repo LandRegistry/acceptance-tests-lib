@@ -48,57 +48,39 @@ When(/^I elect to view requests$/) do
     click_link('View pending and historical changes to this title')
 end
 
-Then(/^the correct data is displayed$/) do
-
-  #Loop through the data held on the pending applications table i.e. the cases table
-
-    if (!$pending_cases.nil?)
-
-      for i in 0 ..$pending_cases.count - 1
-
-        assert_match($pending_cases[i]["title_number"], page.body, 'Expected to find '+ $pending_cases[i]["title_number"] +' displayed on the screen')
-        assert_match($pending_cases[i]["submitted_by"], page.body, 'Expected to find '+ $pending_cases[i]["submitted_by"] +' displayed on the screen')
-
-      end # of $pending_cases loop
-
-    end  # if (!$pending_cases.nil?)
-
-
-  if (!$completed_cases.nil?)
-
-    for i in 0 ..$completed_cases.count - 1
-
-      last_application = DateTime.parse($completed_cases[i]['regdata']['last_application']).strftime("%e %B %Y")
-
-      assert_match(last_application, page.body, 'Expected to find '+ last_application +' displayed on the screen')
-
-    end  # of for i in 0 ..$completed_cases.count - 1
-
-  end # if (!$completed_cases.nil?)
-
-  # initialise the 2 cases arrays ready for reuse
-  $pending_cases = nil # Lets Tidy up, so that another scenario doesn't resuse this data
-  $completed_cases = nil # Lets Tidy up, so that another scenario doesn't resuse this data
-
-
-end # of Then(/^the correct data is displayed$/)
-
 Then(/^a list of pending requests are shown in order of receipt by date & time$/) do
-  i = 0
+  requests = page.all(".//ol[@class='register-changes-pending']/*")
+  list = []
+  requests.each do |row|
+    list.push(row)
+  end
 
-  page.all(".//*[@id='pending']/ol[3]/li/div/ul/li[1]").each do |el|
-    puts i.to_s + el.text.to_s
-    assert_match($pending_cases[i]["marriage_data"]["proprietor_new_full_name"], el.text, 'Expected to find '+ $pending_cases[i]["marriage_data"]["proprietor_new_full_name"] +' displayed on the screen')
-    i += 1
-  end # of .each loop
+  cases = get_cases_by_title_number_and_status($pending_cases[0]["title_number"], 'queued')
+
+  assert_equal list.length, $pending_cases.length, "number of pending changes does not match what is expected"
+
+  list.each_with_index { |row, idx|
+    submitted_on_text = "SUBMITTED ON " + getDateTimeFormatted(cases[idx]['submitted_at']).upcase
+    submitted_by_text = "Submitted by " + cases[idx]['submitted_by']
+    assert row.text.include?(submitted_on_text), "The requests were not in the correct order"
+    assert row.text.include?(submitted_by_text), "The submitted by was incorrect"
+  }
 end
 
 Then(/^a separate list of completed requests are shown in order of receipt by date & time$/) do
-  i = 0
-  page.all(".//*[@id='previous']/ol/li/div/p").each do |el|
-    assert_match($completed_cases[i]["marriage_data"]["proprietor_full_name"], el.text, 'Expected to find '+ $completed_cases[i]["marriage_data"]["proprietor_full_name"] +'')
-    i += 1
-  end # of .each loop
+  requests = page.all(".//ol[@class='register-changes-previous']/*")
+  list = []
+  requests.each do |row|
+    list.push(row)
+  end
+
+  assert_equal list.length, $completed_cases.length, "number of versions does not match what is expected"
+
+  list.reverse.each_with_index { |row, idx|
+    assert row.text.include?("Version " + (idx + 1).to_s), "The version was not in the correct order"
+    link_text = 'View register on ' + getDateTimeFormatted($completed_cases[idx]['regdata']['last_application'])
+    assert_equal has_link?(link_text), true, 'Expected link to view version ' + (idx + 1).to_s
+  }
 end
 
 Then(/^a view requests option is not displayed$/) do
@@ -112,4 +94,11 @@ end
 Then(/^the no pending nor completed requests screen are displayed$/) do
   assert_match('There are no pending changes to this title register', page.body, 'Expected to find No pending changes text displayed on the screen')
   assert_match('There have been no changes to this title register', page.body, 'Expected to find No previous changes text displayed on the screen')
+end
+
+def getDateTimeFormatted(date)
+  date_time = DateTime.parse(date)
+  formatted_time = date_time.strftime('%H:%M:%S')
+  formatted_date = date_time.strftime('%e %B %Y')
+  return formatted_date.strip + ' at ' + formatted_time
 end

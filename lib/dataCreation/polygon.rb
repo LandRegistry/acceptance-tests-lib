@@ -4,7 +4,7 @@ def genenerate_title_extent2(data_characteristics)
   polydata['crs'] = Hash.new()
   polydata['crs']['type'] = 'name'
   polydata['crs']['properties'] = Hash.new()
-  polydata['crs']['properties']['name'] = 'urn:ogc:def:crs:EPSG:27700'
+  polydata['crs']['properties']['name'] = 'urn:ogc:def:crs:EPSG::27700'
   polydata['geometry'] = Hash.new()
 
   if (count_characteristic_types(data_characteristics, 'polygon') > 1) then
@@ -130,7 +130,7 @@ def genenerate_title_easement2(extentData, data_characteristics)
   polydata['crs'] = Hash.new()
   polydata['crs']['type'] = 'name'
   polydata['crs']['properties'] = Hash.new()
-  polydata['crs']['properties']['name'] = 'urn:ogc:def:crs:EPSG:27700'
+  polydata['crs']['properties']['name'] = 'urn:ogc:def:crs:EPSG::27700'
   polydata['geometry'] = Hash.new()
 
 
