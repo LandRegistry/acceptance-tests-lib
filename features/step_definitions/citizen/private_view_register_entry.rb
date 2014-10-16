@@ -22,8 +22,8 @@ Then(/^I have the option to edit the register$/) do
 end
 
 When(/^I have viewed the private register (\d+) times$/) do |views|
-  set_user_view_count($userdetails['email'], views.to_i)
+  set_user_view_count($userdetails['email'], views.to_i - 1)
   step "I view the private register"
-  checkTitleNumber()
-
+  assert_match(/#{$regData['property_description']['fields']['addresses'][0]['postcode']}/i, page.body, 'Expected to see post code on the screen')
+  step "I view the private register"
 end
