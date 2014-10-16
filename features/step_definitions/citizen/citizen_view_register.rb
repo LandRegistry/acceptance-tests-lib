@@ -72,7 +72,7 @@ Then(/^the property details page is displayed$/) do
 end
 
 Then(/^I have the option to view the full register$/) do
-  assert_equal has_link?('View full register'), true, 'Expected View full register button to be on the page'
+  assert_equal has_link?('View register'), true, 'Expected View full register button to be on the page'
 end
 
 When(/^I view the property details on gov\.uk$/) do
