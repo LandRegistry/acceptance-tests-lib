@@ -44,6 +44,7 @@ Given(/^completed applications exist$/) do
 end
 
 When(/^I elect to view requests$/) do
+    find(".//h3[contains(., 'Changes to this title')]").click
     click_link('View pending and historical changes to this title')
 end
 
@@ -67,8 +68,9 @@ Then(/^the correct data is displayed$/) do
 
     for i in 0 ..$completed_cases.count - 1
 
-      assert_match($completed_cases[i]["title_number"], page.body, 'Expected to find '+ $completed_cases[i]["title_number"] +' displayed on the screen')
-      assert_match($completed_cases[i]["submitted_by"], page.body, 'Expected to find '+ $completed_cases[i]["submitted_by"] +' displayed on the screen')
+      last_application = DateTime.parse($completed_cases[i]['regdata']['last_application']).strftime("%e %B %Y")
+
+      assert_match(last_application, page.body, 'Expected to find '+ last_application +' displayed on the screen')
 
     end  # of for i in 0 ..$completed_cases.count - 1
 
@@ -108,6 +110,6 @@ Then(/^an error message re unauthorised is displayed$/) do
 end
 
 Then(/^the no pending nor completed requests screen are displayed$/) do
-  assert_match('No pending changes', page.body, 'Expected to find No pending changes text displayed on the screen')
-  assert_match('No previous changes', page.body, 'Expected to find No previous changes text displayed on the screen')
+  assert_match('There are no pending changes to this title register', page.body, 'Expected to find No pending changes text displayed on the screen')
+  assert_match('There have been no changes to this title register', page.body, 'Expected to find No previous changes text displayed on the screen')
 end

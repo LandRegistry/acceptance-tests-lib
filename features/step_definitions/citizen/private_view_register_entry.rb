@@ -9,20 +9,21 @@ Given(/^I view the full register of title$/) do
 end
 
 Given(/^I would like to change my name as I have been married$/) do
-  click_button('Edit the register')
-  find("//li[contains(text(),'" + $regData['proprietorship']['fields']['proprietors'][0]['name']['full_name'] + "')]/span[1]/a").click
+  click_button('Make a change to the register')
+  find("//*[contains(text(),'" + $regData['proprietorship']['fields']['proprietors'][0]['name']['full_name'] + "')]/span[1]/a").click
 end
 
 Then(/^I do not have the option to edit the register$/) do
-  assert_equal has_button?('Edit the register'), false, 'Expected Edit the register button to not be on the page'
+  assert_equal has_button?('Make a change to the register'), false, 'Expected Edit the register button to not be on the page'
 end
 
 Then(/^I have the option to edit the register$/) do
-  assert_equal has_button?('Edit the register'), true, 'Expected Edit the register button to be on the page'
+  assert_equal has_button?('Make a change to the register'), true, 'Expected Edit the register button to be on the page'
 end
 
 When(/^I have viewed the private register (\d+) times$/) do |views|
-  set_user_view_count($userdetails['email'], views.to_i-1)
+  set_user_view_count($userdetails['email'], views.to_i - 1)
   step "I view the private register"
-  checkTitleNumber()
+  assert_match(/#{$regData['property_description']['fields']['addresses'][0]['postcode']}/i, page.body, 'Expected to see post code on the screen')
+  step "I view the private register"
 end

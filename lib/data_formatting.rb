@@ -87,9 +87,9 @@ def format_data_characteristics(table)
           end
 
         end
-        if (found == false) then
-          raise "Unexpected characteristic: " + value[0]
-        end
+        #if (found == false) then
+        #  raise "Unexpected characteristic: " + value[0]
+        #end
 
 
       end

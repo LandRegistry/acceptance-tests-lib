@@ -1,17 +1,17 @@
 When(/^I select the property$/) do
+  click_link('Start now')
   fill_in('search', :with => $regData['title_number'])
   click_button('Search')
   click_button('Select this property')
 end
 
 When(/^the clients want to buy the property$/) do
-  choose('Buying this property')
+  choose('Buying')
   click_button('Next')
 end
 
 When(/^I request to create a client relationship$/) do
   visit("#{$SERVICE_FRONTEND_DOMAIN}/relationship/conveyancer")
-  click_link('Start now')
 end
 
 Given(/^clients have provided their details for me to act on their behalf$/) do
@@ -24,7 +24,7 @@ When(/^I enter the clients details$/) do
   fill_in('address', :with => $relationshipData['clients']['address'])
   fill_in('telephone', :with => $relationshipData['clients']['telephone'])
   fill_in('email', :with => $relationshipData['clients']['email'])
-  select($relationshipData['clients']['gender'], :from => 'gender')
+  choose($relationshipData['clients']['gender'])
   click_button('Add client')
 end
 
@@ -51,11 +51,13 @@ Given(/^I have a relationship token for a registered property$/) do
 end
 
 When(/^I enter the relationship token code$/) do
+  click_link('Start now')
   fill_in('token', :with => $token_code)
   click_button('Submit')
 end
 
 When(/^I enter an invalid relationship token code$/) do
+  click_link('Start now')
   fill_in('token', :with => "Rubbish")
   click_button('Submit')
 end

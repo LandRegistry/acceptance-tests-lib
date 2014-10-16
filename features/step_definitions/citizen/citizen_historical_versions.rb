@@ -1,7 +1,7 @@
 Given(/^historical versions of the register exist$/) do
   #change loop to have as many historical records as you want
   for i in 0..2 do
-    $historical_data = create_historical_data()
+    $historical_data = create_historical_data($regData)
     post_to_historical($historical_data, $regData['title_number'])
   end
 end
