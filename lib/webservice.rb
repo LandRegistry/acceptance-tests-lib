@@ -312,3 +312,8 @@ def unblock_user(email)
   ## End Meta Data
 
 end
+
+def get_cases_by_title_number(title_no)
+  response = rest_get_call($CASES_URL + '/cases/property/' + title_no)
+  return response.body
+end

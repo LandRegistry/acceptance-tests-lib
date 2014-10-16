@@ -10,7 +10,6 @@ When I view the full register of title
 And  I elect to view requests
 Then a separate list of completed requests are shown in order of receipt by date & time
 And a list of pending requests are shown in order of receipt by date & time
-And the correct data is displayed
 
 Scenario:As a property owner with neither completed nor pending applications
 Given I am a citizen

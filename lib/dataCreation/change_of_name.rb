@@ -50,6 +50,8 @@ def create_change_of_name_marriage_request(marriage_data)
   response = http.request(request)
 
   change_of_name['case_id'] = JSON.parse(response.body)['id']
+  #make sure case is in queued status
+  assert_equal check_case_is_with_status(change_of_name['case_id'], $regData['title_number'], 'queued'), true, "case not in correct status"
 
   if ($PERFROMANCETEST.nil?) then
     $function_call_name << 'create_change_of_name_marriage_request'
@@ -80,4 +82,40 @@ def complete_case(case_id)
     $function_call_arguments << {}
     method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
   end
+end
+
+def check_case_is_with_status(case_id, title_number, status)
+  count = 0
+  found = false
+  while (found != true && count < 25) do
+    sleep(1)
+    array = JSON.parse(get_cases_by_title_number(title_number))
+    array.each { |row|
+      if row['id'] = case_id
+        if row['status'] == status
+          found = true
+          puts 'case is queued'
+          break
+        end
+      end
+    }
+    count = count + 1
+  end
+
+  if (found == true) then
+    return true
+  else
+    return false
+  end
+end
+
+def get_cases_by_title_number_and_status(title_number, status)
+  cases = []
+  array = JSON.parse(get_cases_by_title_number(title_number))
+  array.each { |row|
+      if row['status'] == status
+        cases.push(row)
+      end
+  }
+  return cases
 end
