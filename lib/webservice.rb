@@ -144,6 +144,16 @@ def getlrid(email)
   if (response.code != '200') then
     raise "Error in finding email for: " + email
   end
+
+  ## Function Meta Data Generator
+  if ($PERFROMANCETEST.nil?) then
+    $function_call_name << 'getlrid'
+    $function_call_data << response.body
+    $function_call_arguments << {}
+    method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
+  end
+  ## End Meta Data
+
   return response.body
 end
 
@@ -206,6 +216,16 @@ def post_to_historical(data_hash, title_number)
   if (response.code != '200') then
     raise "Failed to create the historical data: " + response.body
   end
+
+  ## Function Meta Data Generator
+  if ($PERFROMANCETEST.nil?) then
+    $function_call_name << 'post_to_historical'
+    $function_call_data << response.body
+    $function_call_arguments << {}
+    method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
+  end
+  ## End Meta Data
+
   return response.body
 end
 
@@ -214,6 +234,16 @@ def get_all_history(title_number)
   if (response.code != '200') then
     raise "Failed to retrieve list of historical data: " + response.body
   end
+
+  ## Function Meta Data Generator
+  if ($PERFROMANCETEST.nil?) then
+    $function_call_name << 'get_all_history'
+    $function_call_data << JSON.parse(response.body)
+    $function_call_arguments << {}
+    method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
+  end
+  ## End Meta Data
+
   return JSON.parse(response.body)
 end
 
@@ -226,6 +256,16 @@ def get_history_version(title_number, version)
   if (response.code != '200') then
     raise "Failed to retrieve historical version specified: " + response.body
   end
+
+  ## Function Meta Data Generator
+  if ($PERFROMANCETEST.nil?) then
+    $function_call_name << 'get_history_version'
+    $function_call_data << JSON.parse(response.body)
+    $function_call_arguments << {}
+    method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
+  end
+  ## End Meta Data
+
   return JSON.parse(response.body)
 end
 
@@ -239,6 +279,16 @@ def set_user_view_count(email, count)
   if (response.code != '302') then
     raise "Could not set view count: " + response.body
   end
+
+  ## Function Meta Data Generator
+  if ($PERFROMANCETEST.nil?) then
+    $function_call_name << 'set_user_view_count'
+    $function_call_data << nil
+    $function_call_arguments << {}
+    method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
+  end
+  ## End Meta Data
+
 end
 
 def unblock_user(email)
@@ -251,4 +301,14 @@ def unblock_user(email)
   if (response.body != 'UNBLOCKED') then
     raise "Could not unblock: " + email + " " + response.body
   end
+
+  ## Function Meta Data Generator
+  if ($PERFROMANCETEST.nil?) then
+    $function_call_name << 'unblock_user'
+    $function_call_data << nil
+    $function_call_arguments << {}
+    method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
+  end
+  ## End Meta Data
+
 end
