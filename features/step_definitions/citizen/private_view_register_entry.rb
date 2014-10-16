@@ -22,9 +22,8 @@ Then(/^I have the option to edit the register$/) do
 end
 
 When(/^I have viewed the private register (\d+) times$/) do |views|
-  set_user_view_count($userdetails['email'], views.to_i-1)
+  set_user_view_count($userdetails['email'], views.to_i)
   step "I view the private register"
   checkTitleNumber()
-  step "I view the private register"
-  step "I view the private register"
+
 end
