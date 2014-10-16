@@ -36,7 +36,7 @@ def create_historical_data(regData)
   return historical_regData
 end
 
-def create_base_register(table)
+def create_base_register(table = nil)
   structuredData = false
 
   if (!table.nil?) then
@@ -155,28 +155,29 @@ def create_base_register(table)
 
   regData = add_proprietors(regData, 1, structuredData)
   regData = add_price_paid(regData)
-  if (table != '')
-    table.raw.each do |value|
-      if (value[0] != 'CHARACTERISTICS') then
-        if value[0] == 'restictive covenants' then
-          regData = add_restrictive_covenants(regData)
-        elsif  value[0] == 'bankruptcy notice' then
-          regData = add_bankruptcy(regData)
-        elsif value[0] == 'easement' then
-          regData = add_easement(regData)
-        elsif value[0] == 'provision' then
-          regData = add_provision(regData)
-        elsif value[0] == 'price paid' then
-          regData = add_price_paid(regData)
-        elsif value[0] == 'restriction' then
-          regData = add_restriction(regData)
-        elsif value[0] == 'charge' then
-          regData = add_charge(regData)
-        elsif value[0] == 'other' then
-          regData = add_other(regData)
-        end
-      end
-    end
+  if !data_characteristics['restictive covenants'].nil? then
+    regData = add_restrictive_covenants(regData)
+  end
+  if !data_characteristics['bankruptcy notice'].nil? then
+    regData = add_bankruptcy(regData)
+  end
+  if !data_characteristics['easement'].nil? then
+    regData = add_easement(regData)
+  end
+  if !data_characteristics['provision'].nil? then
+    regData = add_provision(regData)
+  end
+  if !data_characteristics['price paid'].nil? then
+    regData = add_price_paid(regData)
+  end
+  if !data_characteristics['restriction'].nil? then
+    regData = add_restriction(regData)
+  end
+  if !data_characteristics['charge'].nil? then
+    regData = add_charge(regData)
+  end
+  if !data_characteristics['other'].nil? then
+    regData = add_other(regData)
   end
   puts 'xxxxx'
   puts regData.to_json

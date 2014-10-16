@@ -30,7 +30,7 @@ end
 
 Then(/^the details of my change of name by marriage request are reflected back to me in a statement$/) do
   dateOfMarriage = Date.strptime($marriage_data['marriage_date'], "%d-%m-%Y")
-  formattedDate = dateOfMarriage.strftime("%d %B %Y").to_s
+  formattedDate = dateOfMarriage.strftime("%-d %B %Y").to_s
 
   text1 = "I confirm that I, #{$marriage_data['proprietor_new_full_name']}, was married to #{$marriage_data['partner_name']} on #{formattedDate} in #{$marriage_data['marriage_place']}, #{$marriage_data['marriage_country']}."
   assert_match(text1, page.body, 'Expected to see confirmation message with marriage details')
