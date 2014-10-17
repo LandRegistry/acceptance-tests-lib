@@ -72,5 +72,6 @@ When(/^I confirm the relationship$/) do
 end
 
 Then(/^the relationship is confirmed$/) do
-  assert_match(/You have confirmed your relationship/i, page.body, 'Expected to get message saying the relationship was confirmed')
+
+  assert_match(/You've verified your relationship/i, page.body, 'Expected to get message saying the relationship was confirmed')
 end
