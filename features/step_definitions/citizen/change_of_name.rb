@@ -1,9 +1,7 @@
 Given(/^a change of name by marriage application that requires reviewing by a caseworker$/) do
   step "a registered title with characteristics", ''
   $marriage_data = create_marriage_data('GB', $regData['proprietorship']['fields']['proprietors'][0]['name']['full_name'], $regData['title_number'])
-  puts '1'
   create_change_of_name_marriage_request($marriage_data)
-  puts '2'
   wait_for_case_to_exist($regData['title_number'])
 end
 
