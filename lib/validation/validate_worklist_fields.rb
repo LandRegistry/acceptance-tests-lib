@@ -20,7 +20,7 @@ end
 def checkDateRequestWasSubmitted()
   titleList = page.all(:xpath, ".//tr[td//text()[contains(.,'" + $regData['title_number'] + "')]]")
   assert_equal(titleList.length, 1, 'There are zero or more than one entries for title' + $regData['title_number'])
-  assert_match(Date.today.strftime("%d-%m-%Y"), titleList[0].text, 'Expected date today\'s date as date submitted' + titleList[0].text)
+  assert_match(Date.today.strftime("%e %B %Y"), titleList[0].text, 'Expected date today\'s date as date submitted' + titleList[0].text)
   puts 'Date request was submitted exists'
 end
 
