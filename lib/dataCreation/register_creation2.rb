@@ -52,7 +52,7 @@ def create_base_register(table = nil)
   regData['tenure'] = "Freehold"
   regData['edition_date'] = DateTime.now.strftime('%Y-%m-%d')
   #regData['last_application'] = DateTime.now.strftime('%FT%T%:z')
-  regData['last_application'] = "2014-02-20T09:03:10.000+01:00"
+  regData['last_application'] = "2014-02-20T09:03:10.000+00:00"
 
   regData['proprietorship'] = Hash.new()
   regData['proprietorship']['template'] = "PROPRIETOR(S): *RP*"
