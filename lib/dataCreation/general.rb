@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 def emailAddress()
   prefix = Time.now.strftime('%Y%m%d%H%M%S%L').to_s
   domain = "@example.org"
@@ -143,7 +145,8 @@ def townName()
 end
 
 def pricePaid()
-	return rand(100000 .. 9999000)
+
+	return ('£' + rand(100 .. 999).to_s + ',' + rand(100 .. 999).to_s)
 end
 
 #function determines if single polygon or multipolygon and returns result
