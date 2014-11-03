@@ -1,5 +1,5 @@
 Travis: [![Build Status](https://travis-ci.org/LandRegistry/acceptance-tests.svg)](https://travis-ci.org/LandRegistry/acceptance-tests)<br>
-Jenkins: [![Build Status](http://ci.preview.landregistryconcept.co.uk/job/Test-Acceptance/badge/icon)](http://ci.preview.landregistryconcept.co.uk/job/Test-Acceptance/)
+
 
 Frontend Acceptance Tests
 ===============
@@ -80,4 +80,3 @@ sh generate_perfornance_scripts.sh features/conveyancer/conveyancer_create_citiz
 
 This requires a custom build of phantomjs from:
 https://github.com/mooreandrew/phantomjs
-
