@@ -11,7 +11,7 @@ export LR_SEARCH_API_DOMAIN="http://172.16.42.43:8003"
 export SYSTEM_OF_RECORD_API_DOMAIN="http://172.16.42.43:8000"
 export SERVICE_FRONTEND_DOMAIN="http://172.16.42.43:8007"
 export LR_FIXTURES_URL="http://172.16.42.43:8012"
-export CASES_URL="http://172.16.42.43:8009"
+export CASES_URL="http://172.16.42.43:8014"
 
 bundle install
 

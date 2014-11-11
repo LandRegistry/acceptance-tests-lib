@@ -18,7 +18,6 @@ require 'net/https'
 require 'digest/md5'
 require 'capybara/cucumber'
 require 'cucumber-performance'
-require 'cucumber-performance-generator'
 
 ### Includes Capybara (the visit, find, fill_in commands) and poltergeist (channel to phantomjs headless browser)
 
@@ -51,6 +50,9 @@ else
   end
   #This removes the referer for the map tiles to be returned
   page.driver.add_header("Referer", "", permanent: true)
+
+  require 'cucumber-performance-generator'
+
 end
 
 ### Reads the basic auth username and password from env settings

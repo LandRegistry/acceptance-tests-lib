@@ -142,7 +142,7 @@ def getlrid(email)
   end
 
   ## Function Meta Data Generator
-  if ($PERFROMANCETEST.nil?) then
+  if (!$PERFROMANCETEST.nil?) then
     $function_call_name << 'getlrid'
     $function_call_data << response.body
     $function_call_arguments << {}
@@ -193,7 +193,7 @@ def wait_for_register_to_update_full_name(title_number, full_name)
     raise "Title not updated " + title_number
   end
 
-  if ($PERFROMANCETEST.nil?) then
+  if (!$PERFROMANCETEST.nil?) then
     $function_call_name << 'wait_for_register_to_update_full_name'
     $function_call_data << nil
     $function_call_arguments << {}
@@ -214,7 +214,7 @@ def post_to_historical(data_hash, title_number)
   end
 
   ## Function Meta Data Generator
-  if ($PERFROMANCETEST.nil?) then
+  if (!$PERFROMANCETEST.nil?) then
     $function_call_name << 'post_to_historical'
     $function_call_data << response.body
     $function_call_arguments << {}
@@ -232,7 +232,7 @@ def get_all_history(title_number)
   end
 
   ## Function Meta Data Generator
-  if ($PERFROMANCETEST.nil?) then
+  if (!$PERFROMANCETEST.nil?) then
     $function_call_name << 'get_all_history'
     $function_call_data << JSON.parse(response.body)
     $function_call_arguments << {}
@@ -254,7 +254,7 @@ def get_history_version(title_number, version)
   end
 
   ## Function Meta Data Generator
-  if ($PERFROMANCETEST.nil?) then
+  if (!$PERFROMANCETEST.nil?) then
     $function_call_name << 'get_history_version'
     $function_call_data << JSON.parse(response.body)
     $function_call_arguments << {}
@@ -277,7 +277,7 @@ def set_user_view_count(email, count)
   end
 
   ## Function Meta Data Generator
-  if ($PERFROMANCETEST.nil?) then
+  if (!$PERFROMANCETEST.nil?) then
     $function_call_name << 'set_user_view_count'
     $function_call_data << nil
     $function_call_arguments << {}
@@ -299,7 +299,7 @@ def unblock_user(email)
   end
 
   ## Function Meta Data Generator
-  if ($PERFROMANCETEST.nil?) then
+  if (!$PERFROMANCETEST.nil?) then
     $function_call_name << 'unblock_user'
     $function_call_data << nil
     $function_call_arguments << {}

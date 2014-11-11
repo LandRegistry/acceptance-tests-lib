@@ -113,7 +113,7 @@ def generic_register_data(table = nil)
   wait_for_register_to_be_created(regData['title_number'])
 
   ## Function Meta Data Generator
-  if ($PERFROMANCETEST.nil?) then
+  if (!$PERFROMANCETEST.nil?) then
     $function_call_name << 'generic_register_data'
     $function_call_data << regData
     $function_call_arguments << {}
@@ -240,7 +240,7 @@ def first_registration_data()
   data['title_extent'] = data['title_extent'].to_json
   data['easement'] = data['easement'].to_json
 
-  if ($PERFROMANCETEST.nil?) then
+  if (!$PERFROMANCETEST.nil?) then
     $function_call_name << 'first_registration_data'
     $function_call_data << data
   end

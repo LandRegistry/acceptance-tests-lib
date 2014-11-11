@@ -12,7 +12,7 @@ def create_marriage_data(country, full_name, title_number)
   marriage_data['marriage_certificate_number'] = certificateNumber()
   marriage_data['marriage_date'] = dateInThePast().strftime("%d-%m-%Y")
 
-  if ($PERFROMANCETEST.nil?) then
+  if (!$PERFROMANCETEST.nil?) then
     $function_call_name << 'create_marriage_data'
     $function_call_data << marriage_data
     $function_call_arguments << {}
@@ -53,7 +53,7 @@ def create_change_of_name_marriage_request(marriage_data)
   #make sure case is in queued status
   assert_equal check_case_is_with_status(change_of_name['case_id'], marriage_data['title_number'], 'queued'), true, "case not in correct status"
 
-  if ($PERFROMANCETEST.nil?) then
+  if (!$PERFROMANCETEST.nil?) then
     $function_call_name << 'create_change_of_name_marriage_request'
     $function_call_data << change_of_name
     $function_call_arguments << {}
@@ -76,7 +76,7 @@ def complete_case(case_id)
     raise 'Error: ' + response.body
   end
 
-  if ($PERFROMANCETEST.nil?) then
+  if (!$PERFROMANCETEST.nil?) then
     $function_call_name << 'complete_case'
     $function_call_data << nil
     $function_call_arguments << {}

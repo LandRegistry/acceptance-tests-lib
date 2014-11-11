@@ -7,7 +7,7 @@ def get_all_historical_titles(title_number)
   end
 
   ## Function Meta Data Generator
-  if ($PERFROMANCETEST.nil?) then
+  if (!$PERFROMANCETEST.nil?) then
     $function_call_name << 'get_all_historical_titles'
     $function_call_data << title_version_history
     $function_call_arguments << {}
@@ -25,7 +25,7 @@ def create_historical_data(regData)
   historical_regData['edition_date'] = DateTime.now.strftime('%d.%m.%Y %H:%M:%S')
 
   ## Function Meta Data Generator
-  if ($PERFROMANCETEST.nil?) then
+  if (!$PERFROMANCETEST.nil?) then
     $function_call_name << 'create_historical_data'
     $function_call_data << historical_regData
     $function_call_arguments << {}
@@ -81,7 +81,7 @@ def create_base_register(table = nil)
   regData['restrictive_covenants'] = Array.new()
   regData['restrictions'] = Array.new()
   regData['bankruptcy'] = Array.new()
-  regData['easements'] = Array.new()
+  #regData['easements'] = Array.new()
   regData['provisions'] = Array.new()
   regData['charges'] = Array.new()
   regData['other'] = Array.new()
@@ -139,7 +139,7 @@ def create_base_register(table = nil)
   wait_for_register_to_be_created(regData['title_number'])
 
   ## Function Meta Data Generator
-  if ($PERFROMANCETEST.nil?) then
+  if (!$PERFROMANCETEST.nil?) then
     $function_call_name << 'create_base_register'
     $function_call_data << regData
     $function_call_arguments << {}
