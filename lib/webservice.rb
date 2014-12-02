@@ -9,6 +9,18 @@ def rest_get_call(url)
   return response
 end
 
+def rest_post_call(url, data)
+  uri = URI.parse(url)
+
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Post.new(uri.path,  initheader = {'Content-Type' =>'application/json'})
+  request.basic_auth $http_auth_name, $http_auth_password
+  request.set_form_data(data)
+  response = http.request(request)
+
+  return response
+end
+
 
 
 def wait_for_register_to_be_created(title_no)
@@ -21,23 +33,17 @@ def wait_for_register_to_be_created(title_no)
 
     found_count = 0
 
-    puts 'found_count = ' + found_count.to_s
-
     sleep(1)
 
     response = rest_get_call($LR_SEARCH_API_DOMAIN + '/titles/' + title_no)
     json_response = JSON.parse(response.body);
-    puts 'json_response = ' + json_response.to_s
 
     if ((response.code != '404') && (!json_response['title_number'].nil?)) then
         found_count = found_count + 1
     end
 
-    puts 'found_count = ' + found_count.to_s
-
     response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_no)
     json_response = JSON.parse(response.body);
-    puts "json_response = " + json_response.to_s
 
     if ((response.code != '404') && (!json_response['title_number'].nil?)) then
         found_count = found_count + 1
@@ -52,7 +58,6 @@ def wait_for_register_to_be_created(title_no)
   end
 
   return JSON.parse(response.body)
-  puts 'JSON.parse(response.body) = ' + JSON.parse(response.body)
 end
 
 def get_register_details(title_no)
@@ -64,12 +69,7 @@ end
 
 def link_title_to_email(email, title_number, role)
 
-  uri = URI.parse($LR_FIXTURES_URL)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Post.new('/create-matching-data-and-ownership')
-  request.basic_auth $http_auth_name, $http_auth_password
-  request.set_form_data({'email' => email, 'title_number' => title_number, 'role_id' => role,'submit' => 'submit'})
-  response = http.request(request)
+  response = rest_post_call($LR_FIXTURES_URL + '/create-matching-data-and-ownership', {'email' => email, 'title_number' => title_number, 'role_id' => role,'submit' => 'submit'})
 
   if (response.body != 'OK') then
     raise "Could not match title(#{title_number}), email(#{email}) and role(#{role}): " + response.body

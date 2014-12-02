@@ -19,8 +19,6 @@ require 'digest/md5'
 require 'capybara/cucumber'
 require 'cucumber-performance'
 
-### Includes Capybara (the visit, find, fill_in commands) and poltergeist (channel to phantomjs headless browser)
-
 ### Allows you to use the page. commands
 include Capybara::DSL
 
@@ -37,7 +35,7 @@ if (ENV['WEBDRIVER'] == 'Firefox') then
   Capybara.javascript_driver = :selenium
 
 else
-
+  ### Includes Capybara (the visit, find, fill_in commands) and poltergeist (channel to phantomjs headless browser)
   require 'capybara/poltergeist'
 
   ### Configures Capybara to use Xpath selectors and use poltergeist driver
