@@ -10,9 +10,6 @@ When(/^I view the check worklist$/) do
   click_link('Check list')
 end
 
-Then(/^queue is ascending by order of submission$/) do
-  puts "step needs to be implemented"
-end
 
 Then(/^an option to approve the change of name request$/) do
   titleList = page.all(:xpath, ".//tr[td//text()[contains(.,'" + $regData['title_number'] + "')]]")

@@ -12,16 +12,10 @@ Then(/^the correct historical versions of the register are displayed$/) do
   puts result.native.text
   for i in 0..title_version_history.length-1 do
     assert_match(title_version_history[i]["contents"]["edition_date"], result.native.text, 'Expected to find edition date '+ title_version_history[i]["contents"]["edition_date"] +' displayed on the screen')
-    #puts title_version_history[i]
-    #puts title_version_history[i]["contents"]
   end
 
   for i in 0..title_version_history.length-1 do
     visit("#{$SERVICE_FRONTEND_DOMAIN}/property/" + $regData['title_number'] +"/changes")
     click_link('Version '+(i+1).to_s)
   end
-end
-
-Then(/^historical versions of the register are not editable$/) do
-  pending # express the regexp above with the code you wish you had
 end

@@ -1,7 +1,6 @@
 ### Include Custom function libraries
 require_relative '../../lib/dataCreation/general.rb'
 require_relative '../../lib/dataCreation/polygon.rb'
-require_relative '../../lib/dataCreation/register_creation.rb'
 require_relative '../../lib/dataCreation/register_creation2.rb'
 require_relative '../../lib/dataCreation/conveyancer_client_token.rb'
 require_relative '../../lib/dataCreation/change_of_name.rb'
