@@ -1,6 +1,6 @@
 Feature: Create relationship between acting conveyancer and a citizen buyer(s) or seller(s)
 
-@performance_test_script
+@service-frontend
 Scenario: Create relationship token for buyers
 Given I have conveyancer login credentials
 And I am not already logged in as a conveyancer
@@ -14,7 +14,7 @@ And I enter the clients details
 And I confirm the details entered
 Then a relationship token code is generated
 
-@performance_test_script
+@service-frontend
 Scenario: Citizen authorises the conveyancer client relationship
 Given I have private citizen login credentials
 And I login to the service frontend with correct credentials
@@ -24,6 +24,7 @@ And I enter the relationship token code
 And I confirm the relationship
 Then the relationship is confirmed
 
+@service-frontend
 Scenario: Citizen enters invalid relationship token
 Given I have private citizen login credentials
 And I am not already logged in as a private citizen

@@ -1,6 +1,6 @@
 Feature: Find a property on gov.uk and view its details
 
-@performance_test_script
+@property-frontend
 Scenario: A user can find a property and view its details
 
   Given I am a user
@@ -19,7 +19,7 @@ Scenario: A user can find a property and view its details
     | Property Address |
     | Tenure           |
 
-
+@property-frontend
 Scenario: A user cannot find a property that does not exist
 
   Given I am a user
