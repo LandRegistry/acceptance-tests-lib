@@ -2,16 +2,14 @@ Given(/^pending applications exist$/) do
 
   $pending_cases = []
 
-  $marriage_data = create_marriage_data('GB', $regData['proprietorship']['fields']['proprietors'][0]['name']['full_name'], $regData['title_number'])
-  $pending_cases << create_change_of_name_marriage_request($marriage_data)
-  $pending_cases[0]['regdata'] = $regData
-  $pending_cases[0]['marriage_data'] = $marriage_data
+  for i in 0..2 do
 
-  #$regData['proprietors'][0]['full_name'] = $marriage_data['proprietor_new_full_name']
-  $marriage_data = create_marriage_data('GB', $regData['proprietorship']['fields']['proprietors'][0]['name']['full_name'], $regData['title_number'])
-  $pending_cases << create_change_of_name_marriage_request($marriage_data)
-  $pending_cases[1]['regdata'] = $regData
-  $pending_cases[1]['marriage_data'] = $marriage_data
+    $marriage_data = create_marriage_data('GB', $regData['proprietorship']['fields']['proprietors'][0]['name']['full_name'], $regData['title_number'])
+    $pending_cases << create_change_of_name_marriage_request($marriage_data)
+    $pending_cases[i]['regdata'] = $regData
+    $pending_cases[i]['marriage_data'] = $marriage_data
+
+  end
 
 end
 
@@ -19,24 +17,23 @@ Given(/^completed applications exist$/) do
 
   $completed_cases = []
 
-  ## Request No 1
+  name = $regData['proprietorship']['fields']['proprietors'][0]['name']['full_name']
 
-  $marriage_data = create_marriage_data('GB', $regData['proprietorship']['fields']['proprietors'][0]['name']['full_name'], $regData['title_number'])
-  $completed_cases << create_change_of_name_marriage_request($marriage_data)
-  $completed_cases[0]['regdata'] = $regData
-  $completed_cases[0]['marriage_data'] = $marriage_data
-  complete_case($completed_cases[0]['case_id'])
-  wait_for_register_to_update_full_name($regData['title_number'], $marriage_data['proprietor_new_full_name'])
+  for i in 0..2 do
 
-  ## Request No 2
-  title_no = $regData['title_number']
-  $regData = get_register_details(title_no)
-  $marriage_data = create_marriage_data('GB', $completed_cases[0]['marriage_data']['proprietor_new_full_name'], $regData['title_number'])
-  $completed_cases << create_change_of_name_marriage_request($marriage_data)
-  $completed_cases[1]['regdata'] = $regData
-  $completed_cases[1]['marriage_data'] = $marriage_data
-  complete_case($completed_cases[1]['case_id'])
-  wait_for_register_to_update_full_name($regData['title_number'], $marriage_data['proprietor_new_full_name'])
+    $regData = get_register_details($regData['title_number'])
+    $marriage_data = create_marriage_data('GB', name, $regData['title_number'])
+    $completed_cases << create_change_of_name_marriage_request($marriage_data)
+    $completed_cases[i]['regdata'] = $regData
+    $completed_cases[i]['marriage_data'] = $marriage_data
+    complete_case($completed_cases[i]['case_id'])
+    wait_for_register_to_update_full_name($regData['title_number'], $marriage_data['proprietor_new_full_name'])
+
+    name = $completed_cases[i]['marriage_data']['proprietor_new_full_name']
+
+  end
+
+
 
 end
 
@@ -56,12 +53,12 @@ Then(/^a list of pending requests are shown in order of receipt by date & time$/
 
   assert_equal list.length, $pending_cases.length, "number of pending changes does not match what is expected"
 
-  list.each_with_index { |row, idx|
+  list.each_with_index do |row, idx|
     submitted_on_text = "SUBMITTED ON " + getDateTimeFormatted(cases[idx]['submitted_at']).upcase
     submitted_by_text = "Submitted by " + cases[idx]['submitted_by']
     assert row.text.include?(submitted_on_text), "The requests were not in the correct order"
     assert row.text.include?(submitted_by_text), "The submitted by was incorrect"
-  }
+  end
 end
 
 Then(/^a separate list of completed requests are shown in order of receipt by date & time$/) do
@@ -73,11 +70,11 @@ Then(/^a separate list of completed requests are shown in order of receipt by da
 
   assert_equal list.length, $completed_cases.length, "number of versions does not match what is expected"
 
-  list.reverse.each_with_index { |row, idx|
+  list.reverse.each_with_index do |row, idx|
     assert row.text.include?("Version " + (idx + 1).to_s), "The version was not in the correct order"
     link_text = 'View register on ' + getDateTimeFormatted($completed_cases[idx]['regdata']['last_application'])
     assert_equal has_link?(link_text), true, 'Expected link to view version ' + (idx + 1).to_s
-  }
+  end
 end
 
 Then(/^a view requests option is not displayed$/) do

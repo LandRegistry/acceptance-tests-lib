@@ -1,6 +1,6 @@
 Feature: Citizen view full register of title
 
-@performance_test_script
+@service-frontend
 Scenario: Full register of title
 
   Given I am a citizen
@@ -28,6 +28,7 @@ Scenario: Full register of title
     | Restriction                  |
   And Audit for private citizen register view written
 
+@service-frontend
 Scenario: Proprietor can edit the register
 
   Given I am a citizen
@@ -35,6 +36,7 @@ Scenario: Proprietor can edit the register
   When I view the full register of title
   Then I have the option to edit the register
 
+@service-frontend
 Scenario: Non proprietor cannot edit the register
 
   Given I am a citizen
@@ -42,12 +44,14 @@ Scenario: Non proprietor cannot edit the register
   When I view the full register of title
   Then I do not have the option to edit the register
 
+@service-frontend
 Scenario: Citizen can only view private register if logged in
 
   Given a registered title
   When I view the private register
   Then I am prompted to login as a private citizen
 
+@service-frontend
 Scenario: Private Register with Title Extents
 
   Given I am a citizen
@@ -69,6 +73,7 @@ Scenario: Private Register with Title Extents
     | the map can't be moved        |
     | the polygons are over a map   |
 
+@service-frontend
 Scenario: Block user viewing X number of titles
   Given I am a citizen
   And I am unblocked

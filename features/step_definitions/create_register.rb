@@ -1,5 +1,4 @@
 Given(/^a registered title with characteristics$/) do |table|
-  #$regData = generic_register_data(table)
   $regData = create_base_register(table)
 end
 

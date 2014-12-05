@@ -1,6 +1,6 @@
 Feature: Caseworker worklist
 
-@performance_test_script
+@casework-frontend
 Scenario: View Change of Name in work queue (no Checking)
 
   Given I am a caseworker
@@ -14,6 +14,7 @@ Scenario: View Change of Name in work queue (no Checking)
      | Application Type Of Change Name Marriage |
   And an option to approve the change of name request
 
+@casework-frontend
 Scenario: View Change of Name in work queue (Checking)
 
   Given I am a caseworker
@@ -25,6 +26,7 @@ Scenario: View Change of Name in work queue (Checking)
      | Date Request Was Submitted               |
      | Application Type Of Change Name Marriage |
 
+@casework-frontend
 Scenario: Caseworker can process a change of name by way of marriage request and update the title of register
 
   Given I am a caseworker

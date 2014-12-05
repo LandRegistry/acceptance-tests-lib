@@ -6,7 +6,7 @@ echo ""
 echo "IMPORTANT:"
 echo "This will generate performance tests from scenarios with the @performance_test_script tag. "
 
-echo "This requires the custom version of phantomjs from http://github.com/mooreandrew/phantom"
+echo "This requires the custom version of phantomjs from http://github.com/mooreandrew/phantomjs"
 echo ""
 
 export CASEWORK_FRONTEND_DOMAIN="http://172.16.42.43:8004"

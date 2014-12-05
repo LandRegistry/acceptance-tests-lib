@@ -70,6 +70,7 @@ Then(/^I fail to login \(incorrect password\)$/) do
 end
 
 Given(/^I am still authenticated$/) do
+  # Logout first and re-login to ensure you're still logged in
   visit("#{$SERVICE_FRONTEND_DOMAIN}/auth/logout")
   step "I have private citizen login credentials"
   visit("#{$SERVICE_FRONTEND_DOMAIN}/auth/login")
@@ -127,7 +128,7 @@ Given(/^I am a citizen$/) do
 end
 
 Given(/^I am a user$/) do
-
+  # A user isn't logged in, so don't do anything
 end
 
 Given(/^I am a caseworker$/) do

@@ -1,10 +1,10 @@
-@property-frontend
 Feature: View property details on gov.uk
 
+@property-frontend
 Scenario: Citizen View public register
 
   Given I am a citizen
-And a registered title with characteristics
+  And a registered title with characteristics
   | CHARACTERISTICS           |
   | restictive covenants      |
   | bankruptcy notice         |
@@ -20,14 +20,14 @@ And a registered title with characteristics
     | Price Paid       |
   And I have the option to view the full register
 
-
+@property-frontend
 Scenario: try to view register that does not exist
 
   Given I am a citizen
   When I try to view a property that does not exist
   Then an error is displayed
 
-
+@property-frontend
 Scenario: Public Register with Title Extents
 
   Given I am a citizen

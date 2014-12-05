@@ -12,13 +12,6 @@ def create_marriage_data(country, full_name, title_number)
   marriage_data['marriage_certificate_number'] = certificateNumber()
   marriage_data['marriage_date'] = dateInThePast().strftime("%d-%m-%Y")
 
-  if (!$PERFROMANCETEST.nil?) then
-    $function_call_name << 'create_marriage_data'
-    $function_call_data << marriage_data
-    $function_call_arguments << {}
-    method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
-  end
-
   return marriage_data
 
 end
@@ -53,13 +46,6 @@ def create_change_of_name_marriage_request(marriage_data)
   #make sure case is in queued status
   assert_equal check_case_is_with_status(change_of_name['case_id'], marriage_data['title_number'], 'queued'), true, "case not in correct status"
 
-  if (!$PERFROMANCETEST.nil?) then
-    $function_call_name << 'create_change_of_name_marriage_request'
-    $function_call_data << change_of_name
-    $function_call_arguments << {}
-    method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
-  end
-
   return change_of_name
 
 end
@@ -76,12 +62,6 @@ def complete_case(case_id)
     raise 'Error: ' + response.body
   end
 
-  if (!$PERFROMANCETEST.nil?) then
-    $function_call_name << 'complete_case'
-    $function_call_data << nil
-    $function_call_arguments << {}
-    method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
-  end
 end
 
 def check_case_is_with_status(case_id, title_number, status)

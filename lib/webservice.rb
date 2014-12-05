@@ -1,3 +1,13 @@
+
+
+#######
+# Function: rest_get_call
+# Description: This function should be used to do all get requests
+# Inputs:
+#     - url = The url that the web service is calling
+# Outputs:
+#     - curl response
+######
 def rest_get_call(url)
   uri = URI.parse(url)
 
@@ -9,8 +19,47 @@ def rest_get_call(url)
   return response
 end
 
+#######
+# Function: rest_post_call
+# Description: This function should be used to do all post requests
+# Inputs:
+#     - url = The url that the web service is calling
+#     - data = The data post for the post
+#     - body = The body for the post
+# Outputs:
+#     - curl response
+######
+def rest_post_call(url, data = nil, body = nil)
+  uri = URI.parse(url)
+
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Post.new(uri.path,  initheader = {'Content-Type' =>'application/json'})
+  request.basic_auth $http_auth_name, $http_auth_password
+
+  if (!data.nil?) then
+    request.set_form_data(data)
+  end
+
+  if (!body.nil?) then
+    request.body = body
+  end
+
+  response = http.request(request)
+
+  return response
+end
 
 
+#######
+# Function: wait_for_register_to_be_created
+# Description: When creating a title it is sent to the mint and inserted into the system of records,
+#              the feeder then passes that out into the data pots. If the the title isn't found
+#              then an exception will be raised and the script stops.
+# Inputs:
+#     - title_no
+# Outputs:
+#     - curl response
+######
 def wait_for_register_to_be_created(title_no)
   found_count = 0
   count = 0
@@ -21,23 +70,17 @@ def wait_for_register_to_be_created(title_no)
 
     found_count = 0
 
-    puts 'found_count = ' + found_count.to_s
-
     sleep(1)
 
     response = rest_get_call($LR_SEARCH_API_DOMAIN + '/titles/' + title_no)
     json_response = JSON.parse(response.body);
-    puts 'json_response = ' + json_response.to_s
 
     if ((response.code != '404') && (!json_response['title_number'].nil?)) then
         found_count = found_count + 1
     end
 
-    puts 'found_count = ' + found_count.to_s
-
     response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_no)
     json_response = JSON.parse(response.body);
-    puts "json_response = " + json_response.to_s
 
     if ((response.code != '404') && (!json_response['title_number'].nil?)) then
         found_count = found_count + 1
@@ -52,24 +95,37 @@ def wait_for_register_to_be_created(title_no)
   end
 
   return JSON.parse(response.body)
-  puts 'JSON.parse(response.body) = ' + JSON.parse(response.body)
 end
 
+#######
+# Function: get_register_details
+# Description: Gets the register json structure
+# Inputs:
+#     - title_no
+# Outputs:
+#     - json register structure
+######
 def get_register_details(title_no)
 
   response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_no)
+
   return  JSON.parse(response.body)
 
 end
 
+#######
+# Function: link_title_to_email
+# Description: Connects a title to a person's email address
+# Inputs:
+#     - email = email address of the user
+#     - title_number = title number to be linked
+#     - role = the role id of the person (e.g. citizen, conveyancer)
+# Outputs:
+#     - json register structure
+######
 def link_title_to_email(email, title_number, role)
 
-  uri = URI.parse($LR_FIXTURES_URL)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Post.new('/create-matching-data-and-ownership')
-  request.basic_auth $http_auth_name, $http_auth_password
-  request.set_form_data({'email' => email, 'title_number' => title_number, 'role_id' => role,'submit' => 'submit'})
-  response = http.request(request)
+  response = rest_post_call($LR_FIXTURES_URL + '/create-matching-data-and-ownership', {'email' => email, 'title_number' => title_number, 'role_id' => role,'submit' => 'submit'})
 
   if (response.body != 'OK') then
     raise "Could not match title(#{title_number}), email(#{email}) and role(#{role}): " + response.body
@@ -77,15 +133,17 @@ def link_title_to_email(email, title_number, role)
 
 end
 
+#######
+# Function: does_title_exist
+# Description: Does the title exist in the system of records
+# Inputs:
+#     - title_no
+# Outputs:
+#     - boolean if title exists (true = exists, false = doesn't exist)
+######
 def does_title_exist(title_no)
-  puts 'Does title exist'
 
-  uri = URI.parse($SYSTEM_OF_RECORD_API_DOMAIN)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Get.new('/titles/' + title_no,  initheader = {'Content-Type' =>'application/json'})
-  request.basic_auth $http_auth_name, $http_auth_password
-  request.body = $regData.to_json
-  response = http.request(request)
+  response = rest_get_call($SYSTEM_OF_RECORD_API_DOMAIN + '/titles/' + title_no)
 
   if (response.code == '404') then
     return false
@@ -95,6 +153,15 @@ def does_title_exist(title_no)
 
 end
 
+#######
+# Function: wait_for_case_to_exist
+# Description: Once a case has been submitted, this function will wait for it to exist. If after
+#              the 25 seconds it doesn't exist then an exception will be raised.
+# Inputs:
+#     - title_no
+# Outputs:
+#     - curl response body
+######
 def wait_for_case_to_exist(title_no)
   found_count = 0
   count = 0
@@ -116,56 +183,89 @@ def wait_for_case_to_exist(title_no)
   end
 
   return response.body
+
 end
 
+#######
+# Function: get_token_code
+# Description: This inserts a conveyancer + client relationship request returns the token
+# Inputs:
+#     - relationship hash = Structure of relationship request
+# Outputs:
+#     - token
+######
 def get_token_code(relationship_hash)
-  uri = URI.parse($INTRODUCTIONS_DOMAIN)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Post.new('/relationship',  initheader = {'Content-Type' =>'application/json'})
-  request.basic_auth $http_auth_name, $http_auth_password
-  request.body = relationship_hash.to_json
-  response = http.request(request)
+
+
+  response = rest_post_call($INTRODUCTIONS_DOMAIN + '/relationship', nil, relationship_hash.to_json)
+
+  #uri = URI.parse($INTRODUCTIONS_DOMAIN)
+  #http = Net::HTTP.new(uri.host, uri.port)
+  #request = Net::HTTP::Post.new('/relationship',  initheader = {'Content-Type' =>'application/json'})
+  #request.basic_auth $http_auth_name, $http_auth_password
+  #request.body = relationship_hash.to_json
+  #response = http.request(request)
+
+  #response = rest_post_call($INTRODUCTIONS_DOMAIN + '/relationship', relationship_hash.to_json)
+
   if (response.code != '200') then
     raise "Failed creating relationship: " + response.body
   end
+
   return JSON.parse(response.body)['token']
+
 end
 
+#######
+# Function: getlrid
+# Description: this gets the lrid (unique id) of a user
+# Inputs:
+#     - email = user's email address
+# Outputs:
+#     - curl response body
+######
 def getlrid(email)
-  uri = URI.parse($LR_FIXTURES_URL)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Get.new('/get-lrid-by-email/' + email)
-  request.basic_auth $http_auth_name, $http_auth_password
-  response = http.request(request)
+
+  response = rest_get_call($LR_FIXTURES_URL + '/get-lrid-by-email/' + email)
+
   if (response.code != '200') then
     raise "Error in finding email for: " + email
   end
 
-  ## Function Meta Data Generator
-  if (!$PERFROMANCETEST.nil?) then
-    $function_call_name << 'getlrid'
-    $function_call_data << response.body
-    $function_call_arguments << {}
-    method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
-  end
-  ## End Meta Data
-
   return response.body
+
 end
 
+#######
+# Function: associate_client_with_token
+# Description: This will confirm a conveyancers relationship
+# Inputs:
+#     - data_hash = the data structure of the confirmation request
+# Outputs:
+#     - curl response body
+######
 def associate_client_with_token(data_hash)
-  uri = URI.parse($INTRODUCTIONS_DOMAIN)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Post.new('/confirm',  initheader = {'Content-Type' =>'application/json'})
-  request.basic_auth $http_auth_name, $http_auth_password
-  request.body = data_hash.to_json
-  response = http.request(request)
+
+  response = rest_post_call($INTRODUCTIONS_DOMAIN + '/confirm', data_hash.to_json)
+
   if (response.code != '200') then
     raise "Failed to associate client with token: " + response.body
   end
+
   return response.body
+
 end
 
+#######
+# Function: wait_for_register_to_update_full_name
+# Description: This will wait for the new full name to appear on the register. If it doesn't find
+#              it then an exception will be raised.
+# Inputs:
+#     - title_number
+#     - full_name = the name you expect it to now be
+# Outputs:
+#     - none
+######
 def wait_for_register_to_update_full_name(title_number, full_name)
 
   found_count = 0
@@ -193,123 +293,117 @@ def wait_for_register_to_update_full_name(title_number, full_name)
     raise "Title not updated " + title_number
   end
 
-  if (!$PERFROMANCETEST.nil?) then
-    $function_call_name << 'wait_for_register_to_update_full_name'
-    $function_call_data << nil
-    $function_call_arguments << {}
-    method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
-  end
-
 end
 
+#######
+# Function: post_to_historical
+# Description: This will create a historical register entry
+# Inputs:
+#     - data_hash = data structure of the register
+#     - title_number = the new title number that will be inserted
+# Outputs:
+#     - curl response body
+######
 def post_to_historical(data_hash, title_number)
-  uri = URI.parse($HISTORIAN_URL)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Post.new('/' + title_number,  initheader = {'Content-Type' =>'application/json'})
-  request.basic_auth $http_auth_name, $http_auth_password
-  request.body = data_hash.to_json
-  response = http.request(request)
+
+  response = rest_post_call($HISTORIAN_URL + '/' + title_number, data_hash.to_json)
+
   if (response.code != '200') then
     raise "Failed to create the historical data: " + response.body
   end
 
-  ## Function Meta Data Generator
-  if (!$PERFROMANCETEST.nil?) then
-    $function_call_name << 'post_to_historical'
-    $function_call_data << response.body
-    $function_call_arguments << {}
-    method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
-  end
-  ## End Meta Data
-
   return response.body
 end
 
+#######
+# Function: get_all_history
+# Description: This will get all history of a title
+# Inputs:
+#     - title_number
+# Outputs:
+#     - curl response body
+######
 def get_all_history(title_number)
+
   response = rest_get_call($HISTORIAN_URL + '/' + title_number +'?versions=list')
+
   if (response.code != '200') then
     raise "Failed to retrieve list of historical data: " + response.body
   end
 
-  ## Function Meta Data Generator
-  if (!$PERFROMANCETEST.nil?) then
-    $function_call_name << 'get_all_history'
-    $function_call_data << JSON.parse(response.body)
-    $function_call_arguments << {}
-    method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
-  end
-  ## End Meta Data
-
   return JSON.parse(response.body)
 end
 
+#######
+# Function: get_history_version
+# Description: This will get a specific version of a register
+# Inputs:
+#     - title_number
+#     - version = the version you want to return
+# Outputs:
+#     - curl response body
+######
 def get_history_version(title_number, version)
-  uri = URI.parse($HISTORIAN_URL)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Get.new('/' + title_number +'?version=' + version.to_s,  initheader = {'Content-Type' =>'application/json'})
-  request.basic_auth $http_auth_name, $http_auth_password
-  response = http.request(request)
+
+  response = rest_get_call($HISTORIAN_URL + '/' + title_number +'?version=' + version.to_s)
+
   if (response.code != '200') then
     raise "Failed to retrieve historical version specified: " + response.body
   end
 
-  ## Function Meta Data Generator
-  if (!$PERFROMANCETEST.nil?) then
-    $function_call_name << 'get_history_version'
-    $function_call_data << JSON.parse(response.body)
-    $function_call_arguments << {}
-    method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
-  end
-  ## End Meta Data
-
   return JSON.parse(response.body)
 end
 
+#######
+# Function: set_user_view_count
+# Description: Sets the view count of the amount of registered than a user has viewed
+# Inputs:
+#     - email
+#     - count = the amount of registered the user has viewed
+# Outputs:
+#     none
+######
 def set_user_view_count(email, count)
-  uri = URI.parse($LR_FIXTURES_URL)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Post.new('/set-user-view-count')
-  request.basic_auth $http_auth_name, $http_auth_password
-  request.set_form_data({'user_view_email' => email, 'view_count' => count.to_s, 'submit' => 'Set view count'})
-  response = http.request(request)
+
+  response = rest_post_call($LR_FIXTURES_URL + '/set-user-view-count', {'user_view_email' => email, 'view_count' => count.to_s, 'submit' => 'Set view count'})
+
   if (response.code != '302') then
     raise "Could not set view count: " + response.body
   end
 
-  ## Function Meta Data Generator
-  if (!$PERFROMANCETEST.nil?) then
-    $function_call_name << 'set_user_view_count'
-    $function_call_data << nil
-    $function_call_arguments << {}
-    method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
-  end
-  ## End Meta Data
-
 end
 
+
+#######
+# Function: unblock_user
+# Description: unlocks a blocked user
+# Inputs:
+#     - email
+# Outputs:
+#     none
+######
 def unblock_user(email)
-  uri = URI.parse($LR_FIXTURES_URL)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Post.new('/unblock-user')
-  request.basic_auth $http_auth_name, $http_auth_password
-  request.set_form_data({'account_email' => email})
-  response = http.request(request)
+
+  response = rest_post_call($LR_FIXTURES_URL + '/unblock-user', {'account_email' => email})
+
   if (response.body != 'UNBLOCKED') then
     raise "Could not unblock: " + email + " " + response.body
   end
 
-  ## Function Meta Data Generator
-  if (!$PERFROMANCETEST.nil?) then
-    $function_call_name << 'unblock_user'
-    $function_call_data << nil
-    $function_call_arguments << {}
-    method(__method__).parameters.each do |key, value| $function_call_arguments[$function_call_arguments.count - 1][value.to_s] = decode_value(eval(value.to_s)) end
-  end
-  ## End Meta Data
-
 end
 
+#######
+# Function: get_cases_by_title_number
+# Description: gets all the cases associated to that tile
+# Inputs:
+#     - title_no
+# Outputs:
+#     - curl response body
+######
 def get_cases_by_title_number(title_no)
+
   response = rest_get_call($CASES_URL + '/cases/property/' + title_no)
+
   return response.body
+
 end

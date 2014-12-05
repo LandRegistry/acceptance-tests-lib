@@ -23,7 +23,6 @@ end
 
 When(/^I choose to view the property details$/) do
   address_split = $regData['property_description']['fields']['addresses'][0]['full_address'].split(',')
-
   click_link(address_split[0])
 end
 
