@@ -14,13 +14,13 @@ def check_logs_for_message(url, log_message)
       puts 'Checking Audit'
       request = Net::HTTP::Get.new(uri.request_uri)
       response = http.request(request)
- 
+
       if (response.body.include? log_message) then
         found = true
       end
 
       count = count + 1
-      sleep(1)
+      sleep(1) #
     end
 
     assert_match(log_message, response.body, 'Expected to find audit message in logs')
