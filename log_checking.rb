@@ -7,14 +7,14 @@ def check_logs_for_message(url, log_message)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
- 
+
     found = false
     count = 0
     while (found == false && count < 30) do
       puts 'Checking Audit'
       request = Net::HTTP::Get.new(uri.request_uri)
       response = http.request(request)
-
+ 
       if (response.body.include? log_message) then
         found = true
       end
