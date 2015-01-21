@@ -2,7 +2,7 @@
 require_relative 'dataChecking/log_checking.rb'
 
 require_relative 'dataCreation/create_register.rb'
-require_relative 'dataCreation/data_denerator.rb'
+require_relative 'dataCreation/data_generator.rb'
 require_relative 'dataCreation/create_register.lib.rb'
 
 require_relative 'mapping/polygon_checking.rb'
