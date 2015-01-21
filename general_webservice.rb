@@ -48,3 +48,21 @@ def rest_post_call(url, data = nil, body = nil)
 
   return response
 end
+
+#######
+# Function: unblock_user
+# Description: unlocks a blocked user
+# Inputs:
+#     - email
+# Outputs:
+#     none
+######
+def unblock_user(email)
+
+  response = rest_post_call($LR_FIXTURES_URL + '/unblock-user', {'account_email' => email})
+
+  if (response.body != 'UNBLOCKED') then
+    raise "Could not unblock: " + email + " " + response.body
+  end
+
+end
