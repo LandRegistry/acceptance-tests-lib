@@ -287,3 +287,50 @@ def generate_address(country, structuredData)
   end
   return address
 end
+
+#######
+# Function: wait_for_register_to_be_created
+# Description: When creating a title it is sent to the mint and inserted into the system of records,
+#              the feeder then passes that out into the data pots. If the the title isn't found
+#              then an exception will be raised and the script stops.
+# Inputs:
+#     - title_no
+# Outputs:
+#     - curl response
+######
+def wait_for_register_to_be_created(title_no)
+  found_count = 0
+  count = 0
+
+  sleep(5) # Temp sleep to try and get Jenkins Working.
+  while (found_count != 2 && count < 25) do
+    puts 'waiting for registration to be created'
+
+    found_count = 0
+
+    sleep(1)
+
+    response = rest_get_call($LR_SEARCH_API_DOMAIN + '/titles/' + title_no)
+    json_response = JSON.parse(response.body);
+
+    if ((response.code != '404') && (!json_response['title_number'].nil?)) then
+      found_count = found_count + 1
+    end
+
+    response = rest_get_call($LR_SEARCH_API_DOMAIN + '/auth/titles/' + title_no)
+    json_response = JSON.parse(response.body);
+
+    if ((response.code != '404') && (!json_response['title_number'].nil?)) then
+      found_count = found_count + 1
+    end
+
+    count = count + 1
+    puts 'count = ' + count.to_s
+  end
+
+  if (found_count != 2) then
+    raise "No records found for title " + title_no
+  end
+
+  return JSON.parse(response.body)
+end
